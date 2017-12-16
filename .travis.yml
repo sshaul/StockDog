@@ -5,5 +5,5 @@ python:
 install:
   - pip install -r requirements.txt
 #for now running no tests
-script: notests
-  #- pytest $TEST_SUITE # or py.test for Python versions 3.5 and below
+script:
+  - pytest tests/suite_3_6.py 
