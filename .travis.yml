@@ -1,9 +1,9 @@
 language: python
 python:
   - "3.6"
-# command to install dependencies
+# command to install dependencies - this file needs to be updated everytime there are new things to be added to install
 install:
   - pip install -r requirements.txt
-#for now running no tests
+#running dummy tests
 script:
-  - pytest tests/suite_3_6.py 
+  - pytest tests/suite_3_6.py
