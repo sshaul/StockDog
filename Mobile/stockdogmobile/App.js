@@ -10,9 +10,16 @@ export default class App extends Component{
   }
 
   helloWorld() {
-    this.setState({textValue : 'hello!!!'});
-    // fetch(--api endpoint--)...
-  }
+    fetch('http://localhost:5000/api/v1.0', 
+     {
+      method: 'GET'})
+      .then(response => {
+        var sdtext = response._bodyText;
+        this.setState({textValue : sdtext});
+      })
+      .catch(error => {
+        console.log('ERROR: '+  error);
+      })};
   
   render() {
     return (
