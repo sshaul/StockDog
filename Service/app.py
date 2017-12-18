@@ -1,3 +1,5 @@
+import argparse
+
 from flask import Flask
 from flask import make_response
 from flask import jsonify
@@ -15,5 +17,13 @@ def index():
 def not_found(error):
    return make_response(jsonify({'error': 'Not found'}), 404)
 
+
+def getPortNum(defaultPort=5000):
+   parser = argparse.ArgumentParser()
+   parser.add_argument('-p','--port', type=int, help='specify the port number')
+   args = parser.parse_args()
+   return args.port or defaultPort 
+
+
 if __name__ == '__main__':
-   app.run(debug=True)
+   app.run(debug=True, port=getPortNum())
