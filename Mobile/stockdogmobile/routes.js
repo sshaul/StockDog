@@ -5,12 +5,12 @@ import Login from './screens/login.js';
 import Register from './screens/register.js';
 
 export const Root = StackNavigator({
-    Login : {
-        screen: Login,
-        navigationOptions: {
-            header: null
-        }
-    },
+    // Login : {
+    //     screen: Login,
+    //     navigationOptions: {
+    //         header: null
+    //     }
+    // },
     Register: {
         screen: Register,
         navigationOptions: {

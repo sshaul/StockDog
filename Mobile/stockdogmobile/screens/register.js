@@ -5,6 +5,7 @@ import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
 import Icon from 'react-native-vector-icons/Feather';
+import PopoverTooltip from 'react-native-popover-tooltip';
 
 export default class Register extends Component {
   constructor(props) {
@@ -58,7 +59,20 @@ export default class Register extends Component {
             value={this.state.password}
           />
           <TouchableOpacity>
-            <Icon name='info' size={30} color='white' />
+            <PopoverTooltip
+              ref='tooltip1'
+              buttonComponent={
+                <Icon name='info' size={30} color='white' />
+              }
+              items={[
+                {
+                  label: 'Password must be at least 8 characters long and contain at least 1 special character.',
+                  onPress: () => {}
+                }
+              ]}
+              // animationType='timing'
+              // using the default timing animation
+              />
           </TouchableOpacity>
         </View>
         <TouchableOpacity
