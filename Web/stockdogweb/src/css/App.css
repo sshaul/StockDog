@@ -1,0 +1,48 @@
+/* Colors
+-----------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+/* General
+-----------------------------------------------------------------------------*/
+body {
+  background-color: #354854;
+  font-family: 'Open Sans', sans-serif; }
+
+/*---------------------------------------------------------------------------*/
+/* Login
+-----------------------------------------------------------------------------*/
+.Login {
+  font-family: 'Open Sans', sans-serif; }
+
+.login-area {
+  width: 262px;
+  height: 270px;
+  position: absolute;
+  margin: -131px 0 0 -135px;
+  left: 50%;
+  top: 50%; }
+
+.login-area input {
+  font-family: 'Open Sans', sans-serif;
+  width: 200px;
+  display: block;
+  padding: 5px;
+  margin-bottom: 10px;
+  height: 50px;
+  width: 260px;
+  font-size: 20px; }
+
+.login-area h1 {
+  width: 180px;
+  height: 80px;
+  display: block;
+  margin: 0 auto;
+  color: #FFF; }
+
+#submit-btn {
+  background-color: #63CEC2;
+  color: #FFF;
+  border: none; }
+
+/*---------------------------------------------------------------------------*/
+
+/*# sourceMappingURL=App.css.map */
