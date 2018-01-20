@@ -1,46 +1,27 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { Root } from './routes.js';
+import { Font } from 'expo';
 
-export default class App extends Component{
-  constructor(){
-      super();
-      this.state = {
-          textValue:''
-      }
+export default class App extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      fontLoaded: false,
+    };
+}
+  
+  async componentDidMount() {
+    await Font.loadAsync({
+      'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+      'open-sans': require('./assets/fonts/OpenSans-Regular.ttf')
+    });
+    this.setState({fontLoaded: true});
   }
 
-  helloWorld() {
-    fetch('http://localhost:5000/api/v1.0', 
-     {
-      method: 'GET'})
-      .then(response => {
-        var sdtext = response._bodyText;
-        this.setState({textValue : sdtext});
-      })
-      .catch(error => {
-        console.log('ERROR: '+  error);
-      })};
-  
   render() {
-    return (
-      <View style={styles.container}>
-        <Button
-          onPress={this.helloWorld.bind(this)}
-          title="API Button"
-          color="#841584"
-          accessibilityLabel="Calls hello world from API"
-        />
-      <Text>{this.state.textValue}</Text>
-      </View>
+    return(
+      this.state.fontLoaded ? 
+       <Root/ > : null
     );
   }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+};
