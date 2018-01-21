@@ -8,7 +8,8 @@ import {
 import './css/App.css';
 
 // Components
-import Login from "./components/Login"
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 class App extends Component {
    render() {
@@ -16,6 +17,7 @@ class App extends Component {
          <Router>
             <div className="App">
                <Route exact path="/" component={Login} />
+               <Route exact path="/register" component={Register} />
             </div>
          </Router>
       );
