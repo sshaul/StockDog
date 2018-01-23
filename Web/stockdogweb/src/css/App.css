@@ -1,13 +1,13 @@
 /* Colors
 -----------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
+/*===========================================================================*/
 /* General
 -----------------------------------------------------------------------------*/
 body {
   background-color: #354854;
   font-family: 'Open Sans', sans-serif; }
 
-/*---------------------------------------------------------------------------*/
+/*===========================================================================*/
 /* Login
 -----------------------------------------------------------------------------*/
 .Login {
@@ -44,7 +44,7 @@ body {
   color: #F7F8F9;
   border: none; }
 
-/*---------------------------------------------------------------------------*/
+/*===========================================================================*/
 /* Register
 -----------------------------------------------------------------------------*/
 .Register {
@@ -83,6 +83,64 @@ body {
   color: white;
   background-color: white; }
 
-/*---------------------------------------------------------------------------*/
+/*===========================================================================*/
+/* Stock
+-----------------------------------------------------------------------------*/
+.Stock h1 {
+  font-family: 'Open Sans', sans-serif;
+  color: #F7F8F9;
+  width: 90px;
+  margin: 0 auto; }
+
+.stock-chart {
+  height: 400px; }
+
+.stock-shares-owned {
+  color: #F7F8F9;
+  margin: 10px;
+  font-size: 20px;
+  float: left; }
+
+.stock-chart-time-select {
+  float: right;
+  margin: 10px; }
+
+.stock-chart-time-select button {
+  padding: 5px;
+  background-color: #F7F8F9;
+  border: none;
+  cursor: pointer; }
+
+.stock-chart-time-select button:hover {
+  background-color: #d6d7d8; }
+
+.stock-buy-sell-btns {
+  color: #F7F8F9;
+  font-size: 20px;
+  clear: both; }
+
+.stock-buy-sell-btns {
+  width: 545px;
+  margin: 0 auto; }
+
+.stock-btn {
+  color: #F7F8F9;
+  border: none;
+  font-size: 25px;
+  margin: 10px;
+  width: 250px;
+  padding: 10px;
+  cursor: pointer; }
+
+.stock-btn:active {
+  color: #d6d7d8; }
+
+#stock-buy-btn {
+  background-color: #63CEC2; }
+
+#stock-sell-btn {
+  background-color: #ed4d0a; }
+
+/*===========================================================================*/
 
 /*# sourceMappingURL=App.css.map */
