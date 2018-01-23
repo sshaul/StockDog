@@ -36,9 +36,12 @@ body {
   width: 260px;
   margin-bottom: 10px; }
 
+.login-links a {
+  color: #63CEC2; }
+
 #submit-btn {
   background-color: #63CEC2;
-  color: #FFF;
+  color: #F7F8F9;
   border: none; }
 
 /*---------------------------------------------------------------------------*/
@@ -69,6 +72,16 @@ body {
 .register-area img {
   width: 260px;
   margin-bottom: 10px; }
+
+.register-password-tt {
+  position: absolute;
+  left: 222px;
+  top: 424px; }
+
+.register-password-tt img {
+  width: 30px;
+  color: white;
+  background-color: white; }
 
 /*---------------------------------------------------------------------------*/
 

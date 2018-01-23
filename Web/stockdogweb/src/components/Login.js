@@ -14,8 +14,10 @@ class Login extends Component {
                   <input type="password" placeholder="password" />
                   <input id="submit-btn" type="submit" value="SUBMIT" />
                </form>
-               <Link to="/forgotpassword">Forgot password</Link><br />
-               <Link to="/register">Create an account</Link>
+               <div class="login-links">
+                  <Link to="/forgotpassword">Forgot password</Link><br />
+                  <Link to="/register">Create an account</Link>
+               </div>
             </div>
          </div>
       );
