@@ -130,12 +130,13 @@ def formatDayData(timeSeriesData):
       if strDate in key:
          slicedTimeSeriesData.append(
             {
-               'time' : datetime.strptime(key, '%Y-%m-%d %H:%M:%S').timestamp(),
+               'time' : key,
+               'epochTime' : datetime.strptime(key, '%Y-%m-%d %H:%M:%S').timestamp(),
                'price' : value['1. open']
             }
          )
 
-   slicedTimeSeriesData.sort(key=lambda item:item['time'], reverse=True)
+   slicedTimeSeriesData.sort(key=lambda item:item['epochTime'], reverse=True)
    return slicedTimeSeriesData
 
 
