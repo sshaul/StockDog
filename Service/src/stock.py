@@ -2,10 +2,12 @@ from flask import Blueprint, abort
 from urllib.parse import urlencode
 from pprint import pprint
 from werkzeug.exceptions import *
+from datetime import date, timedelta, datetime
 
 import json
 import requests
 import re
+import operator
 
 stock_api = Blueprint('stock_api', __name__)
 
@@ -49,9 +51,9 @@ def get_history(ticker, length):
    if response.get('Error Message'):
       abort(404)
 
-   #data = formatData(response, interval, length)
+   data = formatData(response, interval, length)
 
-   return json.dumps(response)
+   return json.dumps(data)
     
 
 def getFunction(length):
@@ -85,17 +87,29 @@ def getApiKey():
    return '3UCU111LQLB5581W'
 
 
+def getLastWeekday():
+   today = date.today()
+   if date.today().weekday() <= 4:
+      return today
+   else:
+      dayBefore = today - timedelta(days=1)
+      while dayBefore.weekday() > 4:
+         dayBefore -= timedelta(days=1)
+
+      return dayBefore
+
+
 def formatData(jsonData, interval, length):
    if not interval:
       interval = 'Daily'
 
    timeSeriesData = jsonData['Time Series (' + interval + ')']
-   pprint(timeSeriesData)
 
    slicedTimeSeriesData = []
 
    if length == 'day':
-      return 1
+      slicedTimeSeriesData = formatDayData(timeSeriesData)
+      pprint(slicedTimeSeriesData)
    elif length == 'week':
       return 1
    elif length == 'month':
@@ -104,4 +118,33 @@ def formatData(jsonData, interval, length):
       return 1
    else:
       raise Exception('Invalid length provided')
+
+   return slicedTimeSeriesData
+
+def formatDayData(timeSeriesData):
+   slicedTimeSeriesData = []
+
+   for (key, value) in timeSeriesData.items():
+      day = getLastWeekday()
+      strDate = day.strftime('%Y-%m-%d')
+      if strDate in key:
+         slicedTimeSeriesData.append(
+            {
+               'time' : datetime.strptime(key, '%Y-%m-%d %H:%M:%S').timestamp(),
+               'price' : value['1. open']
+            }
+         )
+
+   slicedTimeSeriesData.sort(key=lambda item:item['time'], reverse=True)
+   return slicedTimeSeriesData
+
+
+
+
+
+
+
+
+
+
 
