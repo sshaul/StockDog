@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS } from 'react-native';
-import { Button } from 'react-native-elements';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
 import Icon from 'react-native-vector-icons/Feather';
 import PopoverTooltip from 'react-native-popover-tooltip';
+import WideButton from '../components/widebutton';
+import RoundInput from '../components/roundinput';
 
 export default class Register extends Component {
   constructor(props) {
@@ -23,39 +24,33 @@ export default class Register extends Component {
     navigation.goBack(null);
   }
 
+  register() {
+    console.log('here');
+    this.props.navigation.navigate('Profile', {});
+  }
+
   render() {
-    const nav = this.props.navigator;
     return (
       <View style={containers.general}>
         <Text style={text.title}>StockDog</Text>
-        <TextInput
-          style={elements.roundedInput}
-          placeholder="first name"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={(firstname) => this.setState({firstname})}
-          value={this.state.firstname}
-        />
-        <TextInput
-          style={elements.roundedInput}
-          placeholder="last name"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={(lastname) => this.setState({lastname})}
+        <RoundInput 
+          type="first name" 
+          onchange={(firstname) => this.setState({firstname})}
+          value={this.state.firstname}/>
+        <RoundInput
+          type="last name"
+          onchange={(lastname) => this.setState({lastname})}
           value={this.state.lastname}
         />
-        <TextInput
-          style={elements.roundedInput}
-          placeholder="email"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={(email) => this.setState({email})}
+        <RoundInput
+          type="email"
+          onchange={(email) => this.setState({email})}
           value={this.state.email}
         />
         <View style={containers.horizontal}>
-          <TextInput
-            style={elements.roundedInput}
-            placeholder="password"
-            placeholderTextColor="#aaaaaa"
-            secureTextEntry={true}
-            onChangeText={(password) => this.setState({password})}
+          <RoundInput
+            type="password"
+            onchange={(password) => this.setState({password})}
             value={this.state.password}
           />
           <TouchableOpacity>
@@ -75,11 +70,7 @@ export default class Register extends Component {
               />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={elements.loginButton}
-          >
-          <Text style={text.loginButton}>LOGIN</Text>
-        </TouchableOpacity>
+        <WideButton type='register' onpress ={this.register.bind(this)}/>
         <TouchableOpacity
           style={elements.smallTextButton}>
           <Text 
