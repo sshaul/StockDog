@@ -4,6 +4,7 @@ import { Button } from 'react-native-elements';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
+import WideButton from '../components/widebutton';
 
 export default class Login extends Component {
   constructor(props) {
@@ -39,11 +40,7 @@ export default class Login extends Component {
           onChangeText={(password) => this.setState({password})}
           value={this.state.password}
         />
-        <TouchableOpacity
-          style={elements.loginButton}
-          >
-          <Text style={text.loginButton}>LOGIN</Text>
-        </TouchableOpacity>
+        <WideButton type='login'/>
         <TouchableOpacity
           style={elements.smallTextButton}>
           <Text style={text.smallText}> Forgot Password? </Text>
