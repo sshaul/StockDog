@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
+import { colors } from './colors.js'; 
 
 export default text = StyleSheet.create({
     roundedInput: {
         height: 45,
         width: 250,
-        backgroundColor: "#f7f8f9",
+        backgroundColor: colors.white,
         borderRadius: 25,
         paddingLeft: 20,
         margin: 10
@@ -12,7 +13,7 @@ export default text = StyleSheet.create({
     loginButton: {
         height: 45,
         width: 250,
-        backgroundColor: "#63cec2",
+        backgroundColor: colors.bright,
         borderRadius: 25,
         alignItems: 'center',
         justifyContent: 'center',
@@ -20,9 +21,27 @@ export default text = StyleSheet.create({
     },
     smallTextButton: {
         height: 25,
-        backgroundColor: "#354854",
+        backgroundColor: colors.dark,
         marginTop: 10,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    buyButton: {
+        height: '60%',
+        width: '45%',
+        backgroundColor: colors.bright,
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10
+    },
+    sellButton: {
+        height: '60%',
+        width: '45%',
+        backgroundColor: colors.red,
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10
     }
 });
