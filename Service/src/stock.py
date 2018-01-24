@@ -9,6 +9,11 @@ import requests
 import re
 import operator
 
+DAY_AGO = 1
+WEEK_AGO = 7
+MONTH_AGO = 31
+YEAR_AGO = 365
+
 stock_api = Blueprint('stock_api', __name__)
 
 @stock_api.errorhandler(400)
@@ -87,18 +92,6 @@ def getApiKey():
    return '3UCU111LQLB5581W'
 
 
-def getLastWeekday():
-   today = date.today()
-   if date.today().weekday() <= 4:
-      return today
-   else:
-      dayBefore = today - timedelta(days=1)
-      while dayBefore.weekday() > 4:
-         dayBefore -= timedelta(days=1)
-
-      return dayBefore
-
-
 def formatData(jsonData, interval, length):
    if not interval:
       interval = 'Daily'
@@ -108,44 +101,51 @@ def formatData(jsonData, interval, length):
    slicedTimeSeriesData = []
 
    if length == 'day':
-      slicedTimeSeriesData = formatDayData(timeSeriesData)
+      slicedTimeSeriesData = formatDataInRange(timeSeriesData, getLastWeekdayDelta(), '%Y-%m-%d %H:%M:%S')
       pprint(slicedTimeSeriesData)
    elif length == 'week':
-      return 1
+      slicedTimeSeriesData = formatDataInRange(timeSeriesData, WEEK_AGO, '%Y-%m-%d %H:%M:%S')
+      pprint(slicedTimeSeriesData)
    elif length == 'month':
-      return 1
+      slicedTimeSeriesData = formatDataInRange(timeSeriesData, MONTH_AGO, '%Y-%m-%d')
+      pprint(slicedTimeSeriesData)
    elif length == 'year':
-      return 1
+      slicedTimeSeriesData = formatDataInRange(timeSeriesData, YEAR_AGO, '%Y-%m-%d')
+      pprint(slicedTimeSeriesData)
    else:
       raise Exception('Invalid length provided')
 
    return slicedTimeSeriesData
 
-def formatDayData(timeSeriesData):
+
+def getLastWeekdayDelta():
+   today = date.today()
+   if date.today().weekday() <= 4:
+      return DAY_AGO
+   else:
+      daysAgo = 1
+      dayBefore = today - timedelta(days=daysAgo)
+      while dayBefore.weekday() > 4:
+         daysAgo += 1
+         dayBefore -= timedelta(days=daysAgo)
+
+      return daysAgo
+
+
+def formatDataInRange(timeSeriesData, timeDelta, dateFormat):
    slicedTimeSeriesData = []
+   today = datetime.now()
+   pastDate = today - timedelta(days=timeDelta)
 
    for (key, value) in timeSeriesData.items():
-      day = getLastWeekday()
-      strDate = day.strftime('%Y-%m-%d')
-      if strDate in key:
-         slicedTimeSeriesData.append(
-            {
-               'time' : key,
-               'epochTime' : datetime.strptime(key, '%Y-%m-%d %H:%M:%S').timestamp(),
-               'price' : value['1. open']
-            }
-         )
+      keyTime = datetime.strptime(key, dateFormat)
+
+      if pastDate < keyTime <= today:
+         slicedTimeSeriesData.append({
+            'time' : key,
+            'epochTime' : keyTime.timestamp(),
+            'price' : value['1. open']
+         })
 
    slicedTimeSeriesData.sort(key=lambda item:item['epochTime'], reverse=True)
    return slicedTimeSeriesData
-
-
-
-
-
-
-
-
-
-
-
