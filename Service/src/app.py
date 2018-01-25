@@ -31,4 +31,4 @@ def getPortNum(defaultPort=5000):
 
 
 if __name__ == '__main__':
-   app.run(debug=True, port=getPortNum())
+   app.run(debug=True, port=getPortNum(), host='0.0.0.0')
