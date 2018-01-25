@@ -3,10 +3,12 @@ import argparse
 from flask import Flask
 from flask import make_response
 from flask import jsonify
+from flask_cors import CORS
 
 from stock import stock_api
 
 app = Flask(__name__)
+CORS(app)
 
 app.register_blueprint(stock_api)
 
