@@ -53,6 +53,8 @@ def get_history(ticker, length):
    alphaVantageApi = 'https://www.alphavantage.co/query?'
    response = (requests.get(alphaVantageApi + urlencode(queryParams))).json()
    
+   pprint(response)
+
    if response.get('Error Message'):
       abort(404)
 
@@ -102,16 +104,16 @@ def formatData(jsonData, interval, length):
 
    if length == 'day':
       slicedTimeSeriesData = formatDataInRange(timeSeriesData, getLastWeekdayDelta(), '%Y-%m-%d %H:%M:%S')
-      pprint(slicedTimeSeriesData)
+      #pprint(slicedTimeSeriesData)
    elif length == 'week':
       slicedTimeSeriesData = formatDataInRange(timeSeriesData, WEEK_AGO, '%Y-%m-%d %H:%M:%S')
-      pprint(slicedTimeSeriesData)
+      #pprint(slicedTimeSeriesData)
    elif length == 'month':
       slicedTimeSeriesData = formatDataInRange(timeSeriesData, MONTH_AGO, '%Y-%m-%d')
-      pprint(slicedTimeSeriesData)
+      #pprint(slicedTimeSeriesData)
    elif length == 'year':
       slicedTimeSeriesData = formatDataInRange(timeSeriesData, YEAR_AGO, '%Y-%m-%d')
-      pprint(slicedTimeSeriesData)
+      #pprint(slicedTimeSeriesData)
    else:
       raise Exception('Invalid length provided')
 
@@ -140,12 +142,12 @@ def formatDataInRange(timeSeriesData, timeDelta, dateFormat):
    for (key, value) in timeSeriesData.items():
       keyTime = datetime.strptime(key, dateFormat)
 
-      if pastDate < keyTime <= today:
+      if pastDate < keyTime:
          slicedTimeSeriesData.append({
             'time' : key,
             'epochTime' : keyTime.timestamp(),
             'price' : value['1. open']
          })
 
-   slicedTimeSeriesData.sort(key=lambda item:item['epochTime'], reverse=True)
+   slicedTimeSeriesData.sort(key=lambda item:item['epochTime'], reverse=False)
    return slicedTimeSeriesData
