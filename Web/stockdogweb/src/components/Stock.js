@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
+import axios from 'axios';
 
 class Stock extends Component {
    constructor() {
       super();
+
+      this.state = {
+         data: {}
+      }
+
 		this.data = {
 			labels: ['12/22/17', '12/26/17', '12/27/17', '12/28/17', '12/29/17',
             '1/2/18', '1/3/18', '1/4/18', '1/5/18', '1/8/18', '1/9/18',
@@ -33,7 +39,9 @@ class Stock extends Component {
 	            ]
 				}
          ]
-		};
+      };
+
+      // Options for the chart
       this.options =  { 
          maintainAspectRatio: false,
          legend: {
@@ -57,20 +65,39 @@ class Stock extends Component {
                ticks: {
                   fontColor: "rgb(247, 248, 249)",
                   fontSize: 12,
+               },
+               gridLines: {
+                  display: false
                }
             }],
             xAxes: [{
                ticks: {
                   fontColor: "rgb(247, 248, 249)",
-                  fontSize: 14,
+                  fontSize: 12,
                   stepSize: 1,
+               },
+               gridLines: {
+                  display: false
                }
             }]
          }
       }
+
+      this.getDay();
    }
 
 
+   // Get the data for day up to date day chart
+   getDay = () => {
+      // Hard coded symbol for now
+      axios.get("localhost:5000/api/stock/AMD/history/day")
+         .then((res) => {
+            console.log(res);
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   }
 
    render() {
       return (
@@ -87,8 +114,8 @@ class Stock extends Component {
                <button>1Y</button><button>ALL</button>
             </div>
             <div className="stock-buy-sell-btns">
-               <button id="stock-buy-btn" class="stock-btn">BUY</button>
-               <button id="stock-sell-btn" class="stock-btn">SELL</button>
+               <button id="stock-buy-btn" className="stock-btn">BUY</button>
+               <button id="stock-sell-btn" className="stock-btn">SELL</button>
             </div>
          </div>
       );
