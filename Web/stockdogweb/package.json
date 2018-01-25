@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.17.1",
     "chart.js": "^2.7.1",
     "react": "^16.2.0",
     "react-chartjs-2": "^2.7.0",
@@ -12,7 +13,7 @@
     "react-tooltip": "^3.4.0"
   },
   "scripts": {
-    "start": "PORT=5000 react-scripts start",
+    "start": "PORT=5001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
