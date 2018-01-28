@@ -22,6 +22,11 @@ export default containers = StyleSheet.create({
       justifyContent: 'flex-start',
       paddingTop: 0
     },
+    chart: {
+      // flex: 1,
+      // alignItems: 'center',
+      // justifyContent: 'center'
+    },
     chartOut: {
       flex: 0.5,
       alignItems: 'center',
