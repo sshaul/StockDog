@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
 import { colors } from './colors.js'; 
 
-export default text = StyleSheet.create({
+export default elements = StyleSheet.create({
     roundedInput: {
         height: 45,
         width: 250,
         backgroundColor: colors.white,
-        borderRadius: 25,
+        borderRadius: 12,
         paddingLeft: 20,
         margin: 10
     },
@@ -14,7 +14,7 @@ export default text = StyleSheet.create({
         height: 45,
         width: 250,
         backgroundColor: colors.bright,
-        borderRadius: 25,
+        borderRadius: 12,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10
@@ -43,5 +43,9 @@ export default text = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10
+    },
+    tabNavIcon: {
+        height: 24,
+        width: 24
     }
 });
