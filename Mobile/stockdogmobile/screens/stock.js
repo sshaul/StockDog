@@ -48,7 +48,6 @@ export default class Profile extends Component {
   };
 
   createChart() {
-    // console.log(this.state.data);
     var Highcharts='Highcharts';
     var conf={
             chart: {
@@ -124,7 +123,7 @@ export default class Profile extends Component {
     };
  
     return (
-      <ChartView style={{height:240, width: 350}} config={conf} options={options}></ChartView>
+      <ChartView style={{flex:1, width: 350}} config={conf} options={options}></ChartView>
     );
   };
 
