@@ -23,7 +23,7 @@ def not_found(error):
    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
-def getPortNum(defaultPort=5000):
+def getPortNum(defaultPort=6000):
    parser = argparse.ArgumentParser()
    parser.add_argument('-p','--port', type=int, help='specify the port number')
    args = parser.parse_args()

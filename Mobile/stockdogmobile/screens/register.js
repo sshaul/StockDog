@@ -26,7 +26,7 @@ export default class Register extends Component {
 
   register() {
     console.log('here');
-    this.props.navigation.navigate('Profile', {});
+    this.props.navigation.navigate('Main', {});
   }
 
   render() {
