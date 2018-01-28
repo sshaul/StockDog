@@ -23,30 +23,19 @@ export default containers = StyleSheet.create({
       paddingTop: 0
     },
     chart: {
-      // flex: 1,
-      // alignItems: 'center',
-      // justifyContent: 'center'
+      flex: 0.7,
+      alignItems: 'center',
+      justifyContent: 'center'
     },
     chartOut: {
       flex: 0.5,
       alignItems: 'center',
-      justifyContent: 'flex-start',
-      //backgroundColor: 'red'
-    },
-    chartIn: {
-      flex: 1,
-      backgroundColor: colors.dark,
-      borderBottomWidth: 2,
-      borderBottomColor: colors.white,
-      borderLeftWidth: 2,
-      borderLeftColor: colors.white
-      
+      justifyContent: 'flex-start'
     },
     iconHeaders: {
       flex: 0.1,
       flexDirection: 'row',
       alignItems: 'center',
-      // backgroundColor: colors.grey,
       justifyContent: 'space-between',
       paddingLeft: 10,
       paddingRight: 10,
