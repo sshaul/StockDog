@@ -81,7 +81,7 @@ class Stock extends Component {
    // Get the data for day up to date day chart
    getDay = () => {
       // Hard coded symbol for now
-      axios.get("http://localhost:5000/api/stock/AMD/history/day")
+      axios.get("http://198.199.100.209:6000/api/stock/AMD/history/day")
          .then((res) => {
             // Sort the array depend on epoch
             var sortedArr = sortJsonArray(res['data'], 'epochTime', 'asc');
