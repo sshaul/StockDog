@@ -7,7 +7,6 @@ from datetime import date, timedelta, datetime
 import json
 import requests
 import re
-import operator
 
 DAY_AGO = 1
 WEEK_AGO = 7
