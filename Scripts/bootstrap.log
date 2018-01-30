@@ -1,0 +1,58 @@
+
+WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-vR2IrHqvmN9JF8OENzsE2XGis3o= integrity checksum failed when using sha1: wanted sha1-vR2IrHqvmN9JF8OENzsE2XGis3o= but got sha512-tTfZbM9Ecwj3GK50mnPrUpinTwA4xXmDiQGCk/aBYbvl1+X8YqldK86wZ1owVJ4u3mrKbRlXMma80J18qwiaTQ==. (3793 bytes)
+WARN registry Using stale package data from https://registry.npmjs.org/ due to a request error during revalidation.
+
+> fsevents@1.1.2 install /Users/Nishanth/git/StockDog/Web/stockdogweb/node_modules/fsevents
+> node install
+
+node-pre-gyp ERR! Tried to download(404): https://fsevents-binaries.s3-us-west-2.amazonaws.com/v1.1.2/fse-v1.1.2-node-v59-darwin-x64.tar.gz 
+node-pre-gyp ERR! Pre-built binaries not found for fsevents@1.1.2 and node@9.3.0 (node-v59 ABI) (falling back to source compile with node-gyp) 
+  SOLINK_MODULE(target) Release/.node
+  CXX(target) Release/obj.target/fse/fsevents.o
+  SOLINK_MODULE(target) Release/fse.node
+  COPY /Users/Nishanth/git/StockDog/Web/stockdogweb/node_modules/fsevents/lib/binding/Release/node-v59-darwin-x64/fse.node
+  TOUCH Release/obj.target/action_after_build.stamp
+
+> uglifyjs-webpack-plugin@0.4.6 postinstall /Users/Nishanth/git/StockDog/Web/stockdogweb/node_modules/uglifyjs-webpack-plugin
+> node lib/post_install.js
+
+npm notice created a lockfile as package-lock.json. You should commit this file.
+added 1306 packages in 39.971s
+npm WARN deprecated connect@2.30.2: connect 2.x series is deprecated
+npm WARN deprecated gulp-util@3.0.8: gulp-util is deprecated - replace it, following the guidelines at https://medium.com/gulpjs/gulp-util-ca3b1f9f9ac5
+WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-jLLDmSs4XrWGbMkfJfFZQgJY0Zo= integrity checksum failed when using sha1: wanted sha1-jLLDmSs4XrWGbMkfJfFZQgJY0Zo= but got sha512-kVUujNwT/8S45vHZ7VyH+WpOpqmC/bZHa99irs8uNp+2WUKUxLBMOhhj4Nx5nlCQEDxdOfDFJqCvd6llwBSj7w==. (72035 bytes)
+WARN registry Using stale package data from https://registry.npmjs.org/ due to a request error during revalidation.
+WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-29ysrNjGCKODFoaTaBF2l6FjHFk= integrity checksum failed when using sha1: wanted sha1-29ysrNjGCKODFoaTaBF2l6FjHFk= but got sha512-7aelVrYqCLuVjq2kEKRTH8fXPTC0xKTkM+G7UlFkEwCXY3sFbSxvY375JoFowOAYbkaU47SrBvOefUlLZZ+6QA==. (12124 bytes)
+WARN registry Using stale package data from https://registry.npmjs.org/ due to a request error during revalidation.
+WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-DYUhIuW8W+tFP7Ao6cDJvzY0DJQ= integrity checksum failed when using sha1: wanted sha1-DYUhIuW8W+tFP7Ao6cDJvzY0DJQ= but got sha512-q6rbdDd1o2mAnQreO7YADIxf/Whx4AHBiRf6d+/cVT8h44ss+lHgxf1FemcqDnQt9X3ct4McHr+JMGlYSsK7Cg==. (35519 bytes)
+WARN registry Using stale package data from https://registry.npmjs.org/ due to a request error during revalidation.
+
+> fsevents@1.1.3 install /Users/Nishanth/git/StockDog/Mobile/stockdogmobile/node_modules/fsevents
+> node install
+
+[fsevents] Success: "/Users/Nishanth/git/StockDog/Mobile/stockdogmobile/node_modules/fsevents/lib/binding/Release/node-v59-darwin-x64/fse.node" is installed via remote
+
+> react-native-elements@0.19.0 postinstall /Users/Nishanth/git/StockDog/Mobile/stockdogmobile/node_modules/react-native-elements
+> opencollective postinstall
+
+
+     *** Thank you for using react-native-elements! ***
+
+Please consider donating to our open collective
+     to help us maintain this package.
+
+  https://opencollective.com/react-native-elements/donate
+
+                    ***
+
+npm notice created a lockfile as package-lock.json. You should commit this file.
+added 1226 packages in 43.426s
+Requirement already satisfied: Flask==0.12.2 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from -r requirements.txt (line 1))
+Requirement already satisfied: requests==2.10.0 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from -r requirements.txt (line 2))
+Requirement already satisfied: Flask-Cors==3.0.3 in /Users/Nishanth/Library/Python/3.5/lib/python/site-packages (from -r requirements.txt (line 3))
+Requirement already satisfied: click>=2.0 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Flask==0.12.2->-r requirements.txt (line 1))
+Requirement already satisfied: Werkzeug>=0.7 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Flask==0.12.2->-r requirements.txt (line 1))
+Requirement already satisfied: Jinja2>=2.4 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Flask==0.12.2->-r requirements.txt (line 1))
+Requirement already satisfied: itsdangerous>=0.21 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Flask==0.12.2->-r requirements.txt (line 1))
+Requirement already satisfied: Six in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Flask-Cors==3.0.3->-r requirements.txt (line 3))
+Requirement already satisfied: MarkupSafe>=0.23 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Jinja2>=2.4->Flask==0.12.2->-r requirements.txt (line 1))
