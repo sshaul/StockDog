@@ -12,7 +12,6 @@ import WideButton from '../components/widebutton';
 import Chart from 'react-native-chartjs';
 import ChartView from 'react-native-highcharts';
 
-
 export default class Profile extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +27,7 @@ export default class Profile extends Component {
     var newData = [];
 
     // var url = 'http://localhost:5000/api/stock/AMD/history/day';
-    var url = 'http://198.199.100.209:6000/api/stock/AMD/history/day';
+    var url = 'http://198.199.100.209:5005/api/stock/AMD/history/day';
     fetch(url, {
       method: 'GET'
     }).then((response) => response.json())
@@ -65,7 +64,11 @@ export default class Profile extends Component {
                 type: 'datetime',
                 gridLineColor: colors.dark,
                 labels: {
-                    enabled: false
+                    enabled: true,
+                    style: {
+                      color: colors.white,
+                      fontSize: '11px'
+                    }
                 },
                 lineColor: colors.white,
                 lineWidth: 2
@@ -123,7 +126,7 @@ export default class Profile extends Component {
     };
  
     return (
-      <ChartView style={{flex:1, width: 350}} config={conf} options={options}></ChartView>
+      <ChartView style={{height: 300, width: '100%'}} config={conf} options={options}></ChartView>
     );
   };
 
@@ -134,10 +137,10 @@ export default class Profile extends Component {
           <Icon name='user' size={30} color='white' />
           <Icon name='settings' size={30} color='white' />
         </View>
-        <View style={containers.chartOut}>
-          <Text style={text.money}>AMD</Text>
-          <Text style={text.money}>$20.05</Text>
-          {this.createChart()}
+        <View style={containers.chart}>
+            <Text style={text.money}>AMD</Text>
+            <Text style={text.money}>$20.05</Text>
+            {this.createChart()}
         </View>
         <View style={containers.buttons}>
           <TouchableOpacity

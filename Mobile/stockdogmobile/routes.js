@@ -8,20 +8,21 @@ import Register from './screens/register.js';
 import Main from './screens/main.js';
 import Profile from './screens/profile.js';
 import Stock from './screens/stock.js';
+// import Day from './screens/day.js';
 
 export const Root = StackNavigator({
-    // Login : {
-    //     screen: Login,
-    //     navigationOptions: {
-    //         header: null
-    //     }
-    // },
-    // Register: {
-    //     screen: Register,
-    //     navigationOptions: {
-    //         header: null
-    //     }
-    // },
+    Login : {
+        screen: Login,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Register: {
+        screen: Register,
+        navigationOptions: {
+            header: null
+        }
+    },
     Main: {
         screen: Main,
         navigationOptions: {
@@ -62,3 +63,13 @@ export const TabRoot = TabNavigator({
     activeBackgroundColor: '#434b59'
   },
 });
+
+
+// export const DatesNav = TabNavigator({
+//   Day: {
+//     screen: Day,
+//     navigationOptions: {
+//       tabBarLabel: 'D',
+//     }
+//   }
+// });

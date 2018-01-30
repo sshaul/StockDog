@@ -6,6 +6,7 @@ import elements from '../style/elements';
 import text from '../style/text';
 import { colors } from '../style/colors'; 
 import ChartView from 'react-native-highcharts';
+import Icon from 'react-native-vector-icons/Feather';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -20,29 +21,25 @@ export default class Profile extends Component {
   componentDidMount() {
       var newData = [];
     //   var url = 'http://localhost:5000/api/stock/AMD/history/day';
-      var url = 'http://198.199.100.209:6000/api/stock/AMD/history/day';
+      var url = 'http://198.199.100.209:5005/api/stock/AMD/history/day';
       fetch(url, {
         method: 'GET'
       }).then((response) => response.json())
       .then((responseJson) => {
         responseJson.forEach(element => {
           var date = new Date(element.epochTime * 1000);
-          newData.push([date, parseFloat(element.price)]);
-          newData.sort(function (date1, date2) {
-            // This is a comparison function that will result in dates being sorted in
-            // ASCENDING order. As you can see, JavaScript's native comparison operators
-            // can be used to compare dates. This was news to me.
-            if (date1 > date2) return 1;
-            if (date1 < date2) return -1;
-            return 0;
-          });
+          newData.push([element.epochTime * 1000, parseFloat(element.price)]);
+          // newData.sort(function (date1, date2) {
+          //   if (date1 > date2) return 1;
+          //   if (date1 < date2) return -1;
+          //   return 0;
+          // });
         });
         this.setState({data: newData, isLoading: false});
       }).catch((error) => console.error(error));
   }
 
   createChart() {
-    // console.log(this.state.data);
     var Highcharts='Highcharts';
     var conf={
             chart: {
@@ -60,7 +57,11 @@ export default class Profile extends Component {
                 type: 'datetime',
                 gridLineColor: colors.dark,
                 labels: {
-                    enabled: false
+                    enabled: true,
+                    style: {
+                      color: colors.white,
+                      fontSize: '11px'
+                    }
                 },
                 lineColor: colors.white,
                 lineWidth: 2
@@ -83,7 +84,7 @@ export default class Profile extends Component {
             },
             tooltip: {
                 formatter: function () {
-                    return Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                    return Highcharts.dateFormat('%H:%M', this.x) + '<br/>' +
                         Highcharts.numberFormat(this.y, 2);
                 }
             },
@@ -118,12 +119,11 @@ export default class Profile extends Component {
     };
  
     return (
-      <ChartView style={{height:300}} config={conf} options={options}></ChartView>
+      <ChartView style={{height:300, width: '100%'}} config={conf} options={options}></ChartView>
     );
   }
 
   viewStock() {
-    console.log('here');
     this.props.navigation.navigate('Stock', {name: 'AMD'})
   }
 
@@ -131,6 +131,8 @@ export default class Profile extends Component {
     return (
       <View style={containers.profileGeneral}>
         <View style={containers.iconHeaders}>
+          <Icon name='user' size={30} color='white' />
+          <Icon name='settings' size={30} color='white' />
         </View>
         <View style={containers.chart}>
             <Text style={text.money}>$20.05</Text>
@@ -142,5 +144,4 @@ export default class Profile extends Component {
       </View>
     );
   }
-  
 }
