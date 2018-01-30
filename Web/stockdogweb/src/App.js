@@ -8,9 +8,9 @@ import {
 import './css/App.css';
 
 // Components
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Stock from "./components/Stock";
+import Login from "./container/Login";
+import Register from "./container/Register";
+import Stock from "./container/Stock";
 
 class App extends Component {
    render() {
@@ -19,7 +19,7 @@ class App extends Component {
             <div className="App">
                <Route exact path="/" component={Login} />
                <Route exact path="/register" component={Register} />
-               <Route exact path="/stock" component={Stock} />
+               <Route path="/stock/:ticker" component={Stock} />
             </div>
          </Router>
       );

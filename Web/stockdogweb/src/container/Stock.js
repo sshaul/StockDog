@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
-import axios from 'axios';
 import sortJsonArray from 'sort-json-array';
+import API from '../api';
 
 class Stock extends Component {
-   constructor() {
-      super();
+   constructor(props) {
+      super(props);
+
+      this.api = new API();
 
       this.state = {
          data: {
@@ -20,7 +22,7 @@ class Stock extends Component {
                   borderWidth: 4,
                   pointBorderColor: 'rgba(75,192,192,1)',
                   pointBackgroundColor: '#fff',
-                  pointHoverRadius: 10,
+                  pointHoverRadius: 20,
                   pointHoverBackgroundColor: 'rgb(99, 206, 194)',
                   pointHoverBorderColor: 'rgb(247, 248, 249)',
                   pointHoverBorderWidth: 4,
@@ -29,8 +31,10 @@ class Stock extends Component {
                   data: []
                }
             ]
-         }
+         },
+         ticker: this.props.match.params.ticker.toUpperCase()
       };
+
 
       // Options for the chart
       this.options = { 
@@ -66,6 +70,7 @@ class Stock extends Component {
                   fontColor: "rgb(247, 248, 249)",
                   fontSize: 12,
                   stepSize: 1,
+                  maxTicksLimit: 5
                },
                gridLines: {
                   display: false
@@ -80,38 +85,33 @@ class Stock extends Component {
 
    // Get the data for day up to date day chart
    getDay = () => {
-      // Hard coded symbol for now
-      axios.get("http://198.199.100.209:5005/api/stock/AMD/history/day")
-         .then((res) => {
-            // Sort the array depend on epoch
-            var sortedArr = sortJsonArray(res['data'], 'epochTime', 'asc');
-            var prices = [];
-            var labels = [];
-            // Getting an array of prices and times
-            sortedArr.forEach(function(data) {
-               prices.push(data['price']);
-               labels.push(data['time'].substring(11, 16));
-            });
-            // Update the state with new information
-            var newData = this.state;
-            newData['data']['datasets'][0]['data'] = prices;
-            newData['data']['labels'] = labels;
-            // Make the points smaller
-            newData['data']['datasets'][0]['pointHoverRadius'] = 5;
-            newData['data']['datasets'][0]['pointHitRadius'] = 7;
-            this.setState(newData);
-            console.log(labels);
-            console.log(this.state);
-         })
-         .catch((err) => {
-            console.log(err);
+      const ticker = this.state.ticker;
+
+      this.api.stockHistory(ticker, 'day', (history) => {
+         // Sort the array depend on epoch
+         var sortedArr = sortJsonArray(history, 'epochTime', 'asc');
+         var prices = [];
+         var labels = [];
+         // Getting an array of prices and times
+         sortedArr.forEach(function(data) {
+            prices.push(data['price']);
+            labels.push(data['time'].substring(11, 16));
          });
+         // Update the state with new information
+         var newData = this.state;
+         newData['data']['datasets'][0]['data'] = prices;
+         newData['data']['labels'] = labels;
+         // Make the points smaller
+         newData['data']['datasets'][0]['pointHoverRadius'] = 5;
+         newData['data']['datasets'][0]['pointHitRadius'] = 7;
+         this.setState(newData);
+      });            
    }
 
    render() {
       return (
          <div className="Stock">
-            <h1>AMD</h1>
+            <h1>{this.state.ticker}</h1>
             <div className="stock-chart">
                <Line data={this.state.data} options={this.options}/>
             </div>
