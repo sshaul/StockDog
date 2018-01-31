@@ -1,4 +1,5 @@
 import argparse
+from util import logger
 
 from flask import Flask
 from flask import make_response
@@ -11,6 +12,8 @@ app = Flask(__name__)
 CORS(app)
 
 app.register_blueprint(stock_api)
+
+log = logger.Logger(True, True, True)
 
 @app.route('/')
 @app.route('/api/v1.0')

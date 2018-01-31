@@ -1,12 +1,14 @@
 from flask import Blueprint, abort
 from urllib.parse import urlencode
+from util import logger
 from pprint import pprint
 from werkzeug.exceptions import *
 from datetime import date, timedelta, datetime
-
 import json
 import requests
 import re
+
+log = logger.Logger(True, True, True)
 
 DAY_AGO = 1
 WEEK_AGO = 7
@@ -52,8 +54,6 @@ def get_history(ticker, length):
    alphaVantageApi = 'https://www.alphavantage.co/query?'
    response = (requests.get(alphaVantageApi + urlencode(queryParams))).json()
    
-   pprint(response)
-
    if response.get('Error Message'):
       abort(404)
 
@@ -103,16 +103,12 @@ def formatData(jsonData, interval, length):
 
    if length == 'day':
       slicedTimeSeriesData = formatDataInRange(timeSeriesData, getLastWeekdayDelta(), '%Y-%m-%d %H:%M:%S')
-      #pprint(slicedTimeSeriesData)
    elif length == 'week':
       slicedTimeSeriesData = formatDataInRange(timeSeriesData, WEEK_AGO, '%Y-%m-%d %H:%M:%S')
-      #pprint(slicedTimeSeriesData)
    elif length == 'month':
       slicedTimeSeriesData = formatDataInRange(timeSeriesData, MONTH_AGO, '%Y-%m-%d')
-      #pprint(slicedTimeSeriesData)
    elif length == 'year':
       slicedTimeSeriesData = formatDataInRange(timeSeriesData, YEAR_AGO, '%Y-%m-%d')
-      #pprint(slicedTimeSeriesData)
    else:
       raise Exception('Invalid length provided')
 
