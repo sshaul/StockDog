@@ -1,5 +1,11 @@
 
-WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-vR2IrHqvmN9JF8OENzsE2XGis3o= integrity checksum failed when using sha1: wanted sha1-vR2IrHqvmN9JF8OENzsE2XGis3o= but got sha512-tTfZbM9Ecwj3GK50mnPrUpinTwA4xXmDiQGCk/aBYbvl1+X8YqldK86wZ1owVJ4u3mrKbRlXMma80J18qwiaTQ==. (3793 bytes)
+WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-sWloqBEAq+YWCLAVPJFZ74uyvYM= integrity checksum failed when using sha1: wanted sha1-sWloqBEAq+YWCLAVPJFZ74uyvYM= but got sha512-5ZXLWWsMqHKFr5y0N3Eo5IIisxeEeRAajNq4mELb/WELOR7srdbQk2N5XiyNy2A/AgvlR3AmeBCZJW8lHrolbw==. (183183 bytes)
+WARN registry Using stale package data from https://registry.npmjs.org/ due to a request error during revalidation.
+WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-rpC0qk/x8C3s1rGiqNq/1zyfmIY= integrity checksum failed when using sha1: wanted sha1-rpC0qk/x8C3s1rGiqNq/1zyfmIY= but got sha512-pX1oQAY86MiuyZ2hY593Acbl4MLHKrBBhhmZ1YqSadzQbbsBE2rnd6WISoHjIsdf0WDeC0hbePYCz2ZxkV8L+g==. (1938933 bytes)
+WARN registry Using stale package data from https://registry.npmjs.org/ due to a request error during revalidation.
+WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-XqjuV1Y1ndwdmIFDJP5DSWNJp9Q= integrity checksum failed when using sha1: wanted sha1-XqjuV1Y1ndwdmIFDJP5DSWNJp9Q= but got sha512-MX60Bv2G83Zks9pi3oLOmRgnPAnwrlMn+lftMrWBm199VQjk46/xgzBi9lPfpZldw2+EI2S+OevuLIaDuxCWRw==. (4116 bytes)
+WARN registry Using stale package data from https://registry.npmjs.org/ due to a request error during revalidation.
+WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-xb3S9U7gk8BIOdcc4uR1imiQq8c= integrity checksum failed when using sha1: wanted sha1-xb3S9U7gk8BIOdcc4uR1imiQq8c= but got sha512-x+cYdNnaA3CxvMaTX0INdTCN8m8aF2uY9BvEqmxuYp8bL09cs/kWVQPVGcA35fMktdOsP69IgU7wFj/61dJHEw==. (3170 bytes)
 WARN registry Using stale package data from https://registry.npmjs.org/ due to a request error during revalidation.
 
 > fsevents@1.1.2 install /Users/Nishanth/git/StockDog/Web/stockdogweb/node_modules/fsevents
@@ -17,14 +23,16 @@ node-pre-gyp ERR! Pre-built binaries not found for fsevents@1.1.2 and node@9.3.0
 > node lib/post_install.js
 
 npm notice created a lockfile as package-lock.json. You should commit this file.
-added 1306 packages in 39.971s
+added 1306 packages in 40.766s
 npm WARN deprecated connect@2.30.2: connect 2.x series is deprecated
 npm WARN deprecated gulp-util@3.0.8: gulp-util is deprecated - replace it, following the guidelines at https://medium.com/gulpjs/gulp-util-ca3b1f9f9ac5
 WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-jLLDmSs4XrWGbMkfJfFZQgJY0Zo= integrity checksum failed when using sha1: wanted sha1-jLLDmSs4XrWGbMkfJfFZQgJY0Zo= but got sha512-kVUujNwT/8S45vHZ7VyH+WpOpqmC/bZHa99irs8uNp+2WUKUxLBMOhhj4Nx5nlCQEDxdOfDFJqCvd6llwBSj7w==. (72035 bytes)
 WARN registry Using stale package data from https://registry.npmjs.org/ due to a request error during revalidation.
-WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-29ysrNjGCKODFoaTaBF2l6FjHFk= integrity checksum failed when using sha1: wanted sha1-29ysrNjGCKODFoaTaBF2l6FjHFk= but got sha512-7aelVrYqCLuVjq2kEKRTH8fXPTC0xKTkM+G7UlFkEwCXY3sFbSxvY375JoFowOAYbkaU47SrBvOefUlLZZ+6QA==. (12124 bytes)
+WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-qEopffhcD0vGCHfIfyoKDOtd41Q= integrity checksum failed when using sha1: wanted sha1-qEopffhcD0vGCHfIfyoKDOtd41Q= but got sha512-UW49uPHgXU1p3743Tfo0/96f8thjlPthsjqV6Ga79lbmPtRmURPZVNr5R3hO9gToH+UtUjNFtk4UljKQuuqLmQ==. (48560 bytes)
 WARN registry Using stale package data from https://registry.npmjs.org/ due to a request error during revalidation.
-WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-DYUhIuW8W+tFP7Ao6cDJvzY0DJQ= integrity checksum failed when using sha1: wanted sha1-DYUhIuW8W+tFP7Ao6cDJvzY0DJQ= but got sha512-q6rbdDd1o2mAnQreO7YADIxf/Whx4AHBiRf6d+/cVT8h44ss+lHgxf1FemcqDnQt9X3ct4McHr+JMGlYSsK7Cg==. (35519 bytes)
+WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-De0Btk6JYxFwF7EG91uDz8NPNlY= integrity checksum failed when using sha1: wanted sha1-De0Btk6JYxFwF7EG91uDz8NPNlY= but got sha512-rKhIXSUEYbBUB9Ues30GYlcotM/4hPTmriBJGdNW5D+zdlxQUgJuPEo2Woo7khNM7xRG5tN7IRnMkKlzx43/Nw==. (253738 bytes)
+WARN registry Using stale package data from https://registry.npmjs.org/ due to a request error during revalidation.
+WARN registry Unexpected warning for https://registry.npmjs.org/: Miscellaneous Warning EINTEGRITY: sha1-29ysrNjGCKODFoaTaBF2l6FjHFk= integrity checksum failed when using sha1: wanted sha1-29ysrNjGCKODFoaTaBF2l6FjHFk= but got sha512-7aelVrYqCLuVjq2kEKRTH8fXPTC0xKTkM+G7UlFkEwCXY3sFbSxvY375JoFowOAYbkaU47SrBvOefUlLZZ+6QA==. (12124 bytes)
 WARN registry Using stale package data from https://registry.npmjs.org/ due to a request error during revalidation.
 
 > fsevents@1.1.3 install /Users/Nishanth/git/StockDog/Mobile/stockdogmobile/node_modules/fsevents
@@ -46,13 +54,13 @@ Please consider donating to our open collective
                     ***
 
 npm notice created a lockfile as package-lock.json. You should commit this file.
-added 1226 packages in 43.426s
+added 1226 packages in 47.985s
 Requirement already satisfied: Flask==0.12.2 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from -r requirements.txt (line 1))
 Requirement already satisfied: requests==2.10.0 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from -r requirements.txt (line 2))
 Requirement already satisfied: Flask-Cors==3.0.3 in /Users/Nishanth/Library/Python/3.5/lib/python/site-packages (from -r requirements.txt (line 3))
-Requirement already satisfied: click>=2.0 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Flask==0.12.2->-r requirements.txt (line 1))
-Requirement already satisfied: Werkzeug>=0.7 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Flask==0.12.2->-r requirements.txt (line 1))
-Requirement already satisfied: Jinja2>=2.4 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Flask==0.12.2->-r requirements.txt (line 1))
 Requirement already satisfied: itsdangerous>=0.21 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Flask==0.12.2->-r requirements.txt (line 1))
+Requirement already satisfied: Jinja2>=2.4 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Flask==0.12.2->-r requirements.txt (line 1))
+Requirement already satisfied: Werkzeug>=0.7 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Flask==0.12.2->-r requirements.txt (line 1))
+Requirement already satisfied: click>=2.0 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Flask==0.12.2->-r requirements.txt (line 1))
 Requirement already satisfied: Six in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Flask-Cors==3.0.3->-r requirements.txt (line 3))
 Requirement already satisfied: MarkupSafe>=0.23 in /Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages (from Jinja2>=2.4->Flask==0.12.2->-r requirements.txt (line 1))
