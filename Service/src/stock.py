@@ -15,6 +15,8 @@ WEEK_AGO = 7
 MONTH_AGO = 31
 YEAR_AGO = 365
 
+EST_HOURS_AHEAD = 3
+
 stock_api = Blueprint('stock_api', __name__)
 
 @stock_api.errorhandler(400)
@@ -136,6 +138,7 @@ def formatDataInRange(timeSeriesData, timeDelta, dateFormat):
 
    for (key, value) in timeSeriesData.items():
       keyTime = datetime.strptime(key, dateFormat)
+      epochTimeEst = keyTime + timedelta(hours=3)
 
       if pastDate < keyTime:
          slicedTimeSeriesData.append({
