@@ -1,3 +1,5 @@
 package-lock.json
 bootstrap.log
 config.json
+run.pid
+nohup.out

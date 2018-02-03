@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
-import sortJsonArray from 'sort-json-array';
 import API from '../api';
 
 class Stock extends Component {
@@ -47,7 +46,7 @@ class Stock extends Component {
 				custom: function(tooltip) {
 					if (!tooltip) return;
 					// disable displaying the color box;
-					tooltip.displayColors = false;
+               tooltip.displayColors = false;
 				},
 				callbacks: {
 					label: function(tooltipItem) {
@@ -60,6 +59,9 @@ class Stock extends Component {
                ticks: {
                   fontColor: "rgb(247, 248, 249)",
                   fontSize: 12,
+                  callback: function(label, index, labels) {
+                     return Math.round(label * 100) / 100;
+                  }
                },
                gridLines: {
                   display: false
@@ -70,7 +72,7 @@ class Stock extends Component {
                   fontColor: "rgb(247, 248, 249)",
                   fontSize: 12,
                   stepSize: 1,
-                  maxTicksLimit: 5
+                  //maxTicksLimit: 5
                },
                gridLines: {
                   display: false
@@ -89,11 +91,10 @@ class Stock extends Component {
 
       this.api.stockHistory(ticker, 'day', (history) => {
          // Sort the array depend on epoch
-         var sortedArr = sortJsonArray(history, 'epochTime', 'asc');
          var prices = [];
          var labels = [];
          // Getting an array of prices and times
-         sortedArr.forEach(function(data) {
+         history.forEach(function(data) {
             prices.push(data['price']);
             labels.push(data['time'].substring(11, 16));
          });
@@ -103,8 +104,9 @@ class Stock extends Component {
          newData['data']['labels'] = labels;
          // Make the points smaller
          newData['data']['datasets'][0]['pointHoverRadius'] = 5;
-         newData['data']['datasets'][0]['pointHitRadius'] = 7;
+         newData['data']['datasets'][0]['pointHitRadius'] = 10;
          this.setState(newData);
+         console.log(this.state)
       });            
    }
 
