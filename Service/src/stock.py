@@ -17,6 +17,9 @@ YEAR_AGO = 365
 
 EST_HOURS_AHEAD = 3
 
+DATE_FORMAT = '%Y-%m-%d'
+DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+
 stock_api = Blueprint('stock_api', __name__)
 
 @stock_api.errorhandler(400)
@@ -95,6 +98,13 @@ def getApiKey():
    return '3UCU111LQLB5581W'
 
 
+def getStartTime(timeDelta):
+   today = datetime.now()
+   pastDate = today - timedelta(days=timeDelta)
+   startTime = pastDate.replace(hour=9)
+   return startTime
+
+
 def formatData(jsonData, interval, length):
    if not interval:
       interval = 'Daily'
@@ -104,13 +114,21 @@ def formatData(jsonData, interval, length):
    slicedTimeSeriesData = []
 
    if length == 'day':
-      slicedTimeSeriesData = formatDataInRange(timeSeriesData, getLastWeekdayDelta(), '%Y-%m-%d %H:%M:%S')
+      startTime = getStartTime(getLastWeekdayDelta())
+      slicedTimeSeriesData = formatDataInRange(timeSeriesData, startTime, DATETIME_FORMAT)
+   
    elif length == 'week':
-      slicedTimeSeriesData = formatDataInRange(timeSeriesData, WEEK_AGO, '%Y-%m-%d %H:%M:%S')
+      startTime = getStartTime(WEEK_AGO)
+      slicedTimeSeriesData = formatDataInRange(timeSeriesData, startTime, DATETIME_FORMAT)
+   
    elif length == 'month':
-      slicedTimeSeriesData = formatDataInRange(timeSeriesData, MONTH_AGO, '%Y-%m-%d')
+      startTime = getStartTime(MONTH_AGO)
+      slicedTimeSeriesData = formatDataInRange(timeSeriesData, startTime, DATE_FORMAT)
+   
    elif length == 'year':
-      slicedTimeSeriesData = formatDataInRange(timeSeriesData, YEAR_AGO, '%Y-%m-%d')
+      startTime = getStartTime(YEAR_AGO)
+      slicedTimeSeriesData = formatDataInRange(timeSeriesData, startTime, DATE_FORMAT)
+   
    else:
       raise Exception('Invalid length provided')
 
@@ -131,16 +149,14 @@ def getLastWeekdayDelta():
       return daysAgo
 
 
-def formatDataInRange(timeSeriesData, timeDelta, dateFormat):
+def formatDataInRange(timeSeriesData, startTime, dateFormat):
    slicedTimeSeriesData = []
-   today = datetime.now()
-   pastDate = today - timedelta(days=timeDelta)
 
    for (key, value) in timeSeriesData.items():
       keyTime = datetime.strptime(key, dateFormat)
       epochTimeEst = keyTime + timedelta(hours=3)
 
-      if pastDate < keyTime:
+      if startTime < keyTime:
          slicedTimeSeriesData.append({
             'time' : key,
             'epochTime' : keyTime.timestamp(),
