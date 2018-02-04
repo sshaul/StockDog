@@ -3,6 +3,8 @@ import { Line } from 'react-chartjs-2';
 import API from '../api';
 import { withRouter } from 'react-router-dom';
 
+import TimeFrame from '../components/TimeFrames'
+
 class Stock extends Component {
    constructor(props) {
       super(props);
@@ -83,15 +85,17 @@ class Stock extends Component {
          }
       }
 
-      this.getDay();
+      this.getData('day');
    }
 
 
-   // Get the data for day up to date day chart
-   getDay = () => {
+   // Get the data for the timeFrame given
+   getData = (timeFrame) => {
+      console.log("Getting data for " + timeFrame);
+
       const ticker = this.state.ticker;
 
-      this.api.stockHistory(ticker, 'day', (history) => {
+      this.api.stockHistory(ticker, timeFrame, (history) => {
          // Sort the array depend on epoch
          var prices = [];
          var labels = [];
@@ -143,8 +147,11 @@ class Stock extends Component {
                23 shares owned
             </div>
             <div className="stock-chart-time-select">
-               <button>1D</button><button>1W</button><button>1M</button>
-               <button>1Y</button><button>ALL</button>
+               <TimeFrame timeFrame='day' text='1D' getData={this.getData} />
+               <TimeFrame timeFrame='week' text='1W' getData={this.getData}/>
+               <TimeFrame timeFrame='month' text='1M' getData={this.getData}/>
+               <TimeFrame timeFrame='year' text='1Y' getData={this.getData}/>
+               <button>ALL</button>
             </div>
             <div className="stock-buy-sell-btns">
                <button id="stock-buy-btn" className="stock-btn">BUY</button>
