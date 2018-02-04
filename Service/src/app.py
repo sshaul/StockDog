@@ -6,12 +6,16 @@ from flask import make_response
 from flask import jsonify
 from flask_cors import CORS
 
-from stock import stock_api
 
 app = Flask(__name__)
+
+from stock import stock_api
+from login import login_api
+
 CORS(app)
 
 app.register_blueprint(stock_api)
+app.register_blueprint(login_api)
 
 log = logger.Logger(True, True, True)
 
