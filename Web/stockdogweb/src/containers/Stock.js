@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 import API from '../api';
+import { withRouter } from 'react-router-dom';
 
 class Stock extends Component {
    constructor(props) {
@@ -31,7 +32,8 @@ class Stock extends Component {
                }
             ]
          },
-         ticker: this.props.match.params.ticker.toUpperCase()
+         ticker: this.props.match.params.ticker.toUpperCase(),
+         currentPrice: 0
       };
 
 
@@ -72,7 +74,7 @@ class Stock extends Component {
                   fontColor: "rgb(247, 248, 249)",
                   fontSize: 12,
                   stepSize: 1,
-                  //maxTicksLimit: 5
+                  maxTicksLimit: 5
                },
                gridLines: {
                   display: false
@@ -102,18 +104,38 @@ class Stock extends Component {
          var newData = this.state;
          newData['data']['datasets'][0]['data'] = prices;
          newData['data']['labels'] = labels;
+         // Setting the current price and round to the 2nd decimal 
+         newData['currentPrice'] = Math.round(prices[prices.length-1]*100)/100;
          // Make the points smaller
          newData['data']['datasets'][0]['pointHoverRadius'] = 5;
          newData['data']['datasets'][0]['pointHitRadius'] = 10;
          this.setState(newData);
-         console.log(this.state)
       });            
+   }
+
+   handleStockSearch = (event) => {
+      this.setState({searchStock: event.target.value});
+   }
+
+   // Redirect to a different stock page
+   changeStock = (stock) => {
+      this.props.history.push('/stock/' + this.state.searchStock); 
    }
 
    render() {
       return (
          <div className="Stock">
-            <h1>{this.state.ticker}</h1>
+            <div className="stock-titles">
+               <h1>{this.state.ticker}</h1>
+               <h2>${this.state.currentPrice}</h2>
+            </div>
+            <div className="stock-search">
+               <form onSubmit={this.changeStock}>
+                  <input id="stock-search-input" value={this.state.value}
+                     placeholder="search stock" 
+                     onChange={this.handleStockSearch}/>
+               </form>
+            </div>
             <div className="stock-chart">
                <Line data={this.state.data} options={this.options}/>
             </div>
@@ -133,4 +155,4 @@ class Stock extends Component {
    }
 }
 
-export default Stock;
+export default withRouter(Stock);
