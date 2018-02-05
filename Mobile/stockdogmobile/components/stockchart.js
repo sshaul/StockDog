@@ -13,43 +13,48 @@ export default class StockChart extends Component {
     super(props);
     this.state = { 
       userId : "",
-      data: [],
       isLoading: true,
       xData: [],
       yData: []
     };
+    this.getData('day');
   };
 
-  componentDidMount() {
-    this.getData();
+  componentWillReceiveProps(nextProps) {
+    this.getData(nextProps.range);
   }
   
-  getData() {
+  getData(range) {
     console.log('range changed!');
       var newData = [];
       var newXData = [];
       var newYData = [];
+      var baseurl = 'http://localhost:5005/api/stock';
       var url = '';
-      if (this.props.range == 'day')
-        url = 'http://198.199.100.209:5005/api/stock/AMD/history/day';
-      else if (this.props.range == 'week')
-        url = 'http://198.199.100.209:5005/api/stock/AMD/history/week';
-      else if (this.props.range == 'month')
-        url = 'http://198.199.100.209:5005/api/stock/AMD/history/month';
+      if (range == 'day')
+        url = baseurl + '/AMD/history/day';
+      else if (range == 'week'){
+        url = baseurl + '/AMD/history/week';
+      }
+      else if (range == 'month')
+        url = baseurl + '/AMD/history/month';
       else
-        url = 'http://198.199.100.209:5005/api/stock/AMD/history/year';
+        url = baseurl + '/AMD/history/year';
       fetch(url, {
         method: 'GET'
       }).then((response) => response.json())
       .then((responseJson) => {
+        console.log(responseJson);
         responseJson.forEach(element => {
           var str = element.time;
           var date = "";
-          if (this.props.range == 'day') {
+          if (range == 'day') {
+            console.log('day');
             str = element.time.split(" ")[1];
             date = str.split(":")[0] + ":" + str.split(":")[1];
+            console.log(date);
           }
-          if (this.props.range == 'week') {
+          else if (range == 'week') {
             var d = new Date(str.split(" ")[0]);
             var mo = d.toLocaleString("en-us", {month: "short"});
             var day = d.toLocaleString("en-us", {day: "numeric"});

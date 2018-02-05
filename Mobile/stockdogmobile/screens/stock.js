@@ -20,32 +20,32 @@ export default class Stock extends Component {
       userId : "",
       data: [],
       isLoading: true,
-      selectedIndex: 0
+      selectedIndex: 0,
+      range: 'day'
     };
   };
 
-  updateIndex(selectedIndex) {
-    this.setState({selectedIndex});
+  componentDidMount() {
+    // this.updateChart();
   }
 
-  updateChart() {
-    console.log('updating chart!');
+  updateIndex(selectedIndex) {
     var index = '';
-    if (this.state.selectedIndex == 0) {
+    if (selectedIndex == 0) {
       console.log('stlil day..');
       index = 'day';
     }
-    else if (this.state.selectedIndex == 1) {
+    else if (selectedIndex == 1) {
       console.log('week1');
       index = 'week';
     }
-    else if (this.state.selectedIndex == 2) {
+    else if (selectedIndex == 2) {
       index = 'month';
     }
     else {
       index = 'year';
     }
-    return <StockChart range={index}/>
+    this.setState({selectedIndex, range: index});
   }
 
   render() {
@@ -58,7 +58,8 @@ export default class Stock extends Component {
         <View style={containers.chart}>
             <Text style={text.money}>AMD</Text>
             <Text style={text.money}>$20.05</Text>
-            { this.updateChart() }
+            <StockChart range={this.state.range} />
+            {/* { this.updateChart() } */}
         </View>
         <View style={containers.underChart}>
           <ButtonGroup
