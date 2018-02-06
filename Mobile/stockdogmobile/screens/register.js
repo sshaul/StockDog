@@ -53,22 +53,22 @@ export default class Register extends Component {
             onchange={(password) => this.setState({password})}
             value={this.state.password}
           />
-          <TouchableOpacity>
-            <PopoverTooltip
-              ref='tooltip1'
-              buttonComponent={
+          <PopoverTooltip
+            ref='tooltip1'
+            buttonComponent={
+              <View style={elements.popoverButton}>
                 <Icon name='info' size={30} color='white' />
+              </View>
+            }
+            items={[
+              {
+                label: 'Password must be at least 8 characters long and contain at least 1 special character.',
+                onPress: () => {}
               }
-              items={[
-                {
-                  label: 'Password must be at least 8 characters long and contain at least 1 special character.',
-                  onPress: () => {}
-                }
-              ]}
-              // animationType='timing'
-              // using the default timing animation
-              />
-          </TouchableOpacity>
+            ]}
+            // animationType='timing'
+            // using the default timing animation
+            />
         </View>
         <WideButton type='register' onpress ={this.register.bind(this)}/>
         <TouchableOpacity
