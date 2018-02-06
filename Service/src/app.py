@@ -45,7 +45,7 @@ login_manager.init_app(app)
 
 #connecting to db
 #is host and port and db required
-conn = pymysql.connect(user= "root", password = "", database="Stockdog")
+conn = pymysql.connect(user= "root", password = "#oth18", database="Stockdog")
 #used to execute queries
 c = conn.cursor()
 #c.execute("show tables")
@@ -54,25 +54,25 @@ c = conn.cursor()
 #used for debugging - making sure that the tables are accessible
 #for (table_name,) in c:
 #   log.info(table_name)
+
+
 #@app.route('/user/login', methods = ['POST'])
 
 
+@app.route('/register', methods=["POST"])
+def createAccount():
+   firstName = str(request.form["first name"])
+   lastName = str(request.form["last name"])
+   email = str(request.form["email"])
+   password = str(request.form["password"])
 
 
-#class User(UserMixin):
-#    def __init__(self, id):
-#        self.id = id
-#        self.name = "user" + str(id)
-#        self.password = self.name + "_secret"
-
-#    def __repr__(self):
-#        return "%d/%s/%s" % (self.id, self.name, self.password)
+   c.execute("INSERT INTO User VALUES (%d, %s, %s, %s, %s, 1, firstName, lastName, email, password)");
+   conn.commit();
+   #return redirect to new page once user created an account (need redirecting page url)
 
 
 
-#@login_manager.user_loader
-#def load_user(user_id):
-#    return User.get(user_id)
 
 if __name__ == '__main__':
    app.run(debug=True, port=getPortNum(), host='0.0.0.0')
