@@ -4,10 +4,11 @@ python:
 # command to install dependencies - this file needs to be updated everytime there are new things to be added to install
 install:
   - pip install -r requirements.txt
+  - cd Web/stockdogweb && npm install && cd ../..
 #running dummy tests
 script:
   - pytest tests/suite_3_6.py
-  - cd Web/stockdogweb && npm test && cd../..
+  - cd Web/stockdogweb && npm test && cd ../..
 
 notifications:
    slack: stockdog-app:Q4crKXH7YschvHLyBoOVytQS
