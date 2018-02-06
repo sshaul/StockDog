@@ -7,6 +7,7 @@ install:
 #running dummy tests
 script:
   - pytest tests/suite_3_6.py
+  - cd Web/stockdogweb && npm test && cd../..
 
 notifications:
    slack: stockdog-app:Q4crKXH7YschvHLyBoOVytQS
