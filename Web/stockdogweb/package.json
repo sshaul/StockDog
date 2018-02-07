@@ -10,13 +10,12 @@
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
-    "react-tooltip": "^3.4.0",
-    "sort-json-array": "^0.1.7"
+    "react-tooltip": "^3.4.0"
   },
   "scripts": {
-    "start": "PORT=5000 react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "start": "NODE_PATH=src PORT=5000 react-scripts start",
+    "build": "NODE_PATH=src react-scripts build",
+    "test": "NODE_PATH=src react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
 }

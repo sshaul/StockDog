@@ -9,6 +9,11 @@ $red-color: #ed4d0a;
 
 /* General
 -----------------------------------------------------------------------------*/
+* {
+   margin: 0;
+   padding: 0;
+}
+
 body {
    background-color: $bg-color;
    font-family: 'Open Sans', sans-serif;
@@ -105,11 +110,19 @@ body {
 
 /* Stock
 -----------------------------------------------------------------------------*/
+.stock-titles {
+   margin-top: 10px;
+   text-align: center;
+}
+
 .Stock h1 {
    font-family: 'Open Sans', sans-serif;
    color: $white-color;
-   width: 90px;
-   margin: 0 auto;
+}
+
+.Stock h2 {
+   font-family: 'Open Sans', sans-serif;
+   color: $green-color;
 }
 
 .stock-chart {
@@ -171,36 +184,21 @@ body {
 #stock-sell-btn {
    background-color: $red-color;
 }
+
+.stock-search {
+   position: absolute;
+   right: 0;
+   top: 0;
+}
+
+#stock-search-input {
+   margin: 20px;
+   padding: 5px 10px;
+   font-size: 20px;
+   width: 150px;
+}
+
 /*===========================================================================*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

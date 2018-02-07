@@ -3,6 +3,10 @@
 /*===========================================================================*/
 /* General
 -----------------------------------------------------------------------------*/
+* {
+  margin: 0;
+  padding: 0; }
+
 body {
   background-color: #354854;
   font-family: 'Open Sans', sans-serif; }
@@ -86,11 +90,17 @@ body {
 /*===========================================================================*/
 /* Stock
 -----------------------------------------------------------------------------*/
+.stock-titles {
+  margin-top: 10px;
+  text-align: center; }
+
 .Stock h1 {
   font-family: 'Open Sans', sans-serif;
-  color: #F7F8F9;
-  width: 90px;
-  margin: 0 auto; }
+  color: #F7F8F9; }
+
+.Stock h2 {
+  font-family: 'Open Sans', sans-serif;
+  color: #63CEC2; }
 
 .stock-chart {
   height: 400px; }
@@ -140,6 +150,17 @@ body {
 
 #stock-sell-btn {
   background-color: #ed4d0a; }
+
+.stock-search {
+  position: absolute;
+  right: 0;
+  top: 0; }
+
+#stock-search-input {
+  margin: 20px;
+  padding: 5px 10px;
+  font-size: 20px;
+  width: 150px; }
 
 /*===========================================================================*/
 

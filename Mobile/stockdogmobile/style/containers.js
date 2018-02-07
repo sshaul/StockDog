@@ -25,7 +25,8 @@ export default containers = StyleSheet.create({
     chart: {
       flex: 0.7,
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'flex-start',
+      // backgroundColor: 'red'
     },
     chartOut: {
       flex: 0.5,
@@ -41,8 +42,16 @@ export default containers = StyleSheet.create({
       paddingRight: 10,
       paddingTop: 5
     },
+    underChart: {
+      flex: 0.2,
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      // backgroundColor: 'red',
+      marginTop: -50
+      // alignItems: 'center'
+    },
     buttons: {
-      flex: 0.1,
+      flex: 0.5,
       flexDirection: 'row',
       justifyContent: 'space-around'
     }
