@@ -54,9 +54,10 @@ class Stock extends Component {
 				},
 				callbacks: {
 					label: function(tooltipItem) {
-						return tooltipItem.yLabel;
+						return '$' + tooltipItem.yLabel;
 					}
-				}
+            },
+            mode: 'x-axis'
 			},
          scales: {
             yAxes: [{
