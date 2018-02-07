@@ -7,6 +7,7 @@ from datetime import date, timedelta, datetime
 import json
 import requests
 import re
+import time
 
 log = logger.Logger(True, True, False)
 
@@ -59,13 +60,18 @@ def get_history(ticker, length):
       queryParams['interval'] = interval
 
    alphaVantageApi = 'https://www.alphavantage.co/query?'
+   startTime = time.time()
    response = (requests.get(alphaVantageApi + urlencode(queryParams))).json()
-   
+   alphaTime = time.time() - startTime
+
    if response.get('Error Message'):
       abort(404)
 
    data = formatData(response, interval, length)
+   parseTime = time.time() - startTime
 
+   log.info('Alphavantage time is: ' + str(alphaTime))
+   log.info('Parsing data time is: ' + str(parseTime))
    return json.dumps(data)
     
 
