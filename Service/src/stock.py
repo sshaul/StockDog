@@ -8,8 +8,9 @@ import json
 import requests
 import re
 
-log = logger.Logger(True, True, True)
+log = logger.Logger(True, True, False)
 
+TODAY = 0
 DAY_AGO = 1
 WEEK_AGO = 7
 MONTH_AGO = 31
@@ -29,6 +30,7 @@ def malformed_request(error):
       return 'Request was formed incorrectly. ' + \
          'Valid lengths are day, week, month, year.', 400
    elif isinstance(error, NotFound):
+      log.error(error)
       return 'Request was formed incorrectly. ' + \
          'The stock ticker is either invalid or unsupported.', 404
    else:
@@ -101,7 +103,9 @@ def getApiKey():
 def getStartTime(timeDelta):
    today = datetime.now()
    pastDate = today - timedelta(days=timeDelta)
-   startTime = pastDate.replace(hour=9)
+   log.debug(str(pastDate))
+   startTime = pastDate.replace(hour=8)
+   log.debug(str(startTime))
    return startTime
 
 
@@ -138,7 +142,7 @@ def formatData(jsonData, interval, length):
 def getLastWeekdayDelta():
    today = date.today()
    if date.today().weekday() <= 4:
-      return DAY_AGO
+      return TODAY
    else:
       daysAgo = 1
       dayBefore = today - timedelta(days=daysAgo)
