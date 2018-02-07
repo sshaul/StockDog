@@ -44,8 +44,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 #connecting to db
-#is host and port and db required
-conn = pymysql.connect(user= "root", password = "#oth18", database="Stockdog")
+conn = pymysql.connect(user= "root", password = "", database="Stockdog")
 #used to execute queries
 c = conn.cursor()
 #c.execute("show tables")
@@ -57,20 +56,22 @@ c = conn.cursor()
 
 
 #@app.route('/user/login', methods = ['POST'])
+#def login():
+
 
 
 @app.route('/register', methods=["POST"])
 def createAccount():
-   firstName = str(request.form["first name"])
-   lastName = str(request.form["last name"])
-   email = str(request.form["email"])
-   password = str(request.form["password"])
+   data = request.get_json()
+   firstName = data['firstName']
+   lastName = data['lastName']
+   email = data['email']
+   password = data['password']
 
 
-   c.execute("INSERT INTO User VALUES (%d, %s, %s, %s, %s, 1, firstName, lastName, email, password)");
+   c.execute("INSERT INTO User(firstName, lastName, email, password) VALUES (%s, %s, %s, %s)",(firstName, lastName, email, password));
    conn.commit();
-   #return redirect to new page once user created an account (need redirecting page url)
-
+   return ""
 
 
 
