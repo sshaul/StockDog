@@ -16,7 +16,7 @@ import StockChart from '../components/stockchart';
 export default class Stock extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       userId : "",
       data: [],
       isLoading: true,
@@ -53,13 +53,13 @@ export default class Stock extends Component {
       <View style={containers.profileGeneral}>
         <View style={containers.iconHeaders}>
           <Icon name='user' size={30} color='white' />
+          <Icon name='chevron-down' size={48} color='grey' />
           <Icon name='settings' size={30} color='white' />
         </View>
         <View style={containers.chart}>
-            <Text style={text.money}>AMD</Text>
+            <Text style={text.money}>{this.props.navigation.state.params.ticker}</Text>
             <Text style={text.money}>$20.05</Text>
-            <StockChart range={this.state.range} />
-            {/* { this.updateChart() } */}
+            <StockChart range={this.state.range} ticker={this.props.navigation.state.params.ticker}/>
         </View>
         <View style={containers.underChart}>
           <ButtonGroup

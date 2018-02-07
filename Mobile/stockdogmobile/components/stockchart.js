@@ -17,42 +17,46 @@ export default class StockChart extends Component {
       xData: [],
       yData: []
     };
-    this.getData('day');
   };
+
+  componentWillMount() {
+    this.getData('day');
+  }
 
   componentWillReceiveProps(nextProps) {
     this.getData(nextProps.range);
   }
   
   getData(range) {
-    console.log('range changed!');
+    // console.log('range changed!');
       var newData = [];
       var newXData = [];
       var newYData = [];
-      var baseurl = 'http://localhost:5005/api/stock';
+      var baseurl = 'http://localhost:5005/api/stock/' + this.props.ticker + '/history/';
+      console.log(baseurl);
       var url = '';
       if (range == 'day')
-        url = baseurl + '/AMD/history/day';
+        url = baseurl + 'day';
       else if (range == 'week'){
-        url = baseurl + '/AMD/history/week';
+        url = baseurl + 'week';
       }
       else if (range == 'month')
-        url = baseurl + '/AMD/history/month';
+        url = baseurl + 'month';
       else
-        url = baseurl + '/AMD/history/year';
+        url = baseurl + 'year';
       fetch(url, {
         method: 'GET'
       }).then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson);
+        // console.log(responseJson);
         responseJson.forEach(element => {
           var str = element.time;
           var date = "";
           if (range == 'day') {
-            console.log('day');
+            // console.log('day');
             str = element.time.split(" ")[1];
             date = str.split(":")[0] + ":" + str.split(":")[1];
-            console.log(date);
+            // console.log(date);
           }
           else if (range == 'week') {
             var d = new Date(str.split(" ")[0]);
@@ -75,6 +79,8 @@ export default class StockChart extends Component {
   };
 
   createChart() {
+    // intervals = 15;
+    var intervals = parseInt(this.state.xData.length / 5);
     var Highcharts='Highcharts';
     var conf={
             chart: {
@@ -92,7 +98,7 @@ export default class StockChart extends Component {
                 type: 'category',
                 categories: this.state.xData,
                 gridLineColor: colors.dark,
-                tickInterval: 15,
+                tickInterval: intervals,
                 labels: {
                     enabled: true,
                     formatter: function() {
@@ -169,7 +175,7 @@ export default class StockChart extends Component {
   }
 
   render() {
-    console.log('rendering chart');
+    // console.log('rendering chart');
     return (
       <View>
         {this.createChart()}

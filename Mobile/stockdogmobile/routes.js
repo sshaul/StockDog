@@ -8,7 +8,8 @@ import Register from './screens/register';
 import Main from './screens/main';
 import Profile from './screens/profile';
 import Stock from './screens/stock';
-// import Day from './components/day';
+import SearchMain from './screens/searchmain';
+import Search from './screens/search';
 
 export const Root = StackNavigator({
     // Login : {
@@ -26,7 +27,8 @@ export const Root = StackNavigator({
     Main: {
         screen: Main,
         navigationOptions: {
-            header: null
+            header: null,
+            gesturesEnabled: false
         }
     }
 });
@@ -43,13 +45,24 @@ export const TabRoot = TabNavigator({
   //     }
   //   }
   // },
-  Stock: {
-    screen: Stock,
+  // Stock: {
+  //   screen: Stock,
+  //   navigationOptions: {
+  //     tabBarLabel: 'Stock',
+  //     tabBarIcon: ({ tintColor }) => {
+  //       return (
+  //         <Icon name='user' size={30} color='white' />
+  //       );
+  //     }
+  //   }
+  // },
+  SearchMain: {
+    screen: SearchMain,
     navigationOptions: {
       tabBarLabel: 'Stock',
       tabBarIcon: ({ tintColor }) => {
         return (
-          <Icon name='user' size={30} color='white' />
+          <Icon name='search' size={30} color='white' />
         );
       }
     }
@@ -64,20 +77,20 @@ export const TabRoot = TabNavigator({
   },
 });
 
-
-// export const DateRoot = TabNavigator({
-//   Day: {
-//     screen: Day,
-//     navigationOptions: {
-//       tabBarLabel: 'D',
-//     }
-//   }
-// }, {
-//   tabBarPosition: 'bottom',
-//   tabBarOptions: {
-//     activeTintColor: '#f7f8f9',
-//     inactiveTintColor: '#f7f8f9',
-//     inactiveBackgroundColor: '#657a86',
-//     activeBackgroundColor: '#434b59'
-//   },
-// });
+export const SearchStockRoot = StackNavigator ({
+  Search: {
+    screen: Search,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Stock: {
+    screen: Stock,
+    navigationOptions: {
+      header: null
+    }
+  }
+},
+{
+  mode: 'modal'
+});

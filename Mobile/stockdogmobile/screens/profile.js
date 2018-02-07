@@ -20,7 +20,6 @@ export default class Profile extends Component {
 
   componentDidMount() {
       var newData = [];
-    //   var url = 'http://localhost:5000/api/stock/AMD/history/day';
       var url = 'http://198.199.100.209:5005/api/stock/AMD/history/day';
       fetch(url, {
         method: 'GET'
