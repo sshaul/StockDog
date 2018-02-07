@@ -61,8 +61,11 @@ def get_history(ticker, length):
 
    alphaVantageApi = 'https://www.alphavantage.co/query?'
    startTime = time.time()
-   response = (requests.get(alphaVantageApi + urlencode(queryParams))).json()
+   raw_response = requests.get(alphaVantageApi + urlencode(queryParams))
+   response = raw_response.json()
    alphaTime = time.time() - startTime
+
+   log.info('API hitting: ' + alphaVantageApi + urlencode(queryParams))
 
    if response.get('Error Message'):
       abort(404)
