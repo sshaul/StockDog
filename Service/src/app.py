@@ -47,14 +47,12 @@ login_manager.init_app(app)
 conn = pymysql.connect(user= "root", password = "", database="Stockdog")
 #used to execute queries
 c = conn.cursor()
-#c.execute("show tables")
-
 
 #used for debugging - making sure that the tables are accessible
 #for (table_name,) in c:
 #   log.info(table_name)
 
-
+#login
 #@app.route('/user/login', methods = ['POST'])
 #def login():
 
@@ -78,3 +76,4 @@ def createAccount():
 if __name__ == '__main__':
    app.run(debug=True, port=getPortNum(), host='0.0.0.0')
 
+#logout
