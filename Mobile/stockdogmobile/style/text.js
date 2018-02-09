@@ -24,6 +24,7 @@ export default text = StyleSheet.create({
       color: colors.bright,
       fontFamily: 'open-sans',
       fontSize: 42,
+      textAlign: 'center'
     },
     // ----------------- Stock page ------------- // 
     stock: {

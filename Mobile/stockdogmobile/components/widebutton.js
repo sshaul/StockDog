@@ -17,6 +17,10 @@ export default class WideButton extends Component {
       buttonText = 'LOGIN';
     else if (this.props.type == 'register')
       buttonText = 'REGISTER';
+    else if (this.props.type == 'buy')
+      buttonText = 'BUY';
+    else if (this.props.type == 'sell')
+      buttonText = 'SELL';
     return (
       <TouchableOpacity
           style={elements.loginButton}

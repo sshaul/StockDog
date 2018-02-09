@@ -10,6 +10,8 @@ import Profile from './screens/profile';
 import Stock from './screens/stock';
 import SearchMain from './screens/searchmain';
 import Search from './screens/search';
+import Group from './screens/group';
+import Feed from './screens/feed';
 
 export const Root = StackNavigator({
     // Login : {
@@ -45,13 +47,24 @@ export const TabRoot = TabNavigator({
   //     }
   //   }
   // },
-  // Stock: {
-  //   screen: Stock,
+  // Group: {
+  //   screen: Group,
   //   navigationOptions: {
-  //     tabBarLabel: 'Stock',
+  //     tabBarLabel: 'Group',
   //     tabBarIcon: ({ tintColor }) => {
   //       return (
-  //         <Icon name='user' size={30} color='white' />
+  //         <Icon name='users' size={30} color='white' style={{color: tintColor}}/>
+  //       );
+  //     }
+  //   }
+  // },
+  // Feed: {
+  //   screen: Feed,
+  //   navigationOptions: {
+  //     tabBarLabel: 'Feed',
+  //     tabBarIcon: ({ tintColor }) => {
+  //       return (
+  //         <Icon name='activity' size={30} color='white' style={{color: tintColor}}/>
   //       );
   //     }
   //   }
@@ -78,12 +91,12 @@ export const TabRoot = TabNavigator({
 });
 
 export const SearchStockRoot = StackNavigator ({
-  Search: {
-    screen: Search,
-    navigationOptions: {
-      header: null
-    }
-  },
+  // Search: {
+  //   screen: Search,
+  //   navigationOptions: {
+  //     header: null
+  //   }
+  // },
   Stock: {
     screen: Stock,
     navigationOptions: {
