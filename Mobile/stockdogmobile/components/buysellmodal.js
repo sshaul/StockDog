@@ -18,7 +18,8 @@ export default class BuySellModal extends Component {
     return (
       <Modal
         isVisible={this.props.visibility}
-        animationType={'fade'}
+        animationIn="fadeIn"
+        animationOut="fadeOut"
         onBackdropPress={this.props._close}>
         <View style={containers.outerModal}>
           <View style={containers.modalHeaders}>
