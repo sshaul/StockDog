@@ -17,42 +17,48 @@ export default class StockChart extends Component {
       xData: [],
       yData: []
     };
-    this.getData('day');
   };
+
+  componentWillMount() {
+    this.getData('day');
+  }
 
   componentWillReceiveProps(nextProps) {
     this.getData(nextProps.range);
   }
   
   getData(range) {
-    console.log('range changed!');
       var newData = [];
       var newXData = [];
       var newYData = [];
-      var baseurl = 'http://localhost:5005/api/stock';
+      // var baseurl = 'http://localhost:5005/api/stock/' + this.props.ticker + '/history/';
+      // var baseurl = 'http://198.199.100.209:5005/api/stock/' + this.props.ticker + '/history/';
+      var baseurl = 'http://198.199.100.209:5005/api/stock/AMD/history/';
       var url = '';
-      if (range == 'day')
-        url = baseurl + '/AMD/history/day';
-      else if (range == 'week'){
-        url = baseurl + '/AMD/history/week';
+      if (this.props.username) {
+        console.log('username: ' + this.props.username);
       }
-      else if (range == 'month')
-        url = baseurl + '/AMD/history/month';
-      else
-        url = baseurl + '/AMD/history/year';
+      else {
+        if (range == 'day')
+          url = baseurl + 'day';
+        else if (range == 'week'){
+          url = baseurl + 'week';
+        }
+        else if (range == 'month')
+          url = baseurl + 'month';
+        else
+          url = baseurl + 'year';
+      }
       fetch(url, {
         method: 'GET'
       }).then((response) => response.json())
       .then((responseJson) => {
-        console.log(responseJson);
         responseJson.forEach(element => {
           var str = element.time;
           var date = "";
           if (range == 'day') {
-            console.log('day');
             str = element.time.split(" ")[1];
             date = str.split(":")[0] + ":" + str.split(":")[1];
-            console.log(date);
           }
           else if (range == 'week') {
             var d = new Date(str.split(" ")[0]);
@@ -75,6 +81,7 @@ export default class StockChart extends Component {
   };
 
   createChart() {
+    var intervals = parseInt(this.state.xData.length / 5);
     var Highcharts='Highcharts';
     var conf={
             chart: {
@@ -92,12 +99,13 @@ export default class StockChart extends Component {
                 type: 'category',
                 categories: this.state.xData,
                 gridLineColor: colors.dark,
-                tickInterval: 15,
+                tickInterval: intervals,
                 labels: {
                     enabled: true,
                     formatter: function() {
-                      // console.log(this.value);
-                      // return this.value.split(":")[0];
+                      if (this.value.split(" ").length > 2) {
+                        return this.value.split(" ")[0] + " " + this.value.split(" ")[1];
+                      }
                       return this.value
                     },
                     rotation: 0,
@@ -169,9 +177,10 @@ export default class StockChart extends Component {
   }
 
   render() {
-    console.log('rendering chart');
+    const lastelt = this.state.yData[this.state.yData.length - 1];
     return (
       <View>
+        <Text style={text.money}>${lastelt}</Text>
         {this.createChart()}
       </View>
     );

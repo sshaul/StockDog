@@ -54,5 +54,23 @@ export default containers = StyleSheet.create({
       flex: 0.5,
       flexDirection: 'row',
       justifyContent: 'space-around'
+    },
+    modalHeaders: {
+      flex: 0.3,
+      width: '70%',
+      alignItems: 'flex-end',
+      justifyContent: 'center'
+    },
+    innerModal: {
+      flex: 0.9,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    outerModal: {
+      flex: 0.6,
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      backgroundColor: colors.grey
     }
 });
