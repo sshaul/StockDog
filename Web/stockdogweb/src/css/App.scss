@@ -12,6 +12,7 @@ $red-color: #ed4d0a;
 * {
    margin: 0;
    padding: 0;
+   font-family: 'Open Sans', sans-serif;
 }
 
 body {
@@ -37,10 +38,10 @@ body {
 }
 
 .login-area input {
+   border: none;
    font-family: 'Open Sans', sans-serif;
-   width: 200px;
    display: block;
-   padding: 5px;
+   padding: 10px;
    margin-bottom: 10px;
    height: 50px;
    width: 260px;
@@ -56,11 +57,45 @@ body {
    color: $green-color;
 }
 
-#submit-btn {
+#login-reg-submit-btn {
    background-color: $green-color;
    color: $white-color;
    border: none;
+   width: 260px;
+   height: 50px;
+   padding: 10px;
+   font-size: 20px;
+   margin-bottom: 10px;
 }
+
+.submit-btn {
+   cursor: pointer;
+   transition: all 0.5s;
+}
+
+.submit-btn span {
+   position: relative;
+   transition: 0.5s;
+}
+
+.submit-btn span:after {
+   content: '\00bb';
+   position: absolute;
+   opacity: 0;
+   top: -2px;
+   right: -20px;
+   transition: 0.5s;
+}
+
+.submit-btn:hover span {
+   padding-right: 15px;
+}
+
+.submit-btn:hover span:after {
+   opacity: 1;
+   right: 0;
+}
+
 /*===========================================================================*/
 
 /* Register
@@ -159,18 +194,19 @@ body {
 }
 
 .stock-buy-sell-btns {
-   width: 545px;
+   width: 562px;
    margin: 0 auto;
 }
 
 .stock-btn {
    color: $white-color;
    border: none;
-   font-size: 25px;
-   margin: 10px;
-   width: 250px;
+   width: 260px;
+   height: 50px;
    padding: 10px;
+   font-size: 20px;
    cursor: pointer;
+   margin: 10px;
 }
 
 .stock-btn:active {
@@ -198,7 +234,37 @@ body {
    width: 150px;
 }
 
+.trans-modal {
+   background-color: $white-color;
+}
+
+.trans-modal-content {
+   margin: 50px;
+}
+
+.trans-modal-content input {
+   display: block;
+   font-size: 20px;
+   padding: 5px;
+   width: 210px;
+   margin-bottom: 10px;
+}
+
+.trans-modal-content button {
+   color: $white-color;
+   border: none;
+   width: 210px;
+   height: 50px;
+   padding: 10px;
+   font-size: 20px;
+}
+
+.buy-btn {
+   background-color: $green-color;
+}
+
+.sell-btn {
+   background-color: $red-color;
+}
 /*===========================================================================*/
-
-
 
