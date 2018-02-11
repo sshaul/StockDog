@@ -1,166 +1,71 @@
 import React, { Component } from 'react';
-import { Line } from 'react-chartjs-2';
-import API from '../api';
-import { withRouter } from 'react-router-dom';
+import Modal from 'react-responsive-modal';
 
-import TimeFrame from '../components/TimeFrames'
+import Graph from '../components/Graph';
 
 class Stock extends Component {
    constructor(props) {
       super(props);
 
-      this.api = new API();
-
       this.state = {
-         data: {
-            labels: [],
-            datasets: [
-               {
-                  fill: false,
-                  lineTension: 0,
-                  borderColor: 'rgb(99, 206, 194)',
-                  borderCapStyle: 'butt',
-                  borderJoinStyle: 'miter',
-                  borderWidth: 4,
-                  pointBorderColor: 'rgba(75,192,192,1)',
-                  pointBackgroundColor: '#fff',
-                  pointHoverRadius: 20,
-                  pointHoverBackgroundColor: 'rgb(99, 206, 194)',
-                  pointHoverBorderColor: 'rgb(247, 248, 249)',
-                  pointHoverBorderWidth: 4,
-                  pointRadius: 0,
-                  pointHitRadius: 30,
-                  data: []
-               }
-            ]
-         },
          ticker: this.props.match.params.ticker.toUpperCase(),
-         currentPrice: 0
+         currentPrice: 0,
+         buyOpen: false,
+         sellOpen: false
       };
-
-
-      // Options for the chart
-      this.options = { 
-         maintainAspectRatio: false,
-         legend: {
-            display: false
-         },
-			showAllTooltips: true,
-			tooltips: {
-				custom: function(tooltip) {
-					if (!tooltip) return;
-					// disable displaying the color box;
-               tooltip.displayColors = false;
-				},
-				callbacks: {
-					label: function(tooltipItem) {
-						return '$' + tooltipItem.yLabel;
-					}
-            },
-            mode: 'x-axis'
-			},
-         scales: {
-            yAxes: [{
-               ticks: {
-                  fontColor: "rgb(247, 248, 249)",
-                  fontSize: 12,
-                  callback: function(label, index, labels) {
-                     return Math.round(label * 100) / 100;
-                  }
-               },
-               gridLines: {
-                  display: false
-               }
-            }],
-            xAxes: [{
-               ticks: {
-                  fontColor: "rgb(247, 248, 249)",
-                  fontSize: 12,
-                  stepSize: 1,
-                  maxTicksLimit: 5
-               },
-               gridLines: {
-                  display: false
-               }
-            }]
-         }
-      }
-
-      this.getData('day');
    }
 
-
-   // Get the data for the timeFrame given
-   getData = (timeFrame) => {
-      console.log("Getting data for " + timeFrame);
-
-      const ticker = this.state.ticker;
-
-      this.api.stockHistory(ticker, timeFrame, (history) => {
-         // Sort the array depend on epoch
-         var prices = [];
-         var labels = [];
-         // Getting an array of prices and times
-         history.forEach(function(data) {
-            prices.push(data['price']);
-            labels.push(data['time'].substring(11, 16));
-         });
-         // Update the state with new information
-         var newData = this.state;
-         newData['data']['datasets'][0]['data'] = prices;
-         newData['data']['labels'] = labels;
-         // Setting the current price and round to the 2nd decimal 
-         newData['currentPrice'] = Math.round(prices[prices.length-1]*100)/100;
-         // Make the points smaller
-         newData['data']['datasets'][0]['pointHoverRadius'] = 5;
-         newData['data']['datasets'][0]['pointHitRadius'] = 10;
-         this.setState(newData);
-      });            
+   onOpenBuyModal = () => {
+      this.setState({buyOpen: true});
    }
 
-   handleStockSearch = (event) => {
-      this.setState({searchStock: event.target.value});
+   onOpenSellModal = () => {
+      this.setState({sellOpen: true});
    }
 
-   // Redirect to a different stock page
-   changeStock = (stock) => {
-      this.props.history.push('/stock/' + this.state.searchStock); 
+   onCloseBuyModal = () => {
+      this.setState({buyOpen: false});
+   }
+
+   onCloseSellModal = () => {
+      this.setState({sellOpen: false});
    }
 
    render() {
       return (
          <div className="Stock">
-            <div className="stock-titles">
-               <h1>{this.state.ticker}</h1>
-               <h2>${this.state.currentPrice}</h2>
-            </div>
-            <div className="stock-search">
-               <form onSubmit={this.changeStock}>
-                  <input id="stock-search-input" value={this.state.value}
-                     placeholder="search stock" 
-                     onChange={this.handleStockSearch}/>
-               </form>
-            </div>
-            <div className="stock-chart">
-               <Line data={this.state.data} options={this.options}/>
-            </div>
-            <div className="stock-shares-owned">
-               23 shares owned
-            </div>
-            <div className="stock-chart-time-select">
-               <TimeFrame timeFrame='day' text='1D' getData={this.getData} />
-               <TimeFrame timeFrame='week' text='1W' getData={this.getData}/>
-               <TimeFrame timeFrame='month' text='1M' getData={this.getData}/>
-               <TimeFrame timeFrame='year' text='1Y' getData={this.getData}/>
-               <button>ALL</button>
-            </div>
+            <Graph title={this.state.ticker} ticker={this.state.ticker} />
             <div className="stock-buy-sell-btns">
-               <button id="stock-buy-btn" className="stock-btn">BUY</button>
-               <button id="stock-sell-btn" className="stock-btn">SELL</button>
+               <button id="stock-buy-btn" className="stock-btn submit-btn"
+                  onClick={this.onOpenBuyModal}><span>BUY</span></button>
+               <button id="stock-sell-btn" className="stock-btn submit-btn"
+                  onClick={this.onOpenSellModal}><span>SELL</span></button>
+               <Modal open={this.state.buyOpen} 
+                  onClose={this.onCloseBuyModal}
+                  className="trans-modal">
+                  <div className="trans-modal-content">
+                     <form>
+                        <input type="number" min="1" placeholder="amount" />
+                        <button className="buy-btn submit-btn">
+                           <span>SUBMIT</span></button>
+                     </form>
+                  </div>
+               </Modal>
+               <Modal open={this.state.sellOpen} 
+                  onClose={this.onCloseSellModal}
+                  className="trans-modal">
+                  <div className="trans-modal-content">
+                     <form>
+                        <input type="number" min="1" placeholder="amount" />
+                        <button className="sell-btn submit-btn">
+                           <span>SUBMIT</span></button>
+                     </form>
+                  </div>
+               </Modal>
             </div>
          </div>
       );
    }
 }
 
-export default withRouter(Stock);
+export default Stock;

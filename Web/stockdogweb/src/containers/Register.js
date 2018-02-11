@@ -24,7 +24,8 @@ class Register extends Component {
                         <ReactTooltip />
                      </div>
                   </div>
-                  <input id="submit-btn" type="submit" value="SUBMIT" />
+                  <button id="login-reg-submit-btn"
+                     className="submit-btn"><span>SUBMIT</span></button>
                </form>
             </div>
          </div>
