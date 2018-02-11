@@ -63,10 +63,10 @@ export default class Stock extends Component {
           <Icon name='settings' size={30} color='white' />
         </View>
         <View style={containers.chart}>
-            {/* <Text style={text.money}>{this.props.navigation.state.params.ticker}</Text> */}
-            <Text style={text.money}>AMD</Text>
-            <StockChart range={this.state.range} ticker='AMD'/>
-            {/* <StockChart range={this.state.range} ticker={this.props.navigation.state.params.ticker}/> */}
+            <Text style={text.money}>{this.props.navigation.state.params.ticker}</Text>
+            {/* <Text style={text.stockMoney}>AMD</Text>
+            <StockChart range={this.state.range} ticker='AMD'/> */}
+            <StockChart range={this.state.range} ticker={this.props.navigation.state.params.ticker}/>
         </View>
         <View style={containers.underChart}>
           <ButtonGroup

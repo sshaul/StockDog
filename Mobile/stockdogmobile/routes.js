@@ -6,6 +6,7 @@ import elements from './style/elements';
 import Login from './screens/login';
 import Register from './screens/register';
 import Main from './screens/main';
+import ProfileMain from './screens/profilemain';
 import Profile from './screens/profile';
 import Stock from './screens/stock';
 import SearchMain from './screens/searchmain';
@@ -36,39 +37,39 @@ export const Root = StackNavigator({
 });
 
 export const TabRoot = TabNavigator({
-  // Profile: {
-  //   screen: Profile,
-  //   navigationOptions: {
-  //     tabBarLabel: 'Profile',
-  //     tabBarIcon: ({ tintColor }) => {
-  //       return (
-  //         <Icon name='user' size={30} color='white' style={{color: tintColor}}/>
-  //       );
-  //     }
-  //   }
-  // },
-  // Group: {
-  //   screen: Group,
-  //   navigationOptions: {
-  //     tabBarLabel: 'Group',
-  //     tabBarIcon: ({ tintColor }) => {
-  //       return (
-  //         <Icon name='users' size={30} color='white' style={{color: tintColor}}/>
-  //       );
-  //     }
-  //   }
-  // },
-  // Feed: {
-  //   screen: Feed,
-  //   navigationOptions: {
-  //     tabBarLabel: 'Feed',
-  //     tabBarIcon: ({ tintColor }) => {
-  //       return (
-  //         <Icon name='activity' size={30} color='white' style={{color: tintColor}}/>
-  //       );
-  //     }
-  //   }
-  // },
+  Profile: {
+    screen: ProfileMain,
+    navigationOptions: {
+      tabBarLabel: 'Profile',
+      tabBarIcon: ({ tintColor }) => {
+        return (
+          <Icon name='user' size={30} color='white' style={{color: tintColor}}/>
+        );
+      }
+    }
+  },
+  Group: {
+    screen: Group,
+    navigationOptions: {
+      tabBarLabel: 'Group',
+      tabBarIcon: ({ tintColor }) => {
+        return (
+          <Icon name='users' size={30} color='white' style={{color: tintColor}}/>
+        );
+      }
+    }
+  },
+  Feed: {
+    screen: Feed,
+    navigationOptions: {
+      tabBarLabel: 'Feed',
+      tabBarIcon: ({ tintColor }) => {
+        return (
+          <Icon name='activity' size={30} color='white' style={{color: tintColor}}/>
+        );
+      }
+    }
+  },
   SearchMain: {
     screen: SearchMain,
     navigationOptions: {
@@ -82,21 +83,32 @@ export const TabRoot = TabNavigator({
   }
 }, {
   tabBarPosition: 'bottom',
+  swipeEnabled: false,
   tabBarOptions: {
     activeTintColor: '#f7f8f9',
     inactiveTintColor: '#f7f8f9',
     inactiveBackgroundColor: '#657a86',
-    activeBackgroundColor: '#434b59'
+    activeBackgroundColor: '#434b59',
+    indicatorStyle: {
+      backgroundColor: '#434b59',
+      height: 50
+    },
+    style: {
+      backgroundColor: '#657a86'
+    },
+    labelStyle: {
+      color: '#f7f8f9'
+    }
   },
 });
 
-export const SearchStockRoot = StackNavigator ({
-  // Search: {
-  //   screen: Search,
-  //   navigationOptions: {
-  //     header: null
-  //   }
-  // },
+export const ProfileStockRoot = StackNavigator ({
+  Profile: {
+    screen: Profile,
+    navigationOptions: {
+      header: null
+    }
+  },
   Stock: {
     screen: Stock,
     navigationOptions: {
@@ -105,5 +117,29 @@ export const SearchStockRoot = StackNavigator ({
   }
 },
 {
-  mode: 'modal'
+  mode: 'modal',
+  navigationOptions: {
+    gesturesEnabled: true
+  }
+});
+
+export const SearchStockRoot = StackNavigator ({
+  Search: {
+    screen: Search,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Stock: {
+    screen: Stock,
+    navigationOptions: {
+      header: null
+    }
+  }
+},
+{
+  mode: 'modal',
+  navigationOptions: {
+    gesturesEnabled: true
+  }
 });

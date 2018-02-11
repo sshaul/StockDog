@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 import containers from '../style/containers';
 import elements from '../style/elements';
@@ -37,6 +37,8 @@ export default class StockChart extends Component {
       var url = '';
       if (this.props.username) {
         console.log('username: ' + this.props.username);
+        this.setState({xData: [], yData: [], isLoading: false});
+        return;
       }
       else {
         if (range == 'day')
@@ -179,7 +181,7 @@ export default class StockChart extends Component {
   render() {
     const lastelt = this.state.yData[this.state.yData.length - 1];
     return (
-      <View>
+      <View style={containers.chart}>
         <Text style={text.money}>${lastelt}</Text>
         {this.createChart()}
       </View>

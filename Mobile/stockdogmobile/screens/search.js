@@ -32,6 +32,7 @@ export default class Search extends Component {
           <TextInput
             style={[elements.roundedInput, {textAlign: 'center', paddingLeft: 0}]}
             placeholder="Search a ticker"
+            underlineColorAndroid='transparent'
             onChangeText={(text) => this.setState({text})}
             onSubmitEditing={this.searchTicker.bind(this)}
             value={this.state.text} />
