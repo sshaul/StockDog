@@ -10,6 +10,14 @@ export default elements = StyleSheet.create({
         paddingLeft: 20,
         margin: 10
     },
+    popoverButton: {
+        width: 48, 
+        height: 48, 
+        // backgroundColor: 'red',
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        marginLeft: -15
+    },
     loginButton: {
         height: 45,
         width: 250,

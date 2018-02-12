@@ -50,7 +50,7 @@ class Logger:
 
    def error(self, msg, isPprint=False):
       if self.isActive:
-         print(Colors.WARNING + "[ERROR]" + Colors.RESTORE)
+         print(Colors.FAIL + "[ERROR]" + Colors.RESTORE)
          pprint(msg)
       else:
          print(Colors.FAIL + "\t[ERROR] : " + msg + Colors.RESTORE)

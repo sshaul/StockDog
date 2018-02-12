@@ -25,7 +25,8 @@ export default containers = StyleSheet.create({
     chart: {
       flex: 0.7,
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'flex-start',
+      marginTop: -10
     },
     chartOut: {
       flex: 0.5,
@@ -35,15 +36,52 @@ export default containers = StyleSheet.create({
     iconHeaders: {
       flex: 0.1,
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'flex-end',
       justifyContent: 'space-between',
       paddingLeft: 10,
       paddingRight: 10,
       paddingTop: 5
     },
+    underChart: {
+      flex: 0.2,
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      marginTop: -50
+    },
     buttons: {
-      flex: 0.1,
+      flex: 0.5,
       flexDirection: 'row',
       justifyContent: 'space-around'
+    },
+    modalHeaders: {
+      flex: 0.3,
+      width: '70%',
+      alignItems: 'flex-end',
+      justifyContent: 'center'
+    },
+    innerModal: {
+      flex: 0.9,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    outerModal: {
+      flex: 0.6,
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      backgroundColor: colors.grey
+    },
+    profileChart: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    portfolioItem: {
+      flexDirection: 'row', 
+      justifyContent: 'space-between', 
+      alignItems: 'center',
+      borderStyle: 'solid', 
+      borderColor: colors.white, 
+      borderWidth: 2
     }
 });

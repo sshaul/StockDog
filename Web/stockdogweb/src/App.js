@@ -8,9 +8,9 @@ import {
 import './css/App.css';
 
 // Components
-import Login from "./container/Login";
-import Register from "./container/Register";
-import Stock from "./container/Stock";
+import Login from "./containers/Login";
+import Register from "./containers/Register";
+import Stock from "./containers/Stock";
 
 class App extends Component {
    render() {

@@ -7,13 +7,20 @@ from datetime import date, timedelta, datetime
 import json
 import requests
 import re
+import time
 
-log = logger.Logger(True, True, True)
+log = logger.Logger(True, True, False)
 
+TODAY = 0
 DAY_AGO = 1
 WEEK_AGO = 7
 MONTH_AGO = 31
 YEAR_AGO = 365
+
+EST_HOURS_AHEAD = 3
+
+DATE_FORMAT = '%Y-%m-%d'
+DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 stock_api = Blueprint('stock_api', __name__)
 
@@ -24,6 +31,7 @@ def malformed_request(error):
       return 'Request was formed incorrectly. ' + \
          'Valid lengths are day, week, month, year.', 400
    elif isinstance(error, NotFound):
+      log.error(error)
       return 'Request was formed incorrectly. ' + \
          'The stock ticker is either invalid or unsupported.', 404
    else:
@@ -52,18 +60,26 @@ def get_history(ticker, length):
       queryParams['interval'] = interval
 
    alphaVantageApi = 'https://www.alphavantage.co/query?'
-   response = (requests.get(alphaVantageApi + urlencode(queryParams))).json()
-   
+   startTime = time.time()
+   raw_response = requests.get(alphaVantageApi + urlencode(queryParams))
+   response = raw_response.json()
+   alphaTime = time.time() - startTime
+
+   log.info('API hitting: ' + alphaVantageApi + urlencode(queryParams))
+
    if response.get('Error Message'):
       abort(404)
 
    data = formatData(response, interval, length)
+   parseTime = time.time() - startTime
 
+   log.info('Alphavantage time is: ' + str(alphaTime))
+   log.info('Parsing data time is: ' + str(parseTime))
    return json.dumps(data)
     
 
 def getFunction(length):
-   if length == 'day' or length == 'week':
+   if length == 'day' or length == 'week' or length == 'now':
       return 'TIME_SERIES_INTRADAY'
    elif length == 'month' or length == 'year':
       return 'TIME_SERIES_DAILY'
@@ -72,7 +88,7 @@ def getFunction(length):
 
 
 def getOutputSize(length):
-   if length == 'day' or length == 'month':
+   if length == 'day' or length == 'month' or length == 'now':
       return 'compact'
    elif length == 'week' or length == 'year':
       return 'full'
@@ -81,7 +97,9 @@ def getOutputSize(length):
 
 
 def getInterval(length):
-   if length == 'day':
+   if length == 'now':
+      return '1min'
+   elif length == 'day':
       return '5min'
    elif length == 'week':
       return '15min'
@@ -93,6 +111,15 @@ def getApiKey():
    return '3UCU111LQLB5581W'
 
 
+def getStartTime(timeDelta):
+   today = datetime.now()
+   pastDate = today - timedelta(days=timeDelta)
+   log.debug(str(pastDate))
+   startTime = pastDate.replace(hour=8)
+   log.debug(str(startTime))
+   return startTime
+
+
 def formatData(jsonData, interval, length):
    if not interval:
       interval = 'Daily'
@@ -102,15 +129,41 @@ def formatData(jsonData, interval, length):
    slicedTimeSeriesData = []
 
    if length == 'day':
-      slicedTimeSeriesData = formatDataInRange(timeSeriesData, getLastWeekdayDelta(), '%Y-%m-%d %H:%M:%S')
+      startTime = getStartTime(getLastWeekdayDelta())
+      slicedTimeSeriesData = formatDataInRange(timeSeriesData, startTime, DATETIME_FORMAT)
+   
    elif length == 'week':
-      slicedTimeSeriesData = formatDataInRange(timeSeriesData, WEEK_AGO, '%Y-%m-%d %H:%M:%S')
+      startTime = getStartTime(WEEK_AGO)
+      slicedTimeSeriesData = formatDataInRange(timeSeriesData, startTime, DATETIME_FORMAT)
+   
    elif length == 'month':
-      slicedTimeSeriesData = formatDataInRange(timeSeriesData, MONTH_AGO, '%Y-%m-%d')
+      startTime = getStartTime(MONTH_AGO)
+      slicedTimeSeriesData = formatDataInRange(timeSeriesData, startTime, DATE_FORMAT)
+   
    elif length == 'year':
-      slicedTimeSeriesData = formatDataInRange(timeSeriesData, YEAR_AGO, '%Y-%m-%d')
+      startTime = getStartTime(YEAR_AGO)
+      slicedTimeSeriesData = formatDataInRange(timeSeriesData, startTime, DATE_FORMAT)
+   
+   elif length == 'now':
+      slicedTimeSeriesData = getRecentDatum(timeSeriesData, DATETIME_FORMAT)
+      pprint (slicedTimeSeriesData)
+
    else:
       raise Exception('Invalid length provided')
+
+   return slicedTimeSeriesData
+
+
+def getRecentDatum(timeSeriesData, dateFormat):
+   slicedTimeSeriesData = []
+   recentDatumKey = sorted(list(timeSeriesData))[-1]
+
+   keyTime = datetime.strptime(recentDatumKey, dateFormat)
+   slicedTimeSeriesData.append ({
+      'time' : recentDatumKey,
+      'epochTime' : keyTime.timestamp(),
+      'price' : timeSeriesData[recentDatumKey]['1. open']
+   })
 
    return slicedTimeSeriesData
 
@@ -118,7 +171,7 @@ def formatData(jsonData, interval, length):
 def getLastWeekdayDelta():
    today = date.today()
    if date.today().weekday() <= 4:
-      return DAY_AGO
+      return TODAY
    else:
       daysAgo = 1
       dayBefore = today - timedelta(days=daysAgo)
@@ -129,15 +182,14 @@ def getLastWeekdayDelta():
       return daysAgo
 
 
-def formatDataInRange(timeSeriesData, timeDelta, dateFormat):
+def formatDataInRange(timeSeriesData, startTime, dateFormat):
    slicedTimeSeriesData = []
-   today = datetime.now()
-   pastDate = today - timedelta(days=timeDelta)
 
    for (key, value) in timeSeriesData.items():
       keyTime = datetime.strptime(key, dateFormat)
+      epochTimeEst = keyTime + timedelta(hours=3)
 
-      if pastDate < keyTime:
+      if startTime < keyTime:
          slicedTimeSeriesData.append({
             'time' : key,
             'epochTime' : keyTime.timestamp(),
