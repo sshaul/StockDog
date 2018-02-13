@@ -2,41 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6421d799-e4e0-4a82-8852-ebc891ff4bb0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/components/buysellmodal.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/components/portfolioItem.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/components/stockchart.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/screens/feed.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/screens/group.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/screens/profilemain.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/screens/search.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/screens/searchmain.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Service/src/start.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Web/stockdogweb/src/components/TimeFrames.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Web/stockdogweb/src/containers/Stock.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Web/stockdogweb/src/App.test.js" afterPath="$PROJECT_DIR$/Web/stockdogweb/src/tests/App.test.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Web/stockdogweb/src/container/Login.js" afterPath="$PROJECT_DIR$/Web/stockdogweb/src/containers/Login.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Web/stockdogweb/src/container/Register.js" afterPath="$PROJECT_DIR$/Web/stockdogweb/src/containers/Register.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Web/stockdogweb/src/container/Stock.js" afterPath="$PROJECT_DIR$/Web/stockdogweb/src/components/Graph.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Web/stockdogweb/src/css/.sass-cache/90a5b539281a140f45a53fc916588409d7dc5c7c/App.scssc" afterPath="$PROJECT_DIR$/Web/stockdogweb/src/css/.sass-cache/90a5b539281a140f45a53fc916588409d7dc5c7c/App.scssc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Mobile/stockdogmobile/components/widebutton.js" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/components/widebutton.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Mobile/stockdogmobile/routes.js" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Mobile/stockdogmobile/screens/profile.js" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/screens/profile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Mobile/stockdogmobile/screens/register.js" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/screens/register.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Mobile/stockdogmobile/screens/stock.js" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/screens/stock.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Mobile/stockdogmobile/style/containers.js" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/style/containers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Mobile/stockdogmobile/style/elements.js" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/style/elements.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Mobile/stockdogmobile/style/text.js" afterPath="$PROJECT_DIR$/Mobile/stockdogmobile/style/text.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Service/.gitignore" afterPath="$PROJECT_DIR$/Service/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Service/src/stock.py" afterPath="$PROJECT_DIR$/Service/src/stock.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Service/src/util/logger.py" afterPath="$PROJECT_DIR$/Service/src/util/logger.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Web/stockdogweb/package.json" afterPath="$PROJECT_DIR$/Web/stockdogweb/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Web/stockdogweb/src/App.js" afterPath="$PROJECT_DIR$/Web/stockdogweb/src/App.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Web/stockdogweb/src/css/App.css" afterPath="$PROJECT_DIR$/Web/stockdogweb/src/css/App.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Web/stockdogweb/src/css/App.css.map" afterPath="$PROJECT_DIR$/Web/stockdogweb/src/css/App.css.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Web/stockdogweb/src/css/App.scss" afterPath="$PROJECT_DIR$/Web/stockdogweb/src/css/App.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Service/src/login.py" afterPath="$PROJECT_DIR$/Service/src/login.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -53,7 +20,7 @@
             <state relative-caret-position="0">
               <caret line="0" column="16" lean-forward="false" selection-start-line="0" selection-start-column="16" selection-end-line="0" selection-end-column="16" />
               <folding>
-                <marker date="1518404409508" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
+                <marker date="1518404980383" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
               </folding>
             </state>
           </provider>
@@ -81,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="login.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Service/src/login.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="31" column="29" lean-forward="false" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
+            <state relative-caret-position="351">
+              <caret line="45" column="8" lean-forward="false" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="8" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -93,11 +60,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+            <state relative-caret-position="105">
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -106,8 +73,8 @@
       <file leaf-file-name="credentials.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Service/src/credentials.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="20" lean-forward="false" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="20" />
+            <state relative-caret-position="45">
+              <caret line="3" column="2" lean-forward="false" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -116,12 +83,11 @@
       <file leaf-file-name="stock.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Service/src/stock.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
+            <state relative-caret-position="510">
               <caret line="43" column="36" lean-forward="false" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
-                <marker date="1518404409519" expanded="true" signature="5051:5226" ph="..." />
-                <marker date="1518404409519" expanded="true" signature="5051:5337" ph="..." />
+                <marker date="1518404980395" expanded="true" signature="5051:5226" ph="..." />
               </folding>
             </state>
           </provider>
@@ -160,8 +126,8 @@
         <option value="$PROJECT_DIR$/Service/db/init.sql" />
         <option value="$PROJECT_DIR$/credentials.json" />
         <option value="$PROJECT_DIR$/Service/src/app.py" />
-        <option value="$PROJECT_DIR$/Service/src/login.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/Service/src/login.py" />
       </list>
     </option>
   </component>
@@ -280,10 +246,10 @@
     <frame x="0" y="23" width="1405" height="808" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21276596" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21863537" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959327" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959327" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32959327" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959327" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959327" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -316,8 +282,7 @@
           <caret line="140" column="31" lean-forward="false" selection-start-line="140" selection-start-column="30" selection-end-line="140" selection-end-column="31" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
-            <marker date="1518404409519" expanded="true" signature="5051:5226" ph="..." />
-            <marker date="1518404409519" expanded="true" signature="5051:5337" ph="..." />
+            <marker date="1518404980395" expanded="true" signature="5051:5226" ph="..." />
           </folding>
         </state>
       </provider>
@@ -328,7 +293,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1518404409508" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
+            <marker date="1518404980383" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
           </folding>
         </state>
       </provider>
@@ -338,7 +303,7 @@
         <state relative-caret-position="105">
           <caret line="7" column="7" lean-forward="false" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
           <folding>
-            <marker date="1518404409508" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
+            <marker date="1518404980383" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
           </folding>
         </state>
       </provider>
@@ -362,7 +327,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1518404409508" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
+            <marker date="1518404980383" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
           </folding>
         </state>
       </provider>
@@ -386,7 +351,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1518404409508" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
+            <marker date="1518404980383" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
           </folding>
         </state>
       </provider>
@@ -410,7 +375,7 @@
         <state relative-caret-position="105">
           <caret line="7" column="7" lean-forward="false" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
           <folding>
-            <marker date="1518404409508" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
+            <marker date="1518404980383" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
           </folding>
         </state>
       </provider>
@@ -434,7 +399,7 @@
         <state relative-caret-position="105">
           <caret line="7" column="7" lean-forward="false" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
           <folding>
-            <marker date="1518404409508" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
+            <marker date="1518404980383" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
           </folding>
         </state>
       </provider>
@@ -458,7 +423,7 @@
         <state relative-caret-position="105">
           <caret line="7" column="7" lean-forward="false" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
           <folding>
-            <marker date="1518404409508" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
+            <marker date="1518404980383" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
           </folding>
         </state>
       </provider>
@@ -483,7 +448,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1518404409508" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
+            <marker date="1518404980383" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
           </folding>
         </state>
       </provider>
@@ -508,7 +473,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1518404409508" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
+            <marker date="1518404980383" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
           </folding>
         </state>
       </provider>
@@ -533,7 +498,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1518404409508" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
+            <marker date="1518404980383" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
           </folding>
         </state>
       </provider>
@@ -560,13 +525,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Service/app.py" />
-    <entry file="file://$PROJECT_DIR$/Scripts/bootstrap.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Scripts/bootstrap.log" />
     <entry file="file://$PROJECT_DIR$/tests/suite_3_6.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -588,21 +547,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Web/stockdogweb/src/container/Login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Web/stockdogweb/src/container/Login.js" />
     <entry file="file://$PROJECT_DIR$/Service/src/login.py" />
-    <entry file="file://$PROJECT_DIR$/Web/stockdogweb/src/container/Register.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Web/stockdogweb/src/container/Register.js" />
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -615,15 +562,41 @@
         <state relative-caret-position="0">
           <caret line="0" column="16" lean-forward="false" selection-start-line="0" selection-start-column="16" selection-end-line="0" selection-end-column="16" />
           <folding>
-            <marker date="1518404409508" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
+            <marker date="1518404980383" expanded="true" signature="155:199" ph="install: &lt;1 item&gt;" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Service/src/credentials.json">
+    <entry file="file://$PROJECT_DIR$/Service/src/stock.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="20" lean-forward="false" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="20" />
+        <state relative-caret-position="510">
+          <caret line="43" column="36" lean-forward="false" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+            <marker date="1518404980395" expanded="true" signature="5051:5226" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Service/db/init.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="23" lean-forward="false" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Service/src/start.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -638,49 +611,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Service/src/stock.py">
+    <entry file="file://$PROJECT_DIR$/Service/src/credentials.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="43" column="36" lean-forward="false" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-            <marker date="1518404409519" expanded="true" signature="5051:5226" ph="..." />
-            <marker date="1518404409519" expanded="true" signature="5051:5337" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Service/db/init.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="23" lean-forward="false" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+        <state relative-caret-position="45">
+          <caret line="3" column="2" lean-forward="false" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Service/src/login.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="31" column="29" lean-forward="false" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
+        <state relative-caret-position="351">
+          <caret line="45" column="8" lean-forward="false" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="8" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Service/src/start.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
