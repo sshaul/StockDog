@@ -9,15 +9,20 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from flask import jsonify
 import pymysql
 from stock import stock_api
-#from login import login_api
-
+from login import Login
+import json
+import os.path
 
 app = Flask(__name__)
 
 CORS(app)
 
+
+
+
+login = Login(app)
 app.register_blueprint(stock_api)
-#app.register_blueprint(login_api)
+app.register_blueprint(login.login_api)
 
 log = logger.Logger(True, True, True)
 
@@ -37,39 +42,6 @@ def getPortNum(defaultPort=5005):
    parser.add_argument('-p','--port', type=int, help='specify the port number')
    args = parser.parse_args()
    return args.port or defaultPort 
-
-
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-#connecting to db
-conn = pymysql.connect(user= "root", password = "", database="Stockdog")
-#used to execute queries
-c = conn.cursor()
-
-#used for debugging - making sure that the tables are accessible
-#for (table_name,) in c:
-#   log.info(table_name)
-
-#login
-#@app.route('/user/login', methods = ['POST'])
-#def login():
-
-
-
-@app.route('/register', methods=["POST"])
-def createAccount():
-   data = request.get_json()
-   firstName = data['firstName']
-   lastName = data['lastName']
-   email = data['email']
-   password = data['password']
-
-
-   c.execute("INSERT INTO User(firstName, lastName, email, password) VALUES (%s, %s, %s, %s)",(firstName, lastName, email, password));
-   conn.commit();
-   return ""
 
 
 
