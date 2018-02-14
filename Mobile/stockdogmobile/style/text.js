@@ -23,13 +23,37 @@ export default text = StyleSheet.create({
     money: {
       color: colors.bright,
       fontFamily: 'open-sans',
-      fontSize: 42,
+      fontSize: 48,
       textAlign: 'center'
+    },
+    profileLabels: {
+      color: colors.white,
+      fontFamily: 'open-sans',
+      fontSize: 24,
+      textAlign: 'left'
+    },
+    bigPortfolioText: {
+      color: colors.white,
+      fontFamily: 'open-sans',
+      fontSize: 20,
+      textAlign: 'left'
+    },
+    smallPortfolioText: {
+      color: colors.white,
+      fontFamily: 'open-sans',
+      fontSize: 16,
+      textAlign: 'left'
     },
     // ----------------- Stock page ------------- // 
     stock: {
       color: colors.bright,
       fontFamily: 'open-sans',
       fontSize: 36
+    },
+    stockMoney: {
+      color: colors.bright,
+      fontFamily: 'open-sans',
+      fontSize: 42,
+      textAlign: 'center'
     }
 });

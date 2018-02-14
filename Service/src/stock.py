@@ -79,7 +79,7 @@ def get_history(ticker, length):
     
 
 def getFunction(length):
-   if length == 'day' or length == 'week':
+   if length == 'day' or length == 'week' or length == 'now':
       return 'TIME_SERIES_INTRADAY'
    elif length == 'month' or length == 'year':
       return 'TIME_SERIES_DAILY'
@@ -88,7 +88,7 @@ def getFunction(length):
 
 
 def getOutputSize(length):
-   if length == 'day' or length == 'month':
+   if length == 'day' or length == 'month' or length == 'now':
       return 'compact'
    elif length == 'week' or length == 'year':
       return 'full'
@@ -97,7 +97,9 @@ def getOutputSize(length):
 
 
 def getInterval(length):
-   if length == 'day':
+   if length == 'now':
+      return '1min'
+   elif length == 'day':
       return '5min'
    elif length == 'week':
       return '15min'
@@ -142,8 +144,26 @@ def formatData(jsonData, interval, length):
       startTime = getStartTime(YEAR_AGO)
       slicedTimeSeriesData = formatDataInRange(timeSeriesData, startTime, DATE_FORMAT)
    
+   elif length == 'now':
+      slicedTimeSeriesData = getRecentDatum(timeSeriesData, DATETIME_FORMAT)
+      pprint (slicedTimeSeriesData)
+
    else:
       raise Exception('Invalid length provided')
+
+   return slicedTimeSeriesData
+
+
+def getRecentDatum(timeSeriesData, dateFormat):
+   slicedTimeSeriesData = []
+   recentDatumKey = sorted(list(timeSeriesData))[-1]
+
+   keyTime = datetime.strptime(recentDatumKey, dateFormat)
+   slicedTimeSeriesData.append ({
+      'time' : recentDatumKey,
+      'epochTime' : keyTime.timestamp(),
+      'price' : timeSeriesData[recentDatumKey]['1. open']
+   })
 
    return slicedTimeSeriesData
 
