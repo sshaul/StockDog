@@ -44,7 +44,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 #connecting to db
-conn = pymysql.connect(user= "root", password = "", database="Stockdog")
 #used to execute queries
 c = conn.cursor()
 
