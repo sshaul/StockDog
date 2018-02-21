@@ -15,7 +15,7 @@ def post_portfolio():
       config = json.load(configFile)
       configFile.close()
    except Exception as e:
-      log.error('Config file does not exist or is poorly formatted' + str(e))
+      log.error('Config file does not exist or is poorly formatted ' + str(e))
       abort(500)
 
    conn = pymysql.connect(user=config['username'], password=config['password'], database='StockDog')

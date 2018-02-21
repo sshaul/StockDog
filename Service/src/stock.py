@@ -1,4 +1,4 @@
-from flask import Blueprint, abort
+from flask import Blueprint, abort, request, Response
 from urllib.parse import urlencode
 from util import logger
 from pprint import pprint
@@ -8,8 +8,9 @@ import json
 import requests
 import re
 import time
+import pymysql
 
-log = logger.Logger(True, True, False)
+log = logger.Logger(True, True, True)
 
 TODAY = 0
 DAY_AGO = 1
@@ -38,6 +39,46 @@ def malformed_request(error):
       return 'Something went wrong...', 400
 
 
+@stock_api.route('/api/stock/buy/<ticker>', methods=['POST'])
+def post_buy_transaction(ticker):
+   # 1. get the price of stock
+   # 2. get the buying power
+   # 3. compare buying power and purchase price and potentially throw error
+   # 4. add stock to portfolio
+   # 5. deduct purchase price from buying power
+   # 6. return 200
+   body = request.get_json()
+   try:
+      configFile = open('credentials.json', 'r')
+      config = json.load(configFile)
+      configFile.close()
+   except Exception as e:
+      log.error('Config file does not exist or is poorly formatted ' + str(e))
+      abort(500)
+
+   conn = pymysql.connect(user=config['username'], password=config['password'], database='StockDog')
+   cursor = conn.cursor()
+
+   cursor.execute("SELECT buyPower FROM Portfolio WHERE id = %s",
+      int(body['userId']))
+
+   userBuyPower = cursor.fetchone()[0]
+   purchaseCost = body['sharePrice'] * body['shareCount']
+
+   if userBuyPower < purchaseCost:
+      abort(400)
+
+   cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker)" + 
+      "VALUES (%s, %s, %s, %s, %s, %s)",
+      (body['sharePrice'], body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker))
+
+   log.info(str(purchaseCost))
+
+   conn.commit()
+
+   return Response(status=200)
+
+
 @stock_api.route('/api/stock/<ticker>/history/<length>')
 def get_history(ticker, length):
    try:
@@ -61,6 +102,7 @@ def get_history(ticker, length):
 
    alphaVantageApi = 'https://www.alphavantage.co/query?'
    startTime = time.time()
+   log.debug("again before the request")
    raw_response = requests.get(alphaVantageApi + urlencode(queryParams))
    response = raw_response.json()
    alphaTime = time.time() - startTime

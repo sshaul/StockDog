@@ -12,13 +12,14 @@ CREATE TABLE User (
 
 
 CREATE TABLE Portfolio (
+   id INT(11) AUTO_INCREMENT PRIMARY KEY,
    buyPower DECIMAL(13, 2),
    userId INT(11) REFERENCES User(id)
 );
 
 CREATE TABLE Ticker (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
-   ticker VARCHAR(8),
+   symbol VARCHAR(8),
    company VARCHAR(32)
 );
 
@@ -30,13 +31,13 @@ CREATE TABLE Transaction (
    isBuy TINYINT(1),
    datetime DATE,
    portfolioId INT(11) REFERENCES Portfolio(id),
-   tickerId INT(11) REFERENCES Ticker(id)
+   ticker INT(11) REFERENCES Ticker(symbol)
 );
 
 CREATE TABLE Watchlist (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    portfolioId INT(11) REFERENCES Portfolio(id),
-   tickerId INT(11) REFERENCES Ticker(id)
+   ticker INT(11) REFERENCES Ticker(symbol)
 );
 
 
@@ -45,5 +46,5 @@ CREATE TABLE PortfolioItem (
    shareCount INT(11),
    avgCost INT(11),
    portfolioId INT(11) REFERENCES Portfolio(id),
-   tickerId INT(11) REFERENCES Ticker(id)
+   ticker INT(11) REFERENCES Ticker(symbol)
 );
