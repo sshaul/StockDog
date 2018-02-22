@@ -31,13 +31,13 @@ CREATE TABLE Transaction (
    isBuy TINYINT(1),
    datetime DATE,
    portfolioId INT(11) REFERENCES Portfolio(id),
-   ticker INT(11) REFERENCES Ticker(symbol)
+   ticker VARCHAR(8) REFERENCES Ticker(symbol)
 );
 
 CREATE TABLE Watchlist (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    portfolioId INT(11) REFERENCES Portfolio(id),
-   ticker INT(11) REFERENCES Ticker(symbol)
+   ticker VARCHAR(8) REFERENCES Ticker(symbol)
 );
 
 
@@ -46,5 +46,5 @@ CREATE TABLE PortfolioItem (
    shareCount INT(11),
    avgCost INT(11),
    portfolioId INT(11) REFERENCES Portfolio(id),
-   ticker INT(11) REFERENCES Ticker(symbol)
+   ticker VARCHAR(8) REFERENCES Ticker(symbol)
 );

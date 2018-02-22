@@ -41,12 +41,6 @@ def malformed_request(error):
 
 @stock_api.route('/api/stock/buy/<ticker>', methods=['POST'])
 def post_buy_transaction(ticker):
-   # 1. get the price of stock
-   # 2. get the buying power
-   # 3. compare buying power and purchase price and potentially throw error
-   # 4. add stock to portfolio
-   # 5. deduct purchase price from buying power
-   # 6. return 200
    body = request.get_json()
    try:
       configFile = open('credentials.json', 'r')
@@ -56,13 +50,14 @@ def post_buy_transaction(ticker):
       log.error('Config file does not exist or is poorly formatted ' + str(e))
       abort(500)
 
-   conn = pymysql.connect(user=config['username'], password=config['password'], database='StockDog')
+   conn = pymysql.connect(user=config['username'], password=config['password'], database='StockDog',
+      cursorclass=pymysql.cursors.DictCursor)
    cursor = conn.cursor()
 
    cursor.execute("SELECT buyPower FROM Portfolio WHERE id = %s",
       int(body['userId']))
 
-   userBuyPower = cursor.fetchone()[0]
+   userBuyPower = cursor.fetchone()['buyPower']
    purchaseCost = body['sharePrice'] * body['shareCount']
 
    if userBuyPower < purchaseCost:
@@ -70,18 +65,28 @@ def post_buy_transaction(ticker):
 
    remainingBuyPower = float(userBuyPower) - purchaseCost
 
-   cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker)" + 
+   cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker) " + 
       "VALUES (%s, %s, %s, %s, %s, %s)",
       (body['sharePrice'], body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker))
 
    cursor.execute("UPDATE Portfolio SET buyPower = %s WHERE id = %s",
       [remainingBuyPower, body['portfolioId']])
 
+   cursor.execute("SELECT * FROM PortfolioItem WHERE portfolioId = %s AND ticker = %s",
+      [body['portfolioId'], ticker])
 
-   cursor.execute("INSERT INTO PortfolioItem")
-
-   log.info(str(purchaseCost))
-
+   portfolioItem = cursor.fetchone()
+   if portfolioItem:
+      newShareCt = portfolioItem['shareCount'] + body['shareCount']
+      newAvgCost = ((portfolioItem['avgCost'] * portfolioItem['shareCount']) + purchaseCost) // newShareCt
+      cursor.execute("UPDATE PortfolioItem SET shareCount = %s, avgCost = %s " +
+         "WHERE portfolioId = %s AND ticker = %s",
+         [newShareCt, newAvgCost, body['portfolioId'], ticker])
+   else:
+      cursor.execute("INSERT INTO PortfolioItem(shareCount, avgCost, portfolioId, ticker) " +
+         "VALUES (%s, %s, %s, %s)",
+         [body['shareCount'], body['sharePrice'], body['portfolioId'], ticker])
+   
    conn.commit()
 
    return Response(status=200)
