@@ -68,9 +68,17 @@ def post_buy_transaction(ticker):
    if userBuyPower < purchaseCost:
       abort(400)
 
+   remainingBuyPower = float(userBuyPower) - purchaseCost
+
    cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker)" + 
       "VALUES (%s, %s, %s, %s, %s, %s)",
       (body['sharePrice'], body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker))
+
+   cursor.execute("UPDATE Portfolio SET buyPower = %s WHERE id = %s",
+      [remainingBuyPower, body['portfolioId']])
+
+
+   cursor.execute("INSERT INTO PortfolioItem")
 
    log.info(str(purchaseCost))
 
