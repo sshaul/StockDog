@@ -1,7 +1,7 @@
 from flask import Blueprint, abort, request, Response
 from util import logger
 import pymysql
-import json
+import simplejson as json
 
 log = logger.Logger(True, True, True)
 
@@ -40,11 +40,11 @@ def get_portfolio(portfolioId):
    conn = pymysql.connect(user=config['username'], password=config['password'], database='StockDog', 
       cursorclass=pymysql.cursors.DictCursor)
    cursor = conn.cursor()
-   cursor.execute("SELECT * FROM Portfolio WHERE id = %s", portfolioId)
+   cursor.execute("SELECT ticker, shareCount, avgCost, buyPower FROM Portfolio AS p JOIN PortfolioItem as pi ON p.id = pi.portfolioId " + 
+      "WHERE p.id = %s", portfolioId)
 
-   portfolio = cursor.fetchone()
+   portfolio = cursor.fetchall()
    log.debug(portfolio, isPprint=True)
-   portfolio['buyPower'] = float(portfolio['buyPower'])
 
    return json.dumps(portfolio)
 

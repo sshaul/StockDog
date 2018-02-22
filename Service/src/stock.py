@@ -4,7 +4,7 @@ from util import logger
 from pprint import pprint
 from werkzeug.exceptions import *
 from datetime import date, timedelta, datetime
-import json
+import simplejson as json
 import requests
 import re
 import time
@@ -61,7 +61,7 @@ def post_buy_transaction(ticker):
    purchaseCost = body['sharePrice'] * body['shareCount']
 
    if userBuyPower < purchaseCost:
-      abort(400)
+      raise errorHandler.InvalidUsage('This view is gone', status_code=410)
 
    remainingBuyPower = float(userBuyPower) - purchaseCost
 
