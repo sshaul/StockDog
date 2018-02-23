@@ -1,6 +1,6 @@
 from flask import Blueprint, abort, request, Response
 from urllib.parse import urlencode
-from util import logger
+from util import logger, dbConn
 from pprint import pprint
 from werkzeug.exceptions import *
 from datetime import date, timedelta, datetime
@@ -39,6 +39,48 @@ def malformed_request(error):
       return 'Something went wrong...', 400
 
 
+@stock_api.route('/api/stock/sell/<ticker>', methods=['POST'])
+def post_sell_transaction(ticker):
+   body = request.get_json()
+   try:
+      configFile = open('credentials.json', 'r')
+      config = json.load(configFile)
+      configFile.close()
+   except Exception as e:
+      log.error('Config file does not exist or is poorly formatted ' + str(e))
+      abort(500)
+
+   conn = pymysql.connect(user=config['username'], password=config['password'], database='StockDog',
+      cursorclass=pymysql.cursors.DictCursor)
+   cursor = conn.cursor()
+
+   cursor.execute("SELECT shareCount, avgCost FROM PortfolioItem " +
+      "WHERE portfolioId = %s AND ticker = %s",
+      [body['portfolioId'], ticker])
+
+   userShares = cursor.fetchone()
+   if not userShares or body['shareCount'] > userShares['shareCount']:
+      abort(400)
+
+   saleValue = body['sharePrice'] * body['shareCount']
+   newShareCt = userShares['shareCount'] - body['shareCount']
+
+   cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker) " +
+      "VALUES (%s, %s, %s, %s, %s, %s)",
+      [body['sharePrice'], body['shareCount'], 0, datetime.now(), body['portfolioId'], ticker])
+
+   cursor.execute("UPDATE Portfolio SET buyPower = buyPower + %s WHERE id = %s",
+      [saleValue, body['portfolioId']])
+
+   cursor.execute("UPDATE PortfolioItem SET shareCount = %s " 
+      "WHERE portfolioId = %s AND ticker = %s",
+      [newShareCt, body['portfolioId'], ticker])
+
+   conn.commit()
+
+   return Response(status=200)
+
+
 @stock_api.route('/api/stock/buy/<ticker>', methods=['POST'])
 def post_buy_transaction(ticker):
    body = request.get_json()
@@ -61,7 +103,7 @@ def post_buy_transaction(ticker):
    purchaseCost = body['sharePrice'] * body['shareCount']
 
    if userBuyPower < purchaseCost:
-      raise errorHandler.InvalidUsage('This view is gone', status_code=410)
+      abort(400)
 
    remainingBuyPower = float(userBuyPower) - purchaseCost
 
