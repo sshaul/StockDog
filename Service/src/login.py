@@ -32,28 +32,29 @@ class Login:
         email = data['email']
         password = data['password']
 
-        #if os.path.exists("credentials.json"):
         try:
             credentialsFile = open("credentials.json", "r")
             credentials = json.load(credentialsFile)
             db_username = credentials['username']
             db_password = credentials['password']
-        #else:
         except Exception as e:
             log.write("credentials file doesn't exist")
             sys.exit(1)
 
         conn = pymysql.connect(user=db_username, password=db_password, database="Stockdog")
-        # used to execute queries
         dbConnection = conn.cursor()
 
         dbConnection.execute("INSERT INTO User(firstName, lastName, email, password) VALUES (%s, %s, %s, %s)",
                   (firstName, lastName, email, password));
         conn.commit();
         return ""
+
+
     # login
      #@app.route('/user/login', methods = ['POST'])
      #def login():
+     #   data = request.get_json()
+     #   username = data['username']
 
 
 
