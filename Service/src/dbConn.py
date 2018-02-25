@@ -6,7 +6,6 @@ def getDBConn():
    try:
       configFile = open('credentials.json', 'r')
       config = json.load(configFile)
-      pprint(config)
       configFile.close()
    except Exception as e:
       raise Exception('The filename was not provided or poorly formatted') 
@@ -14,4 +13,4 @@ def getDBConn():
    conn = pymysql.connect(user=config['username'], password=config['password'], database='StockDog',
       cursorclass=pymysql.cursors.DictCursor)
 
-   return conn.cursor()
+   return conn

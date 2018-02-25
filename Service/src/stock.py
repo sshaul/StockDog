@@ -1,6 +1,6 @@
 from flask import Blueprint, abort, request, Response
 from urllib.parse import urlencode
-from util import logger, dbConn
+from util import logger
 from pprint import pprint
 from werkzeug.exceptions import *
 from datetime import date, timedelta, datetime
@@ -9,6 +9,7 @@ import requests
 import re
 import time
 import pymysql
+import dbConn
 
 log = logger.Logger(True, True, True)
 
@@ -43,16 +44,10 @@ def malformed_request(error):
 def post_sell_transaction(ticker):
    body = request.get_json()
    try:
-      configFile = open('credentials.json', 'r')
-      config = json.load(configFile)
-      configFile.close()
+      conn = dbConn.getDBConn()
+      cursor = conn.cursor()
    except Exception as e:
-      log.error('Config file does not exist or is poorly formatted ' + str(e))
       abort(500)
-
-   conn = pymysql.connect(user=config['username'], password=config['password'], database='StockDog',
-      cursorclass=pymysql.cursors.DictCursor)
-   cursor = conn.cursor()
 
    cursor.execute("SELECT shareCount, avgCost FROM PortfolioItem " +
       "WHERE portfolioId = %s AND ticker = %s",
@@ -85,16 +80,10 @@ def post_sell_transaction(ticker):
 def post_buy_transaction(ticker):
    body = request.get_json()
    try:
-      configFile = open('credentials.json', 'r')
-      config = json.load(configFile)
-      configFile.close()
+      conn = dbConn.getDBConn()
+      cursor = conn.cursor()
    except Exception as e:
-      log.error('Config file does not exist or is poorly formatted ' + str(e))
       abort(500)
-
-   conn = pymysql.connect(user=config['username'], password=config['password'], database='StockDog',
-      cursorclass=pymysql.cursors.DictCursor)
-   cursor = conn.cursor()
 
    cursor.execute("SELECT buyPower FROM Portfolio WHERE id = %s",
       int(body['portfolioId']))
@@ -157,7 +146,6 @@ def get_history(ticker, length):
 
    alphaVantageApi = 'https://www.alphavantage.co/query?'
    startTime = time.time()
-   log.debug("again before the request")
    raw_response = requests.get(alphaVantageApi + urlencode(queryParams))
    response = raw_response.json()
    alphaTime = time.time() - startTime
@@ -211,9 +199,7 @@ def getApiKey():
 def getStartTime(timeDelta):
    today = datetime.now()
    pastDate = today - timedelta(days=timeDelta)
-   log.debug(str(pastDate))
    startTime = pastDate.replace(hour=8)
-   log.debug(str(startTime))
    return startTime
 
 
