@@ -14,7 +14,7 @@ export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      userId : "",
+      userid : "",
       data: [],
       isLoading: true
     };
@@ -40,6 +40,8 @@ export default class Profile extends Component {
   };
 
   render() {
+    console.log(this.state);
+    console.log(this.props);
     const p = [
       {key: 'item1', ticker: 'AMD', numShares: '3', price: '20'},
       {key: 'item2', ticker: 'WMT', numShares: '6', price: '3'},

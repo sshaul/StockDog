@@ -19,7 +19,7 @@ export default class StockChart extends Component {
     };
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.getData('day');
   }
 
@@ -32,8 +32,7 @@ export default class StockChart extends Component {
       var newXData = [];
       var newYData = [];
       // var baseurl = 'http://localhost:5005/api/stock/' + this.props.ticker + '/history/';
-      // var baseurl = 'http://198.199.100.209:5005/api/stock/' + this.props.ticker + '/history/';
-      var baseurl = 'http://198.199.100.209:5005/api/stock/AMD/history/';
+      var baseurl = 'http://198.199.100.209:5005/api/stock/' + this.props.ticker + '/history/';
       var url = '';
       if (this.props.username) {
         console.log('username: ' + this.props.username);

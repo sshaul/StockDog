@@ -15,18 +15,18 @@ import Group from './screens/group';
 import Feed from './screens/feed';
 
 export const Root = StackNavigator({
-    // Login : {
-    //     screen: Login,
-    //     navigationOptions: {
-    //         header: null
-    //     }
-    // },
-    // Register: {
-    //     screen: Register,
-    //     navigationOptions: {
-    //         header: null
-    //     }
-    // },
+    Login : {
+        screen: Login,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Register: {
+        screen: Register,
+        navigationOptions: {
+            header: null
+        }
+    },
     Main: {
         screen: Main,
         navigationOptions: {

@@ -9,10 +9,21 @@ import WideButton from '../components/widebutton';
 export default class Login extends Component {
   constructor(props) {
     super(props);
+    var user = "";
+    if (this.props.navigation.state.params) {
+      user = this.props.navigation.state.params.email;
+    }
     this.state = { 
-      username : "" ,
+      email : user,
       password: ""
     };
+
+    this.focusNextField = this.focusNextField.bind(this);
+    this.inputs = {};
+  }
+
+  focusNextField(id) {
+    this.inputs[id].focus();
   }
   
   navToRegister() {
@@ -21,16 +32,23 @@ export default class Login extends Component {
   }
 
   render() {
-    const nav = this.props.navigator;
+    var disabled = !(this.state.email && this.state.password);
     return (
       <View style={containers.general}>
         <Text style={text.title}>StockDog</Text>
         <TextInput
           style={elements.roundedInput}
-          placeholder="username"
+          placeholder="email"
           placeholderTextColor="#aaaaaa"
-          onChangeText={(username) => this.setState({username})}
-          value={this.state.username}
+          onChangeText={(email) => this.setState({email})}
+          value={this.state.email}
+          onSubmitEditing={() => {
+            this.focusNextField('two');
+          }}
+          returnKeyType={ "next" }
+          ref={ input => {
+            this.inputs['one'] = input;
+          }}
         />
         <TextInput
           style={elements.roundedInput}
@@ -40,7 +58,7 @@ export default class Login extends Component {
           onChangeText={(password) => this.setState({password})}
           value={this.state.password}
         />
-        <WideButton type='login'/>
+        <WideButton type='login' disabled={disabled}/>
         <TouchableOpacity
           style={elements.smallTextButton}>
           <Text style={text.smallText}> Forgot Password? </Text>

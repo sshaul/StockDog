@@ -21,10 +21,17 @@ export default class WideButton extends Component {
       buttonText = 'BUY';
     else if (this.props.type == 'sell')
       buttonText = 'SELL';
+
+    var style = elements.loginButton;
+    if (this.props.disabled) {
+      style = elements.disabledLoginButton;
+    };
+
     return (
       <TouchableOpacity
-          style={elements.loginButton}
+          style={style}
           onPress={this.props.onpress}
+          disabled={this.props.disabled}
           >
           <Text style={text.loginButton}>{buttonText}</Text>
         </TouchableOpacity>
