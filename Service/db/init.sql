@@ -41,6 +41,14 @@ CREATE TABLE Watchlist (
 );
 
 
+CREATE TABLE PortfolioHistory (
+   id INT(11) AUTO_INCREMENT PRIMARY KEY,
+   portfolioId INT(11) REFERENCES Portfolio(id),
+   day DATE,
+   value DECIMAL(8, 2)
+);
+
+
 CREATE TABLE PortfolioItem (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    shareCount INT(11),
