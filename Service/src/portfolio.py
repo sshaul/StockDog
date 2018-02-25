@@ -87,7 +87,7 @@ def get_portfolio_history(portfolioId):
    conn = pymysql.connect(user=config['username'], password=config['password'], database='StockDog', 
       cursorclass=pymysql.cursors.DictCursor)
    cursor = conn.cursor()
-   cursor.execute("SELECT * FROM Portfolio AS p JOIN PortfolioHistory AS ph ON p.id = ph.portfolioId " +
+   cursor.execute("SELECT value, day FROM Portfolio AS p JOIN PortfolioHistory AS ph ON p.id = ph.portfolioId " +
       "WHERE portfolioId = %s", portfolioId)
 
    portfolio = cursor.fetchall()
