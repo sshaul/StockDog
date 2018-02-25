@@ -16,7 +16,7 @@ def post_portfolio():
       conn = dbConn.getDBConn()
       cursor = conn.cursor()
    except Exception as e:
-      abort(500)
+      return Response('Failed to make connection to database', status=500)
 
    cursor.execute("INSERT INTO Portfolio(buyPower, userId) VALUES (%s, %s)", 
       (body['buyPower'], body['userId']))
@@ -31,7 +31,7 @@ def get_portfolio(portfolioId):
       conn = dbConn.getDBConn()
       cursor = conn.cursor()
    except Exception as e:
-      abort(500)
+      return Response('Failed to make connection to database', status=500)
 
    cursor.execute("SELECT ticker, shareCount, avgCost, buyPower FROM Portfolio AS p LEFT JOIN PortfolioItem as pi ON p.id = pi.portfolioId " + 
       "WHERE p.id = %s", portfolioId)
@@ -47,7 +47,7 @@ def post_portfolio_history(portfolioId):
       conn = dbConn.getDBConn()
       cursor = conn.cursor()
    except Exception as e:
-      abort(500)
+      return Response('Failed to make connection to database', status=500)
 
    now = datetime.now()
 
@@ -64,7 +64,7 @@ def get_portfolio_history(portfolioId):
       conn = dbConn.getDBConn()
       cursor = conn.cursor()
    except Exception as e:
-      abort(500)
+      return Response('Failed to make connection to database', status=500)
 
    cursor.execute("SELECT value, day FROM Portfolio AS p JOIN PortfolioHistory AS ph ON p.id = ph.portfolioId " +
       "WHERE portfolioId = %s", portfolioId)
