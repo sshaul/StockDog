@@ -50,7 +50,7 @@ class Login:
         dbConnection.execute("INSERT INTO User(firstName, lastName, email, password) VALUES (%s, %s, %s, %s)",
                   (firstName, lastName, email, password));
         conn.commit();
-        return ""
+        return "{}"
     # login
      #@app.route('/user/login', methods = ['POST'])
      #def login():
