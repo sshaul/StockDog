@@ -97,7 +97,7 @@ def post_buy_transaction(ticker):
    cursor = conn.cursor()
 
    cursor.execute("SELECT buyPower FROM Portfolio WHERE id = %s",
-      int(body['userId']))
+      int(body['portfolioId']))
 
    userBuyPower = cursor.fetchone()['buyPower']
    purchaseCost = body['sharePrice'] * body['shareCount']
