@@ -7,7 +7,8 @@ CREATE TABLE User (
    firstName VARCHAR(32),
    lastName VARCHAR(32),
    email VARCHAR(32) UNIQUE,
-   password VARCHAR(1024)
+   password VARCHAR(1024),
+   token VARCHAR(1024)
 );
 
 
