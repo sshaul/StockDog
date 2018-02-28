@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS, Keyboard } from 'react-native';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
@@ -18,11 +18,13 @@ export default class RoundInput extends Component {
     return (
       <TextInput
           style={elements.roundedInput}
+          autoCorrect={false}
           placeholder={placeholder}
           secureTextEntry={secure}
           placeholderTextColor="#aaaaaa"
           onChangeText={this.props.onchange}
           value={this.props.value}
+          onSubmitEditing={Keyboard.dismiss}
         />
     );
   }

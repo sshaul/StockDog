@@ -6,8 +6,9 @@ CREATE TABLE User (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    firstName VARCHAR(32),
    lastName VARCHAR(32),
-   email VARCHAR(32),
-   password VARCHAR(128)
+   email VARCHAR(32) UNIQUE,
+   password VARCHAR(1024),
+   token VARCHAR(1024)
 );
 
 
@@ -38,6 +39,14 @@ CREATE TABLE Watchlist (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    portfolioId INT(11) REFERENCES Portfolio(id),
    ticker VARCHAR(8) REFERENCES Ticker(symbol)
+);
+
+
+CREATE TABLE PortfolioHistory (
+   id INT(11) AUTO_INCREMENT PRIMARY KEY,
+   portfolioId INT(11) REFERENCES Portfolio(id),
+   day DATE,
+   value DECIMAL(8, 2)
 );
 
 

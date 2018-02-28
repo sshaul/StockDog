@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
@@ -17,6 +18,13 @@ export default class Register extends Component {
       email: "",
       password: ""
     };
+
+    this.focusNextField = this.focusNextField.bind(this);
+    this.inputs = {};
+  }
+
+  focusNextField(id) {
+    this.inputs[id].focus();
   }
 
   navToLogin() {
@@ -25,13 +33,47 @@ export default class Register extends Component {
   }
 
   register() {
-    console.log('here');
-    this.props.navigation.navigate('Main', {});
+    var id;
+    // var baseurl = 'http://localhost:5005';
+    var baseurl = 'http://198.199.100.209:5005';
+    var url = baseurl + '/register';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        firstName: this.state.firstname,
+        lastName: this.state.lastname,
+        email: this.state.email,
+        password: this.state.password
+      })
+    }).then((response) => {
+      return response.json();
+    })
+    .then((responseJson) => {
+      console.log('success!!');
+      console.log(responseJson);
+      this.props.navigation.navigate('Login', {email: this.state.email});
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+
+  validatePassword(password) {
+    return password.length >= 8 && password.match('.*[0-9].*');
   }
 
   render() {
+    var disabled = !(this.state.firstname && this.state.lastname 
+                    && this.state.email && this.validatePassword(this.state.password));
     return (
-      <View style={containers.general}>
+      // <View style={containers.general}>
+      <KeyboardAwareScrollView 
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={containers.general}
+        scrollEnabled={false}>
         <Text style={text.title}>StockDog</Text>
         <RoundInput 
           type="first name" 
@@ -62,15 +104,13 @@ export default class Register extends Component {
             }
             items={[
               {
-                label: 'Password must be at least 8 characters long and contain at least 1 special character.',
+                label: 'Password must be at least 8 characters long and contain at least 1 number.',
                 onPress: () => {}
               }
             ]}
-            // animationType='timing'
-            // using the default timing animation
             />
         </View>
-        <WideButton type='register' onpress ={this.register.bind(this)}/>
+        <WideButton type='register' disabled={disabled} onpress={this.register.bind(this)}/>
         <TouchableOpacity
           style={elements.smallTextButton}>
           <Text 
@@ -79,7 +119,8 @@ export default class Register extends Component {
             Return to log in 
           </Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAwareScrollView>
+      // </View>
     );
   }
 }
