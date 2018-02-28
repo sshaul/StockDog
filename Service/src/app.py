@@ -11,6 +11,7 @@ import pymysql
 from stock import stock_api
 from portfolio import portfolio_api
 from login import Login
+from session import session_api
 import json
 import os.path
 
@@ -22,6 +23,7 @@ login = Login(app)
 app.register_blueprint(stock_api)
 app.register_blueprint(login.login_api)
 app.register_blueprint(portfolio_api)
+app.register_blueprint(session_api)
 
 log = logger.Logger(True, True, True)
 
