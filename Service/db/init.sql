@@ -6,8 +6,9 @@ CREATE TABLE User (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    firstName VARCHAR(32),
    lastName VARCHAR(32),
-   email VARCHAR(32),
-   password VARCHAR(128)
+   email VARCHAR(32) UNIQUE,
+   password VARCHAR(1024),
+   token VARCHAR(1024)
 );
 
 

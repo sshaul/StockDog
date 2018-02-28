@@ -1,21 +1,19 @@
 from flask import Flask
 from util import logger
 from flask import Blueprint, abort
-from flask import make_response, request
+from flask import request
 from flask import jsonify
-from flask_cors import CORS
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from flask_login import LoginManager, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymysql
 import json
-import os.path
 import sys
+import manageTokens
 
 
 log = logger.Logger(True, True, True)
 class Login:
 
-    #represents blueprint of login api
     login_api = Blueprint('login_api', __name__)
 
     def __init__(self, app):
@@ -30,31 +28,66 @@ class Login:
         firstName = data['firstName']
         lastName = data['lastName']
         email = data['email']
-        password = data['password']
+        password = generate_password_hash(data['password'])
 
-        #if os.path.exists("credentials.json"):
         try:
             credentialsFile = open("credentials.json", "r")
             credentials = json.load(credentialsFile)
             db_username = credentials['username']
             db_password = credentials['password']
-        #else:
         except Exception as e:
-            log.write("credentials file doesn't exist")
+            log.error("credentials file doesn't exist")
             sys.exit(1)
 
         conn = pymysql.connect(user=db_username, password=db_password, database="Stockdog")
-        # used to execute queries
+        dbConnection = conn.cursor()
+        dbConnection.execute("INSERT INTO User(firstName, lastName, email, password) VALUES (%s, %s, %s, %s)",
+              (firstName, lastName, email, password));
+        conn.commit();
+        return json.dumps({}), 200
+
+    @login_api.route('/user/login', methods = ['POST'])
+    def login():
+        data = request.get_json()
+        errorMessage = {}
+        email = data['email']
+        try:
+            credentialsFile = open("credentials.json", "r")
+            credentials = json.load(credentialsFile)
+            db_username = credentials['username']
+            db_password = credentials['password']
+        except Exception as e:
+            log.error("credentials file doesn't exist")
+            sys.exit(1)
+
+        conn = pymysql.connect(user=db_username, password=db_password, database="Stockdog")
         dbConnection = conn.cursor()
 
-        dbConnection.execute("INSERT INTO User(firstName, lastName, email, password) VALUES (%s, %s, %s, %s)",
-                  (firstName, lastName, email, password));
-        conn.commit();
-        return "{}"
-    # login
-     #@app.route('/user/login', methods = ['POST'])
-     #def login():
+        try:
+            dbConnection.execute("SELECT password FROM User WHERE email = %s", email)
+        except Exception as e:
+            log.error("query couldn't be made")
+        checkPassword = dbConnection.rowcount
 
+        if checkPassword == 0:
+            errorMessage['message'] = 'Username does not exist.'
+            return json.dumps(errorMessage), 406;
+        else:
+            password = dbConnection.fetchone()[0]
+            userPass = data['password']
+            if check_password_hash(password, userPass):
+                dbConnection.execute("SELECT id FROM User WHERE password = %s", password)
+                id = dbConnection.fetchone()[0]
+                token = manageTokens.addTokenToUser(id)
+                userInfo = {'userId': int(id), 'token': token}
+                return json.dumps(userInfo)
+            else:
+                errorMessage['message'] = 'Username does not exist.'
+                return json.dumps(errorMessage), 406;
+
+    #@login_api.route('/user/logout/<token>', methods=['DELETE'])
+    #def logout(token):
+    #    logout_user()
 
 
 
