@@ -1,27 +1,26 @@
 from flask import Flask
 from util import logger
 from flask import Blueprint, abort
-from flask import make_response, request
+from flask import request
 from flask import jsonify
-from flask_cors import CORS
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from flask_login import LoginManager, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymysql
 import json
-import os.path
 import sys
+import manageTokens
 
 
 log = logger.Logger(True, True, True)
 class Login:
 
-    #represents blueprint of login api
     login_api = Blueprint('login_api', __name__)
 
     def __init__(self, app):
         self.app = app
         login_manager = LoginManager()
         login_manager.init_app(app)
+
 
     @login_api.route('/register', methods=["POST"])
     def createAccount():
@@ -45,13 +44,13 @@ class Login:
         dbConnection.execute("INSERT INTO User(firstName, lastName, email, password) VALUES (%s, %s, %s, %s)",
               (firstName, lastName, email, password));
         conn.commit();
-        return "{}"
+        return json.dumps({}), 200
 
     @login_api.route('/user/login', methods = ['POST'])
     def login():
         data = request.get_json()
+        errorMessage = {}
         email = data['email']
-        userPass = data['password']
         try:
             credentialsFile = open("credentials.json", "r")
             credentials = json.load(credentialsFile)
@@ -68,24 +67,27 @@ class Login:
             dbConnection.execute("SELECT password FROM User WHERE email = %s", email)
         except Exception as e:
             log.error("query couldn't be made")
-        #use 0 to get the individual value because tuples returned from dbConnection.execute
-        password = dbConnection.fetchone()[0]
-        if password == 0:
-            log.error("no such user exists")
+        checkPassword = dbConnection.rowcount
+
+        if checkPassword == 0:
+            errorMessage['message'] = 'Username does not exist.'
+            return json.dumps(errorMessage), 406;
         else:
+            password = dbConnection.fetchone()[0]
+            userPass = data['password']
             if check_password_hash(password, userPass):
                 dbConnection.execute("SELECT id FROM User WHERE password = %s", password)
                 id = dbConnection.fetchone()[0]
-                userId = {'userId': id}
-                return json.dumps(userId)
+                token = manageTokens.addTokenToUser(id)
+                userInfo = {'userId': int(id), 'token': token}
+                return json.dumps(userInfo)
             else:
-                log.error("password is incorrect")
-                return ""
+                errorMessage['message'] = 'Username does not exist.'
+                return json.dumps(errorMessage), 406;
 
-
-    #logout functionality
-    def logout():
-        logout_user()
+    #@login_api.route('/user/logout/<token>', methods=['DELETE'])
+    #def logout(token):
+    #    logout_user()
 
 
 
