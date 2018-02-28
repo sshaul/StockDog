@@ -3,21 +3,60 @@ import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import sdLogo from '../img/sd1.png';
 import infoIcon from '../img/feather-icons/info.svg';
+import API from "../api.js";
 
 class Register extends Component {
-   passwordReqs = "Password must be 8 characters long and include a number."
+   passwordReqs = "Password must be 8 characters long and include a number.";
+
+   constructor(props) {
+      super(props);
+      
+      this.api = new API();
+
+      this.state = {
+         fname: "",
+         lname: "",
+         email: "",
+         pass:
+      }
+   }
+
+   register = (event) => {
+      event.preventDefault();
+
+      this.api.register(
+         this.state.fname,
+         this.state.lname,
+         this.state.email,
+         this.state.pass,
+         () => {
+            alert(this.state.email + " has been registered.");
+            this.props.history.push('/');
+         }
+      );
+   };
+
+   registerOnChange = (event) => {
+      this.setState({
+         [event.target.id]: event.target.value
+      });
+   };
 
    render() {
       return (
          <div className="Register">
             <div className="register-area">
                <Link to="/"> <img alt="StockDog Logo" src={sdLogo}/></Link>
-               <form>
-                  <input type="text" placeholder="first name" />
-                  <input type="text" placeholder="last name" />
-                  <input type="email" placeholder="email" />
+               <form onSubmit={this.register}>
+                  <input id="fname" type="text" placeholder="first name" 
+                     onChange={this.registerOnChange} />
+                  <input id="lname" type="text" placeholder="last name"
+                     onChange={this.registerOnChange} />
+                  <input id="email" type="email" placeholder="email" 
+                     onChange={this.registerOnChange} />
                   <div className="register-password-field">
-                     <input type="password" placeholder="password" />
+                     <input id="pass" type="password" placeholder="password" 
+                        onChange={this.registerOnChange} />
                      <div className="register-password-tt">
                         <img src={infoIcon} alt="tooltip"
                            data-tip={this.passwordReqs}/>

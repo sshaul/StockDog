@@ -93,6 +93,7 @@ body {
   text-align: center; }
 
 .register-area input {
+  border: none;
   font-family: 'Open Sans', sans-serif;
   width: 200px;
   display: block;
@@ -190,7 +191,8 @@ body {
   margin: 20px;
   padding: 5px 10px;
   font-size: 20px;
-  width: 150px; }
+  width: 150px;
+  border: none; }
 
 .trans-modal {
   background-color: #F7F8F9; }
