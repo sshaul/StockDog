@@ -7,10 +7,11 @@ import {
 // CSS
 import './css/App.css';
 
-// Components
+// Containers
 import Login from "./containers/Login";
 import Register from "./containers/Register";
 import Stock from "./containers/Stock";
+import Profile from "./containers/Profile"
 
 class App extends Component {
    render() {
@@ -19,6 +20,7 @@ class App extends Component {
             <div className="App">
                <Route exact path="/" component={Login} />
                <Route exact path="/register" component={Register} />
+               <Route exact path="/profile" component={Profile} />
                <Route path="/stock/:ticker" component={Stock} />
             </div>
          </Router>

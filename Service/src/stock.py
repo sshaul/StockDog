@@ -1,15 +1,17 @@
-from flask import Blueprint, abort
+from flask import Blueprint, abort, request, Response
 from urllib.parse import urlencode
 from util import logger
 from pprint import pprint
 from werkzeug.exceptions import *
 from datetime import date, timedelta, datetime
-import json
+import simplejson as json
 import requests
 import re
 import time
+import pymysql
+import dbConn
 
-log = logger.Logger(True, True, False)
+log = logger.Logger(True, True, True)
 
 TODAY = 0
 DAY_AGO = 1
@@ -24,18 +26,88 @@ DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 stock_api = Blueprint('stock_api', __name__)
 
-@stock_api.errorhandler(400)
-@stock_api.errorhandler(404)
-def malformed_request(error):
-   if isinstance(error, BadRequest):
-      return 'Request was formed incorrectly. ' + \
-         'Valid lengths are day, week, month, year.', 400
-   elif isinstance(error, NotFound):
-      log.error(error)
-      return 'Request was formed incorrectly. ' + \
-         'The stock ticker is either invalid or unsupported.', 404
+
+@stock_api.route('/api/stock/sell/<ticker>', methods=['POST'])
+def post_sell_transaction(ticker):
+   body = request.get_json()
+   try:
+      conn = dbConn.getDBConn()
+      cursor = conn.cursor()
+   except Exception as e:
+      return Response('Failed to make connection to database', status=500)
+
+   cursor.execute("SELECT shareCount, avgCost FROM PortfolioItem " +
+      "WHERE portfolioId = %s AND ticker = %s",
+      [body['portfolioId'], ticker])
+
+   userShares = cursor.fetchone()
+   if not userShares or body['shareCount'] > userShares['shareCount']:
+      return Response('Inadequate shares owned to make sale', status=400)
+
+   saleValue = body['sharePrice'] * body['shareCount']
+   newShareCt = userShares['shareCount'] - body['shareCount']
+
+   cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker) " +
+      "VALUES (%s, %s, %s, %s, %s, %s)",
+      [body['sharePrice'], body['shareCount'], 0, datetime.now(), body['portfolioId'], ticker])
+
+   cursor.execute("UPDATE Portfolio SET buyPower = buyPower + %s WHERE id = %s",
+      [saleValue, body['portfolioId']])
+
+   cursor.execute("UPDATE PortfolioItem SET shareCount = %s " 
+      "WHERE portfolioId = %s AND ticker = %s",
+      [newShareCt, body['portfolioId'], ticker])
+
+   conn.commit()
+
+   return Response(status=200)
+
+
+@stock_api.route('/api/stock/buy/<ticker>', methods=['POST'])
+def post_buy_transaction(ticker):
+   body = request.get_json()
+   try:
+      conn = dbConn.getDBConn()
+      cursor = conn.cursor()
+   except Exception as e:
+      return Response('Failed to make connection to database', status=500)
+
+   cursor.execute("SELECT buyPower FROM Portfolio WHERE id = %s",
+      int(body['portfolioId']))
+
+   userBuyPower = cursor.fetchone()['buyPower']
+   purchaseCost = body['sharePrice'] * body['shareCount']
+
+   if userBuyPower < purchaseCost:
+      return Response('Insufficient buying power to make purchase', status=400)
+
+   remainingBuyPower = float(userBuyPower) - purchaseCost
+
+   cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker) " + 
+      "VALUES (%s, %s, %s, %s, %s, %s)",
+      (body['sharePrice'], body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker))
+
+   cursor.execute("UPDATE Portfolio SET buyPower = %s WHERE id = %s",
+      [remainingBuyPower, body['portfolioId']])
+
+   cursor.execute("SELECT * FROM PortfolioItem WHERE portfolioId = %s AND ticker = %s",
+      [body['portfolioId'], ticker])
+
+   portfolioItem = cursor.fetchone()
+   if portfolioItem:
+      newShareCt = portfolioItem['shareCount'] + body['shareCount']
+      newAvgCost = ((portfolioItem['avgCost'] * portfolioItem['shareCount']) + purchaseCost) // newShareCt
+      cursor.execute("UPDATE PortfolioItem SET shareCount = %s, avgCost = %s " +
+         "WHERE portfolioId = %s AND ticker = %s",
+         [newShareCt, newAvgCost, body['portfolioId'], ticker])
    else:
-      return 'Something went wrong...', 400
+      cursor.execute("INSERT INTO PortfolioItem(shareCount, avgCost, portfolioId, ticker) " +
+         "VALUES (%s, %s, %s, %s)",
+         [body['shareCount'], body['sharePrice'], body['portfolioId'], ticker])
+   
+   conn.commit()
+
+   return Response(status=200)
 
 
 @stock_api.route('/api/stock/<ticker>/history/<length>')
@@ -44,7 +116,8 @@ def get_history(ticker, length):
       function = getFunction(length)
       outputSize = getOutputSize(length)
    except Exception as e:
-      abort(400)
+      return Response('Request was formed incorrectly. ' +
+         'Valid lengths are day, week, month, year.', status=400)
 
    interval = getInterval(length)
    apiKey = getApiKey()
@@ -68,7 +141,8 @@ def get_history(ticker, length):
    log.info('API hitting: ' + alphaVantageApi + urlencode(queryParams))
 
    if response.get('Error Message'):
-      abort(404)
+      return Response('Request was formed incorrectly. ' +
+         'The stock ticker is either invalid or unsupported.', status=400)
 
    data = formatData(response, interval, length)
    parseTime = time.time() - startTime
@@ -114,9 +188,7 @@ def getApiKey():
 def getStartTime(timeDelta):
    today = datetime.now()
    pastDate = today - timedelta(days=timeDelta)
-   log.debug(str(pastDate))
    startTime = pastDate.replace(hour=8)
-   log.debug(str(startTime))
    return startTime
 
 

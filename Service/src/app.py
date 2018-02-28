@@ -9,6 +9,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from flask import jsonify
 import pymysql
 from stock import stock_api
+from portfolio import portfolio_api
 from login import Login
 import json
 import os.path
@@ -17,12 +18,10 @@ app = Flask(__name__)
 
 CORS(app)
 
-
-
-
 login = Login(app)
 app.register_blueprint(stock_api)
 app.register_blueprint(login.login_api)
+app.register_blueprint(portfolio_api)
 
 log = logger.Logger(True, True, True)
 
@@ -42,8 +41,6 @@ def getPortNum(defaultPort=5005):
    parser.add_argument('-p','--port', type=int, help='specify the port number')
    args = parser.parse_args()
    return args.port or defaultPort 
-
-
 
 if __name__ == '__main__':
    app.run(debug=True, port=getPortNum(), host='0.0.0.0')

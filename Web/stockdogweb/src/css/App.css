@@ -220,5 +220,21 @@ body {
   background-color: #ed4d0a; }
 
 /*===========================================================================*/
+/* Stock
+-----------------------------------------------------------------------------*/
+.Profile h1 {
+  font-family: 'Open Sans', sans-serif;
+  color: #F7F8F9; }
+
+.Profile h2 {
+  font-family: 'Open Sans', sans-serif;
+  color: #63CEC2; }
+
+.profile-content h1 {
+  display: block;
+  clear: both;
+  padding: 0 10px; }
+
+/*===========================================================================*/
 
 /*# sourceMappingURL=App.css.map */

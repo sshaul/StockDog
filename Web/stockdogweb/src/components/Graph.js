@@ -130,7 +130,7 @@ class Graph extends Component {
 
    render() {
       return (
-         <div className={Graph}>
+         <div className="Graph">
             <div className="stock-titles">
                <h1>{this.props.title}</h1>
                <h2>${this.state.currentPrice}</h2>

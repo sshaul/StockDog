@@ -27,6 +27,15 @@ export default elements = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 10
     },
+    disabledLoginButton: {
+        height: 45,
+        width: 250,
+        backgroundColor: colors.grey,
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10
+    },
     smallTextButton: {
         height: 25,
         backgroundColor: colors.dark,
