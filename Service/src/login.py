@@ -82,7 +82,7 @@ class Login:
                 userInfo = {'userId': int(id), 'token': token}
                 return json.dumps(userInfo), 200
             else:
-                errorMessage['message'] = 'Username does not exist.'
+                errorMessage['message'] = 'Password is incorrect.'
                 return json.dumps(errorMessage), 401;
 
     #@login_api.route('/user/logout/<token>', methods=['DELETE'])
