@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withCookies } from 'react-cookie';
+import API from 'api';
 
 import sdLogo from '../img/sd1.png';
 
@@ -27,7 +28,10 @@ class Login extends Component {
 
       this.api.login(
          this.state.username,
-         this.state.pass
+         this.state.pass,
+         () => {
+            this.props.history.push('/') 
+         }
       );
    }
 
@@ -38,10 +42,11 @@ class Login extends Component {
                <img alt="StockDog Logo" src={sdLogo}/>
                <form>
                   <input id="username" type="email" placeholder="email"
-                     onChange={loginOnChange} />
+                     onChange={this.loginOnChange} />
                   <input id="pass" type="password" placeholder="password" 
-                     onChange={loginOnChange} />
+                     onChange={this.loginOnChange} />
                   <button id="login-reg-submit-btn"
+                     onClick={this.login}
                      className="submit-btn"><span>SUBMIT</span></button>
                </form>
                <div className="login-links">

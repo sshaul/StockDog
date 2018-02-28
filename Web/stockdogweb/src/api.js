@@ -24,7 +24,7 @@ class API {
    };
 
    register = (fname, lname, email, pass, callback) => {
-      axios.post(this.baseURL + "/user/register", {
+      axios.post(this.baseURL + "/register", {
          "firstName": fname,
          "lastName": lname,
          "email": email,
@@ -38,16 +38,17 @@ class API {
          });
    };
 
-   login = (username, password) => {
+   login = (username, password, callback) => {
       axios.post(this.baseURL + "/user/login", {
-         "username": username,
+         "email": username,
          "password": password
       }, this.config)
          .then((res) => {
-            callback();
+            callback(res["data"]["userId"], res["data"]["userId"]);
          })
          .catch((err) => {
             console.log(err);
+            alert("Login unsuccessful. Please check username and password.");
          });
    };
 }

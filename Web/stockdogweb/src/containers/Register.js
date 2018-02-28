@@ -17,7 +17,7 @@ class Register extends Component {
          fname: "",
          lname: "",
          email: "",
-         pass:
+         pass: ""
       }
    }
 
