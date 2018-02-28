@@ -71,7 +71,7 @@ class Login:
 
         if checkPassword == 0:
             errorMessage['message'] = 'Username does not exist.'
-            return json.dumps(errorMessage), 406;
+            return json.dumps(errorMessage), 401;
         else:
             password = dbConnection.fetchone()[0]
             userPass = data['password']
@@ -83,7 +83,7 @@ class Login:
                 return json.dumps(userInfo)
             else:
                 errorMessage['message'] = 'Username does not exist.'
-                return json.dumps(errorMessage), 406;
+                return json.dumps(errorMessage), 401;
 
     #@login_api.route('/user/logout/<token>', methods=['DELETE'])
     #def logout(token):
