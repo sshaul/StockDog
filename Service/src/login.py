@@ -80,7 +80,7 @@ class Login:
                 id = dbConnection.fetchone()[0]
                 token = manageTokens.addTokenToUser(id)
                 userInfo = {'userId': int(id), 'token': token}
-                return json.dumps(userInfo)
+                return json.dumps(userInfo), 200
             else:
                 errorMessage['message'] = 'Username does not exist.'
                 return json.dumps(errorMessage), 401;
