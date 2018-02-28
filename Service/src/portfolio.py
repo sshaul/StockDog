@@ -25,6 +25,24 @@ def post_portfolio():
    return Response(status=200)
 
 
+@portfolio_api.route('/api/portfolio', methods=['GET'])
+def get_portfolios():
+   userId = request.args.get('userId')
+   try:
+      conn = dbConn.getDBConn()
+      cursor = conn.cursor()
+   except Exception as e:
+      return Response('Failed to make connection to database', status=500)
+
+   if userId is not None:
+      cursor.execute("SELECT * FROM Portfolio WHERE userId = %s", userId)
+   else:
+      cursor.execute("SELECT * FROM Portfolio")
+
+   portfolios = cursor.fetchall()
+   return json.dumps(portfolios)
+
+
 @portfolio_api.route('/api/portfolio/<portfolioId>', methods=['GET'])
 def get_portfolio(portfolioId):
    try:
