@@ -37,6 +37,5 @@ class Login:
             return jsonify(userId=user['id'], token=token)
          else:
             return Response('Incorrect password for user with email ' + body['email'], status=401)
-
       else:
          return Response('No user with email ' + body['email'] + ' exists', status=401)
