@@ -112,6 +112,9 @@ class Graph extends Component {
          newData['data']['labels'] = labels;
          // Setting the current price and round to the 2nd decimal 
          newData['currentPrice'] = Math.round(prices[prices.length-1]*100)/100;
+         // Update parent's current price
+         this.props.updateCurrentPrice(
+            Math.round(prices[prices.length-1]*100)/100);
          // Make the points smaller
          newData['data']['datasets'][0]['pointHoverRadius'] = 5;
          newData['data']['datasets'][0]['pointHitRadius'] = 10;
@@ -125,7 +128,8 @@ class Graph extends Component {
 
    // Redirect to a different stock page
    changeStock = (stock) => {
-      this.props.history.push('/stock/' + this.state.searchStock); 
+      this.props.history.push('/stock/' + this.state.searchStock + "/" +
+         this.props.portfolioId); 
    }
 
    render() {
@@ -145,9 +149,10 @@ class Graph extends Component {
             <div className="stock-chart">
                <Line data={this.state.data} options={this.options}/>
             </div>
-            <div className="stock-shares-owned">
-               23 shares owned
-            </div>
+            {//<div className="stock-shares-owned">
+               //  23 shares owned
+               // </div>
+            }
             <div className="stock-chart-time-select">
                <TimeFrame timeFrame='day' text='1D' getData={this.getData} />
                <TimeFrame timeFrame='week' text='1W' getData={this.getData}/>

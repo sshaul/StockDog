@@ -20,8 +20,7 @@ body {
   height: 50px;
   padding: 10px;
   font-size: 20px;
-  cursor: pointer;
-  margin: 10px; }
+  cursor: pointer; }
 
 .submit-btn span {
   position: relative;
@@ -49,7 +48,7 @@ body {
   font-family: 'Open Sans', sans-serif; }
 
 .login-area {
-  width: 262px;
+  width: 260px;
   height: 270px;
   position: absolute;
   margin: -180px 0 0 -131px;
@@ -91,7 +90,7 @@ body {
   font-family: 'Open Sans', sans-serif; }
 
 .register-area {
-  width: 262px;
+  width: 260px;
   height: 540px;
   position: absolute;
   margin: -250px 0 0 -131px;
@@ -260,6 +259,17 @@ body {
   right: 0;
   bottom: 0;
   margin: auto; }
+
+#create-portfolio-area input {
+  border: none;
+  font-family: 'Open Sans', sans-serif;
+  width: 200px;
+  display: block;
+  padding: 5px;
+  margin-bottom: 10px;
+  height: 50px;
+  width: 260px;
+  font-size: 20px; }
 
 /*===========================================================================*/
 

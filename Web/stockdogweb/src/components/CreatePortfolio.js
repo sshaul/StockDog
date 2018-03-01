@@ -15,17 +15,30 @@ class CreatePortfolio extends Component {
       this.api = new API();
 
       this.cookies = this.props.cookies;
+
+      this.state = {
+         portfolioName: ""
+      };
    }
 
    createPortfolio = () => {
-      this.api.createPortfolio(this.cookies.get("userId"), 1000);
+      this.api.createPortfolio(this.cookies.get("userId"), 
+                               this.state.portfolioName, 1000);
       this.props.history.push("/portfolio");
-   }
+   };
+
+   _onChange = (event) => {
+      this.setState({
+         [event.target.id]: event.target.value
+      });
+   };
 
    render() {
       return (
          <div className="CreatePortfolio">
             <div id="create-portfolio-area">
+               <input id="portfolioName create-portfolio-name" type="text" 
+                  placeholder="Name of portfolio" />
                <button className="submit-btn" id="create-portfolio-btn"
                   onClick={this.createPortfolio}>
                   <span>Create a portfolio</span></button>

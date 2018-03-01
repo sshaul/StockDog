@@ -11,6 +11,7 @@ class Stock extends Component {
 
       this.state = {
          ticker: this.props.match.params.ticker.toUpperCase(),
+         portfolioId: this.props.match.params.portfolioId,
          currentPrice: 0,
          buyOpen: false,
          sellOpen: false,
@@ -40,19 +41,36 @@ class Stock extends Component {
       });
    };
 
-   buy = () => {
+   updateCurrentPrice = (currentPrice) => {
+      this.setState({
+         currentPrice 
+      });
+   }
+
+   buy = (event) => {
+      event.preventDefault();
+
+      console.log(this.state.ticker);
+      console.log(this.state.buyCount);
+
       this.api.buy(
          this.state.ticker,
-         this.state.buyCount,
-         this.state.currentPrice,
-         this.state.portfolioId
+         parseInt(this.state.buyCount, 10),
+         parseFloat(this.state.currentPrice),
+         this.state.portfolioId,
+         () => {
+            alert(this.state.buyCount + " shares of " +
+                  this.state.ticker + " bought at " +
+                  this.state.currentPrice + ".");
+         }
       );
    }
 
    render() {
       return (
          <div className="Stock">
-            <Graph title={this.state.ticker} ticker={this.state.ticker} />
+            <Graph title={this.state.ticker} ticker={this.state.ticker} 
+               updateCurrentPrice={this.updateCurrentPrice} />
             <div className="stock-buy-sell-btns">
                <button id="stock-buy-btn" className="stock-btn submit-btn"
                   onClick={this.onOpenBuyModal}><span>BUY</span></button>
@@ -64,8 +82,9 @@ class Stock extends Component {
                   <div className="trans-modal-content">
                      <form>
                         <input id="buyCount" type="number" min="1" 
-                           placeholder="amount" />
-                        <button className="buy-btn submit-btn">
+                           placeholder="amount" onChange={this._onChange} />
+                        <button className="buy-btn submit-btn"
+                           onClick={this.buy}>
                            <span>SUBMIT</span></button>
                      </form>
                   </div>
