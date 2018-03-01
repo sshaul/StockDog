@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
+import { instanceOf } from 'prop-types';
 import Graph from '../components/Graph';
+import { withCookies, Cookies } from 'react-cookie';
 
 class Profile extends Component {
+   static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
+   };
+
+   constructor(props) {
+      super(props);
+
+      this.cookies = this.props.cookies;
+   }
+
    render() {
       return (
          <div className="Profile">
@@ -15,4 +27,4 @@ class Profile extends Component {
    }
 }
 
-export default Profile;
+export default withCookies(Profile);

@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
+import { instanceOf } from 'prop-types';
 import { Link } from 'react-router-dom';
-import { withCookies } from 'react-cookie';
+import { withCookies, Cookies } from 'react-cookie';
 import API from 'api';
 
 import sdLogo from '../img/sd1.png';
 
 class Login extends Component {
+   static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
+   };
+
    constructor(props) {
       super(props);
 
       this.api = new API();
+
+      this.cookies = this.props.cookies;
 
       this.state = {
          username: "",
@@ -29,8 +36,11 @@ class Login extends Component {
       this.api.login(
          this.state.username,
          this.state.pass,
-         () => {
-            this.props.history.push('/') 
+         (userId, token) => {
+            // Save userId and token in cookie
+            this.cookies.set("userId", userId);
+            this.cookies.set("token", token);
+            this.props.history.push('/profile'); 
          }
       );
    }
@@ -59,4 +69,4 @@ class Login extends Component {
    }
 }
 
-export default Login;
+export default withCookies(Login);

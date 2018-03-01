@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { CookiesProvider } from 'react-cookie';
 import registerServiceWorker from './registerServiceWorker';
+import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
    <CookiesProvider>
       <App />
-   </CookiesProvider>, 
+   </CookiesProvider>,
    document.getElementById('root'));
 registerServiceWorker();

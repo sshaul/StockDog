@@ -44,7 +44,7 @@ class API {
          "password": password
       }, this.config)
          .then((res) => {
-            callback(res["data"]["userId"], res["data"]["userId"]);
+            callback(res["data"]["userId"], res["data"]["token"]);
          })
          .catch((err) => {
             console.log(err);

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {
-   BrowserRouter as Router,
-   Route
+   BrowserRouter as Router
 } from 'react-router-dom';
+import AuthenticatedRoute from "components/AuthenticatedRoute";
+import UnauthenticatedRoute from "components/UnauthenticatedRoute";
+import { withCookies } from "react-cookie";
 
 // CSS
 import './css/App.css';
@@ -18,14 +20,18 @@ class App extends Component {
       return (
          <Router>
             <div className="App">
-               <Route exact path="/" component={Login} />
-               <Route exact path="/register" component={Register} />
-               <Route exact path="/profile" component={Profile} />
-               <Route path="/stock/:ticker" component={Stock} />
+               <UnauthenticatedRoute exact path="/" component={Login}
+                  appProps={this.props}/>
+               <UnauthenticatedRoute exact path="/register" 
+                  component={Register} appProps={this.props} />
+               <AuthenticatedRoute exact path="/profile" component={Profile} 
+                  appProps={this.props}/>
+               <UnauthenticatedRoute path="/stock/:ticker" component={Stock} 
+                  appProps={this.props}/>
             </div>
          </Router>
       );
    }
 }
 
-export default App;
+export default withCookies(App);
