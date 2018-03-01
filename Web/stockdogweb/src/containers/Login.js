@@ -40,7 +40,7 @@ class Login extends Component {
             // Save userId and token in cookie
             this.cookies.set("userId", userId);
             this.cookies.set("token", token);
-            this.props.history.push('/profile'); 
+            this.props.history.push('/portfolio'); 
          }
       );
    }

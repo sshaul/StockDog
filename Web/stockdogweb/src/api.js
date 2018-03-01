@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Contains all of the API calls
 class API {
-   baseURL = 'http://198.199.100.209:5005/api/';
+   baseURL = 'http://198.199.100.209:5005/api';
    config = {
       "headers": {
          "Content-Type": "application/json"
@@ -39,7 +39,7 @@ class API {
    };
 
    login = (username, password, callback) => {
-      axios.post(this.baseURL + "/user/login", {
+      axios.post(this.baseURL + "/login", {
          "email": username,
          "password": password
       }, this.config)
@@ -62,12 +62,22 @@ class API {
          });
    };
 
-   createPortfolio = (userId, buyPower, callback) => {
+   createPortfolio = (userId, name, buyPower, callback) => {
       axios.post(this.baseURL + "/portfolio", {
-         userId, buyPower
+         userId, name, buyPower
       }, this.config)
          .then((res) => {
             console.log("Portfolio created.");
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   };
+
+   getPortfolio = (portfolioId, callback) => {
+      axios.get(this.baseURL + "/" + portfolioId, this.config)
+         .then((res) => {
+            callback(res["data"])
          })
          .catch((err) => {
             console.log(err);

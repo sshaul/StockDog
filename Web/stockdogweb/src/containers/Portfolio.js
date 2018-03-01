@@ -20,7 +20,8 @@ class Portfolio extends Component {
 
       this.state = {
          portfolios: [],
-         portfolioId: null
+         portfolioId: null,
+         holdings: []
       }
    }
 
@@ -35,16 +36,24 @@ class Portfolio extends Component {
       });
    }
 
+   getPortfolio = () => {
+      this.api.getPortforlio(this.state.portfolioId, (holdings) => {
+         this.setState({
+            holdings: []
+         });
+      });
+   };
+
    render() {
-      if (this.state.portfolio === null) {
+      if (this.state.portfolioId === null) {
          return (
             <CreatePortfolio />
          )
       }
-
       return (
          <div className="Portfolio">
-            <Graph title="Portfolio" ticker="AMD" />
+            <Graph title="Portfolio" ticker="AMD" 
+               portfolioId={this.state.portfolioId}/>
             <div className="portfolio-content">
                <h1>Owned</h1>
                <h1>Watchlist</h1>
