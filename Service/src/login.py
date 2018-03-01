@@ -1,5 +1,5 @@
-from flask import Blueprint, abort, Response, request, jsonify
-from flask_login import LoginManager, logout_user
+from flask import Blueprint, request, Response, jsonify
+from flask_login import LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymysql
 import dbConn

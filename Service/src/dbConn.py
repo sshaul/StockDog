@@ -1,4 +1,3 @@
-from pprint import pprint
 import simplejson as json
 import pymysql
 

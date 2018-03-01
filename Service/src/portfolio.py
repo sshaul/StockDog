@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, request, Response
+from flask import Blueprint, request, Response
 from util import logger
 from datetime import datetime
 import pymysql
