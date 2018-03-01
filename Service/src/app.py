@@ -4,22 +4,26 @@ from util import logger
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from register import register_api
+from user import user_api
 from stock import stock_api
 from portfolio import portfolio_api
 from login import Login
 from session import session_api
+from seed import seed_api
+from nuke import nuke_api
 
 app = Flask(__name__)
 
 CORS(app)
 
 login = Login(app)
-app.register_blueprint(register_api)
+app.register_blueprint(user_api)
 app.register_blueprint(stock_api)
 app.register_blueprint(login.login_api)
 app.register_blueprint(portfolio_api)
 app.register_blueprint(session_api)
+app.register_blueprint(seed_api)
+app.register_blueprint(nuke_api)
 
 log = logger.Logger(True, True, True)
 
