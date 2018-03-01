@@ -68,6 +68,25 @@ def post_seed():
    insertPortfolioItem(cursor, 1, 230, 3, "NVDA")
    insertPortfolioItem(cursor, 10, 44, 3, "MU")
 
+   insertWatchlistItem(cursor, 1, "PLUG")
+   insertWatchlistItem(cursor, 1, "AAPL")
+   insertWatchlistItem(cursor, 1, "SNAP")
+   insertWatchlistItem(cursor, 1, "SPOT")
+   insertWatchlistItem(cursor, 1, "NFLX")
+   insertWatchlistItem(cursor, 1, "NVDA")
+   insertWatchlistItem(cursor, 1, "MU")
+   insertWatchlistItem(cursor, 1, "TTS")
+   insertWatchlistItem(cursor, 2, "INTU")
+   insertWatchlistItem(cursor, 2, "COST")
+   insertWatchlistItem(cursor, 2, "TEAR")
+   insertWatchlistItem(cursor, 2, "TWTR")
+   insertWatchlistItem(cursor, 2, "BABA")
+   insertWatchlistItem(cursor, 2, "BTC")
+   insertWatchlistItem(cursor, 3, "BTC")
+   insertWatchlistItem(cursor, 3, "LTC")
+   insertWatchlistItem(cursor, 3, "RPL")
+   insertWatchlistItem(cursor, 3, "ETH")
+
    conn.commit()
    return Response(status=200)
 
@@ -99,3 +118,6 @@ def insertPortfolioItem(cursor, shareCount, avgCost, portfolioId, ticker):
          [shareCount, avgCost, portfolioId, ticker])
    
 
+def insertWatchlistItem(cursor, portfolioId, ticker):
+   cursor.execute("INSERT INTO Watchlist(portfolioId, ticker) VALUES (%s, %s)",
+      [portfolioId, ticker])
