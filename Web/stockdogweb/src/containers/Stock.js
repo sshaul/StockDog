@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import Modal from 'react-responsive-modal';
-
+import API from 'api';
 import Graph from '../components/Graph';
 
 class Stock extends Component {
    constructor(props) {
       super(props);
 
+      this.api = new API();
+
       this.state = {
          ticker: this.props.match.params.ticker.toUpperCase(),
          currentPrice: 0,
          buyOpen: false,
-         sellOpen: false
+         sellOpen: false,
+         buyCount: null
       };
    }
 
@@ -31,6 +34,21 @@ class Stock extends Component {
       this.setState({sellOpen: false});
    }
 
+   _onChange = (event) => {
+      this.setState({
+         [event.target.id]: event.target.value
+      });
+   };
+
+   buy = () => {
+      this.api.buy(
+         this.state.ticker,
+         this.state.buyCount,
+         this.state.currentPrice,
+         this.state.portfolioId
+      );
+   }
+
    render() {
       return (
          <div className="Stock">
@@ -45,7 +63,8 @@ class Stock extends Component {
                   className="trans-modal">
                   <div className="trans-modal-content">
                      <form>
-                        <input type="number" min="1" placeholder="amount" />
+                        <input id="buyCount" type="number" min="1" 
+                           placeholder="amount" />
                         <button className="buy-btn submit-btn">
                            <span>SUBMIT</span></button>
                      </form>

@@ -19,6 +19,42 @@ body {
    background-color: $bg-color;
    font-family: 'Open Sans', sans-serif;
 }
+
+.submit-btn {
+   transition: all 0.5s;
+   color: $white-color;
+   border: none;
+   width: 260px;
+   height: 50px;
+   padding: 10px;
+   font-size: 20px;
+   cursor: pointer;
+   margin: 10px;
+}
+
+.submit-btn span {
+   position: relative;
+   transition: 0.5s;
+}
+
+.submit-btn span:after {
+   content: '\00bb';
+   position: absolute;
+   opacity: 0;
+   top: -2px;
+   right: -20px;
+   transition: 0.5s;
+}
+
+.submit-btn:hover span {
+   padding-right: 15px;
+}
+
+.submit-btn:hover span:after {
+   opacity: 1;
+   right: 0;
+}
+
 /*===========================================================================*/
 
 /* Login
@@ -66,34 +102,6 @@ body {
    padding: 10px;
    font-size: 20px;
    margin-bottom: 10px;
-}
-
-.submit-btn {
-   cursor: pointer;
-   transition: all 0.5s;
-}
-
-.submit-btn span {
-   position: relative;
-   transition: 0.5s;
-}
-
-.submit-btn span:after {
-   content: '\00bb';
-   position: absolute;
-   opacity: 0;
-   top: -2px;
-   right: -20px;
-   transition: 0.5s;
-}
-
-.submit-btn:hover span {
-   padding-right: 15px;
-}
-
-.submit-btn:hover span:after {
-   opacity: 1;
-   right: 0;
 }
 
 /*===========================================================================*/
@@ -270,21 +278,40 @@ body {
 }
 /*===========================================================================*/
 
-/* Stock
+/* Portfolio
 -----------------------------------------------------------------------------*/
-.Profile h1 {
+.Portfolio h1 {
    font-family: 'Open Sans', sans-serif;
    color: $white-color;
 }
 
-.Profile h2 {
+.Portfolio h2 {
    font-family: 'Open Sans', sans-serif;
    color: $green-color;
 }
 
-.profile-content h1 {
+.portfolio-content h1 {
    display: block;
    clear: both;
    padding: 0 10px;
+}
+/*===========================================================================*/
+
+/* CreatePortfolio
+-----------------------------------------------------------------------------*/
+#create-portfolio-btn {
+   background-color: $green-color;
+   margin: 0px;
+}
+
+#create-portfolio-area {
+   position: absolute;
+   width: 262px;
+   height: 52px;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   margin: auto;
 }
 /*===========================================================================*/

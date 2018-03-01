@@ -13,7 +13,7 @@ import './css/App.css';
 import Login from "./containers/Login";
 import Register from "./containers/Register";
 import Stock from "./containers/Stock";
-import Profile from "./containers/Profile"
+import Portfolio from "./containers/Portfolio"
 
 class App extends Component {
    render() {
@@ -24,10 +24,10 @@ class App extends Component {
                   appProps={this.props}/>
                <UnauthenticatedRoute exact path="/register" 
                   component={Register} appProps={this.props} />
-               <AuthenticatedRoute exact path="/profile" component={Profile} 
+               <AuthenticatedRoute exact path="/portfolio" component={Portfolio} 
                   appProps={this.props}/>
-               <UnauthenticatedRoute path="/stock/:ticker" component={Stock} 
-                  appProps={this.props}/>
+               <AuthenticatedRoute path="/stock/:ticker/:portfolioId" 
+                  component={Stock} appProps={this.props}/>
             </div>
          </Router>
       );

@@ -17,7 +17,7 @@ const UnauthenticatedRoute = ({component: Component, appProps: P, ...rest}) => {
          {...rest}
          render={props =>
             isAuthenticated ? (
-               <Redirect to={{pathname: '/profile', 
+               <Redirect to={{pathname: '/portfolio', 
                   state: { from: props.location}}} />
             ) : (
                <Component {...props} />
