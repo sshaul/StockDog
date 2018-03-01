@@ -1,8 +1,6 @@
-from flask import Blueprint, abort, request, Response
+from flask import Blueprint, request, Response
 from urllib.parse import urlencode
 from util import logger
-from pprint import pprint
-from werkzeug.exceptions import *
 from datetime import date, timedelta, datetime
 import simplejson as json
 import requests
@@ -218,7 +216,6 @@ def formatData(jsonData, interval, length):
    
    elif length == 'now':
       slicedTimeSeriesData = getRecentDatum(timeSeriesData, DATETIME_FORMAT)
-      pprint (slicedTimeSeriesData)
 
    else:
       raise Exception('Invalid length provided')

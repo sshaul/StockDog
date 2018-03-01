@@ -1,29 +1,31 @@
 import argparse
 from util import logger
 
-from flask import Flask
-from flask import make_response, request
-from flask import jsonify
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
-from flask import jsonify
-import pymysql
-from stock import stock_api
-from portfolio import portfolio_api
+
+from user import user_api
 from login import Login
 from session import session_api
-import json
-import os.path
+from stock import stock_api
+from portfolio import portfolio_api
+from watchlist import watchlist_api
+from seed import seed_api
+from nuke import nuke_api
 
 app = Flask(__name__)
 
 CORS(app)
 
 login = Login(app)
-app.register_blueprint(stock_api)
+app.register_blueprint(user_api)
 app.register_blueprint(login.login_api)
-app.register_blueprint(portfolio_api)
 app.register_blueprint(session_api)
+app.register_blueprint(stock_api)
+app.register_blueprint(portfolio_api)
+app.register_blueprint(watchlist_api)
+app.register_blueprint(seed_api)
+app.register_blueprint(nuke_api)
 
 log = logger.Logger(True, True, True)
 
@@ -35,7 +37,7 @@ def index():
 
 @app.errorhandler(404)
 def not_found(error):
-   return make_response(jsonify({'error': 'Not found'}), 404)
+   return jsonify({'error': 'Not found'}), 404
 
 
 def getPortNum(defaultPort=5005):
@@ -46,5 +48,3 @@ def getPortNum(defaultPort=5005):
 
 if __name__ == '__main__':
    app.run(debug=True, port=getPortNum(), host='0.0.0.0')
-
-#logout

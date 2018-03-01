@@ -1,39 +1,40 @@
-from flask import Flask
+from flask import Flask, Response
 from util import logger
 import pymysql
 import json
 import sys
 import tokenize
 import random
+import dbConn
 
 log = logger.Logger(True, True, True)
 
 def generateToken():
-    return  '%064x' % random.randrange(16**64)
+   return  '%064x' % random.randrange(16**64)
+
+
+def isTokenUnique(cursor, token):
+   cursor.execute("SELECT * FROM User WHERE token = %s", token)
+   return False if cursor.rowcount > 0 else True
+
+
+def getUniqueToken(cursor):
+   token = generateToken()
+   while not isTokenUnique(cursor, token):
+      token = generateToken()
+
+   return token
+
 
 def addTokenToUser(userId):
-    token = generateToken()
-    try:
-        credentialsFile = open("credentials.json", "r")
-        credentials = json.load(credentialsFile)
-        db_username = credentials['username']
-        db_password = credentials['password']
-    except Exception as e:
-        log.error("credentials file doesn't exist")
-        sys.exit(1)
+   try:
+      conn = dbConn.getDBConn()
+      cursor = conn.cursor()
+   except Exception as e:
+      raise Exception(e)
 
-    conn = pymysql.connect(user=db_username, password=db_password, database="Stockdog")
-    dbConnection = conn.cursor()
+   token = getUniqueToken(cursor)
+   cursor.execute("UPDATE User SET token = %s WHERE id = %s", [token, userId])
+   conn.commit()
 
-    dbConnection.execute("SELECT token FROM User WHERE token = %s", token)
-    tokenExists = dbConnection.rowcount
-    if tokenExists != 0:
-        while tokenExists != 0:
-            token = generateToken()
-            dbConnection.execute("SELECT token FROM User WHERE token = %s", token)
-            tokenExists = dbConnection.rowcount
-    updateQuery = "UPDATE User SET token = %s WHERE id = %s"
-    updateData = (token, userId)
-    dbConnection.execute(updateQuery, updateData)
-    conn.commit()
-    return token
+   return token

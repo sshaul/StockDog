@@ -1,7 +1,5 @@
+from flask import Blueprint, request, Response, jsonify
 from util import logger
-from flask import Blueprint, abort, Response
-from flask import request
-from flask import jsonify
 import pymysql
 import json
 import dbConn

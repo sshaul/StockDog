@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, request, Response
+from flask import Blueprint, request, Response
 from util import logger
 from datetime import datetime
 import pymysql
@@ -18,8 +18,8 @@ def post_portfolio():
    except Exception as e:
       return Response('Failed to make connection to database', status=500)
 
-   cursor.execute("INSERT INTO Portfolio(buyPower, userId) VALUES (%s, %s)", 
-      (body['buyPower'], body['userId']))
+   cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)", 
+      [body['name'], body['buyPower'], body['userId']])
    conn.commit()
 
    return Response(status=200)
@@ -51,7 +51,7 @@ def get_portfolio(portfolioId):
    except Exception as e:
       return Response('Failed to make connection to database', status=500)
 
-   cursor.execute("SELECT ticker, shareCount, avgCost, buyPower FROM Portfolio AS p LEFT JOIN PortfolioItem as pi ON p.id = pi.portfolioId " + 
+   cursor.execute("SELECT ticker, shareCount, avgCost, name, buyPower FROM Portfolio AS p LEFT JOIN PortfolioItem as pi ON p.id = pi.portfolioId " + 
       "WHERE p.id = %s", portfolioId)
 
    portfolio = cursor.fetchall()

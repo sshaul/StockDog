@@ -1,0 +1,243 @@
+{
+	"variables": [],
+	"info": {
+		"name": "StockDog",
+		"_postman_id": "0483701c-e170-1e23-6e10-2fe4cea63bcd",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register a user",
+			"request": {
+				"url": "http://localhost:5005/api/user",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\" : \"NISH\",\n\t\"lastName\" : \"DARA\",\n\t\"email\" : \"ndara\",\n\t\"password\" : \"yeet\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Make a Portfolio",
+			"request": {
+				"url": "http://localhost:5005/api/portfolio",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"techPortfolio\",\n\t\"buyPower\" : 1000,\n\t\"userId\" : 1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Buy stock",
+			"request": {
+				"url": "http://localhost:5005/api/stock/buy/MSFT",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"portfolioId\": 1,\n\t\"shareCount\": 4,\n\t\"sharePrice\": 100.11\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get stock history",
+			"request": {
+				"url": "http://localhost:5005/api/stock/AMD/history/week",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Portfolio 1",
+			"request": {
+				"url": "http://localhost:5005/api/portfolio/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Sell stock",
+			"request": {
+				"url": "http://localhost:5005/api/stock/sell/MSFT",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"shareCount\": 1,\n\t\"sharePrice\": 10,\n\t\"portfolioId\": 1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Post Portfolio history",
+			"request": {
+				"url": "http://localhost:5005/api/portfolio/1/history",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"value\": \"103.31\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Portfolio history",
+			"request": {
+				"url": "http://localhost:5005/api/portfolio/1/history",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "\t"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User1's Portfolios",
+			"request": {
+				"url": "http://localhost:5005/api/portfolio?userId=1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Login Ndara",
+			"request": {
+				"url": "http://localhost:5005/api/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"ndara\",\n\t\"password\": \"yeet\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Seed",
+			"request": {
+				"url": "http://localhost:5005/api/seed",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Nuke",
+			"request": {
+				"url": "http://localhost:5005/api/nuke",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"resetIncrement\": true\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Post to Watchlist",
+			"request": {
+				"url": "http://localhost:5005/api/watchlist",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"portfolioId\" : 1,\n\t\"ticker\" : \"PLUG\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get watchlist",
+			"request": {
+				"url": "http://localhost:5005/api/watchlist?portfolioId=3",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
