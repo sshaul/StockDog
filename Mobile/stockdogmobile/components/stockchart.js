@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, ScrollView } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, ButtonGroup } from 'react-native-elements';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
@@ -31,15 +31,15 @@ export default class StockChart extends Component {
       var newData = [];
       var newXData = [];
       var newYData = [];
-      // var baseurl = 'http://localhost:5005/api/stock/' + this.props.ticker + '/history/';
-      var baseurl = 'http://198.199.100.209:5005/api/stock/' + this.props.ticker + '/history/';
-      var url = '';
-      if (this.props.username) {
-        console.log('username: ' + this.props.username);
-        this.setState({xData: [], yData: [], isLoading: false});
+      
+      if (this.props.portfolioid) {
+        console.log('portfolio: ' + this.props.portfolioid);
         return;
       }
       else {
+        var baseurl = 'http://localhost:5005/api/stock/' + this.props.ticker + '/history/';
+        // var baseurl = 'http://198.199.100.209:5005/api/stock/' + this.props.ticker + '/history/';
+        var url = '';
         if (range == 'day')
           url = baseurl + 'day';
         else if (range == 'week'){

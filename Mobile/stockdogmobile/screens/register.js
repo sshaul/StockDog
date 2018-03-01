@@ -34,8 +34,8 @@ export default class Register extends Component {
 
   register() {
     var id;
-    // var baseurl = 'http://localhost:5005';
-    var baseurl = 'http://198.199.100.209:5005';
+    var baseurl = 'http://localhost:5005';
+    // var baseurl = 'http://198.199.100.209:5005';
     var url = baseurl + '/register';
     fetch(url, {
       method: 'POST',
@@ -69,7 +69,6 @@ export default class Register extends Component {
     var disabled = !(this.state.firstname && this.state.lastname 
                     && this.state.email && this.validatePassword(this.state.password));
     return (
-      // <View style={containers.general}>
       <KeyboardAwareScrollView 
         resetScrollToCoords={{ x: 0, y: 0 }}
         contentContainerStyle={containers.general}
@@ -120,7 +119,6 @@ export default class Register extends Component {
           </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
-      // </View>
     );
   }
 }
