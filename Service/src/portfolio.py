@@ -19,7 +19,7 @@ def post_portfolio():
       return Response('Failed to make connection to database', status=500)
 
    cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)", 
-      (body['name'], body['buyPower'], body['userId']))
+      [body['name'], body['buyPower'], body['userId']])
    conn.commit()
 
    return Response(status=200)
