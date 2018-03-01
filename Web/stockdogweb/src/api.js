@@ -95,6 +95,18 @@ class API {
             console.log(err);
          });
    };
+
+   sell = (ticker, shareCount, sharePrice, portfolioId, callback) => {
+      axios.post(this.baseURL + "/stock/sell/" + ticker, {
+         shareCount, sharePrice, portfolioId
+      }, this.config)
+         .then((res) => {
+            callback();
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   };
 }
 
 export default API;

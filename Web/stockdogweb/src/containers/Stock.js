@@ -15,7 +15,8 @@ class Stock extends Component {
          currentPrice: 0,
          buyOpen: false,
          sellOpen: false,
-         buyCount: null
+         buyCount: null,
+         sellCount: null
       };
    }
 
@@ -50,9 +51,6 @@ class Stock extends Component {
    buy = (event) => {
       event.preventDefault();
 
-      console.log(this.state.ticker);
-      console.log(this.state.buyCount);
-
       this.api.buy(
          this.state.ticker,
          parseInt(this.state.buyCount, 10),
@@ -61,6 +59,22 @@ class Stock extends Component {
          () => {
             alert(this.state.buyCount + " shares of " +
                   this.state.ticker + " bought at " +
+                  this.state.currentPrice + ".");
+         }
+      );
+   }
+
+   sell = (event) => {
+      event.preventDefault();
+
+      this.api.sell(
+         this.state.ticker,
+         parseInt(this.state.sellCount, 10),
+         parseFloat(this.state.currentPrice),
+         this.state.portfolioId,
+         () => {
+            alert(this.state.sellCount + " shares of " +
+                  this.state.ticker + " sold at " +
                   this.state.currentPrice + ".");
          }
       );
@@ -94,8 +108,10 @@ class Stock extends Component {
                   className="trans-modal">
                   <div className="trans-modal-content">
                      <form>
-                        <input type="number" min="1" placeholder="amount" />
-                        <button className="sell-btn submit-btn">
+                        <input type="number" min="1" placeholder="amount" 
+                           id="sellCount" onChange={this._onChange}/>
+                        <button className="sell-btn submit-btn"
+                           onClick={this.sell}>
                            <span>SUBMIT</span></button>
                      </form>
                   </div>

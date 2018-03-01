@@ -36,7 +36,9 @@ class Graph extends Component {
          ticker: this.props.ticker,
          currentPrice: 0,
          buyOpen: false,
-         sellOpen: false
+         sellOpen: false,
+         portfolioId: this.props.portfolioId || 
+                      this.props.match.params.portfolioId
       };
 
 
@@ -129,7 +131,7 @@ class Graph extends Component {
    // Redirect to a different stock page
    changeStock = (stock) => {
       this.props.history.push('/stock/' + this.state.searchStock + "/" +
-         this.props.portfolioId); 
+         this.state.portfolioId); 
    }
 
    render() {
