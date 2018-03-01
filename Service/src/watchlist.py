@@ -16,8 +16,33 @@ def post_watchlist():
    except Exception as e:
       return Response('Failed to make connection to database', status=500)
 
+   cursor.execute("SELECT * FROM Watchlist WHERE portfolioId = %s AND ticker = %s",
+      [body['portfolioId'], body['ticker']])
+
+   watchlistItem = cursor.fetchone()
+   if watchlistItem:
+      return Response(body['ticker'] + ' already exists in the watchlist of portfolio', status=400)
+
    cursor.execute("INSERT INTO Watchlist(portfolioId, ticker) VALUES (%s, %s)",
       [body['portfolioId'], body['ticker']])
    conn.commit()
 
    return Response(status=200)
+
+
+@watchlist_api.route('/api/watchlist', methods=['GET'])
+def get_watchlists():
+   portfolioId = request.args.get('portfolioId')
+   try:
+      conn = dbConn.getDBConn()
+      cursor = conn.cursor()
+   except Exception as e:
+      return Response('Failed to make connection to database', status=500)
+
+   if portfolioId is not None:
+      cursor.execute("SELECT * FROM Watchlist WHERE portfolioId = %s", portfolioId)
+   else:
+      cursor.execute("SELECT * FROM Watchlist")
+
+   watchlists = cursor.fetchall()
+   return json.dumps(watchlists)
