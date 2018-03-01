@@ -9,6 +9,7 @@ import { colors } from '../style/colors';
 import WideButton from '../components/widebutton';
 import StockChart from '../components/stockchart';
 import BuySellModal from '../components/buysellmodal';
+import Api from '../api';
 
 export default class Stock extends Component {
   constructor(props) {
@@ -21,8 +22,11 @@ export default class Stock extends Component {
       range: 'day',
       isModalVisible: false,
       modalType: 'buy',
-      modalVisible: false
+      modalVisible: false,
+      addedWatch: false
     };
+
+    this.api = new Api();
   };
 
   updateIndex(selectedIndex) {
@@ -54,7 +58,25 @@ export default class Stock extends Component {
     this.setState({isModalVisible: false});
   }
 
+  addToWatchlist = () => {
+    this.api.addToWatchlist(this.props.navigation.state.params.ticker, () => {
+      this.setState({addedWatch: true});
+    });
+  };
+
   render() {
+    var watching;
+    if (this.state.addedWatch) {
+      watching = (<TouchableOpacity onPress={this.addToWatchlist}>
+                    <Icon name='eye-off' size={30} color='white' />
+                  </TouchableOpacity>);
+    }
+    else {
+      watching = (<TouchableOpacity onPress={this.addToWatchlist}>
+                    <Icon name='eye' size={30} color='white' />
+                  </TouchableOpacity>);
+    }
+
     return (
       <View style={containers.profileGeneral}>
         <View style={containers.iconHeaders}>
@@ -63,7 +85,10 @@ export default class Stock extends Component {
           <Icon name='settings' size={30} color='white' />
         </View>
         <View style={containers.chart}>
-            <Text style={text.money}>{this.props.navigation.state.params.ticker}</Text>
+            <View style={{flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', paddingLeft: 10}}>
+              <Text style={text.money}>{this.props.navigation.state.params.ticker}</Text>
+              {watching}
+            </View>
             {/* <Text style={text.stockMoney}>AMD</Text>
             <StockChart range={this.state.range} ticker='AMD'/> */}
             <StockChart range={this.state.range} ticker={this.props.navigation.state.params.ticker}/>
@@ -97,6 +122,8 @@ export default class Stock extends Component {
           visibility={this.state.isModalVisible}
           _close={this._closeModal.bind(this)}
           type={this.state.modalType}
+          ticker={this.props.navigation.state.params.ticker}
+          id={this.props.navigation.state.params.pid}
           />
       </View>
     );

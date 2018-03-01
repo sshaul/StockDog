@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import PopoverTooltip from 'react-native-popover-tooltip';
 import WideButton from '../components/widebutton';
 import RoundInput from '../components/roundinput';
+import Api from '../api';
 
 export default class Register extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ export default class Register extends Component {
       password: ""
     };
 
+    this.api = new Api();
     this.focusNextField = this.focusNextField.bind(this);
     this.inputs = {};
   }
@@ -33,32 +35,10 @@ export default class Register extends Component {
   }
 
   register() {
-    var id;
-    var baseurl = 'http://localhost:5005';
-    // var baseurl = 'http://198.199.100.209:5005';
-    var url = baseurl + '/register';
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        firstName: this.state.firstname,
-        lastName: this.state.lastname,
-        email: this.state.email,
-        password: this.state.password
-      })
-    }).then((response) => {
-      return response.json();
-    })
-    .then((responseJson) => {
-      console.log('success!!');
-      console.log(responseJson);
-      this.props.navigation.navigate('Login', {email: this.state.email});
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+    this.api.register(this.state.firstname, this.state.lastname,
+      this.state.email, this.state.password, (email) => {
+        this.props.navigation.navigate('Login', {email: this.state.email});
+      });
   }
 
   validatePassword(password) {

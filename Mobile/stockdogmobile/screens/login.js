@@ -5,6 +5,7 @@ import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
 import WideButton from '../components/widebutton';
+import Api from '../api';
 
 export default class Login extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export default class Login extends Component {
 
     this.focusNextField = this.focusNextField.bind(this);
     this.inputs = {};
+    this.api = new Api();
   }
 
   focusNextField(id) {
@@ -38,30 +40,8 @@ export default class Login extends Component {
   });
 
   login() {
-    var id;
-    var baseurl = 'http://localhost:5005';
-    // var baseurl = 'http://198.199.100.209:5005';
-    var url = baseurl + '/user/login';
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password
-      })
-    }).then((response) => {
-      return response.json();
-    })
-    .then((responseJson) => {
-      AsyncStorage.setItem('userid', '' + responseJson.userId);
-      AsyncStorage.setItem('token', responseJson.token);
-      this.props.navigation.navigate('Main', {user: ""});
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+    this.api.login(this.state.email, this.state.password,
+      () => {this.props.navigation.navigate('Main');});
   };
 
   render() {

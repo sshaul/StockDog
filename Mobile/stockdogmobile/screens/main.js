@@ -8,7 +8,6 @@ export default class Main extends Component {
 }
 
   render() {
-    console.log('rendering main');
     return( 
        <TabRoot/ >
     );

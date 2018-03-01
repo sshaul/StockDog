@@ -14,7 +14,7 @@ import Group from './screens/group';
 import Feed from './screens/feed';
 import Api from './api';
 
-var api = new Api();
+// var api = new Api();
 // export const GroupDrawerRoot = api.createDrawers((items) => {
 //   console.log(items);
 //   return DrawerNavigator(items);
@@ -23,18 +23,18 @@ var api = new Api();
 
 
 export const Root = StackNavigator({
-    // Login : {
-    //     screen: Login,
-    //     navigationOptions: {
-    //         header: null
-    //     }
-    // },
-    // Register: {
-    //     screen: Register,
-    //     navigationOptions: {
-    //         header: null
-    //     }
-    // },
+    Login : {
+        screen: Login,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Register: {
+        screen: Register,
+        navigationOptions: {
+            header: null
+        }
+    },
     // Drawers: GroupDrawerRoot,
     Main: {
         screen: Main,
