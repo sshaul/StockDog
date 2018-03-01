@@ -15,6 +15,7 @@ CREATE TABLE User (
 CREATE TABLE Portfolio (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    buyPower DECIMAL(13, 2),
+   name VARCHAR(32),
    userId INT(11) REFERENCES User(id)
 );
 
