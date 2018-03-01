@@ -7,6 +7,8 @@ import text from '../style/text';
 import { colors } from '../style/colors'; 
 import ChartView from 'react-native-highcharts';
 import Icon from 'react-native-vector-icons/Feather';
+import Api from '../api';
+import SpinningLoader from './spinningloader';
 
 export default class StockChart extends Component {
   constructor(props) {
@@ -17,6 +19,7 @@ export default class StockChart extends Component {
       xData: [],
       yData: []
     };
+    this.api = new Api();
   };
 
   componentDidMount() {
@@ -28,58 +31,17 @@ export default class StockChart extends Component {
   }
   
   getData(range) {
-      var newData = [];
-      var newXData = [];
-      var newYData = [];
-      
-      if (this.props.portfolioid) {
-        console.log('portfolio: ' + this.props.portfolioid);
-        return;
-      }
-      else {
-        var baseurl = 'http://localhost:5005/api/stock/' + this.props.ticker + '/history/';
-        // var baseurl = 'http://198.199.100.209:5005/api/stock/' + this.props.ticker + '/history/';
-        var url = '';
-        if (range == 'day')
-          url = baseurl + 'day';
-        else if (range == 'week'){
-          url = baseurl + 'week';
-        }
-        else if (range == 'month')
-          url = baseurl + 'month';
-        else
-          url = baseurl + 'year';
-      }
-      fetch(url, {
-        method: 'GET'
-      }).then((response) => response.json())
-      .then((responseJson) => {
-        responseJson.forEach(element => {
-          var str = element.time;
-          var date = "";
-          if (range == 'day') {
-            str = element.time.split(" ")[1];
-            date = str.split(":")[0] + ":" + str.split(":")[1];
-          }
-          else if (range == 'week') {
-            var d = new Date(str.split(" ")[0]);
-            var mo = d.toLocaleString("en-us", {month: "short"});
-            var day = d.toLocaleString("en-us", {day: "numeric"});
-            var time = str.split(" ")[1];
-            date = mo + " " + day + " " + time;
-          }
-          else {
-            var d = new Date(element.time);
-            var month = d.toLocaleString("en-us", {month: "short"});
-            var day = d.toLocaleString("en-us", {day: "numeric"});
-            date = month + " " + day;
-          }
-          newXData.push(date);
-          newYData.push(parseFloat(element.price));
-        });
+    console.log(this.props.portfolioid);
+    if (this.props.portfolioid) {
+      console.log('portfolio: ' + this.props.portfolioid);
+      return;
+    }
+    else {
+      this.api.getChartData(this.props.ticker, range, (newXData, newYData) => {
         this.setState({xData: newXData, yData: newYData, isLoading: false});
-      }).catch((error) => console.error(error));
-  };
+      });
+    };
+  }
 
   createChart() {
     var intervals = parseInt(this.state.xData.length / 5);
@@ -179,6 +141,13 @@ export default class StockChart extends Component {
 
   render() {
     const lastelt = this.state.yData[this.state.yData.length - 1];
+    if (this.state.isLoading) {
+      return (
+        <View style={{height:300, width: 350, justifyContent: 'center', alignItems: 'center'}}>
+          <SpinningLoader />
+        </View>
+      );
+    }
     return (
       <View style={containers.chart}>
         <Text style={text.money}>${lastelt}</Text>

@@ -18,7 +18,7 @@ export default class Search extends Component {
 
   searchTicker() {
     const navigate = this.props.navigation.navigate;
-    navigate('Stock', {ticker: this.state.text.toUpperCase()});
+    navigate('Stock', {ticker: this.state.text.toUpperCase(), pid: 1});
   }
 
   render() {

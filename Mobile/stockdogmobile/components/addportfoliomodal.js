@@ -12,14 +12,20 @@ import Api from '../api';
 export default class AddPortfolioModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      name: ""
+    };
     this.api = new Api();
   }
 
   onpress = () => {
-    this.api.createNewPortfolio((response) => {
+    this.api.createNewPortfolio(this.state.name, (response) => {
       this.props._close();
     });
+  }
+
+  onchangename = (name) => {
+    this.setState({name})
   }
 
   render() {
@@ -36,7 +42,10 @@ export default class AddPortfolioModal extends Component {
             </TouchableOpacity>
           </View>
           <View style={containers.innerModal}>
-            <RoundInput type="Name"/>
+            <RoundInput 
+              type="Name" 
+              onchange={this.onchangename.bind(this)} 
+              value={this.state.name}/>
             <WideButton type="portfolio" onpress = {this.onpress}/>
           </View>
         </View>

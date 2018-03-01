@@ -7,6 +7,7 @@ import text from '../style/text';
 import { colors } from '../style/colors'; 
 import ChartView from 'react-native-highcharts';
 import Icon from 'react-native-vector-icons/Feather';
+import SpinningLoader from './spinningloader';
 
 export default class LoadingProfile extends Component {
   constructor(props) {
@@ -24,7 +25,8 @@ export default class LoadingProfile extends Component {
           <Icon name='settings' size={30} color='white' />
         </View>
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Icon name='loader' size={48} color='white' />
+          {/* <Icon name='loader' size={48} color='white' /> */}
+          <SpinningLoader />
         </View>
       </View>
     );
