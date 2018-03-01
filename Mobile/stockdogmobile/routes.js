@@ -1,6 +1,5 @@
 import React from 'react';
-import { TabNavigator, StackNavigator } from 'react-navigation';
-// import { Icon } from 'react-native-elements';
+import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Feather';
 import elements from './style/elements';
 import Login from './screens/login';
@@ -13,20 +12,30 @@ import SearchMain from './screens/searchmain';
 import Search from './screens/search';
 import Group from './screens/group';
 import Feed from './screens/feed';
+import Api from './api';
+
+var api = new Api();
+// export const GroupDrawerRoot = api.createDrawers((items) => {
+//   console.log(items);
+//   return DrawerNavigator(items);
+// });
+
+
 
 export const Root = StackNavigator({
-    Login : {
-        screen: Login,
-        navigationOptions: {
-            header: null
-        }
-    },
-    Register: {
-        screen: Register,
-        navigationOptions: {
-            header: null
-        }
-    },
+    // Login : {
+    //     screen: Login,
+    //     navigationOptions: {
+    //         header: null
+    //     }
+    // },
+    // Register: {
+    //     screen: Register,
+    //     navigationOptions: {
+    //         header: null
+    //     }
+    // },
+    // Drawers: GroupDrawerRoot,
     Main: {
         screen: Main,
         navigationOptions: {
@@ -143,3 +152,4 @@ export const SearchStockRoot = StackNavigator ({
     gesturesEnabled: true
   }
 });
+

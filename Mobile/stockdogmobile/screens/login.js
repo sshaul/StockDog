@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS } from 'react-native';
+import { Text, TouchableOpacity, View, FlatList, TextInput, AsyncStorage } from 'react-native';
 import { Button } from 'react-native-elements';
 import containers from '../style/containers';
 import elements from '../style/elements';
@@ -24,12 +24,45 @@ export default class Login extends Component {
 
   focusNextField(id) {
     this.inputs[id].focus();
-  }
+  };
   
   navToRegister() {
     const navigate = this.props.navigation.navigate;
     navigate('Register', {});
-  }
+  };
+
+  setStorage = ((key, value) => {
+    AsyncStorage.setItem(key, value).then((value) => {
+      console.log(value);
+    })
+  });
+
+  login() {
+    var id;
+    var baseurl = 'http://localhost:5005';
+    // var baseurl = 'http://198.199.100.209:5005';
+    var url = baseurl + '/user/login';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
+      })
+    }).then((response) => {
+      return response.json();
+    })
+    .then((responseJson) => {
+      AsyncStorage.setItem('userid', '' + responseJson.userId);
+      AsyncStorage.setItem('token', responseJson.token);
+      this.props.navigation.navigate('Main', {user: ""});
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  };
 
   render() {
     var disabled = !(this.state.email && this.state.password);
@@ -58,7 +91,7 @@ export default class Login extends Component {
           onChangeText={(password) => this.setState({password})}
           value={this.state.password}
         />
-        <WideButton type='login' disabled={disabled}/>
+        <WideButton type='login' disabled={disabled} onpress={this.login.bind(this)}/>
         <TouchableOpacity
           style={elements.smallTextButton}>
           <Text style={text.smallText}> Forgot Password? </Text>

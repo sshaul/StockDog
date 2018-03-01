@@ -61,8 +61,8 @@ export default containers = StyleSheet.create({
     },
     innerModal: {
       flex: 0.9,
-      justifyContent: 'center',
-      alignItems: 'center'
+      justifyContent: 'flex-start',
+      alignItems: 'center',
     },
     outerModal: {
       flex: 0.6,
