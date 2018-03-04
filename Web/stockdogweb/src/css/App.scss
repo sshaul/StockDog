@@ -54,6 +54,32 @@ body {
    right: 0;
 }
 
+
+.back-btn {
+   position: absolute;
+   left: 10;
+   top: 10;
+}
+
+.back-btn img {
+   width: 50px;
+   cursor: pointer;
+}
+
+.loading-animation {
+   position: absolute;
+   width: 40px;
+   height: 40px;
+   top: 0;
+   left: 0;
+   bottom: 250px;
+   right: 0;
+   margin: auto;
+}
+
+.loading-animation img {
+   width: 40px;
+}
 /*===========================================================================*/
 
 /* Login
@@ -293,6 +319,23 @@ body {
    display: block;
    clear: both;
    padding: 0 10px;
+}
+
+.portfolio-holding {
+   margin-left: 30px;
+}
+
+.portfolio-holding-title {
+   display: inline-block;
+   font-size: 34px;
+   color: $green-color;
+   width: 150px;
+} 
+
+.portfolio-holding-amount {
+   display: inline-block;
+   font-size: 34px;
+   color: $white-color;
 }
 /*===========================================================================*/
 

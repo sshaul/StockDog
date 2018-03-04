@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Modal from 'react-responsive-modal';
 import API from 'api';
 import Graph from '../components/Graph';
+import backIcon from "../img/feather-icons/chevron-left.svg";
+import { withRouter } from "react-router-dom";
 
 class Stock extends Component {
    constructor(props) {
@@ -19,6 +21,10 @@ class Stock extends Component {
          sellCount: null
       };
    }
+
+   goBack = () => {
+      this.props.history.goBack();
+   };
 
    onOpenBuyModal = () => {
       this.setState({buyOpen: true});
@@ -83,6 +89,9 @@ class Stock extends Component {
    render() {
       return (
          <div className="Stock">
+            <div className="back-btn">
+               <img src={backIcon} alt="Back button" onClick={this.goBack}/>
+            </div>
             <Graph title={this.state.ticker} ticker={this.state.ticker} 
                updateCurrentPrice={this.updateCurrentPrice} />
             <div className="stock-buy-sell-btns">
@@ -122,4 +131,4 @@ class Stock extends Component {
    }
 }
 
-export default Stock;
+export default withRouter(Stock);

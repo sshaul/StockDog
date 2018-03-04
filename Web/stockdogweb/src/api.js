@@ -75,7 +75,7 @@ class API {
    };
 
    getPortfolio = (portfolioId, callback) => {
-      axios.get(this.baseURL + "/" + portfolioId, this.config)
+      axios.get(this.baseURL + "/portfolio/" + portfolioId, this.config)
          .then((res) => {
             callback(res["data"])
          })

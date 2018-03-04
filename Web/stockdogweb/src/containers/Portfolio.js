@@ -21,7 +21,8 @@ class Portfolio extends Component {
       this.state = {
          portfolios: [],
          portfolioId: null,
-         holdings: []
+         holdings: [],
+         holdingComponents: []
       }
    }
 
@@ -32,15 +33,39 @@ class Portfolio extends Component {
                portfolios,
                portfolioId: portfolios[0]["id"]
             });
+            this.getPortfolio();
          }
       });
    }
 
    getPortfolio = () => {
-      this.api.getPortforlio(this.state.portfolioId, (holdings) => {
+      this.api.getPortfolio(this.state.portfolioId, (holdings) => {
          this.setState({
-            holdings: []
+            holdings
          });
+         this.createHoldings();
+      });
+   };
+
+   createHoldings = () => {
+      var holdingComponents = [];
+      console.log("Creating holdings.")
+      this.state.holdings.forEach((holding) => {
+         console.log(holding["ticker"]);
+         console.log(holding["shareCount"]);
+         holdingComponents.push(
+            <div className="portfolio-holding" key={holding["ticker"]}>
+               <div className="portfolio-holding-title">
+                  {holding["ticker"]}
+               </div>
+               <div className="portfolio-holding-amount">
+                  {holding["shareCount"]} shares
+               </div>
+            </div>
+         );
+      });
+      this.setState({
+         holdingComponents
       });
    };
 
@@ -52,10 +77,11 @@ class Portfolio extends Component {
       }
       return (
          <div className="Portfolio">
-            <Graph title="Portfolio" ticker="AMD" 
+            <Graph title="Portfolio" ticker="PORTFOLIO" 
                portfolioId={this.state.portfolioId}/>
             <div className="portfolio-content">
                <h1>Owned</h1>
+               {this.state.holdingComponents}
                <h1>Watchlist</h1>
             </div>
          </div>

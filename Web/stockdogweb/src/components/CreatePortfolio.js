@@ -24,7 +24,7 @@ class CreatePortfolio extends Component {
    createPortfolio = () => {
       this.api.createPortfolio(this.cookies.get("userId"), 
                                this.state.portfolioName, 1000);
-      this.props.history.push("/portfolio");
+      window.location.reload();
    };
 
    _onChange = (event) => {

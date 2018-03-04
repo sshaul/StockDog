@@ -3,12 +3,18 @@ import { Line } from 'react-chartjs-2';
 import { withRouter } from 'react-router-dom';
 import API from '../api';
 import TimeFrame from '../components/TimeFrames'
+import loading from "../img/loading.svg";
 
 class Graph extends Component {
    constructor(props) {
       super(props);
 
       this.api = new API();
+
+      this.loadingAnimation = 
+         <div className="loading-animation">
+            <img src={loading} alt="Loading"/>
+         </div>
 
       this.state = {
          data: {
@@ -38,7 +44,8 @@ class Graph extends Component {
          buyOpen: false,
          sellOpen: false,
          portfolioId: this.props.portfolioId || 
-                      this.props.match.params.portfolioId
+            this.props.match.params.portfolioId,
+         loadingAnimation: this.loadingAnimation
       };
 
 
@@ -95,33 +102,44 @@ class Graph extends Component {
 
    // Get the data for the timeFrame given
    getData = (timeFrame) => {
+      this.setState({
+         loadingAnimation: this.loadingAnimation
+      });
+
       console.log("Getting data for " + timeFrame);
 
       const ticker = this.props.ticker;
 
-      this.api.stockHistory(ticker, timeFrame, (history) => {
-         // Sort the array depend on epoch
-         var prices = [];
-         var labels = [];
-         // Getting an array of prices and times
-         history.forEach(function(data) {
-            prices.push(data['price']);
-            labels.push(data['time'].substring(11, 16));
-         });
-         // Update the state with new information
-         var newData = this.state;
-         newData['data']['datasets'][0]['data'] = prices;
-         newData['data']['labels'] = labels;
-         // Setting the current price and round to the 2nd decimal 
-         newData['currentPrice'] = Math.round(prices[prices.length-1]*100)/100;
-         // Update parent's current price
-         this.props.updateCurrentPrice(
-            Math.round(prices[prices.length-1]*100)/100);
-         // Make the points smaller
-         newData['data']['datasets'][0]['pointHoverRadius'] = 5;
-         newData['data']['datasets'][0]['pointHitRadius'] = 10;
-         this.setState(newData);
-      });            
+      console.log(ticker);
+
+      if (ticker !== "PORTFOLIO") {
+         this.api.stockHistory(ticker, timeFrame, (history) => {
+            // Sort the array depend on epoch
+            var prices = [];
+            var labels = [];
+            // Getting an array of prices and times
+            history.forEach(function(data) {
+               prices.push(data['price']);
+               labels.push(data['time'].substring(11, 16));
+            });
+            // Update the state with new information
+            var newData = this.state;
+            newData['data']['datasets'][0]['data'] = prices;
+            newData['data']['labels'] = labels;
+            // Setting the current price and round to the 2nd decimal 
+            newData['currentPrice'] = Math.round(prices[prices.length-1]*100)/100;
+            // Update parent's current price
+            this.props.updateCurrentPrice(
+               Math.round(prices[prices.length-1]*100)/100);
+            // Make the points smaller
+            newData['data']['datasets'][0]['pointHoverRadius'] = 5;
+            newData['data']['datasets'][0]['pointHitRadius'] = 10;
+            // Turn off loading animation.
+            newData["loadingAnimation"] = <div></div>
+            this.setState(newData);
+         });            
+      }
+      
    }
 
    handleStockSearch = (event) => {
@@ -137,6 +155,7 @@ class Graph extends Component {
    render() {
       return (
          <div className="Graph">
+            {this.state.loadingAnimation} 
             <div className="stock-titles">
                <h1>{this.props.title}</h1>
                <h2>${this.state.currentPrice}</h2>
