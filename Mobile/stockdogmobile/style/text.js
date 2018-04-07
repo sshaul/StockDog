@@ -55,5 +55,18 @@ export default text = StyleSheet.create({
       fontFamily: 'open-sans',
       fontSize: 42,
       textAlign: 'center'
+    },
+    // ----------------- Groups Drawer ------------- //
+    groupTitle: {
+      color: colors.white,
+      fontFamily: 'open-sans-bold',
+      fontSize: 36,
+      textDecorationLine: 'underline'
+    },
+    groupText: {
+      color: colors.white,
+      fontFamily: 'open-sans',
+      fontSize: 24,
+      textAlign: 'left'
     }
 });

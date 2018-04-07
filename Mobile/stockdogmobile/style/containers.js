@@ -83,5 +83,21 @@ export default containers = StyleSheet.create({
       borderStyle: 'solid', 
       borderColor: colors.white, 
       borderWidth: 2
+    },
+    groupsDrawer: {
+      flex: 1,
+      backgroundColor: colors.grey,
+      alignItems: 'center',
+      paddingTop: 30
+    },
+    groupsList: {
+      flex: 1,
+      paddingTop: 20,
+      width: '80%'
+    },
+    groupItem: {
+      borderStyle: 'solid', 
+      borderColor: colors.dark, 
+      borderWidth: 2
     }
 });

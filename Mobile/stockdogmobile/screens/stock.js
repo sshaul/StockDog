@@ -89,8 +89,6 @@ export default class Stock extends Component {
               <Text style={text.money}>{this.props.navigation.state.params.ticker}</Text>
               {watching}
             </View>
-            {/* <Text style={text.stockMoney}>AMD</Text>
-            <StockChart range={this.state.range} ticker='AMD'/> */}
             <StockChart range={this.state.range} ticker={this.props.navigation.state.params.ticker}/>
         </View>
         <View style={containers.underChart}>

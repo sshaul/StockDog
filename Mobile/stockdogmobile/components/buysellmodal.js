@@ -20,10 +20,6 @@ export default class BuySellModal extends Component {
     this.api = new Api();
   }
 
-  componentDidMount() {
-    console.log('mount');
-  }
-
   buysellstock() {
     this.api.manageStock(this.props.type, this.props.ticker, parseInt(this.state.amount), 
       parseFloat(this.state.price), this.props.id, (res) => {
@@ -40,7 +36,6 @@ export default class BuySellModal extends Component {
   }
 
   render() {
-    console.log(this.state);
     var content;
     if (this.state.transactionComplete) {
       if (this.props.type == 'buy') {
