@@ -32,6 +32,7 @@ def get_portfolios():
       conn = dbConn.getDBConn()
       cursor = conn.cursor()
    except Exception as e:
+      print(e)
       return Response('Failed to make connection to database', status=500)
 
    if userId is not None:
