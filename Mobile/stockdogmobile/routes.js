@@ -23,18 +23,18 @@ import Api from './api';
 
 
 export const Root = StackNavigator({
-    Login : {
-        screen: Login,
-        navigationOptions: {
-            header: null
-        }
-    },
-    Register: {
-        screen: Register,
-        navigationOptions: {
-            header: null
-        }
-    },
+    // Login : {
+    //     screen: Login,
+    //     navigationOptions: {
+    //         header: null
+    //     }
+    // },
+    // Register: {
+    //     screen: Register,
+    //     navigationOptions: {
+    //         header: null
+    //     }
+    // },
     // Drawers: GroupDrawerRoot,
     Main: {
         screen: Main,

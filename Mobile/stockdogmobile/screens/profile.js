@@ -13,7 +13,8 @@ import Api from '../api';
 import NoPortfoliosProfile from '../components/noPorfoliosProfile';
 import LoadingProfile from '../components/loadingProfile';
 import AddPortfolioModal from '../components/addportfoliomodal';
-
+import NavBar from '../components/navbar';
+import Drawer from 'react-native-drawer';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -106,13 +107,10 @@ export default class Profile extends Component {
 
           return (
             <View style={containers.profileGeneral}>
-              <View style={containers.iconHeaders}>
-                <Icon name='user' size={30} color='white' />
-                <Icon name='settings' size={30} color='white' />
-              </View>
+              <NavBar />
               <View style={{flex: 1, alignItems: 'center'}}>
                 <ScrollView style={{flex: 1}}>
-                  <StockChart range={this.state.range} ticker={'AMD'} portfolioid={this.state.portfolioid}/>
+                  <StockChart range={this.state.range} portfolio={true}/>
                   <ButtonGroup
                     onPress={this.updateIndex.bind(this)}
                     selectedIndex={this.state.selectedIndex}
@@ -132,17 +130,12 @@ export default class Profile extends Component {
             </View>
           );
         }
-        // console.log(this.state);
-
         return (
           <View style={containers.profileGeneral}>
-            <View style={containers.iconHeaders}>
-              <Icon name='user' size={30} color='white' />
-              <Icon name='settings' size={30} color='white' />
-            </View>
+            <NavBar />
             <View style={{flex: 1, alignItems: 'center'}}>
               <ScrollView style={{flex: 1}}>
-                <StockChart range={this.state.range} ticker={'AMD'}/>
+                <StockChart range={this.state.range} portfolio={true}/>
                 <ButtonGroup
                   onPress={this.updateIndex.bind(this)}
                   selectedIndex={this.state.selectedIndex}

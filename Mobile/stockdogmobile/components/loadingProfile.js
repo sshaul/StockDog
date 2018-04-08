@@ -8,6 +8,9 @@ import { colors } from '../style/colors';
 import ChartView from 'react-native-highcharts';
 import Icon from 'react-native-vector-icons/Feather';
 import SpinningLoader from './spinningloader';
+import NavBar from './navbar';
+import Drawer from 'react-native-drawer';
+import GroupDrawer from './groupdrawer';
 
 export default class LoadingProfile extends Component {
   constructor(props) {
@@ -17,18 +20,32 @@ export default class LoadingProfile extends Component {
     };
   }
 
+  openDrawer() {
+    this._drawer.open();
+  }
+
+  closeDrawer() {
+    this._drawer.close();
+  }
+
   render() {
     return (
-      <View style={containers.profileGeneral}>
-        <View style={containers.iconHeaders}>
-          <Icon name='user' size={30} color='white' />
-          <Icon name='settings' size={30} color='white' />
+      <Drawer
+        type="static"
+        openDrawerOffset={100}
+        tweenHandler={Drawer.tweenPresets.parallax}
+        ref={(ref) => this._drawer = ref}
+        content={<GroupDrawer />}
+        // open={true}
+        >
+        <View style={containers.profileGeneral}>
+          <NavBar openDrawer={this.openDrawer.bind(this)}/>
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            {/* <Icon name='loader' size={48} color='white' /> */}
+            <SpinningLoader />
+          </View>
         </View>
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          {/* <Icon name='loader' size={48} color='white' /> */}
-          <SpinningLoader />
-        </View>
-      </View>
+      </Drawer>
     );
   }
 }

@@ -8,7 +8,6 @@ export default class Api {
     constructor () {
       // this.baseurl = "http://localhost:5005";
       this.baseurl = "http://198.199.100.209:5005";
-      this.userid = 1;
       this.headers = {
          'Content-Type': 'application/json'
       }
@@ -19,7 +18,6 @@ export default class Api {
          method: 'GET'
       }).then((response) => response.json())
       .then((responseJson) => {
-         console.log(responseJson);
          return callback({
             Portfolio: {
               screen: Main,
@@ -83,23 +81,31 @@ export default class Api {
 
     //--------------------------- Portfolio Methods -------------------------//
     getPortfolios = (callback) => {
-      fetch(this.baseurl + '/api/portfolio?userId=' + this.userid, {
+      var uid = 1;
+      AsyncStorage.getItem('userid')
+        .then((userid) => {uid = userid});
+      fetch(this.baseurl + '/api/portfolio?userId=' + uid, {
          method: 'GET'
       }).then((response) => response.json())
       .then((responseJson) => {
-         callback(responseJson);
+        console.log(responseJson);
+        AsyncStorage.setItem('portfolios', JSON.stringify(responseJson));
+        callback(responseJson);
       })
       .catch(
-         (error) => console.log(error)
+        (error) => console.log(error)
       );
    };
 
     createNewPortfolio = (pname, callback) => {
+      var uid = 1;
+      AsyncStorage.getItem('userid')
+        .then((userid) => {uid = userid});
       fetch(this.baseurl + '/api/portfolio', {
         method: 'POST',
         headers: this.headers,
         body: JSON.stringify({
-          userId: this.userid,
+          userId: uid,
           buyPower: 600,
           name: pname
         }),
@@ -116,6 +122,34 @@ export default class Api {
         callback(responseJson);
       })
       .catch((error) => console.log(error));
+    };
+
+    getPortfolioData = (callback) => {
+      AsyncStorage.getItem('portfolios')
+        .then((response) => {
+          return JSON.parse(response);
+        })
+        .then((portfolios) => {
+          var newXData = [];
+          var newYData = [];
+          var url = this.baseurl + '/api/portfolio/' + portfolios[0].id + '/history';
+          fetch(url, {
+            method: 'GET'
+          }).then((response) => response.json())
+          .then((responseJson) => {
+            responseJson.forEach(element => {
+              var str = element.time;
+              var d = new Date(str);
+              var month = d.toLocaleString("en-us", {month: "short"});
+              var day = d.toLocaleString("en-us", {day: "numeric"});
+              var date = month + " " + day;
+              newXData.push(date);
+              newYData.push(parseFloat(element.value));
+            })
+            callback(newXData, newYData);
+          }).catch((error) => console.error(error));
+        });
+      
     };
 
     //--------------------------- Buy/Sell Stock Methods -------------------------//
@@ -169,26 +203,38 @@ export default class Api {
     };
 
     addToWatchlist = (ticker, callback) => {
-      var url = this.baseurl + '/api/watchlist';
-      fetch(url, {
-        method: 'POST',
-        headers: this.headers,
-        body: JSON.stringify({
-          portfolioId: 1,
-          ticker: ticker
+      var portfolios = [];
+      AsyncStorage.getItem('portfolios')
+        .then((response) => {
+          return JSON.parse(response);
         })
-      }).then((response) => callback(response))
-      .catch((error) => console.log(error));
+        .then((res) => {
+          portfolios = res;
+          var url = this.baseurl + '/api/watchlist';
+          fetch(url, {
+            method: 'POST',
+            headers: this.headers,
+            body: JSON.stringify({
+              portfolioId: portfolios[0].id,
+              ticker: ticker
+            })
+          }).then((response) => callback(response))
+          .catch((error) => console.log(error));
+        });
     };
 
     getWatchlistStocks = (callback) => {
-      var url = this.baseurl + '/api/watchlist?portfolioId=1';
-      fetch(url, {
-        method: 'GET',
-        headers: this.headers
-      }).then((response) => response.json())
-      .then((responseJson) => callback(responseJson))
-      .catch((error) => console.log(error));
+      AsyncStorage.getItem('portfolios')
+      .then((response) => {return JSON.parse(response);})
+      .then((portfolios) => {
+        var url = this.baseurl + '/api/watchlist?portfolioId=' + portfolios[0].id;
+        fetch(url, {
+          method: 'GET',
+          headers: this.headers
+        }).then((response) => response.json())
+        .then((responseJson) => callback(responseJson))
+        .catch((error) => console.log(error));
+      });
     }
 
 }
