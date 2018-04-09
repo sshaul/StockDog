@@ -36,10 +36,10 @@ def get_portfolios():
 
    if userId is not None:
       cursor.execute("SELECT p.buyPower, p.name AS nickname, p.userId, l.name AS league, l.start, l.end, l.startPos " +
-         "FROM Portfolio AS p JOIN League as l ON p.leagueId = l.id WHERE userId = %s", userId)
+         "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id WHERE userId = %s", userId)
    else:
       cursor.execute("SELECT p.buyPower, p.name AS nickname, p.userId, l.name AS league, l.start, l.end, l.startPos " +
-         "FROM Portfolio AS p JOIN League as l ON p.leagueId = l.id")
+         "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id")
 
    portfolios = cursor.fetchall()
    return json.dumps(portfolios, default=dateToStr)
