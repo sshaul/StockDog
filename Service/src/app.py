@@ -10,6 +10,7 @@ from session import session_api
 from stock import stock_api
 from portfolio import portfolio_api
 from watchlist import watchlist_api
+from league import league_api
 from seed import seed_api
 from nuke import nuke_api
 
@@ -24,6 +25,7 @@ app.register_blueprint(session_api)
 app.register_blueprint(stock_api)
 app.register_blueprint(portfolio_api)
 app.register_blueprint(watchlist_api)
+app.register_blueprint(league_api)
 app.register_blueprint(seed_api)
 app.register_blueprint(nuke_api)
 
