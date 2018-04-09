@@ -86,18 +86,36 @@ export default containers = StyleSheet.create({
     },
     groupsDrawer: {
       flex: 1,
-      backgroundColor: colors.grey,
+      backgroundColor: colors.white,
       alignItems: 'center',
       paddingTop: 30
     },
     groupsList: {
       flex: 1,
       paddingTop: 20,
-      width: '80%'
+      width: '100%'
     },
     groupItem: {
-      borderStyle: 'solid', 
-      borderColor: colors.dark, 
-      borderWidth: 2
+      // borderStyle: 'solid', 
+      // borderColor: colors.grey, 
+      // borderWidth: 2
+    },
+    addGroupModalHeader: {
+      flex: 0.3,
+      width: '70%',
+      alignItems: 'flex-end',
+      justifyContent: 'center'
+    },
+    addGroupInnerModal: {
+      flex: 0.9,
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    },
+    addGroupOuterModal: {
+      flex: 0.8,
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      backgroundColor: colors.grey
     }
 });
