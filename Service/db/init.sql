@@ -20,6 +20,7 @@ CREATE TABLE Portfolio (
    leagueId INT(11) REFERENCES League(id)
 );
 
+
 CREATE TABLE Ticker (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    symbol VARCHAR(8),
@@ -36,6 +37,7 @@ CREATE TABLE Transaction (
    portfolioId INT(11) REFERENCES Portfolio(id),
    ticker VARCHAR(8) REFERENCES Ticker(symbol)
 );
+
 
 CREATE TABLE Watchlist (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
@@ -66,5 +68,5 @@ CREATE TABLE League (
    name VARCHAR(32),
    start DATE,
    end DATE,
-   buyPower DECIMAL(13, 2)
+   startPos DECIMAL(13, 2)
 );

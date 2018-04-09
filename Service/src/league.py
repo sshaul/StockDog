@@ -18,8 +18,8 @@ def post_league():
    except Exception as e:
       return Response('Failed to make connection to database', status=500)
 
-   cursor.execute("INSERT INTO League(name, start, end, buyPower) VALUES (%s, %s, %s, %s)",
-      [body['name'], body['start'], body['end'], body['buyPower']])
+   cursor.execute("INSERT INTO League(name, start, end, startPos) VALUES (%s, %s, %s, %s)",
+      [body['name'], body['start'], body['end'], body['startPos']])
    conn.commit()
 
    return Response(status=200)
