@@ -96,9 +96,9 @@ def insertUser(cursor, first, last, email, password):
       [first, last, email, password])
 
 
-def insertPortfolio(cursor, name, buyPower, userId):
-   cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)", 
-      [name, buyPower, userId])
+def insertPortfolio(cursor, name, buyPower, userId, leagueId=1):
+   cursor.execute("INSERT INTO Portfolio(name, buyPower, userId, leagueId) VALUES (%s, %s, %s, %s)", 
+      [name, buyPower, userId, leagueId])
 
 
 def insertPortfolioHistory(cursor, portfolioId, day, value):

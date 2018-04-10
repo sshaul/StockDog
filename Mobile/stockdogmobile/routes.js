@@ -12,15 +12,8 @@ import SearchMain from './screens/searchmain';
 import Search from './screens/search';
 import Group from './screens/group';
 import Feed from './screens/feed';
+import noPortfoliosProfile from './screens/noPortfoliosProfile';
 import Api from './api';
-
-// var api = new Api();
-// export const GroupDrawerRoot = api.createDrawers((items) => {
-//   console.log(items);
-//   return DrawerNavigator(items);
-// });
-
-
 
 export const Root = StackNavigator({
     // Login : {
@@ -35,14 +28,20 @@ export const Root = StackNavigator({
     //         header: null
     //     }
     // },
-    // Drawers: GroupDrawerRoot,
     Main: {
         screen: Main,
         navigationOptions: {
             header: null,
             gesturesEnabled: false
         }
-    }
+    },
+    NoPortfoliosProfile: {
+      screen: noPortfoliosProfile,
+      navigationOptions: {
+          header: null,
+          gesturesEnabled: false
+      }
+  }
 });
 
 export const TabRoot = TabNavigator({

@@ -32,16 +32,17 @@ def get_portfolios():
       conn = dbConn.getDBConn()
       cursor = conn.cursor()
    except Exception as e:
-      print(e)
       return Response('Failed to make connection to database', status=500)
 
    if userId is not None:
-      cursor.execute("SELECT * FROM Portfolio WHERE userId = %s", userId)
+      cursor.execute("SELECT p.buyPower, p.name AS nickname, p.userId, l.name AS league, l.start, l.end, l.startPos " +
+         "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id WHERE userId = %s", userId)
    else:
-      cursor.execute("SELECT * FROM Portfolio")
+      cursor.execute("SELECT p.buyPower, p.name AS nickname, p.userId, l.name AS league, l.start, l.end, l.startPos " +
+         "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id")
 
    portfolios = cursor.fetchall()
-   return json.dumps(portfolios)
+   return json.dumps(portfolios, default=dateToStr)
 
 
 @portfolio_api.route('/api/portfolio/<portfolioId>', methods=['GET'])
@@ -52,7 +53,8 @@ def get_portfolio(portfolioId):
    except Exception as e:
       return Response('Failed to make connection to database', status=500)
 
-   cursor.execute("SELECT ticker, shareCount, avgCost, name, buyPower FROM Portfolio AS p LEFT JOIN PortfolioItem as pi ON p.id = pi.portfolioId " + 
+   cursor.execute("SELECT ticker, shareCount, avgCost, name, buyPower " +
+      "FROM Portfolio AS p LEFT JOIN PortfolioItem as pi ON p.id = pi.portfolioId " + 
       "WHERE p.id = %s", portfolioId)
 
    portfolio = cursor.fetchall()
@@ -91,3 +93,7 @@ def get_portfolio_history(portfolioId):
    portfolio = cursor.fetchall()
    return json.dumps(portfolio, default=str)
 
+
+def dateToStr(obj):
+   if isinstance(obj, datetime):
+      return obj.__str__()
