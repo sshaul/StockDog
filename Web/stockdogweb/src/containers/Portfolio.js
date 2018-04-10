@@ -3,6 +3,7 @@ import { instanceOf } from 'prop-types';
 import Graph from '../components/Graph';
 import { withCookies, Cookies } from 'react-cookie';
 import API from "api";
+import Navbar from "../components/Navbar";
 
 import CreatePortfolio from "components/CreatePortfolio";
 
@@ -56,7 +57,8 @@ class Portfolio extends Component {
          holdingComponents.push(
             <div className="portfolio-holding" key={holding["ticker"]}>
                <div className="portfolio-holding-title">
-                  {holding["ticker"]}
+                  <a href={"/stock/" + holding["ticker"] + "/" +
+                  this.state.portfolioId}>{holding["ticker"]}</a>
                </div>
                <div className="portfolio-holding-amount">
                   {holding["shareCount"]} shares
@@ -77,7 +79,8 @@ class Portfolio extends Component {
       }
       return (
          <div className="Portfolio">
-            <Graph title="Portfolio" ticker="PORTFOLIO" 
+            <Navbar />
+            <Graph title="Portfolio" ticker="PORTFOLIO"
                portfolioId={this.state.portfolioId}/>
             <div className="portfolio-content">
                <h1>Owned</h1>

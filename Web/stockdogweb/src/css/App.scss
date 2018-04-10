@@ -12,12 +12,12 @@ $red-color: #ed4d0a;
 * {
    margin: 0;
    padding: 0;
-   font-family: 'Open Sans', sans-serif;
+   font-family: 'Lato', sans-serif;
 }
 
 body {
    background-color: $bg-color;
-   font-family: 'Open Sans', sans-serif;
+   font-family: 'Lato', sans-serif;
 }
 
 .submit-btn {
@@ -58,23 +58,23 @@ body {
 .back-btn {
    position: absolute;
    left: 10;
-   top: 10;
-}
-
-.back-btn img {
-   width: 50px;
+   top: 0;
+   color: $white-color;
    cursor: pointer;
 }
 
-.loading-animation {
+.loading-animation-wrapper {
    position: absolute;
+   width: 700px;
+   height: 400px;
+}
+
+.loading-animation {
+   position: relative;
    width: 40px;
    height: 40px;
-   top: 0;
-   left: 0;
-   bottom: 250px;
-   right: 0;
-   margin: auto;
+   top: 180px;
+   left: 330px;
 }
 
 .loading-animation img {
@@ -85,7 +85,7 @@ body {
 /* Login
 -----------------------------------------------------------------------------*/
 .Login {
-   font-family: 'Open Sans', sans-serif;
+   font-family: 'Lato', sans-serif;
 }
 
 .login-area {
@@ -100,7 +100,7 @@ body {
 
 .login-area input {
    border: none;
-   font-family: 'Open Sans', sans-serif;
+   font-family: 'Lato', sans-serif;
    display: block;
    padding: 10px;
    margin-bottom: 10px;
@@ -134,7 +134,7 @@ body {
 /* Register
 -----------------------------------------------------------------------------*/
 .Register {
-   font-family: 'Open Sans', sans-serif;
+   font-family: 'Lato', sans-serif;
 }
 
 .register-area {
@@ -149,7 +149,7 @@ body {
 
 .register-area input {
    border: none;
-   font-family: 'Open Sans', sans-serif;
+   font-family: 'Lato', sans-serif;
    width: 200px;
    display: block;
    padding: 5px;
@@ -180,17 +180,21 @@ body {
 /* Stock
 -----------------------------------------------------------------------------*/
 .stock-titles {
-   margin-top: 10px;
-   text-align: center;
+   margin-top: 20px;
+   margin-left: 70px;
 }
 
 .Stock h1 {
-   font-family: 'Open Sans', sans-serif;
+   font-family: 'Lato', sans-serif;
+   font-size: 30px;
+   font-weight: 800;
    color: $white-color;
 }
 
 .Stock h2 {
-   font-family: 'Open Sans', sans-serif;
+   font-family: 'Lato', sans-serif;
+   font-size: 24px;
+   font-weight: 600;
    color: $green-color;
 }
 
@@ -203,11 +207,6 @@ body {
    margin: 10px;
    font-size: 20px;
    float: left;
-}
-
-.stock-chart-time-select {
-   float: right;
-   margin: 10px;
 }
 
 .stock-chart-time-select button {
@@ -235,12 +234,12 @@ body {
 .stock-btn {
    color: $white-color;
    border: none;
-   width: 260px;
+   width: 179px;
    height: 50px;
    padding: 10px;
    font-size: 20px;
    cursor: pointer;
-   margin: 10px;
+   margin-bottom: 10px;   
 }
 
 .stock-btn:active {
@@ -257,15 +256,29 @@ body {
 
 .stock-search {
    position: absolute;
-   right: 0;
+   right: 0px;
    top: 0;
 }
 
 #stock-search-input {
    margin: 20px;
    padding: 5px 10px;
-   font-size: 20px;
+   font-size: 14px;
    width: 150px;
+   border: none;
+}
+
+.stock-transaction-area {
+   position: absolute;
+   left: 800px;
+   top: 30px;
+   width: 179px;
+}
+
+#transactionAmount {
+   margin-bottom: 10px;   
+   font-size: 16px;
+   padding: 5px;
    border: none;
 }
 
@@ -293,25 +306,17 @@ body {
    padding: 10px;
    font-size: 20px;
 }
-
-.buy-btn {
-   background-color: $green-color;
-}
-
-.sell-btn {
-   background-color: $red-color;
-}
 /*===========================================================================*/
 
 /* Portfolio
 -----------------------------------------------------------------------------*/
 .Portfolio h1 {
-   font-family: 'Open Sans', sans-serif;
+   font-family: 'Lato', sans-serif;
    color: $white-color;
 }
 
 .Portfolio h2 {
-   font-family: 'Open Sans', sans-serif;
+   font-family: 'Lato', sans-serif;
    color: $green-color;
 }
 
@@ -330,12 +335,38 @@ body {
    font-size: 34px;
    color: $green-color;
    width: 150px;
-} 
+}
+
+.portfolio-holding-title a {
+   color: $green-color;
+   text-decoration: none;
+}
 
 .portfolio-holding-amount {
    display: inline-block;
    font-size: 34px;
    color: $white-color;
+}
+/*===========================================================================*/
+
+/* Graph
+-----------------------------------------------------------------------------*/
+.Graph {
+   width: 700px;
+   margin-top: 20px;
+   margin-left: 70px;
+}
+
+.stock-chart-time-select button {
+   font-family: 'Lato', sans-serif;
+   font-weight: 300;
+   background-color: $bg-color;
+   color: $white-color;
+   text-decoration: underline;
+}
+
+.stock-chart-time-select button:hover {
+   background-color: $green-color;
 }
 /*===========================================================================*/
 
@@ -359,7 +390,7 @@ body {
 
 #create-portfolio-area input {
    border: none;
-   font-family: 'Open Sans', sans-serif;
+   font-family: 'Lato', sans-serif;
    width: 200px;
    display: block;
    padding: 5px;
