@@ -5,6 +5,8 @@ class Navbar extends Component {
    constructor(props) {
       super(props);
 
+      this.cookies = this.props.cookies;
+
       this.state = {
          searchStock: ""
       }
@@ -19,8 +21,7 @@ class Navbar extends Component {
    changeStock = (event) => {
       event.preventDefault();
 
-      this.props.history.push('/stock/' + this.state.searchStock + "/" +
-         "1");
+      this.props.history.push('/stock/' + this.state.searchStock);
    }
    /* ======================= */
 

@@ -108,7 +108,7 @@ class API {
          });
    };
 
-   getWatchlist = (ticker, portfolioId, callback) => {
+   getWatchlist = (portfolioId, callback) => {
       axios.get(this.baseURL + "/watchlist?portfolioId=" + portfolioId,
          this.config)
          .then((res) => {
@@ -130,6 +130,16 @@ class API {
             console.log(err);
          });
    };
+
+   deleteFromWatchlist = (watchlistId, callback) => {
+      axios.delete(this.baseURL + "/watchlist/" + watchlistId, this.config)
+         .then((res) => {
+            callback();
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   }
 }
 
 export default API;

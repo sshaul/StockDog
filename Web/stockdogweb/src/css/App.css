@@ -276,6 +276,10 @@ body {
   font-family: 'Lato', sans-serif;
   color: #63CEC2; }
 
+.portfolio-content {
+  margin-left: 60px;
+  margin-bottom: 40px; }
+
 .portfolio-content h1 {
   display: block;
   clear: both;
