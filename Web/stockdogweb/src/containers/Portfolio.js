@@ -52,6 +52,7 @@ class Portfolio extends Component {
       var holdingComponents = [];
       console.log("Creating holdings.")
       this.state.holdings.forEach((holding) => {
+         console.log(holding);
          console.log(holding["ticker"]);
          console.log(holding["shareCount"]);
          holdingComponents.push(
