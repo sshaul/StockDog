@@ -68,5 +68,7 @@ CREATE TABLE League (
    name VARCHAR(32),
    start DATE,
    end DATE,
-   startPos DECIMAL(13, 2)
+   startPos DECIMAL(13, 2),
+   inviteCode VARCHAR(6) UNIQUE,
+   ownerId INT(11) REFERENCES User(id)
 );
