@@ -32,6 +32,7 @@
     "react-native-modal": "^4.1.1",
     "react-native-pathjs-charts": "0.0.33",
     "react-native-popover-tooltip": "^1.1.4",
+    "react-native-router-flux": "4.0.0-beta.27",
     "react-native-svg-charts": "^2.1.0",
     "react-native-tooltip": "^5.0.0",
     "react-native-vector-icons": "^4.5.0",

@@ -10,7 +10,6 @@ import Icon from 'react-native-vector-icons/Feather';
 import StockChart from '../components/stockchart';
 import PortfolioItem from '../components/portfolioItem';
 import Api from '../api';
-// import NoPortfoliosProfile from '../components/noPorfoliosProfile';
 import LoadingProfile from '../components/loadingProfile';
 import AddPortfolioModal from '../components/addportfoliomodal';
 import NavBar from '../components/navbar';
@@ -76,17 +75,6 @@ export default class Profile extends Component {
       return <LoadingProfile />;
     }
     else {
-      return (<Drawer
-      type="static"
-      openDrawerOffset={100}
-      tweenHandler={Drawer.tweenPresets.parallax}
-      ref={(ref) => this._drawer = ref}
-      content={<GroupDrawer />}
-      // open={true}
-      >
-        <LoadingProfile />
-      </Drawer>
-      );
       if (this.state.portfolios.length == 0) {
         return (<View style={{flex: 1}}> 
                   {/* <NoPortfoliosProfile 
