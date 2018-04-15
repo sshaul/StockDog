@@ -9,27 +9,17 @@ import WideButton from './widebutton';
 import Icon from 'react-native-vector-icons/Feather';
 import Api from '../api';
 
-export default class AddPortfolioModal extends Component {
+export default class JoinLeagueModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      buyPower: "",
-      type: "",
-      duration: ""
+      inviteCode: ""
     };
     this.api = new Api();
   }
 
-  onpress = () => {
-    // this.api.createNewPortfolio(this.state.name, (response) => {
-    //   this.props._close();
-    // });
-    
-  }
-
-  onchangename = (name) => {
-    this.setState({name})
+  onchangename = (inviteCode) => {
+    this.setState({inviteCode})
   }
 
   render() {
@@ -46,22 +36,11 @@ export default class AddPortfolioModal extends Component {
             </TouchableOpacity>
           </View>
           <View style={containers.addGroupInnerModal}>
+            <Text style={text.joinLeagueTitle}> Invite Code: </Text>
             <RoundInput 
-              type="Name" 
-              onchange={(name) => this.setState({name})} 
-              value={this.state.name}/>
-            <RoundInput 
-              type="Buying Power" 
-              onchange={(buyPower) => this.setState({buyPower})} 
-              value={this.state.buyPower}/>
-            <RoundInput 
-              type="Type" 
-              onchange={(type) => this.setState({type})} 
-              value={this.state.type}/>
-            <RoundInput 
-              type="Duration" 
-              onchange={(duration) => this.setState({duration})} 
-              value={this.state.duration}/>
+              type="Code" 
+              onchange={this.onchangename.bind(this)} 
+              value={this.state.inviteCode}/>
             <WideButton type="portfolio" onpress = {this.onpress}/>
           </View>
         </View>

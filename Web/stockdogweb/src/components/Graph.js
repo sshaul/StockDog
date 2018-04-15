@@ -11,12 +11,15 @@ class Graph extends Component {
 
       this.api = new API();
 
-      this.loadingAnimation = 
-         <div className="loading-animation">
-            <img src={loading} alt="Loading"/>
+      this.loadingAnimation =
+         <div className="loading-animation-wrapper">
+            <div className="loading-animation">
+               <img src={loading} alt="Loading"/>
+            </div>
          </div>
 
       this.state = {
+         initialLoad: true, // Used to prevent extra setState for loading animation
          data: {
             labels: [],
             datasets: [
@@ -43,14 +46,14 @@ class Graph extends Component {
          currentPrice: 0,
          buyOpen: false,
          sellOpen: false,
-         portfolioId: this.props.portfolioId || 
+         portfolioId: this.props.portfolioId ||
             this.props.match.params.portfolioId,
          loadingAnimation: this.loadingAnimation
       };
 
 
       // Options for the chart
-      this.options = { 
+      this.options = {
          maintainAspectRatio: false,
          legend: {
             display: false
@@ -102,9 +105,12 @@ class Graph extends Component {
 
    // Get the data for the timeFrame given
    getData = (timeFrame) => {
-      this.setState({
-         loadingAnimation: this.loadingAnimation
-      });
+      // Really need to refactor this cause its setStating too many times
+      if (this.state.initialLoad === false) {
+         this.setState({
+            loadingAnimation: this.loadingAnimation
+         });
+      }
 
       console.log("Getting data for " + timeFrame);
 
@@ -126,7 +132,7 @@ class Graph extends Component {
             var newData = this.state;
             newData['data']['datasets'][0]['data'] = prices;
             newData['data']['labels'] = labels;
-            // Setting the current price and round to the 2nd decimal 
+            // Setting the current price and round to the 2nd decimal
             newData['currentPrice'] = Math.round(prices[prices.length-1]*100)/100;
             // Update parent's current price
             this.props.updateCurrentPrice(
@@ -136,44 +142,20 @@ class Graph extends Component {
             newData['data']['datasets'][0]['pointHitRadius'] = 10;
             // Turn off loading animation.
             newData["loadingAnimation"] = <div></div>
+            newData["initialLoad"] = false;
             this.setState(newData);
-         });            
+         });
       }
-      
-   }
 
-   handleStockSearch = (event) => {
-      this.setState({searchStock: event.target.value});
-   }
-
-   // Redirect to a different stock page
-   changeStock = (stock) => {
-      this.props.history.push('/stock/' + this.state.searchStock + "/" +
-         this.state.portfolioId); 
    }
 
    render() {
       return (
          <div className="Graph">
-            {this.state.loadingAnimation} 
-            <div className="stock-titles">
-               <h1>{this.props.title}</h1>
-               <h2>${this.state.currentPrice}</h2>
-            </div>
-            <div className="stock-search">
-               <form onSubmit={this.changeStock}>
-                  <input id="stock-search-input" value={this.state.value}
-                     placeholder="search stock" 
-                     onChange={this.handleStockSearch}/>
-               </form>
-            </div>
+            {this.state.loadingAnimation}
             <div className="stock-chart">
                <Line data={this.state.data} options={this.options}/>
             </div>
-            {//<div className="stock-shares-owned">
-               //  23 shares owned
-               // </div>
-            }
             <div className="stock-chart-time-select">
                <TimeFrame timeFrame='day' text='1D' getData={this.getData} />
                <TimeFrame timeFrame='week' text='1W' getData={this.getData}/>

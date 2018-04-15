@@ -44,6 +44,11 @@ export default text = StyleSheet.create({
       fontSize: 16,
       textAlign: 'left'
     },
+    joinLeagueTitle: {
+      color: colors.white,
+      fontFamily: 'open-sans',
+      fontSize: 36
+    },
     // ----------------- Stock page ------------- // 
     stock: {
       color: colors.bright,
@@ -58,13 +63,12 @@ export default text = StyleSheet.create({
     },
     // ----------------- Groups Drawer ------------- //
     groupTitle: {
-      color: colors.white,
+      color: colors.dark,
       fontFamily: 'open-sans-bold',
       fontSize: 36,
-      textDecorationLine: 'underline'
     },
     groupText: {
-      color: colors.white,
+      color: colors.dark,
       fontFamily: 'open-sans',
       fontSize: 24,
       textAlign: 'left'

@@ -17,14 +17,19 @@ export default class GroupDrawer extends Component {
   }
 
   componentDidMount() {
-    this.setState({leagues: ['Group 1', 'Group 2', 'Group 3']})
+    this.setState({
+      leagues: [{'key': 1, 'name': 'Group 1'}, 
+      {'key': 2, 'name': 'Group 2'}, 
+      {'key': 3, 'name': 'Group 3'}]
+    });
   }
 
   _renderItem(item) {
-    console.log(item);
     return (
       <View style={containers.groupItem}>
-        <Text style={text.groupText}> {item.item} </Text>
+        <Text style={text.groupText}> {item.item.name} </Text>
+        <View style={elements.groupDivider}> 
+        </View>
       </View>
     );
   }
