@@ -30,22 +30,13 @@ export default class LoadingProfile extends Component {
 
   render() {
     return (
-      <Drawer
-        type="static"
-        openDrawerOffset={100}
-        tweenHandler={Drawer.tweenPresets.parallax}
-        ref={(ref) => this._drawer = ref}
-        content={<GroupDrawer />}
-        // open={true}
-        >
-        <View style={containers.profileGeneral}>
-          <NavBar openDrawer={this.openDrawer.bind(this)}/>
-          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            {/* <Icon name='loader' size={48} color='white' /> */}
-            <SpinningLoader />
-          </View>
+      <View style={containers.profileGeneral}>
+        <NavBar/>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          {/* <Icon name='loader' size={48} color='white' /> */}
+          <SpinningLoader />
         </View>
-      </Drawer>
+      </View>
     );
   }
 }

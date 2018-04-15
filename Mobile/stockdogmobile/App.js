@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Root } from './routes.js';
+import Routes from './routes.js';
 import { Font } from 'expo';
 
 export default class App extends Component {
@@ -21,7 +21,7 @@ export default class App extends Component {
   render() {
     return(
       this.state.fontLoaded ? 
-       <Root/ > : null
+       Routes() : null
     );
   }
 };

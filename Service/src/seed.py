@@ -43,18 +43,18 @@ def post_seed():
    insertPortfolioHistory(cursor, 2, "2018-02-27", 3023)
    insertPortfolioHistory(cursor, 2, "2018-02-28", 2973)
 
-   insertTransaction(cursor, 41, 5, 1, "2018-02-24", 1, "ROKU")
-   insertTransaction(cursor, 12, 100, 1, "2018-02-25", 1, "AMD")
-   insertTransaction(cursor, 1, 320, 1, "2018-02-26", 1, "TEAR")
-   insertTransaction(cursor, 41, 2, 0, "2018-02-27", 1, "ROKU")
-   insertTransaction(cursor, 0.5, 220, 0, "2018-02-28", 1, "TEAR")
-   insertTransaction(cursor, 334, 3, 1, "2018-02-25", 2, "TSLA")
-   insertTransaction(cursor, 90, 3, 1, "2018-02-27", 2, "MSFT")
-   insertTransaction(cursor, 80, 3, 1, "2018-02-28", 2, "MSFT")
-   insertTransaction(cursor, 94, 3, 0, "2018-02-28", 2, "MSFT")
-   insertTransaction(cursor, 160, 3, 1, "2018-02-25", 3, "AAPL")
-   insertTransaction(cursor, 152, 3, 0, "2018-02-27", 3, "AAPL")
-   insertTransaction(cursor, 3, 23, 1, "2018-02-25", 4, "ADMP")
+   insertTransaction(cursor, 41, 5, 1, "2018-02-24", 1, "ROKU", 1)
+   insertTransaction(cursor, 12, 100, 1, "2018-02-25", 1, "AMD", 2)
+   insertTransaction(cursor, 1, 320, 1, "2018-02-26", 1, "TEAR", 1)
+   insertTransaction(cursor, 41, 2, 0, "2018-02-27", 1, "ROKU", 2)
+   insertTransaction(cursor, 0.5, 220, 0, "2018-02-28", 1, "TEAR", 1)
+   insertTransaction(cursor, 334, 3, 1, "2018-02-25", 2, "TSLA", 2)
+   insertTransaction(cursor, 90, 3, 1, "2018-02-27", 2, "MSFT", 1)
+   insertTransaction(cursor, 80, 3, 1, "2018-02-28", 2, "MSFT", 2)
+   insertTransaction(cursor, 94, 3, 0, "2018-02-28", 2, "MSFT", 1)
+   insertTransaction(cursor, 160, 3, 1, "2018-02-25", 3, "AAPL", 2)
+   insertTransaction(cursor, 152, 3, 0, "2018-02-27", 3, "AAPL", 1)
+   insertTransaction(cursor, 3, 23, 1, "2018-02-25", 4, "ADMP", 2)
 
    insertPortfolioItem(cursor, 100, 1.86, 1, "PLUG")
    insertPortfolioItem(cursor, 25, 43, 1, "MU")
@@ -106,10 +106,10 @@ def insertPortfolioHistory(cursor, portfolioId, day, value):
       [portfolioId, day, value])
 
 
-def insertTransaction(cursor, sharePrice, shareCount, isBuy, day, portfolioId, ticker):
-   cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker) " +
-      "VALUES (%s, %s, %s, %s, %s, %s)",
-      [sharePrice, shareCount, isBuy, day, portfolioId, ticker])
+def insertTransaction(cursor, sharePrice, shareCount, isBuy, day, portfolioId, ticker, leagueId):
+   cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " +
+      "VALUES (%s, %s, %s, %s, %s, %s, %s)",
+      [sharePrice, shareCount, isBuy, day, portfolioId, ticker, leagueId])
 
 
 def insertPortfolioItem(cursor, shareCount, avgCost, portfolioId, ticker):
