@@ -4,6 +4,8 @@ from datetime import datetime
 import pymysql
 import simplejson as json
 import dbConn
+import random
+import string
 
 log = logger.Logger(True, True, True)
 
@@ -18,11 +20,18 @@ def post_league():
    except Exception as e:
       return Response('Failed to make connection to database', status=500)
 
-   cursor.execute("INSERT INTO League(name, start, end, startPos) VALUES (%s, %s, %s, %s)",
-      [body['name'], body['start'], body['end'], body['startPos']])
-   conn.commit()
+   inviteCode = gen_inviteCode()
 
-   return Response(status=200)
+   cursor.execute("INSERT INTO League(name, start, end, startPos, inviteCode, ownerId) VALUES (%s, %s, %s, %s, %s, %s)",
+      [body['name'], body['start'], body['end'], body['startPos'], inviteCode, body['ownerId']])
+
+   conn.commit()
+   return Response(inviteCode, status=200)
+
+
+def gen_inviteCode():
+   code = random.sample(string.ascii_uppercase + string.digits, 6)
+   return ''.join(code)
 
 
 @league_api.route('/api/league', methods=['GET'])

@@ -189,6 +189,19 @@ body {
    font-size: 30px;
    font-weight: 800;
    color: $white-color;
+   display: inline-block;
+   // background-color: red;
+}
+
+.stock-watchlist {
+   color: $white-color;
+   display: inline-block
+}
+
+.stock-watchlist svg {
+   position: relative;
+   top: 2px;
+   left: 4px;
 }
 
 .Stock h2 {
@@ -239,7 +252,7 @@ body {
    padding: 10px;
    font-size: 20px;
    cursor: pointer;
-   margin-bottom: 10px;   
+   margin-bottom: 10px;
 }
 
 .stock-btn:active {
@@ -276,7 +289,7 @@ body {
 }
 
 #transactionAmount {
-   margin-bottom: 10px;   
+   margin-bottom: 10px;
    font-size: 16px;
    padding: 5px;
    border: none;
