@@ -50,15 +50,13 @@ def get_watchlists():
 
 @watchlist_api.route('/api/watchlist/<watchlistId>', methods=['DELETE'])
 def del_watchlist(watchlistId):
-   body = request.get_json()
    try:
       conn = dbConn.getDBConn()
       cursor = conn.cursor()
    except Exception as e:
       return Response('Failed to make connection to database', status=500)
 
-   cursor.execute("DELETE FROM Watchlist WHERE id = %s AND portfolioId = %s", 
-      [watchlistId, body['portfolioId']])
+   cursor.execute("DELETE FROM Watchlist WHERE id = %s", watchlistId)
    conn.commit()
 
    return Response(status=200)
