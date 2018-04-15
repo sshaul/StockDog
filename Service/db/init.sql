@@ -35,7 +35,8 @@ CREATE TABLE Transaction (
    isBuy TINYINT(1),
    datetime DATE,
    portfolioId INT(11) REFERENCES Portfolio(id),
-   ticker VARCHAR(8) REFERENCES Ticker(symbol)
+   ticker VARCHAR(8) REFERENCES Ticker(symbol),
+   leagueId INT(11) REFERENCES League(id)
 );
 
 
@@ -68,5 +69,7 @@ CREATE TABLE League (
    name VARCHAR(32),
    start DATE,
    end DATE,
-   startPos DECIMAL(13, 2)
+   startPos DECIMAL(13, 2),
+   inviteCode VARCHAR(6) UNIQUE,
+   ownerId INT(11) REFERENCES User(id)
 );

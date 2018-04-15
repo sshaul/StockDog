@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import containers from '../style/containers';
 import elements from '../style/elements';
@@ -37,7 +38,7 @@ export default class Register extends Component {
   register() {
     this.api.register(this.state.firstname, this.state.lastname,
       this.state.email, this.state.password, (email) => {
-        this.props.navigation.navigate('Login', {email: this.state.email});
+        Actions.login({email: this.state.email});
       });
   }
 
