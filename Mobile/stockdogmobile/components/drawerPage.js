@@ -8,7 +8,6 @@ import GroupDrawer from '../components/groupdrawer';
 export default class DrawerPage extends Component {
   constructor(props) {
     super(props);
-    // console.log(props);
   };
 
   render() {

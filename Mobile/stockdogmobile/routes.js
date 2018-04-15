@@ -19,7 +19,7 @@ import containers from './style/containers';
 const Routes = () => (
   <Router>
     <Modal key="modal">
-      <Scene key="root" hideNavBar={true}>
+      <Scene key="root" hideNavBar>
         {/* <Scene key="login" component={Login}/>
         <Scene key="register" component={Register}/> */}
         <Drawer 
@@ -49,10 +49,10 @@ const Routes = () => (
               <Scene key="search" component={Search}/>
             </Scene>
           </Tabs>
+        <Scene key="noportfolios" hideNavBar component={noPortfoliosProfile}/>
         </Drawer>
-        <Scene key="noportfolios" component={noPortfoliosProfile}/>
       </Scene>
-      <Scene key="stock" component={Stock} hideNavBar={true}/>
+      <Scene key="stock" component={Stock} hideNavBar/>
     </Modal>
   </Router>
 );

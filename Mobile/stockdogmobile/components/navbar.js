@@ -11,7 +11,6 @@ export default class NavBar extends Component {
    }
 
    openDrawer() {
-      console.log('hello');
       Actions.drawerOpen();
    }
 

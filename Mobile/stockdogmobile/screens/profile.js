@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, FlatList, TextInput, ScrollView, AsyncStorage } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { Button, ButtonGroup } from 'react-native-elements';
 import containers from '../style/containers';
 import elements from '../style/elements';
@@ -32,6 +33,17 @@ export default class Profile extends Component {
     };
     this.api = new Api();
   };
+
+  componentDidMount() {
+    this.api.getPortfolios((portfolios) => {
+      if (portfolios.length == 0) {
+        Actions.replace('noportfolios', {});
+      }
+      else {
+        this.setState({portfolios, isLoading: false});
+      }
+    });
+  }
 
   updateIndex(selectedIndex) {
     var index = '';
@@ -67,65 +79,29 @@ export default class Profile extends Component {
   };
 
   render() {
+    console.log(this.state);
     if (this.state.isLoading) {
-      this.api.getPortfolios((portfolios) => {
-        this.setState({portfolios, isLoading: false});
-      });
-
       return <LoadingProfile />;
     }
     else {
-      if (this.state.portfolios.length == 0) {
-        return (<View style={{flex: 1}}> 
-                  {/* <NoPortfoliosProfile 
-                    navigation={this.props.navigation}
-                    /> */}
-                </View>);
-      }
-      else {
-        if (this.state.isPortfolioLoading) {
-          this.api.getPortfolioStocks(this.state.portfolios[0].id, (stocks) => {
-            var idx = 0;
-            stocks.forEach((stock) => {
-              stock.key = idx;
+      if (this.state.isPortfolioLoading) {
+        this.api.getPortfolioStocks(this.state.portfolios[0].id, (stocks) => {
+          var idx = 0;
+          stocks.forEach((stock) => {
+            stock.key = idx;
+            idx++;
+          });
+          this.api.getWatchlistStocks((watching) => {
+            watching.forEach((watch)=> {
+              watch.key = idx;
               idx++;
             });
-            this.api.getWatchlistStocks((watching) => {
-              watching.forEach((watch)=> {
-                watch.key = idx;
-                idx++;
-              });
-              this.setState({portfolioStocks: stocks, portfolioWatchlist: watching,
-                 isPortfolioLoading: false, isLoading: false});
-            });
-            
+            this.setState({portfolioStocks: stocks, portfolioWatchlist: watching,
+                isPortfolioLoading: false, isLoading: false});
           });
+          
+        });
 
-          return (
-            <View style={containers.profileGeneral}>
-              <NavBar />
-              <View style={{flex: 1, alignItems: 'center'}}>
-                <ScrollView style={{flex: 1}}>
-                  <StockChart range={this.state.range} portfolio={true}/>
-                  <ButtonGroup
-                    onPress={this.updateIndex.bind(this)}
-                    selectedIndex={this.state.selectedIndex}
-                    buttons={['D', 'W', 'M', 'Y']}
-                    containerStyle={{flex: 0.3}}
-                    textStyle={{color: colors.white}}
-                    buttonStyle={{backgroundColor: colors.grey}}
-                    selectedButtonStyle={{backgroundColor: colors.white}}
-                  />
-                  <View style={{flex: 0.3}}>
-                    <Text style={text.profileLabels}>Portfolio</Text>
-                    <Text style={text.smallPortfolioText}>Loading...</Text>
-                    <Text style={text.profileLabels}>Watchlist</Text>
-                  </View>
-                </ScrollView>
-              </View>
-            </View>
-          );
-        }
         return (
           <View style={containers.profileGeneral}>
             <NavBar />
@@ -143,24 +119,47 @@ export default class Profile extends Component {
                 />
                 <View style={{flex: 0.3}}>
                   <Text style={text.profileLabels}>Portfolio</Text>
-                  <FlatList
-                    style={{flex: 1}}
-                    data={this.state.portfolioStocks}
-                    renderItem={this._renderItem}
-                  />
+                  <Text style={text.smallPortfolioText}>Loading...</Text>
                   <Text style={text.profileLabels}>Watchlist</Text>
-                  <FlatList
-                    style={{flex: 1}}
-                    data={this.state.portfolioWatchlist}
-                    renderItem={this._renderItem}
-                  />
                 </View>
               </ScrollView>
             </View>
           </View>
         );
-      
       }
+      return (
+        <View style={containers.profileGeneral}>
+          <NavBar />
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <ScrollView style={{flex: 1}}>
+              <StockChart range={this.state.range} portfolio={true}/>
+              <ButtonGroup
+                onPress={this.updateIndex.bind(this)}
+                selectedIndex={this.state.selectedIndex}
+                buttons={['D', 'W', 'M', 'Y']}
+                containerStyle={{flex: 0.3}}
+                textStyle={{color: colors.white}}
+                buttonStyle={{backgroundColor: colors.grey}}
+                selectedButtonStyle={{backgroundColor: colors.white}}
+              />
+              <View style={{flex: 0.3}}>
+                <Text style={text.profileLabels}>Portfolio</Text>
+                <FlatList
+                  style={{flex: 1}}
+                  data={this.state.portfolioStocks}
+                  renderItem={this._renderItem}
+                />
+                <Text style={text.profileLabels}>Watchlist</Text>
+                <FlatList
+                  style={{flex: 1}}
+                  data={this.state.portfolioWatchlist}
+                  renderItem={this._renderItem}
+                />
+              </View>
+            </ScrollView>
+          </View>
+        </View>
+      );
     }
   }
 }

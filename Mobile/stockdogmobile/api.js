@@ -77,8 +77,27 @@ export default class Api {
     );
   };
 
+  createNewLeague = (lname, lbuypower, lstartDate, lendDate, callback) => {
+    AsyncStorage.getItem('userid')
+      .then((userid) => {
+        uid = userid;
+        console.log(uid);
+      });
+    fetch(this.baseurl + '/api/league', {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        // userId: uid,
+        name: lname,
+        start: lstartDate,
+        end: ltype,
+        startPos: lbuypower
+      }),
+    }).then((response) => callback(response))
+    .catch((error) => console.log(error));
+  };
+
   createNewPortfolio = (pname, callback) => {
-    var uid = 1;
     AsyncStorage.getItem('userid')
       .then((userid) => {uid = userid});
     fetch(this.baseurl + '/api/portfolio', {
