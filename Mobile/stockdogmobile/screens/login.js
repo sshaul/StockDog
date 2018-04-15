@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, FlatList, TextInput, AsyncStorage } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { Button } from 'react-native-elements';
 import containers from '../style/containers';
 import elements from '../style/elements';
@@ -29,8 +30,7 @@ export default class Login extends Component {
   };
   
   navToRegister() {
-    const navigate = this.props.navigation.navigate;
-    navigate('Register', {});
+    Actions.register({});
   };
 
   setStorage = ((key, value) => {
@@ -41,7 +41,7 @@ export default class Login extends Component {
 
   login() {
     this.api.login(this.state.email, this.state.password,
-      () => {this.props.navigation.navigate('Main');});
+      () => {Actions.main({})});
   };
 
   render() {

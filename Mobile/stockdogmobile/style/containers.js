@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, PixelRatio } from 'react-native';
 import { colors } from './colors.js'; 
 
 export default containers = StyleSheet.create({
@@ -15,6 +15,10 @@ export default containers = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       marginLeft: 30
+    },
+    tabBar: {
+      borderTopColor: '#657a86',
+      borderTopWidth: 1 / PixelRatio.get()
     },
     profileGeneral: {
       flex: 1,

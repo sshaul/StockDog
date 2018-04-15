@@ -5,6 +5,7 @@ import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
 import { colors } from '../style/colors'; 
+import NavBar from '../components/navbar';
 import ChartView from 'react-native-highcharts';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -19,10 +20,7 @@ export default class Feed extends Component {
   render() {
     return (
       <View style={containers.profileGeneral}>
-        <View style={containers.iconHeaders}>
-          <Icon name='user' size={30} color='white' />
-          <Icon name='settings' size={30} color='white' />
-        </View>
+        <NavBar />
         
       </View>
     );
