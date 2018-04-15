@@ -1,9 +1,7 @@
 from flask import Blueprint, request, Response, jsonify
 from flask_login import LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
-import pymysql
 import dbConn
-import json
 import manageTokens
 from util import logger
 
@@ -39,3 +37,4 @@ class Login:
             return Response('Incorrect password for user with email ' + body['email'], status=401)
       else:
          return Response('No user with email ' + body['email'] + ' exists', status=401)
+

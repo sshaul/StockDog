@@ -1,6 +1,7 @@
 import simplejson as json
 import pymysql
 
+
 def getDBConn():
    try:
       configFile = open('credentials.json', 'r')

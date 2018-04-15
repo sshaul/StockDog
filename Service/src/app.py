@@ -12,6 +12,7 @@ from portfolio import portfolio_api
 from watchlist import watchlist_api
 from seed import seed_api
 from nuke import nuke_api
+from logout import logout_api
 
 app = Flask(__name__)
 
@@ -26,6 +27,7 @@ app.register_blueprint(portfolio_api)
 app.register_blueprint(watchlist_api)
 app.register_blueprint(seed_api)
 app.register_blueprint(nuke_api)
+app.register_blueprint(logout_api)
 
 log = logger.Logger(True, True, True)
 
