@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS } from 'react-native';
 import { Button, SearchBar } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
@@ -21,20 +22,11 @@ export default class NoPorfoliosProfile extends Component {
   }
 
   openAddModal () {
-    this.setState({isCreateModalVisible: true});
-  }
-
-  closeAddModal () {
-    this.setState({isCreateModalVisible: false});
+    Actions.addportfolio({});
   }
 
   openJoinModal () {
-    console.log('opening join');
-    this.setState({isJoinModalVisible: true});
-  }
-
-  closeJoinModal () {
-    this.setState({isJoinModalVisible: false});
+    Actions.joinportfolio({});
   }
 
   render() {
@@ -59,12 +51,6 @@ export default class NoPorfoliosProfile extends Component {
             </Text>
           </TouchableOpacity>
         </View>
-        <AddPortfolioModal 
-          visibility={this.state.isCreateModalVisible}
-          _close={this.closeAddModal.bind(this)}/>
-        <JoinLeagueModal
-          visibility={this.state.isJoinModalVisible}
-          _close={this.closeJoinModal.bind(this)}/>
       </View>
     );
   }

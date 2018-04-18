@@ -78,19 +78,20 @@ export default class Api {
   };
 
   createNewLeague = (lname, lbuypower, lstartDate, lendDate, callback) => {
+    var uid;
     AsyncStorage.getItem('userid')
       .then((userid) => {
         uid = userid;
-        console.log(uid);
+        console.log('userid: ' + uid);
       });
     fetch(this.baseurl + '/api/league', {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify({
-        // userId: uid,
+        ownerId: uid,
         name: lname,
         start: lstartDate,
-        end: ltype,
+        end: lendDate,
         startPos: lbuypower
       }),
     }).then((response) => callback(response))
@@ -148,7 +149,6 @@ export default class Api {
           callback(newXData, newYData);
         }).catch((error) => console.error(error));
       });
-    
   };
 
   //--------------------------- Buy/Sell Stock Methods -------------------------//
