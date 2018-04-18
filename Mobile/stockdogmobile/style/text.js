@@ -44,10 +44,23 @@ export default text = StyleSheet.create({
       fontSize: 16,
       textAlign: 'left'
     },
+    // ----------------- Modals ------------- // 
     joinLeagueTitle: {
       color: colors.white,
       fontFamily: 'open-sans',
-      fontSize: 36
+      fontSize: 24,
+      textAlign: 'left'
+    },
+    joinLeagueWarning: {
+      color: colors.white,
+      fontFamily: 'open-sans',
+      fontSize: 14,
+      paddingTop: 10
+    },
+    modalHeader: {
+      color: colors.white,
+      fontFamily: 'open-sans',
+      fontSize: 32
     },
     // ----------------- Stock page ------------- // 
     stock: {
@@ -71,6 +84,12 @@ export default text = StyleSheet.create({
       color: colors.dark,
       fontFamily: 'open-sans',
       fontSize: 24,
+      textAlign: 'left'
+    },
+    addGroupText: {
+      color: colors.dark,
+      fontFamily: 'open-sans',
+      fontSize: 20,
       textAlign: 'left'
     }
 });

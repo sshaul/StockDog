@@ -14,12 +14,19 @@ export default class NavBar extends Component {
       Actions.drawerOpen();
    }
 
+   isStockPage() {
+      if (this.props.stock) {
+         return <Icon name='chevron-down' size={48} color='grey' />;
+      }
+   }
+
    render() {
       return (
          <View style={containers.iconHeaders}>
             <TouchableOpacity onPress={this.openDrawer}>
                <Icon name='user' size={30} color='white' />
             </TouchableOpacity>
+            {this.isStockPage()}
             <Icon name='settings' size={30} color='white' />
          </View>
       );

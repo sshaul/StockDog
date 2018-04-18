@@ -7,7 +7,6 @@ import elements from '../style/elements';
 import text from '../style/text';
 import { colors } from '../style/colors'; 
 import ChartView from 'react-native-highcharts';
-import Icon from 'react-native-vector-icons/Feather';
 import StockChart from '../components/stockchart';
 import PortfolioItem from '../components/portfolioItem';
 import Api from '../api';
@@ -15,7 +14,6 @@ import LoadingProfile from '../components/loadingProfile';
 import AddPortfolioModal from '../components/addportfoliomodal';
 import NavBar from '../components/navbar';
 import Drawer from 'react-native-drawer';
-import GroupDrawer from '../components/groupdrawer';
 
 export default class Profile extends Component {
   constructor(props) {
