@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Stack, Scene, ActionConst, Tabs, Modal, Drawer } from 'react-native-router-flux';
+import { Router, Stack, Scene, ActionConst, Tabs, Modal, Drawer, Lightbox } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Feather';
 import elements from './style/elements';
 import Login from './screens/login';
@@ -10,50 +10,68 @@ import Search from './screens/search';
 import League from './screens/league';
 import Feed from './screens/feed';
 import noPortfoliosProfile from './screens/noPortfoliosProfile';
-import DrawerPage from './components/drawerPage';
-import GroupDrawer from './components/groupdrawer';
+import AddPortfolioModal from './components/addportfoliomodal';
+import JoinLeagueModal from './components/joinLeagueModal';
+import BuySellModal from './components/buysellmodal';
+import SetNickname from './components/setNickname';
+import LeagueDrawer from './components/leaguedrawer';
 import TabIcon from './components/tabIcon';
 import Api from './api';
 import containers from './style/containers';
 
 const Routes = () => (
   <Router>
-    <Modal key="modal">
-      <Scene key="root" hideNavBar>
-        {/* <Scene key="login" component={Login}/>
-        <Scene key="register" component={Register}/> */}
-        <Drawer 
-          key="drawer"  
-          contentComponent={GroupDrawer} 
-          type="replace"
-        >
-          <Tabs 
-            key="main" 
-            tabBarStyle={ containers.tabBar } 
-            activeTintColor="#f7f8f9"
-            inactiveTintColor="#f7f8f9"
-            inactiveBackgroundColor= '#657a86'
-            activeBackgroundColor= '#434b59'
-            indicatorStyle= {{
-              backgroundColor: '#434b59',
-              height: 50}}
-            labelStyle= {
-              {color: '#f7f8f9', fontSize: 12, fontFamily: 'open-sans'}}
-            >
-            <Scene key="profilemain" hideNavBar title="Profile" iconName="user" icon={TabIcon}>
-              <Scene key="profile" component={Profile}/>
-            </Scene>
-            <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon}/>
-            <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon}/>
-            <Scene key="searchmain" hideNavBar title="Search" iconName="search" icon={TabIcon}>
-              <Scene key="search" component={Search}/>
-            </Scene>
-          </Tabs>
-        <Scene key="noportfolios" hideNavBar component={noPortfoliosProfile}/>
-        </Drawer>
-      </Scene>
-      <Scene key="stock" component={Stock} hideNavBar/>
-    </Modal>
+    <Drawer 
+      key="drawer"  
+      contentComponent={LeagueDrawer} 
+      type="replace"
+    >
+      <Modal key="modal">
+      
+        <Scene key="root" hideNavBar>
+          {/* <Scene key="login" component={Login}/>
+          <Scene key="register" component={Register}/> */}
+          
+            
+              <Tabs 
+                key="main" 
+                tabBarStyle={ containers.tabBar } 
+                activeTintColor="#f7f8f9"
+                inactiveTintColor="#f7f8f9"
+                inactiveBackgroundColor= '#657a86'
+                activeBackgroundColor= '#434b59'
+                indicatorStyle= {{
+                  backgroundColor: '#434b59',
+                  height: 50}}
+                labelStyle= {
+                  {color: '#f7f8f9', fontSize: 12, fontFamily: 'open-sans'}}
+                >
+                <Scene key="profilemain" hideNavBar title="Profile" iconName="user" icon={TabIcon}>
+                  <Scene key="profile" component={Profile}/>
+                </Scene>
+                <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon}/>
+                <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon}/>
+                <Scene key="searchmain" hideNavBar title="Search" iconName="search" icon={TabIcon}>
+                  <Scene key="search" component={Search}/>
+                </Scene>
+              </Tabs>
+              <Lightbox key="lightbox">
+                <Scene key="noportfolios" hideNavBar component={noPortfoliosProfile}/>
+                <Scene key="addportfolio" component={AddPortfolioModal}/>
+                <Scene key="joinportfolio" component={JoinLeagueModal}/>
+                <Scene key="setnickname" component={SetNickname} />
+              </Lightbox>
+            
+          </Scene>
+        <Lightbox>
+          <Scene key="stock" component={Stock} hideNavBar/>
+          <Scene key="buysellmodal" component={BuySellModal} hideNavBar />
+        </Lightbox>
+        
+      </Modal>
+
+    </Drawer>
+      
   </Router>
 );
 

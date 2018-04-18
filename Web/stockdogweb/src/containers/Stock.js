@@ -3,23 +3,25 @@ import API from 'api';
 import Graph from '../components/Graph';
 import { ChevronLeft, Eye, EyeOff } from 'react-feather';
 import { withRouter } from "react-router-dom";
+import { withCookies } from 'react-cookie';
 
 class Stock extends Component {
    constructor(props) {
       super(props);
 
       this.api = new API();
+      this.cookies = this.props.cookies;
 
       this.state = {
          ticker: this.props.match.params.ticker.toUpperCase(),
-         // TODO: Get the portfolioId from local storage, not the URL
-         portfolioId: this.props.match.params.portfolioId,
+         portfolioId: this.cookies.get("currPortfolio"),
          currentPrice: 0,
          transactionAmount: null,
          watchlistDiv:
             <div className="stock-watchlist" onClick={this.addToWatchlist}>
                <Eye />
-            </div>
+            </div>,
+         watchlistId: null
       };
    }
 
@@ -34,24 +36,7 @@ class Stock extends Component {
          });
       });
 
-      // Getting watchlist information
-      this.api.getWatchlist(this.state.ticker, this.state.portfolioId,
-         (watchlist) => {
-            watchlist.forEach((stock) => {
-               if (stock["ticker"] === this.state.ticker) {
-                  this.setState({
-                     watchlistDiv:
-                     <div className="stock-watchlist"
-                     onClick={this.addToWatchlist}>
-                        <EyeOff />
-                     </div>
-                  });
-               }
-            })
-            console.log(watchlist);
-         });
-
-
+      this.getWatchlist();
    }
 
    goBack = () => {
@@ -100,19 +85,53 @@ class Stock extends Component {
       );
    }
 
+   getWatchlist = () => {
+      // Getting watchlist information
+      this.api.getWatchlist(this.state.portfolioId,
+         (watchlist) => {
+            watchlist.forEach((stock) => {
+               if (stock["ticker"] === this.state.ticker) {
+                  this.setState({
+                     watchlistDiv:
+                     <div className="stock-watchlist"
+                     onClick={this.deleteFromWatchlist}>
+                        <EyeOff />
+                     </div>,
+                     watchlistId: stock["id"]
+                  });
+               }
+            })
+         });
+   };
+
    addToWatchlist = () => {
       this.api.addToWatchlist(
          this.state.ticker, this.state.portfolioId, () => {
             this.setState({
                watchlistDiv:
                   <div className="stock-watchlist"
-                  onClick={this.addToWatchlist}>
+                  onClick={this.deleteFromWatchlist}>
                      <EyeOff />
                   </div>
-            })
+            });
+            this.getWatchlist();
          }
       );
-   }
+   };
+
+   deleteFromWatchlist = () => {
+      this.api.deleteFromWatchlist(
+         this.state.watchlistId, () => {
+            this.setState({
+               watchlistId: null,
+               watchlistDiv:
+                  <div className="stock-watchlist" onClick={this.addToWatchlist}>
+                     <Eye />
+                  </div>,
+            });
+         }
+      )
+   };
 
    render() {
       return (
@@ -142,4 +161,4 @@ class Stock extends Component {
    }
 }
 
-export default withRouter(Stock);
+export default withCookies(withRouter(Stock));

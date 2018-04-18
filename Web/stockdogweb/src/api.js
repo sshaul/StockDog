@@ -108,7 +108,7 @@ class API {
          });
    };
 
-   getWatchlist = (ticker, portfolioId, callback) => {
+   getWatchlist = (portfolioId, callback) => {
       axios.get(this.baseURL + "/watchlist?portfolioId=" + portfolioId,
          this.config)
          .then((res) => {
@@ -127,6 +127,29 @@ class API {
             callback();
          })
          .catch((err) => {
+            console.log(err);
+         });
+   };
+
+   deleteFromWatchlist = (watchlistId, callback) => {
+      axios.delete(this.baseURL + "/watchlist/" + watchlistId, this.config)
+         .then((res) => {
+            callback();
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   };
+
+   createLeague = (name, start, end, buyPower, ownerId, callback) => {
+      axios.post(this.baseURL + "/league/", {
+         name, start, end, startPos: buyPower, ownerId
+      }, this.config)
+         .then(res => {
+            alert(name + "has been created.");
+            callback();
+         })
+         .catch(err => {
             console.log(err);
          });
    };

@@ -23,11 +23,14 @@ class Portfolio extends Component {
          portfolios: [],
          portfolioId: null,
          holdings: [],
-         holdingComponents: []
+         holdingComponents: [],
+         watchlist: [],
+         watchlistComponents: []
       }
    }
 
    componentDidMount() {
+      // Get the owned portfolios
       this.api.getAllPortfolios(this.cookies.get("userId"), (portfolios) => {
          if (portfolios.length !== 0) {
             this.setState({
@@ -35,10 +38,19 @@ class Portfolio extends Component {
                portfolioId: portfolios[0]["id"]
             });
             this.getPortfolio();
+            this.cookies.set("currPortfolio", this.state.portfolioId);
          }
+      });
+
+      // Get the watchlist
+      this.api.getWatchlist(this.cookies.get("currPortfolio"), (watchlist) => {
+         console.log(watchlist);
+         this.setState({watchlist});
+         this.createWatchlist();
       });
    }
 
+   // Get the portfolio's holdings
    getPortfolio = () => {
       this.api.getPortfolio(this.state.portfolioId, (holdings) => {
          this.setState({
@@ -52,14 +64,10 @@ class Portfolio extends Component {
       var holdingComponents = [];
       console.log("Creating holdings.")
       this.state.holdings.forEach((holding) => {
-         console.log(holding);
-         console.log(holding["ticker"]);
-         console.log(holding["shareCount"]);
          holdingComponents.push(
             <div className="portfolio-holding" key={holding["ticker"]}>
                <div className="portfolio-holding-title">
-                  <a href={"/stock/" + holding["ticker"] + "/" +
-                  this.state.portfolioId}>{holding["ticker"]}</a>
+                  <a href={"/stock/" + holding["ticker"]}>{holding["ticker"]}</a>
                </div>
                <div className="portfolio-holding-amount">
                   {holding["shareCount"]} shares
@@ -71,6 +79,25 @@ class Portfolio extends Component {
          holdingComponents
       });
    };
+
+   createWatchlist = () => {
+      var watchlistComponents = [];
+      console.log("Creating watchlist.");
+      console.log(this.state.watchlist);
+      this.state.watchlist.forEach((stock) => {
+         watchlistComponents.push(
+            <div className="portfolio-holding" key={stock["ticker"]}>
+               <div className="portfolio-holding-title">
+                  <a href={"/stock/" + stock["ticker"]}>{stock["ticker"]}</a>
+               </div>
+            </div>
+         );
+      });
+      this.setState({
+         watchlistComponents
+      });
+      console.log(this.state.watchlistComponents);
+   }
 
    render() {
       if (this.state.portfolioId === null) {
@@ -86,7 +113,9 @@ class Portfolio extends Component {
             <div className="portfolio-content">
                <h1>Owned</h1>
                {this.state.holdingComponents}
+               <br />
                <h1>Watchlist</h1>
+               {this.state.watchlistComponents}
             </div>
          </div>
       );

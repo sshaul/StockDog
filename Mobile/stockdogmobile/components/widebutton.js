@@ -22,7 +22,9 @@ export default class WideButton extends Component {
     else if (this.props.type == 'sell')
       buttonText = 'SELL';
     else if (this.props.type == 'portfolio')
-      buttonText = 'CREATE NEW LEAGUE';
+      buttonText = 'Next';
+    else if (this.props.type == 'join')
+      buttonText = 'Join league!';
 
     var style = elements.loginButton;
     if (this.props.disabled) {

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, Button } from 'react-native';
+import Lightbox from './baseLightbox';
 import DatePicker from 'react-native-datepicker';
+import { Actions } from 'react-native-router-flux';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
@@ -12,14 +14,19 @@ import Api from '../api';
 
 export default class AddPortfolioModal extends Component {
   constructor(props) {
-    super(props);
-    this.state = {
+    super(props);    this.state = {
       name: "",
       buyPower: "",
       startDate: "",
-      endDate: ""
+      endDate: "",
+      minDate: "01/01/2001"
     };
+
     this.api = new Api();
+  }
+
+  componentDidMount() {
+    this.setState({minDate: this.getCurrDate()});
   }
 
   getCurrDate = () => {
@@ -41,97 +48,173 @@ export default class AddPortfolioModal extends Component {
   }
 
   onpress = () => {
-    this.api.createNewLeague(
-      this.state.name, 
-      this.state.buyPower,
-      this.state.startDate,
-      this.state.endDate, (response) => {
-      this.props._close();
-    });
+    Actions.setnickname(this.state);
   }
+
+  close = () => {
+    Actions.pop();
+  };
 
   render() {
     var disabled = !(this.state.name && 
       this.state.buyPower && 
       this.state.startDate && 
       this.state.endDate)
+
     return (
-      <Modal
-        isVisible={this.props.visibility}
-        animationIn="fadeIn"
-        animationOut="fadeOut"
-        onBackdropPress={this.props._close}>
-        <View style={containers.addGroupOuterModal}>
-          <View style={containers.addGroupModalHeader}>
-            <TouchableOpacity onPress={this.props._close}>
-              <Icon name='x' size={30} color='white' />
-            </TouchableOpacity>
+        <Lightbox verticalPercent={0.7} horizontalPercent={0.8}>
+          <View style={containers.addGroupOuterModal}>
+            <View style={containers.addGroupModalHeader}>
+              <Text style={text.modalHeader}> Create a League </Text>
+              <TouchableOpacity onPress={this.close}>
+                <Icon name='x' size={30} color='white' />
+              </TouchableOpacity>
+            </View>
+            <View style={containers.addGroupInnerModal}>
+             <RoundInput 
+                type="Name" 
+                onchange={(name) => this.setState({name})} 
+                value={this.state.name}/>
+              <RoundInput 
+                type="Buying Power" 
+                onchange={(buyPower) => this.setState({buyPower})} 
+                value={this.state.buyPower}/>
+              {/* <RoundInput 
+                type="Start Date" 
+                onchange={(startDate) => this.setState({startDate})} 
+                value={this.state.startDate}/> */}
+              <DatePicker
+                style={elements.roundedInput}
+                date={this.state.startDate}
+                mode="date"
+                placeholder="Select start date"
+                format="MM/DD/YYYY"
+                minDate={this.state.minDate}
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  placeholderText: {
+                    fontFamily: 'open-sans',
+                    textAlign: 'left',
+                    color: "#aaaaaa",
+                    marginLeft: -30
+                  },
+                  dateInput: {
+                    flex: 0.7,
+                    alignItems: 'flex-start',
+                    borderWidth: 0
+                  }
+                }}
+                iconComponent={<Icon name='calendar' size={30} color='grey' />}
+                onDateChange={(startDate) => {this.setState({startDate})}}
+              />
+              <DatePicker
+                style={elements.roundedInput}
+                date={this.state.endDate}
+                mode="date"
+                placeholder="Select end date"
+                format="MM/DD/YYYY"
+                minDate={this.state.minDate}
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  placeholderText: {
+                    fontFamily: 'open-sans',
+                    textAlign: 'left',
+                    color: "#aaaaaa",
+                    marginLeft: -30
+                  },
+                  dateInput: {
+                    flex: 0.7,
+                    alignItems: 'flex-start',
+                    borderWidth: 0
+                  }
+                }}
+                iconComponent={<Icon name='calendar' size={30} color='grey' />}
+                onDateChange={(endDate) => {this.setState({endDate})}}
+              />
+              <WideButton disabled={disabled} type="portfolio" onpress = {this.onpress}/>
+            </View>
           </View>
-          <View style={containers.addGroupInnerModal}>
-            <RoundInput 
-              type="Name" 
-              onchange={(name) => this.setState({name})} 
-              value={this.state.name}/>
-            <RoundInput 
-              type="Buying Power" 
-              onchange={(buyPower) => this.setState({buyPower})} 
-              value={this.state.buyPower}/>
-            {/* <RoundInput 
-              type="Start Date" 
-              onchange={(startDate) => this.setState({startDate})} 
-              value={this.state.startDate}/> */}
-            <DatePicker
-              style={elements.roundedInput}
-              date={this.state.startDate}
-              mode="date"
-              placeholder="Select start date"
-              format="MM/DD/YYYY"
-              minDate={this.getCurrDate()}
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0
-                },
-                dateInput: {
-                  marginLeft: 36
-                }
-              }}
-              onDateChange={(startDate) => {this.setState({startDate})}}
-            />
-            {/* <RoundInput 
-              type="End Date" 
-              onchange={(endDate) => this.setState({endDate})} 
-              value={this.state.endDate}/> */}
-            <DatePicker
-              style={elements.roundedInput}
-              date={this.state.endDate}
-              mode="date"
-              placeholder="Select end date"
-              format="MM/DD/YYYY"
-              minDate={this.getCurrDate()}
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  top: 4,
-                  marginLeft: 0
-                },
-                dateInput: {
-                  marginLeft: 36
-                }
-              }}
-              onDateChange={(endDate) => {this.setState({endDate})}}
-            />
-            <WideButton disabled={disabled} type="portfolio" onpress = {this.onpress}/>
-          </View>
-        </View>
-      </Modal>
+        </Lightbox>
+      // <Modal
+      //   isVisible={this.props.visibility}
+      //   animationIn="fadeIn"
+      //   animationOut="fadeOut"
+      //   onBackdropPress={this.props._close}>
+      //   <View style={containers.addGroupOuterModal}>
+      //     <View style={containers.addGroupModalHeader}>
+      //       <TouchableOpacity onPress={this.props._close}>
+      //         <Icon name='x' size={30} color='white' />
+      //       </TouchableOpacity>
+      //     </View>
+      //     <View style={containers.addGroupInnerModal}>
+      //       <RoundInput 
+      //         type="Name" 
+      //         onchange={(name) => this.setState({name})} 
+      //         value={this.state.name}/>
+      //       <RoundInput 
+      //         type="Buying Power" 
+      //         onchange={(buyPower) => this.setState({buyPower})} 
+      //         value={this.state.buyPower}/>
+      //       {/* <RoundInput 
+      //         type="Start Date" 
+      //         onchange={(startDate) => this.setState({startDate})} 
+      //         value={this.state.startDate}/> */}
+      //       <DatePicker
+      //         style={elements.roundedInput}
+      //         date={this.state.startDate}
+      //         mode="date"
+      //         placeholder="Select start date"
+      //         format="MM/DD/YYYY"
+      //         minDate={this.state.minDate}
+      //         confirmBtnText="Confirm"
+      //         cancelBtnText="Cancel"
+      //         customStyles={{
+      //           placeholderText: {
+      //             fontFamily: 'open-sans',
+      //             textAlign: 'left',
+      //             color: "#aaaaaa",
+      //             marginLeft: -30
+      //           },
+      //           dateInput: {
+      //             flex: 0.7,
+      //             alignItems: 'flex-start',
+      //             borderWidth: 0
+      //           }
+      //         }}
+      //         iconComponent={<Icon name='calendar' size={30} color='grey' />}
+      //         onDateChange={(startDate) => {this.setState({startDate})}}
+      //       />
+      //       <DatePicker
+      //         style={elements.roundedInput}
+      //         date={this.state.endDate}
+      //         mode="date"
+      //         placeholder="Select end date"
+      //         format="MM/DD/YYYY"
+      //         minDate={this.state.minDate}
+      //         confirmBtnText="Confirm"
+      //         cancelBtnText="Cancel"
+      //         customStyles={{
+      //           placeholderText: {
+      //             fontFamily: 'open-sans',
+      //             textAlign: 'left',
+      //             color: "#aaaaaa",
+      //             marginLeft: -30
+      //           },
+      //           dateInput: {
+      //             flex: 0.7,
+      //             alignItems: 'flex-start',
+      //             borderWidth: 0
+      //           }
+      //         }}
+      //         iconComponent={<Icon name='calendar' size={30} color='grey' />}
+      //         onDateChange={(endDate) => {this.setState({endDate})}}
+      //       />
+      //       <WideButton disabled={disabled} type="portfolio" onpress = {this.onpress}/>
+      //     </View>
+      //   </View>
+      // </Modal>
     );
   }
 };

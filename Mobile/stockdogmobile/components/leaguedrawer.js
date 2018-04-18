@@ -7,8 +7,9 @@ import text from '../style/text';
 import { colors } from '../style/colors'; 
 import SpinningLoader from './spinningloader';
 import Drawer from 'react-native-drawer';
+import Icon from 'react-native-vector-icons/Feather';
 
-export default class GroupDrawer extends Component {
+export default class LeagueDrawer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,12 +38,20 @@ export default class GroupDrawer extends Component {
   render() {
     return (
       <View style={containers.groupsDrawer}>
-        <Text style={text.groupTitle}>My Leagues</Text>
-        <FlatList
-          style={containers.groupsList}
-          data={this.state.leagues}
-          renderItem={this._renderItem}
-        />
+        <View style={containers.leaguesList}>
+          <Text style={text.groupTitle}>My Leagues</Text>
+          <FlatList
+            style={containers.groupsList}
+            data={this.state.leagues}
+            renderItem={this._renderItem}
+          />
+        </View>
+        <View>
+          <TouchableOpacity style={containers.leaguesFooter}>
+            <Icon name='plus-circle' size={30} color={colors.dark} />
+            <Text style={text.addGroupText}> Create a new league </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
