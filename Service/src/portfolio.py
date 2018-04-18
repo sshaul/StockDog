@@ -45,13 +45,21 @@ def post_portfolio():
 @portfolio_api.route('/api/portfolio', methods=['GET'])
 def get_portfolios():
    userId = request.args.get('userId')
+   leagueId = request.args.get('leagueId')
    try:
       conn = dbConn.getDBConn()
       cursor = conn.cursor()
    except Exception as e:
       return Response('Failed to make connection to database', status=500)
 
-   if userId is not None:
+   if userId and leagueId:
+      return Response("Please provide only the userId or only the leagueId", status=400)
+
+   if leagueId:
+      cursor.execute("SELECT p.id, p.buyPower, p.name AS nickname, p.userId, l.name AS league, l.start, l.end, l.startPos " +
+         "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id WHERE l.id = %s", leagueId)
+
+   elif userId:
       cursor.execute("SELECT p.id, p.buyPower, p.name AS nickname, p.userId, l.name AS league, l.start, l.end, l.startPos " +
          "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id WHERE userId = %s", userId)
    else:
