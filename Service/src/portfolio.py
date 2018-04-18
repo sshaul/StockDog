@@ -4,6 +4,7 @@ from datetime import datetime
 import pymysql
 import simplejson as json
 import dbConn
+import stock
 
 log = logger.Logger(True, True, True)
 
@@ -75,6 +76,17 @@ def get_portfolio(portfolioId):
 
    portfolio = cursor.fetchall()
    return json.dumps(portfolio)
+
+
+@portfolio_api.route('/api/portfolio/<portfolioId>/value', methods=['GET'])
+def get_portfolio_value(portfolioId):
+   portfolioItems = json.loads(get_portfolio(portfolioId))
+   value = 0
+   for item in portfolioItems:
+      if item['ticker'] is not None:
+         value += float(json.loads(stock.get_history(item['ticker'], 'now'))[0]['price']) * item['shareCount']
+
+   return json.dumps(value + float(portfolioItems[0]['buyPower']))
 
 
 @portfolio_api.route('/api/portfolio/<portfolioId>/history', methods=['POST'])
