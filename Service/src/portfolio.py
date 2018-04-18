@@ -18,8 +18,24 @@ def post_portfolio():
    except Exception as e:
       return Response('Failed to make connection to database', status=500)
 
-   cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)", 
-      [body['name'], body['buyPower'], body['userId']])
+   if 'leagueId' in body:
+      
+      if 'inviteCode' in body:
+         cursor.execute("SELECT inviteCode FROM League WHERE id = %s", body['leagueId'])
+         row = cursor.fetchone()
+         
+         if body['inviteCode'] == row['inviteCode']:
+            cursor.execute("INSERT INTO Portfolio(name, buyPower, userId, leagueId) VALUES (%s, %s, %s, %s)",
+               [body['name'], body['buyPower'], body['userId'], body['leagueId']])
+         else:
+            return Response("Invite code does not match the league's invite code", status=400)
+      
+      else:
+         return Response("Invite code was not provided to join league", status=400)
+   
+   else:
+      cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)", 
+         [body['name'], body['buyPower'], body['userId']])
    conn.commit()
 
    return Response(status=200)

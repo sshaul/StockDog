@@ -26,7 +26,7 @@ def post_league():
       [body['name'], body['start'], body['end'], body['startPos'], inviteCode, body['ownerId']])
 
    conn.commit()
-   return Response(inviteCode, status=200)
+   return json.dumps(inviteCode)
 
 
 def gen_inviteCode():
