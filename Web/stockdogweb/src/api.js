@@ -139,7 +139,20 @@ class API {
          .catch((err) => {
             console.log(err);
          });
-   }
+   };
+
+   createLeague = (name, start, end, buyPower, ownerId, callback) => {
+      axios.post(this.baseURL + "/league/", {
+         name, start, end, startPos: buyPower, ownerId
+      }, this.config)
+         .then(res => {
+            alert(name + "has been created.");
+            callback();
+         })
+         .catch(err => {
+            console.log(err);
+         });
+   };
 }
 
 export default API;
