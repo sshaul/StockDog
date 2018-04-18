@@ -419,3 +419,56 @@ body {
    font-size: 20px;
 }
 /*===========================================================================*/
+
+/* CreateLeague
+-----------------------------------------------------------------------------*/
+.CreateLeague {
+   font-family: 'Lato', sans-serif;
+}
+
+.create-league-area {
+   width: 300px;
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   margin: auto;
+}
+
+#create-league-area-1 {
+   height: 500px;
+}
+
+#create-league-area-2 {
+   height: 280px;
+}
+
+.create-league-area h1 {
+   color: $white-color;
+   text-align: center;
+   margin-bottom: 20px;
+}
+
+.create-league-area label {
+   color: $white-color;
+}
+
+.create-league-area input {
+   padding: 10px;
+   width: 300px;
+   border: none;
+   margin-bottom: 10px;
+}
+
+.create-league-area button {
+   margin-top: 10px;
+   width: 300px;
+   background-color: $green-color;
+}
+
+#league-back {
+   margin-top: 10px;
+   background-color: $red-color;
+}
+/*===========================================================================*/

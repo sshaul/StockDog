@@ -14,6 +14,7 @@ import Login from "./containers/Login";
 import Register from "./containers/Register";
 import Stock from "./containers/Stock";
 import Portfolio from "./containers/Portfolio"
+import CreateLeague from "./containers/CreateLeague";
 
 class App extends Component {
    render() {
@@ -26,8 +27,10 @@ class App extends Component {
                   component={Register} appProps={this.props} />
                <AuthenticatedRoute exact path="/portfolio" component={Portfolio}
                   appProps={this.props}/>
-               <AuthenticatedRoute path="/stock/:ticker" 
+               <AuthenticatedRoute path="/stock/:ticker"
                   component={Stock} appProps={this.props}/>
+               <AuthenticatedRoute path="/create-league/"
+                component={CreateLeague} appProps={this.props} />
             </div>
          </Router>
       );
