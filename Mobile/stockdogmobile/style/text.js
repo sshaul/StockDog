@@ -79,6 +79,7 @@ export default text = StyleSheet.create({
       color: colors.dark,
       fontFamily: 'open-sans-bold',
       fontSize: 36,
+      paddingLeft: 10
     },
     groupText: {
       color: colors.dark,

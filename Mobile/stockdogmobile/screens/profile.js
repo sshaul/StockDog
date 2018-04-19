@@ -27,7 +27,6 @@ export default class Profile extends Component {
       portfolios: [],
       portfolioStocks: [],
       portfolioWatchlist: [],
-      isModalVisible: false
     };
     this.api = new Api();
   };
@@ -38,7 +37,10 @@ export default class Profile extends Component {
         Actions.replace('noportfolios', {});
       }
       else {
-        this.setState({portfolios, isLoading: false});
+        AsyncStorage.getItem('currPortfolio', (value) => {
+          console.log(value);
+          this.setState({portfolios, isLoading: false, portfolioid: value});
+        })
       }
     });
   }
@@ -60,14 +62,6 @@ export default class Profile extends Component {
     this.setState({selectedIndex, range: index});
   }
 
-  _openModal = () => {
-    this.setState({isModalVisible: true});
-  }
-
-  _closeModal = () => {
-    this.setState({isModalVisible: false, isLoading: true});
-  }
-
   _renderItem = ({item}) => {
     return <PortfolioItem 
       ticker={item.ticker}
@@ -77,13 +71,14 @@ export default class Profile extends Component {
   };
 
   render() {
-    console.log(this.state);
     if (this.state.isLoading) {
       return <LoadingProfile />;
     }
     else {
       if (this.state.isPortfolioLoading) {
-        this.api.getPortfolioStocks(this.state.portfolios[0].id, (stocks) => {
+        this.api.getPortfolioStocks(this.state.portfolioid, (stocks) => {
+        // this.api.getPortfolioStocks(this.state.portfolios[0].id, (stocks) => {
+          console.log(this.state.portfolioid);
           var idx = 0;
           stocks.forEach((stock) => {
             stock.key = idx;

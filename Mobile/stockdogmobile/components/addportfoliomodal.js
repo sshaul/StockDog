@@ -14,12 +14,13 @@ import Api from '../api';
 
 export default class AddPortfolioModal extends Component {
   constructor(props) {
-    super(props);    this.state = {
+    super(props);    
+    this.state = {
       name: "",
       buyPower: "",
       startDate: "",
       endDate: "",
-      minDate: "01/01/2001"
+      minDate: "2001/01/01"
     };
 
     this.api = new Api();
@@ -43,7 +44,7 @@ export default class AddPortfolioModal extends Component {
         mm = '0'+mm
     } 
     
-    today = mm + '/' + dd + '/' + yyyy;
+    today = yyyy + '/' + mm + '/' + dd;
     return today;
   }
 
@@ -79,16 +80,12 @@ export default class AddPortfolioModal extends Component {
                 type="Buying Power" 
                 onchange={(buyPower) => this.setState({buyPower})} 
                 value={this.state.buyPower}/>
-              {/* <RoundInput 
-                type="Start Date" 
-                onchange={(startDate) => this.setState({startDate})} 
-                value={this.state.startDate}/> */}
               <DatePicker
                 style={elements.roundedInput}
                 date={this.state.startDate}
                 mode="date"
                 placeholder="Select start date"
-                format="MM/DD/YYYY"
+                format="YYYY/MM/DD"
                 minDate={this.state.minDate}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
@@ -113,7 +110,7 @@ export default class AddPortfolioModal extends Component {
                 date={this.state.endDate}
                 mode="date"
                 placeholder="Select end date"
-                format="MM/DD/YYYY"
+                format="YYYY/MM/DD"
                 minDate={this.state.minDate}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
@@ -137,84 +134,6 @@ export default class AddPortfolioModal extends Component {
             </View>
           </View>
         </Lightbox>
-      // <Modal
-      //   isVisible={this.props.visibility}
-      //   animationIn="fadeIn"
-      //   animationOut="fadeOut"
-      //   onBackdropPress={this.props._close}>
-      //   <View style={containers.addGroupOuterModal}>
-      //     <View style={containers.addGroupModalHeader}>
-      //       <TouchableOpacity onPress={this.props._close}>
-      //         <Icon name='x' size={30} color='white' />
-      //       </TouchableOpacity>
-      //     </View>
-      //     <View style={containers.addGroupInnerModal}>
-      //       <RoundInput 
-      //         type="Name" 
-      //         onchange={(name) => this.setState({name})} 
-      //         value={this.state.name}/>
-      //       <RoundInput 
-      //         type="Buying Power" 
-      //         onchange={(buyPower) => this.setState({buyPower})} 
-      //         value={this.state.buyPower}/>
-      //       {/* <RoundInput 
-      //         type="Start Date" 
-      //         onchange={(startDate) => this.setState({startDate})} 
-      //         value={this.state.startDate}/> */}
-      //       <DatePicker
-      //         style={elements.roundedInput}
-      //         date={this.state.startDate}
-      //         mode="date"
-      //         placeholder="Select start date"
-      //         format="MM/DD/YYYY"
-      //         minDate={this.state.minDate}
-      //         confirmBtnText="Confirm"
-      //         cancelBtnText="Cancel"
-      //         customStyles={{
-      //           placeholderText: {
-      //             fontFamily: 'open-sans',
-      //             textAlign: 'left',
-      //             color: "#aaaaaa",
-      //             marginLeft: -30
-      //           },
-      //           dateInput: {
-      //             flex: 0.7,
-      //             alignItems: 'flex-start',
-      //             borderWidth: 0
-      //           }
-      //         }}
-      //         iconComponent={<Icon name='calendar' size={30} color='grey' />}
-      //         onDateChange={(startDate) => {this.setState({startDate})}}
-      //       />
-      //       <DatePicker
-      //         style={elements.roundedInput}
-      //         date={this.state.endDate}
-      //         mode="date"
-      //         placeholder="Select end date"
-      //         format="MM/DD/YYYY"
-      //         minDate={this.state.minDate}
-      //         confirmBtnText="Confirm"
-      //         cancelBtnText="Cancel"
-      //         customStyles={{
-      //           placeholderText: {
-      //             fontFamily: 'open-sans',
-      //             textAlign: 'left',
-      //             color: "#aaaaaa",
-      //             marginLeft: -30
-      //           },
-      //           dateInput: {
-      //             flex: 0.7,
-      //             alignItems: 'flex-start',
-      //             borderWidth: 0
-      //           }
-      //         }}
-      //         iconComponent={<Icon name='calendar' size={30} color='grey' />}
-      //         onDateChange={(endDate) => {this.setState({endDate})}}
-      //       />
-      //       <WideButton disabled={disabled} type="portfolio" onpress = {this.onpress}/>
-      //     </View>
-      //   </View>
-      // </Modal>
     );
   }
 };

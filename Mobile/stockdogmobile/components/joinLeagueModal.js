@@ -30,16 +30,15 @@ export default class JoinLeagueModal extends Component {
   }
 
   submitCode = () => {
-    // TODO!!!!!!********************************************************
-    // this.api.joinLeague(this.state.inviteCode, (leagueID) => {
-    //   if (leagueID > 0) {
-    //     Actions.setnickname({league: leagueID});
-    //   }
-    //   else {
-    //     this.setState({notFound: true});
-    //   }
-    // });
-    this.setState({notFound: true});
+    this.api.isValidInviteCode(this.state.inviteCode, (res) => {
+      console.log(res);
+      if (res.valid) {
+        Actions.setnickname({league: res.league, inviteCode: this.state.inviteCode});
+      }
+      else {
+        this.setState({notFound: true});
+      }
+    });
   }
 
   render() {

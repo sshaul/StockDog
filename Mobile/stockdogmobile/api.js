@@ -68,7 +68,7 @@ export default class Api {
         method: 'GET'
     }).then((response) => response.json())
     .then((responseJson) => {
-      console.log(responseJson);
+      // console.log(responseJson);
       AsyncStorage.setItem('portfolios', JSON.stringify(responseJson));
       callback(responseJson);
     })
@@ -82,35 +82,85 @@ export default class Api {
     AsyncStorage.getItem('userid')
       .then((userid) => {
         uid = userid;
-        console.log('userid: ' + uid);
+        fetch(this.baseurl + '/api/league', {
+          method: 'POST',
+          headers: this.headers,
+          body: JSON.stringify({
+            ownerId: uid,
+            name: lname,
+            start: lstartDate,
+            end: lendDate,
+            startPos: lbuypower
+          })
+        }).then((response) => response.json())
+        .then((responseJson) => {
+          callback(responseJson);
+        })
+        .catch((error) => console.log(error));
       });
+  };
+
+  isValidInviteCode = (inviteCode, callback) => {
     fetch(this.baseurl + '/api/league', {
-      method: 'POST',
+      method: 'GET',
       headers: this.headers,
-      body: JSON.stringify({
-        ownerId: uid,
-        name: lname,
-        start: lstartDate,
-        end: lendDate,
-        startPos: lbuypower
-      }),
-    }).then((response) => callback(response))
+    }).then((response) => response.json())
+    .then((responseJson) => {
+      var valid = false;
+      var el;
+      responseJson.forEach(element => {
+        if (element.inviteCode === inviteCode) {
+          valid = true;
+          el = element;
+        }
+      });
+      if (valid) {
+        callback({valid: true, league: el});
+      }
+      else {
+        callback({valid: false});
+      }
+    })
     .catch((error) => console.log(error));
   };
 
-  createNewPortfolio = (pname, callback) => {
+  joinLeague = (pname, leagueId, code, callback) => {
+    var uid;
+    console.log(code);
     AsyncStorage.getItem('userid')
-      .then((userid) => {uid = userid});
-    fetch(this.baseurl + '/api/portfolio', {
-      method: 'POST',
-      headers: this.headers,
-      body: JSON.stringify({
-        userId: uid,
-        buyPower: 600,
-        name: pname
-      }),
-    }).then((response) => callback(response))
-    .catch((error) => console.log(error));
+      .then((userid) => {
+        uid = userid;
+        fetch(this.baseurl + '/api/portfolio', {
+          method: 'POST',
+          headers: this.headers,
+          body: JSON.stringify({
+            userId: uid,
+            buyPower: 600,  // ********************* wrong
+            name: pname,
+            inviteCode: code,
+            leagueId: leagueId
+          }),
+        }).then((response) => callback(response))
+        .catch((error) => console.log(error));
+      });
+  }
+
+  createNewPortfolio = (pname, callback) => {
+    var uid;
+    AsyncStorage.getItem('userid')
+      .then((userid) => {
+        uid = userid;
+        fetch(this.baseurl + '/api/portfolio', {
+          method: 'POST',
+          headers: this.headers,
+          body: JSON.stringify({
+            userId: uid,
+            buyPower: 600,
+            name: pname
+          }),
+        }).then((response) => callback(response))
+        .catch((error) => console.log(error));
+      });
   };
 
   getPortfolioStocks = (id, callback) => {
@@ -154,6 +204,7 @@ export default class Api {
   //--------------------------- Buy/Sell Stock Methods -------------------------//
   // Buys or sells a stock
   manageStock = (type, ticker, numShares, price, id, callback) => {
+    // AsyncStorage.getItem('currPortfolio')
     fetch(this.baseurl + '/api/stock/' + type + '/' + ticker, {
       method: 'POST',
       headers: this.headers,

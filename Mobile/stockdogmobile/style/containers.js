@@ -97,20 +97,22 @@ export default containers = StyleSheet.create({
       paddingTop: 30
     },
     leaguesList: {
-      flex: 0.9,
+      flex: 1,
       paddingTop: 20,
-      width: '100%'
+      width: '100%',
+      borderBottomWidth: 1
     },
     leaguesFooter: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      paddingBottom: 10
+      paddingBottom: 10,
+      marginTop: 10,
     },
     groupItem: {
-      // borderStyle: 'solid', 
-      // borderColor: colors.grey, 
-      // borderWidth: 2
+      borderStyle: 'solid', 
+      borderColor: colors.grey, 
+      borderWidth: 2
     },
     addGroupModalHeader: {
       flex: 0.2,
