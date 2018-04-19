@@ -4,6 +4,7 @@ from datetime import datetime
 import pymysql
 import simplejson as json
 import dbConn
+import stock
 
 log = logger.Logger(True, True, True)
 
@@ -21,12 +22,12 @@ def post_portfolio():
    if 'leagueId' in body:
       
       if 'inviteCode' in body:
-         cursor.execute("SELECT inviteCode FROM League WHERE id = %s", body['leagueId'])
+         cursor.execute("SELECT inviteCode, startPos FROM League WHERE id = %s", body['leagueId'])
          row = cursor.fetchone()
          
          if body['inviteCode'] == row['inviteCode']:
             cursor.execute("INSERT INTO Portfolio(name, buyPower, userId, leagueId) VALUES (%s, %s, %s, %s)",
-               [body['name'], body['buyPower'], body['userId'], body['leagueId']])
+               [body['name'], row['startPos'], body['userId'], body['leagueId']])
          else:
             return Response("Invite code does not match the league's invite code", status=400)
       
@@ -44,13 +45,21 @@ def post_portfolio():
 @portfolio_api.route('/api/portfolio', methods=['GET'])
 def get_portfolios():
    userId = request.args.get('userId')
+   leagueId = request.args.get('leagueId')
    try:
       conn = dbConn.getDBConn()
       cursor = conn.cursor()
    except Exception as e:
       return Response('Failed to make connection to database', status=500)
 
-   if userId is not None:
+   if userId and leagueId:
+      return Response("Please provide only the userId or only the leagueId", status=400)
+
+   if leagueId:
+      cursor.execute("SELECT p.id, p.buyPower, p.name AS nickname, p.userId, l.name AS league, l.start, l.end, l.startPos " +
+         "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id WHERE l.id = %s", leagueId)
+
+   elif userId:
       cursor.execute("SELECT p.id, p.buyPower, p.name AS nickname, p.userId, l.name AS league, l.start, l.end, l.startPos " +
          "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id WHERE userId = %s", userId)
    else:
@@ -75,6 +84,17 @@ def get_portfolio(portfolioId):
 
    portfolio = cursor.fetchall()
    return json.dumps(portfolio)
+
+
+@portfolio_api.route('/api/portfolio/<portfolioId>/value', methods=['GET'])
+def get_portfolio_value(portfolioId):
+   portfolioItems = json.loads(get_portfolio(portfolioId))
+   value = 0
+   for item in portfolioItems:
+      if item['ticker'] is not None:
+         value += float(json.loads(stock.get_history(item['ticker'], 'now'))[0]['price']) * item['shareCount']
+
+   return json.dumps(value + float(portfolioItems[0]['buyPower']))
 
 
 @portfolio_api.route('/api/portfolio/<portfolioId>/history', methods=['POST'])
