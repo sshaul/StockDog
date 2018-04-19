@@ -22,12 +22,12 @@ def post_portfolio():
    if 'leagueId' in body:
       
       if 'inviteCode' in body:
-         cursor.execute("SELECT inviteCode FROM League WHERE id = %s", body['leagueId'])
+         cursor.execute("SELECT inviteCode, startPos FROM League WHERE id = %s", body['leagueId'])
          row = cursor.fetchone()
          
          if body['inviteCode'] == row['inviteCode']:
             cursor.execute("INSERT INTO Portfolio(name, buyPower, userId, leagueId) VALUES (%s, %s, %s, %s)",
-               [body['name'], body['buyPower'], body['userId'], body['leagueId']])
+               [body['name'], row['startPos'], body['userId'], body['leagueId']])
          else:
             return Response("Invite code does not match the league's invite code", status=400)
       
