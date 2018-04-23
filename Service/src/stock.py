@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response
+from flask import Blueprint, request, Response, g
 from urllib.parse import urlencode
 from util import logger
 from datetime import date, timedelta, datetime
@@ -28,35 +28,28 @@ stock_api = Blueprint('stock_api', __name__)
 @stock_api.route('/api/stock/sell/<ticker>', methods=['POST'])
 def post_sell_transaction(ticker):
    body = request.get_json()
-   try:
-      conn = dbConn.getDBConn()
-      cursor = conn.cursor()
-   except Exception as e:
-      return Response('Failed to make connection to database', status=500)
 
-   cursor.execute("SELECT shareCount, avgCost FROM PortfolioItem " +
+   g.cursor.execute("SELECT shareCount, avgCost FROM PortfolioItem " +
       "WHERE portfolioId = %s AND ticker = %s",
       [body['portfolioId'], ticker])
 
-   userShares = cursor.fetchone()
+   userShares = g.cursor.fetchone()
    if not userShares or body['shareCount'] > userShares['shareCount']:
-      return Response('Inadequate shares owned to make sale', status=400)
+      return Response('Inadequate shares owned to make sale.', status=400)
 
    saleValue = body['sharePrice'] * body['shareCount']
    newShareCt = userShares['shareCount'] - body['shareCount']
 
-   cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker) " +
+   g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker) " +
       "VALUES (%s, %s, %s, %s, %s, %s)",
       [body['sharePrice'], body['shareCount'], 0, datetime.now(), body['portfolioId'], ticker])
 
-   cursor.execute("UPDATE Portfolio SET buyPower = buyPower + %s WHERE id = %s",
+   g.cursor.execute("UPDATE Portfolio SET buyPower = buyPower + %s WHERE id = %s",
       [saleValue, body['portfolioId']])
 
-   cursor.execute("UPDATE PortfolioItem SET shareCount = %s " 
+   g.cursor.execute("UPDATE PortfolioItem SET shareCount = %s " 
       "WHERE portfolioId = %s AND ticker = %s",
       [newShareCt, body['portfolioId'], ticker])
-
-   conn.commit()
 
    return Response(status=200)
 
@@ -64,46 +57,39 @@ def post_sell_transaction(ticker):
 @stock_api.route('/api/stock/buy/<ticker>', methods=['POST'])
 def post_buy_transaction(ticker):
    body = request.get_json()
-   try:
-      conn = dbConn.getDBConn()
-      cursor = conn.cursor()
-   except Exception as e:
-      return Response('Failed to make connection to database', status=500)
 
-   cursor.execute("SELECT buyPower FROM Portfolio WHERE id = %s",
+   g.cursor.execute("SELECT buyPower FROM Portfolio WHERE id = %s",
       int(body['portfolioId']))
 
-   userBuyPower = cursor.fetchone()['buyPower']
+   userBuyPower = g.cursor.fetchone()['buyPower']
    purchaseCost = body['sharePrice'] * body['shareCount']
 
    if userBuyPower < purchaseCost:
-      return Response('Insufficient buying power to make purchase', status=400)
+      return Response('Insufficient buying power to make purchase.', status=400)
 
    remainingBuyPower = float(userBuyPower) - purchaseCost
 
-   cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker) " + 
+   g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker) " + 
       "VALUES (%s, %s, %s, %s, %s, %s)",
       (body['sharePrice'], body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker))
 
-   cursor.execute("UPDATE Portfolio SET buyPower = %s WHERE id = %s",
+   g.cursor.execute("UPDATE Portfolio SET buyPower = %s WHERE id = %s",
       [remainingBuyPower, body['portfolioId']])
 
-   cursor.execute("SELECT * FROM PortfolioItem WHERE portfolioId = %s AND ticker = %s",
+   g.cursor.execute("SELECT * FROM PortfolioItem WHERE portfolioId = %s AND ticker = %s",
       [body['portfolioId'], ticker])
 
-   portfolioItem = cursor.fetchone()
+   portfolioItem = g.cursor.fetchone()
    if portfolioItem:
       newShareCt = portfolioItem['shareCount'] + body['shareCount']
       newAvgCost = ((portfolioItem['avgCost'] * portfolioItem['shareCount']) + purchaseCost) // newShareCt
-      cursor.execute("UPDATE PortfolioItem SET shareCount = %s, avgCost = %s " +
+      g.cursor.execute("UPDATE PortfolioItem SET shareCount = %s, avgCost = %s " +
          "WHERE portfolioId = %s AND ticker = %s",
          [newShareCt, newAvgCost, body['portfolioId'], ticker])
    else:
-      cursor.execute("INSERT INTO PortfolioItem(shareCount, avgCost, portfolioId, ticker) " +
+      g.cursor.execute("INSERT INTO PortfolioItem(shareCount, avgCost, portfolioId, ticker) " +
          "VALUES (%s, %s, %s, %s)",
          [body['shareCount'], body['sharePrice'], body['portfolioId'], ticker])
-   
-   conn.commit()
 
    return Response(status=200)
 
@@ -147,6 +133,7 @@ def get_history(ticker, length):
 
    log.info('Alphavantage time is: ' + str(alphaTime))
    log.info('Parsing data time is: ' + str(parseTime))
+   
    return json.dumps(data)
     
 
