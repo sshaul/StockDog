@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response, g
+from flask import Blueprint, request, Response, g, jsonify
 from util import logger
 from datetime import datetime
 import pymysql
@@ -33,7 +33,7 @@ def post_portfolio():
       g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)", 
          [body['name'], body['buyPower'], body['userId']])
 
-   return Response(status=200)
+   return jsonify(id=g.cursor.lastrowid)
 
 
 @portfolio_api.route('/api/portfolio', methods=['GET'])
