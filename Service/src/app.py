@@ -55,7 +55,7 @@ def index():
 
 @app.errorhandler(404)
 def not_found(error):
-   return jsonify({'error': 'Not found'}), 404
+   return jsonify(error='Not Found'), 404
 
 
 def getPortNum(defaultPort=5005):
