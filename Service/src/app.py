@@ -2,7 +2,7 @@ from util import logger
 import dbConn
 
 import argparse
-from flask import Flask, request, jsonify, g, Response
+from flask import Flask, request, g, Response
 from flask_cors import CORS
 from werkzeug.local import LocalProxy
 
@@ -55,7 +55,7 @@ def index():
 
 @app.errorhandler(404)
 def not_found(error):
-   return jsonify(error='Not Found'), 404
+   return Response('Not Found', status=404)
 
 
 def getPortNum(defaultPort=5005):
