@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response
+from flask import Blueprint, request, Response, g, jsonify
 from util import logger
 from datetime import datetime
 import pymysql
@@ -14,40 +14,29 @@ league_api = Blueprint('league_api', __name__)
 @league_api.route('/api/league', methods=['POST'])
 def post_league():
    body = request.get_json()
-   try:
-      conn = dbConn.getDBConn()
-      cursor = conn.cursor()
-   except Exception as e:
-      return Response('Failed to make connection to database', status=500)
-
    inviteCode = gen_inviteCode()
 
-   cursor.execute("INSERT INTO League(name, start, end, startPos, inviteCode, ownerId) VALUES (%s, %s, %s, %s, %s, %s)",
+   g.cursor.execute("INSERT INTO League(name, start, end, startPos, inviteCode, ownerId) VALUES (%s, %s, %s, %s, %s, %s)",
       [body['name'], body['start'], body['end'], body['startPos'], inviteCode, body['ownerId']])
 
-   conn.commit()
-   return json.dumps(inviteCode)
+   return jsonify(inviteCode=inviteCode, id=g.cursor.lastrowid)
 
 
+@league_api.route('/api/league', methods=['GET'])
+def get_leagues():
+   g.cursor.execute("SELECT * FROM League")
+
+   leagues = g.cursor.fetchall()
+   return json.dumps(leagues, default=dateToStr)
+
+
+# TODO move to util folder
 def gen_inviteCode():
    code = random.sample(string.ascii_uppercase + string.digits, 6)
    return ''.join(code)
 
 
-@league_api.route('/api/league', methods=['GET'])
-def get_leagues():
-   try:
-      conn = dbConn.getDBConn()
-      cursor = conn.cursor()
-   except Exception as e:
-      return Response('Failed to make connection to database', status=500)
-
-   cursor.execute("SELECT * FROM League")
-
-   leagues = cursor.fetchall()
-   return json.dumps(leagues, default=dateToStr)
-
-
+# TODO move to util folder
 def dateToStr(obj):
    if isinstance(obj, datetime):
       return obj.__str__()
