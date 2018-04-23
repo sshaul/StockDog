@@ -11,6 +11,6 @@ def getDBConn():
       raise Exception('The filename was not provided or poorly formatted') 
 
    conn = pymysql.connect(host='127.0.0.1', user=config['username'], password=config['password'], database='Stockdog',
-      cursorclass=pymysql.cursors.DictCursor)
+      cursorclass=pymysql.cursors.DictCursor, autocommit=True)
 
    return conn
