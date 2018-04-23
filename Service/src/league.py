@@ -21,11 +21,6 @@ def post_league():
 
    return jsonify(inviteCode=inviteCode, id=g.cursor.lastrowid)
 
-# TODO move to util folder
-def gen_inviteCode():
-   code = random.sample(string.ascii_uppercase + string.digits, 6)
-   return ''.join(code)
-
 
 @league_api.route('/api/league', methods=['GET'])
 def get_leagues():
@@ -33,6 +28,13 @@ def get_leagues():
 
    leagues = g.cursor.fetchall()
    return json.dumps(leagues, default=dateToStr)
+
+
+# TODO move to util folder
+def gen_inviteCode():
+   code = random.sample(string.ascii_uppercase + string.digits, 6)
+   return ''.join(code)
+
 
 # TODO move to util folder
 def dateToStr(obj):
