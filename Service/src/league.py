@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response, g
+from flask import Blueprint, request, Response, g, jsonify
 from util import logger
 from datetime import datetime
 import pymysql
@@ -19,7 +19,7 @@ def post_league():
    g.cursor.execute("INSERT INTO League(name, start, end, startPos, inviteCode, ownerId) VALUES (%s, %s, %s, %s, %s, %s)",
       [body['name'], body['start'], body['end'], body['startPos'], inviteCode, body['ownerId']])
 
-   return json.dumps(inviteCode)
+   return jsonify({'inviteCode': inviteCode, 'id': g.cursor.lastrowid})
 
 # TODO move to util folder
 def gen_inviteCode():
