@@ -1,12 +1,13 @@
 from flask import Blueprint, request, Response, g
-from util import logger
-from datetime import datetime
-import pymysql
 import simplejson as json
+
+from util import logger
+from util.utility import Utility
 
 log = logger.Logger(True, True, True)
 
 transaction_api = Blueprint('transaction_api', __name__)
+
 
 @transaction_api.route('/api/transaction', methods=['GET'])
 def get_transactions():
@@ -22,10 +23,4 @@ def get_transactions():
          g.cursor.execute("SELECT * FROM Transaction")
 
    transactions = g.cursor.fetchall()
-   return json.dumps(transactions, default=dateToStr)
-
-
-# TODO move to the util folder
-def dateToStr(obj):
-   if isinstance(obj, datetime):
-      return obj.__str__()
+   return json.dumps(transactions, default=Utility.dateToStr)

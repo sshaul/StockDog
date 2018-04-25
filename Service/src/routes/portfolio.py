@@ -1,13 +1,15 @@
-from flask import Blueprint, request, Response, g, jsonify
-from util import logger
 from datetime import datetime
-import pymysql
+from flask import Blueprint, request, Response, g, jsonify
 import simplejson as json
-import stock
+
+from routes import stock
+from util import logger
+from util.utility import Utility
 
 log = logger.Logger(True, True, True)
 
 portfolio_api = Blueprint('portfolio_api', __name__)
+
 
 @portfolio_api.route('/api/portfolio', methods=['POST'])
 def post_portfolio():
@@ -58,7 +60,7 @@ def get_portfolios():
          "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id")
 
    portfolios = g.cursor.fetchall()
-   return json.dumps(portfolios, default=dateToStr)
+   return json.dumps(portfolios, default=Utility.dateToStr)
 
 
 @portfolio_api.route('/api/portfolio/<portfolioId>', methods=['GET'])
@@ -102,9 +104,3 @@ def get_portfolio_history(portfolioId):
 
    portfolio = g.cursor.fetchall()
    return json.dumps(portfolio, default=str)
-
-
-# TODO move to util folder
-def dateToStr(obj):
-   if isinstance(obj, datetime):
-      return obj.__str__()

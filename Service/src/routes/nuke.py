@@ -1,10 +1,11 @@
 from flask import Blueprint, request, Response, g
+
 from util import logger
-import pymysql
 
 log = logger.Logger(True, True, True)
 
 nuke_api = Blueprint('nuke_api', __name__)
+
 
 @nuke_api.route('/api/nuke', methods=['DELETE'])
 def post_nuke():
@@ -14,6 +15,7 @@ def post_nuke():
       'Ticker', 'Portfolio', 'User'], body['resetIncrement'])
 
    return Response(status=200)
+
 
 def delete_tables(tables, resetIncrement):
    for table in tables:
