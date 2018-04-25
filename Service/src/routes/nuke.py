@@ -11,7 +11,7 @@ nuke_api = Blueprint('nuke_api', __name__)
 def post_nuke():
    body = request.get_json()
 
-   delete_tables(['PortfolioItem', 'PortfolioHistory', 'Watchlist', 'Transaction', 
+   delete_tables(['League', 'PortfolioItem', 'PortfolioHistory', 'Watchlist', 'Transaction', 
       'Ticker', 'Portfolio', 'User'], body['resetIncrement'])
 
    return Response(status=200)
