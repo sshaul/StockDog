@@ -1,13 +1,10 @@
 from flask import Flask, Response, g
-from util import logger
-import pymysql
-import json
-import sys
-import tokenize
 import random
-import util.dbConn
+
+from util import logger
 
 log = logger.Logger(True, True, True)
+
 
 def generateToken():
    return  '%064x' % random.randrange(16**64)

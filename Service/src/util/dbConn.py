@@ -1,5 +1,5 @@
-import simplejson as json
 import pymysql
+import simplejson as json
 
 CONFIG_FILE_PATH = '../db/config.json'
 
