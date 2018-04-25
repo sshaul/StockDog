@@ -3,7 +3,6 @@ from util import logger
 from datetime import datetime
 import pymysql
 import simplejson as json
-import dbConn
 import random
 import string
 

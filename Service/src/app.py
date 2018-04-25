@@ -1,11 +1,11 @@
-from util import logger
-import dbConn
-
 import argparse
 from flask import Flask, request, g, Response
 from flask_cors import CORS
-from werkzeug.local import LocalProxy
+import pymysql
+import simplejson as json
 
+from util.dbConn import getDBConn
+from util import logger
 from user import user_api
 from login import Login
 from session import session_api
@@ -37,13 +37,15 @@ app.register_blueprint(logout_api)
 
 log = logger.Logger(True, True, True)
 
+
 @app.before_request
 def setup():
    if getattr(g, 'db', None) is None:
       try:
-         g.db = dbConn.getDBConn()
+         g.db = getDBConn()
          g.cursor = g.db.cursor()
       except Exception as e:
+         log.error(e)
          return Response('Failed to make connection to database', status=500)
 
 

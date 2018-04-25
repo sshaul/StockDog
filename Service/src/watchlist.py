@@ -2,7 +2,6 @@ from flask import Blueprint, request, Response, g
 from util import logger
 import pymysql
 import simplejson as json
-import dbConn
 
 log = logger.Logger(True, True, True)
 

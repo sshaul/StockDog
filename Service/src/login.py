@@ -1,7 +1,6 @@
 from flask import Blueprint, request, Response, jsonify, g
 from flask_login import LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
-import dbConn
 import manageTokens
 from util import logger
 

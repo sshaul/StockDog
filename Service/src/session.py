@@ -2,7 +2,6 @@ from flask import Blueprint, request, Response, jsonify, g
 from util import logger
 import pymysql
 import json
-import dbConn
 
 session_api = Blueprint('session_api', __name__)
 log = logger.Logger(True, True, True)

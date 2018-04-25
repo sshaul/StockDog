@@ -1,5 +1,4 @@
 from flask import Blueprint, request, Response, g
-import dbConn
 from util import logger
 
 

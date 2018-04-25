@@ -3,7 +3,6 @@ from util import logger
 from datetime import datetime
 import pymysql
 import simplejson as json
-import dbConn
 import stock
 
 log = logger.Logger(True, True, True)
@@ -19,6 +18,9 @@ def post_portfolio():
       if 'inviteCode' in body:
          g.cursor.execute("SELECT inviteCode, startPos FROM League WHERE id = %s", body['leagueId'])
          row = g.cursor.fetchone()
+
+         if row is None:
+            return Response("League does not exist", status=400)
          
          if body['inviteCode'] == row['inviteCode']:
             g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId, leagueId) VALUES (%s, %s, %s, %s)",

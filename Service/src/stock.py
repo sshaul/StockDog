@@ -7,7 +7,6 @@ import requests
 import re
 import time
 import pymysql
-import dbConn
 
 log = logger.Logger(True, True, True)
 

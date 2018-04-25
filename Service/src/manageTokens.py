@@ -1,11 +1,11 @@
-from flask import Flask, Response
+from flask import Flask, Response, g
 from util import logger
 import pymysql
 import json
 import sys
 import tokenize
 import random
-import dbConn
+import util.dbConn
 
 log = logger.Logger(True, True, True)
 
@@ -13,28 +13,22 @@ def generateToken():
    return  '%064x' % random.randrange(16**64)
 
 
-def isTokenUnique(cursor, token):
-   cursor.execute("SELECT * FROM User WHERE token = %s", token)
-   return False if cursor.rowcount > 0 else True
+def isTokenUnique(token):
+   g.cursor.execute("SELECT * FROM User WHERE token = %s", token)
+   return False if g.cursor.rowcount > 0 else True
 
 
-def getUniqueToken(cursor):
+def getUniqueToken():
    token = generateToken()
-   while not isTokenUnique(cursor, token):
+   while not isTokenUnique(token):
       token = generateToken()
 
    return token
 
 
 def addTokenToUser(userId):
-   try:
-      conn = dbConn.getDBConn()
-      cursor = conn.cursor()
-   except Exception as e:
-      raise Exception(e)
-
-   token = getUniqueToken(cursor)
-   cursor.execute("UPDATE User SET token = %s WHERE id = %s", [token, userId])
-   conn.commit()
+   token = getUniqueToken()
+   
+   g.cursor.execute("UPDATE User SET token = %s WHERE id = %s", [token, userId])
 
    return token
