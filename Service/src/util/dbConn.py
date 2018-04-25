@@ -1,11 +1,16 @@
 import pymysql
+import os
 import simplejson as json
 
-CONFIG_FILE_PATH = '../db/config.json'
+CONFIG_FILE_PATH = 'Service/db/config.json'
+
+def getConfigFilePath():
+   cwd = os.getcwd()
+   return cwd[:len(cwd) - 7] + CONFIG_FILE_PATH
 
 def getDBConn():
    try:
-      configFile = open(CONFIG_FILE_PATH, 'r')
+      configFile = open(getConfigFilePath(), 'r')
       config = json.load(configFile)
       configFile.close()
    except Exception as e:
