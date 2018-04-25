@@ -1,12 +1,13 @@
 from flask import Blueprint, request, Response, g
-from util import logger
-import pymysql
 import simplejson as json
-import dbConn
+
+from util import logger
 
 log = logger.Logger(True, True, True)
 
 watchlist_api = Blueprint('watchlist_api', __name__)
+
+
 @watchlist_api.route('/api/watchlist', methods=['POST'])
 def post_watchlist():
    body = request.get_json()

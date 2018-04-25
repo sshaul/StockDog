@@ -1,11 +1,11 @@
 from flask import Blueprint, Response, g
+
 from util import logger
-import pymysql
-import dbConn
 
 log = logger.Logger(True, True, True)
 
 seed_api = Blueprint('seed_api', __name__)
+
 
 @seed_api.route('/api/seed', methods=['POST'])
 def post_seed():

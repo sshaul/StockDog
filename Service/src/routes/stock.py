@@ -1,13 +1,11 @@
-from flask import Blueprint, request, Response, g
-from urllib.parse import urlencode
-from util import logger
 from datetime import date, timedelta, datetime
-import simplejson as json
+from flask import Blueprint, request, Response, g
 import requests
-import re
 import time
-import pymysql
-import dbConn
+import simplejson as json
+from urllib.parse import urlencode
+
+from util import logger
 
 log = logger.Logger(True, True, True)
 

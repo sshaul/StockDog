@@ -1,12 +1,12 @@
 from flask import Blueprint, request, Response, g
-from util import logger
 from werkzeug.security import generate_password_hash, check_password_hash
-import pymysql
-import dbConn
+
+from util import logger
 
 log = logger.Logger(True, True, True)
 
 user_api = Blueprint('user_api', __name__)
+
 
 @user_api.route('/api/user', methods=['POST'])
 def post_user():

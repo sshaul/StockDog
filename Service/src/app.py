@@ -1,22 +1,22 @@
-from util import logger
-import dbConn
-
 import argparse
 from flask import Flask, request, g, Response
 from flask_cors import CORS
-from werkzeug.local import LocalProxy
 
-from user import user_api
-from login import Login
-from session import session_api
-from stock import stock_api
-from portfolio import portfolio_api
-from watchlist import watchlist_api
-from transaction import transaction_api
-from league import league_api
-from seed import seed_api
-from nuke import nuke_api
-from logout import logout_api
+from auth.login import Login
+from auth.session import session_api
+from auth.logout import logout_api
+
+from routes.user import user_api
+from routes.stock import stock_api
+from routes.portfolio import portfolio_api
+from routes.watchlist import watchlist_api
+from routes.transaction import transaction_api
+from routes.league import league_api
+from routes.seed import seed_api
+from routes.nuke import nuke_api
+
+from util.dbConn import getDBConn
+from util import logger
 
 app = Flask(__name__)
 
@@ -37,13 +37,15 @@ app.register_blueprint(logout_api)
 
 log = logger.Logger(True, True, True)
 
+
 @app.before_request
 def setup():
    if getattr(g, 'db', None) is None:
       try:
-         g.db = dbConn.getDBConn()
+         g.db = getDBConn()
          g.cursor = g.db.cursor()
       except Exception as e:
+         log.error(e)
          return Response('Failed to make connection to database', status=500)
 
 
