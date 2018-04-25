@@ -6,7 +6,9 @@ CONFIG_FILE_PATH = 'Service/db/config.json'
 
 def getConfigFilePath():
    cwd = os.getcwd()
-   return cwd[:len(cwd) - 7] + CONFIG_FILE_PATH
+   strIdx = cwd.find('StockDog/')
+   return cwd[:strIdx + 9] + CONFIG_FILE_PATH
+
 
 def getDBConn():
    try:
