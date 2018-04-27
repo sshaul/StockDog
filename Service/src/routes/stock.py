@@ -74,8 +74,6 @@ def post_buy_transaction(ticker):
 
    remainingBuyPower = float(userBuyPower) - purchaseCost
 
-   log.debug(str(get_attr(body, 'leagueId')))
-
    g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " + 
       "VALUES (%s, %s, %s, %s, %s, %s, %s)",
       [body['sharePrice'], body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker, get_attr(body, 'leagueId')])
