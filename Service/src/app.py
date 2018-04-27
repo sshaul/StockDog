@@ -3,26 +3,25 @@ from flask import Flask, request, g, Response
 from flask_cors import CORS
 
 from auth.login import Login
-from auth.session import session_api
 from auth.logout import logout_api
+from auth.session import session_api
 
-from routes.user import user_api
-from routes.stock import stock_api
-from routes.portfolio import portfolio_api
-from routes.watchlist import watchlist_api
-from routes.transaction import transaction_api
 from routes.league import league_api
-from routes.seed import seed_api
 from routes.nuke import nuke_api
+from routes.portfolio import portfolio_api
+from routes.seed import seed_api
+from routes.stock import stock_api
+from routes.transaction import transaction_api
+from routes.watchlist import watchlist_api
+from routes.user import user_api
 
 from util.dbConn import getDBConn
 from util import logger
 
 app = Flask(__name__)
-
 CORS(app)
-
 login = Login(app)
+
 app.register_blueprint(user_api)
 app.register_blueprint(login.login_api)
 app.register_blueprint(session_api)
