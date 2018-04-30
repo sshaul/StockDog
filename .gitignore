@@ -4,4 +4,5 @@ config.json
 credentials.json
 run.pid
 nohup.out
+api.pid
 .idea/workspace.xml

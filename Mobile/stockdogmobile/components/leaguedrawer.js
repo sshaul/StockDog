@@ -24,13 +24,8 @@ export default class LeagueDrawer extends Component {
   componentDidMount() {
     this.api.getPortfolios((portfolios) => {
       // this.setState({leagues: portfolios});
-      this.setState({leagues: [
-        { id: 1, buyPower: 200, name: 'Awesome Rob 1', league: 'The League 1' },
-        { id: 2, buyPower: 201, name: 'Awesome Rob 2', league: 'The League 2' },
-        { id: 3, buyPower: 202, name: 'Awesome Rob 3', league: 'The League 3' },
-        { id: 4, buyPower: 203, name: 'Awesome Rob 4', league: 'The League 4' },
-        { id: 5, buyPower: 204, name: 'Awesome Rob 5', league: 'The League 5' }
-      ]})
+      console.log(portfolios);
+      this.setState({leagues: portfolios});
     });
   }
 
@@ -51,14 +46,13 @@ export default class LeagueDrawer extends Component {
     return (
       <ListItem
         key={item.item.id}
-        title={item.item.name}
+        title={item.item.league}
         subtitle={
           <View style={{
             flexDirection: 'column',
             paddingLeft: 10,
             paddingTop: 5
           }}>
-            <Text> {item.item.league} </Text>
             <Text> Buy Power: {item.item.buyPower} </Text>
           </View>
         }
