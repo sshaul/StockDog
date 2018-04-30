@@ -58,7 +58,7 @@ CREATE TABLE PortfolioHistory (
 CREATE TABLE PortfolioItem (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    shareCount INT(11),
-   avgCost INT(11),
+   avgCost DECIMAL(11, 2),
    portfolioId INT(11) REFERENCES Portfolio(id),
    ticker VARCHAR(8) REFERENCES Ticker(symbol)
 );

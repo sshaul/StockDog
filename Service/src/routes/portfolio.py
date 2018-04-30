@@ -82,7 +82,7 @@ def get_portfolio_value(portfolioId):
       if item['ticker'] is not None:
          value += float(json.loads(stock.get_history(item['ticker'], 'now'))[0]['price']) * item['shareCount']
 
-   return json.dumps(value + float(portfolioItems[0]['buyPower']))
+   return json.dumps({"value": value + float(portfolioItems[0]['buyPower'])})
 
 
 @portfolio_api.route('/api/portfolio/<portfolioId>/history', methods=['POST'])

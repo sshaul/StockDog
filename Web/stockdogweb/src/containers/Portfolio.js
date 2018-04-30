@@ -4,6 +4,7 @@ import Graph from '../components/Graph';
 import { withCookies, Cookies } from 'react-cookie';
 import API from "api";
 import Navbar from "../components/Navbar";
+import SideNav from "../components/SideNav";
 
 import CreatePortfolio from "components/CreatePortfolio";
 
@@ -108,6 +109,7 @@ class Portfolio extends Component {
       return (
          <div className="Portfolio">
             <Navbar />
+            <SideNav />
             <Graph title="Portfolio" ticker="PORTFOLIO"
                portfolioId={this.state.portfolioId}/>
             <div className="portfolio-content">

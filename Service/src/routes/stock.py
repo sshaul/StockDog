@@ -23,6 +23,13 @@ DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 stock_api = Blueprint('stock_api', __name__)
 
 
+def get_attr(body, attr):
+   try:
+      return body[attr]
+   except KeyError:
+      return None
+
+
 @stock_api.route('/api/stock/sell/<ticker>', methods=['POST'])
 def post_sell_transaction(ticker):
    body = request.get_json()
@@ -38,9 +45,9 @@ def post_sell_transaction(ticker):
    saleValue = body['sharePrice'] * body['shareCount']
    newShareCt = userShares['shareCount'] - body['shareCount']
 
-   g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker) " +
-      "VALUES (%s, %s, %s, %s, %s, %s)",
-      [body['sharePrice'], body['shareCount'], 0, datetime.now(), body['portfolioId'], ticker])
+   g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " +
+      "VALUES (%s, %s, %s, %s, %s, %s, %s)",
+      [body['sharePrice'], body['shareCount'], 0, datetime.now(), body['portfolioId'], ticker, get_attr(body, 'leagueId')])
 
    g.cursor.execute("UPDATE Portfolio SET buyPower = buyPower + %s WHERE id = %s",
       [saleValue, body['portfolioId']])
@@ -67,9 +74,9 @@ def post_buy_transaction(ticker):
 
    remainingBuyPower = float(userBuyPower) - purchaseCost
 
-   g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker) " + 
-      "VALUES (%s, %s, %s, %s, %s, %s)",
-      (body['sharePrice'], body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker))
+   g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " + 
+      "VALUES (%s, %s, %s, %s, %s, %s, %s)",
+      [body['sharePrice'], body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker, get_attr(body, 'leagueId')])
 
    g.cursor.execute("UPDATE Portfolio SET buyPower = %s WHERE id = %s",
       [remainingBuyPower, body['portfolioId']])
