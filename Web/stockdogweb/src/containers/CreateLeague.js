@@ -79,7 +79,9 @@ class CreateLeague extends Component {
       });
    }
 
-   createLeague = () => {
+   createLeague = (event) => {
+      event.preventDefault();
+
       const ownerId = this.cookies.get("userId");
 
       this.api.createLeague(
@@ -87,7 +89,18 @@ class CreateLeague extends Component {
          this.state.startDate,
          this.state.endDate,
          this.state.initialBuyingPower,
-         ownerId
+         ownerId,
+         () => {
+            alert(this.state.nameOfLeague + " has been created.");
+         }
+      );
+
+      this.api.createPortfolioWithLeague(
+         this.cookies.get("userId"),
+         this.state.nickname,
+         this.state.initialBuyingPower,
+         this.state.nameOfLeague,
+         () => {}
       );
    }
 

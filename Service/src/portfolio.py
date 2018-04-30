@@ -94,12 +94,13 @@ def get_portfolio_value(portfolioId):
       if item['ticker'] is not None:
          value += float(json.loads(stock.get_history(item['ticker'], 'now'))[0]['price']) * item['shareCount']
 
-   return json.dumps(value + float(portfolioItems[0]['buyPower']))
+   return json.dumps({"value": value + float(portfolioItems[0]['buyPower'])})
 
 
 @portfolio_api.route('/api/portfolio/<portfolioId>/history', methods=['POST'])
 def post_portfolio_history(portfolioId):
    body = request.get_json()
+   log.debug(body, isPprint=True)
    try:
       conn = dbConn.getDBConn()
       cursor = conn.cursor()
@@ -110,6 +111,7 @@ def post_portfolio_history(portfolioId):
 
    cursor.execute("INSERT INTO PortfolioHistory(portfolioId, day, value) VALUES (%s, %s, %s)",
       [portfolioId, now.strftime("%Y-%m-%d"), body['value']])
+
    conn.commit()
 
    return Response(status=200)

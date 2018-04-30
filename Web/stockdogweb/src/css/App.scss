@@ -18,6 +18,7 @@ $red-color: #ed4d0a;
 body {
    background-color: $bg-color;
    font-family: 'Lato', sans-serif;
+   margin-left: 200px;
 }
 
 .submit-btn {
@@ -79,6 +80,42 @@ body {
 
 .loading-animation img {
    width: 40px;
+}
+/*===========================================================================*/
+
+/* Side Nav
+-----------------------------------------------------------------------------*/
+.SideNav {
+   background: #212d35;
+   color: $white-color;
+   width: 200px;
+   height: 100%;
+   position: absolute;
+   left: 0;
+   top: 0;
+}
+
+.side-nav-btn {
+   background-color: #212d35;
+   width: 200px;
+}
+
+.side-nav-btn:hover {
+   background-color: $green-color;
+}
+
+.side-nav-element {
+   padding: 10px;
+   margin: 0;
+   cursor: pointer;   
+}
+
+.side-nav-element p {
+   margin: 0;
+}
+
+.side-nav-element:hover {
+   background-color: $green-color;
 }
 /*===========================================================================*/
 
