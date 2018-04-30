@@ -38,10 +38,11 @@ export default class SetNickname extends Component {
       this.api.createNewLeague(props.name, props.buyPower, props.startDate, props.endDate, (res) => {
         console.log(res);
         console.log('nickname: ' + this.state.nickname);
-        this.api.createNewPortfolio(this.state.nickname, (res) => {
+        this.api.createNewPortfolio(this.state.nickname, res.id, res.inviteCode, (res) => {
           console.log('created new portfolio');
           console.log('RESULTS: ');
           console.log(res);
+          Actions.drawerOpen();
           Actions.profile();
         })
       });

@@ -21,7 +21,7 @@ export default class Profile extends Component {
     this.state = { 
       isLoading: true,
       isPortfolioLoading: true,
-      portfolioid: 1,
+      portfolioid: null,
       selectedIndex: 0,
       range: 'day',
       portfolios: [],
@@ -31,15 +31,49 @@ export default class Profile extends Component {
     this.api = new Api();
   };
 
+  static onEnterPortfolio = () => {
+    Actions.refresh({
+      enterTime: new Date()
+    });
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.enterTime !== nextProps.enterTime) {
+      this.api.getPortfolios((portfolios) => {
+        if (portfolios.length == 0) {
+          Actions.replace('noportfolios', {});
+        }
+        else {
+          AsyncStorage.getItem('currPortfolio').then((value) => {
+            if (value === null) {
+              this.setState({portfolios, isLoading: false, portfolioid: portfolios[0].id});
+              AsyncStorage.setItem('currPortfolio', ''+ portfolios[0].id);
+            }
+            else {
+              this.setState({portfolios, isLoading: false, portfolioid: value});
+            }
+            
+          })
+        }
+      });
+    }
+  }
+
   componentDidMount() {
     this.api.getPortfolios((portfolios) => {
       if (portfolios.length == 0) {
         Actions.replace('noportfolios', {});
       }
       else {
-        AsyncStorage.getItem('currPortfolio', (value) => {
-          console.log(value);
-          this.setState({portfolios, isLoading: false, portfolioid: value});
+        AsyncStorage.getItem('currPortfolio').then((value) => {
+          if (value === null) {
+            this.setState({portfolios, isLoading: false, portfolioid: portfolios[0].id});
+            AsyncStorage.setItem('currPortfolio', ''+ portfolios[0].id);
+          }
+          else {
+            this.setState({portfolios, isLoading: false, portfolioid: value});
+          }
+          
         })
       }
     });
@@ -75,10 +109,9 @@ export default class Profile extends Component {
       return <LoadingProfile />;
     }
     else {
+      var currPort = this.state.portfolios.find(x => x.id === parseInt(this.state.portfolioid));
       if (this.state.isPortfolioLoading) {
         this.api.getPortfolioStocks(this.state.portfolioid, (stocks) => {
-        // this.api.getPortfolioStocks(this.state.portfolios[0].id, (stocks) => {
-          console.log(this.state.portfolioid);
           var idx = 0;
           stocks.forEach((stock) => {
             stock.key = idx;
@@ -90,7 +123,7 @@ export default class Profile extends Component {
               idx++;
             });
             this.setState({portfolioStocks: stocks, portfolioWatchlist: watching,
-                isPortfolioLoading: false, isLoading: false});
+              isPortfolioLoading: false, isLoading: false});
           });
           
         });
@@ -100,7 +133,7 @@ export default class Profile extends Component {
             <NavBar />
             <View style={{flex: 1, alignItems: 'center'}}>
               <ScrollView style={{flex: 1}}>
-                <StockChart range={this.state.range} portfolio={true}/>
+                <StockChart range={this.state.range} portfolio={true} league={currPort.league}/>
                 <ButtonGroup
                   onPress={this.updateIndex.bind(this)}
                   selectedIndex={this.state.selectedIndex}
@@ -125,7 +158,7 @@ export default class Profile extends Component {
           <NavBar />
           <View style={{flex: 1, alignItems: 'center'}}>
             <ScrollView style={{flex: 1}}>
-              <StockChart range={this.state.range} portfolio={true}/>
+              <StockChart range={this.state.range} portfolio={true} league={currPort.league}/>
               <ButtonGroup
                 onPress={this.updateIndex.bind(this)}
                 selectedIndex={this.state.selectedIndex}

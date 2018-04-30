@@ -25,12 +25,13 @@ const Routes = () => (
       key="drawer"  
       contentComponent={LeagueDrawer} 
       type="replace"
+      onOpen={LeagueDrawer.onEnterDrawer}
     >
       <Modal key="modal">
       
         <Scene key="root" hideNavBar>
-          {/* <Scene key="login" component={Login}/>
-          <Scene key="register" component={Register}/> */}
+          <Scene key="login" component={Login}/>
+          <Scene key="register" component={Register}/>
           
             
               <Tabs 
@@ -46,8 +47,8 @@ const Routes = () => (
                 labelStyle= {
                   {color: '#f7f8f9', fontSize: 12, fontFamily: 'open-sans'}}
                 >
-                <Scene key="profilemain" hideNavBar title="Profile" iconName="user" icon={TabIcon}>
-                  <Scene key="profile" component={Profile}/>
+                <Scene key="profilemain" hideNavBar title="Portfolio" iconName="user" icon={TabIcon}>
+                  <Scene key="profile" component={Profile} onEnter={Profile.onEnterPortfolio}/>
                 </Scene>
                 <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon}/>
                 <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon}/>
