@@ -1,10 +1,7 @@
 from flask import Blueprint, request, Response, g
 import simplejson as json
 
-from util import logger
 from util.utility import Utility
-
-log = logger.Logger(True, True, True)
 
 transaction_api = Blueprint('transaction_api', __name__)
 

@@ -1,9 +1,5 @@
 from flask import Blueprint, request, Response, g
 
-from util import logger
-
-log = logger.Logger(True, True, True)
-
 nuke_api = Blueprint('nuke_api', __name__)
 
 

@@ -1,10 +1,6 @@
 from flask import Blueprint, request, Response, g
 
-from util import logger
-
 logout_api = Blueprint('logout_api', __name__)
-
-log = logger.Logger(True, True, True)
 
 
 @logout_api.route('/api/logout', methods=['DELETE'])

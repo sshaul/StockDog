@@ -16,7 +16,7 @@ from routes.watchlist import watchlist_api
 from routes.user import user_api
 
 from util.dbConn import getDBConn
-from util import logger
+from util.logger import Logger
 
 app = Flask(__name__)
 CORS(app)
@@ -34,11 +34,11 @@ app.register_blueprint(seed_api)
 app.register_blueprint(nuke_api)
 app.register_blueprint(logout_api)
 
-log = logger.Logger(True, True, True)
-
 
 @app.before_request
 def setup():
+   g.log = Logger(True, True, True)
+
    if getattr(g, 'db', None) is None:
       try:
          g.db = getDBConn()
@@ -46,6 +46,7 @@ def setup():
       except Exception as e:
          log.error(e)
          return Response('Failed to make connection to database', status=500)
+
 
 
 @app.route('/')

@@ -1,10 +1,7 @@
 from flask import Blueprint, request, Response, g, jsonify
 import simplejson as json
 
-from util import logger
 from util.utility import Utility
-
-log = logger.Logger(True, True, True)
 
 league_api = Blueprint('league_api', __name__)
 

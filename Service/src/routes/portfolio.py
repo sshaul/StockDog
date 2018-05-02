@@ -3,10 +3,7 @@ from flask import Blueprint, request, Response, g, jsonify
 import simplejson as json
 
 from routes import stock
-from util import logger
 from util.utility import Utility
-
-log = logger.Logger(True, True, True)
 
 portfolio_api = Blueprint('portfolio_api', __name__)
 
