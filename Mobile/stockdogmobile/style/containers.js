@@ -134,5 +134,38 @@ export default containers = StyleSheet.create({
       justifyContent: 'flex-start',
       alignItems: 'center',
       backgroundColor: colors.grey
+    },
+    leagueName: {
+      flex: 0.3,
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      //backgroundColor: 'pink',
+      paddingTop: 20,
+      marginTop: 10
+    },
+    leagueMembers: {
+      flex: 0.8,
+      //backgroundColor: 'pink',
+      flexDirection: 'column',
+      //alignItems: 'center',
+      paddingTop: 50,
+      paddingLeft: 30,
+      paddingRight: 30
+    },
+    memberRow: {
+      flexDirection: 'row',
+      //backgroundColor: 'green'
+    },
+    membersName: {
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      //backgroundColor: 'blue',
+      flex: 0.8,
+      //flexDirection: 'row'
+    },
+    membersRank: {
+      flex: 0.2,
+      alignItems: 'flex-end'
     }
 });
