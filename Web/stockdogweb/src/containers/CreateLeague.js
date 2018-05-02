@@ -90,18 +90,23 @@ class CreateLeague extends Component {
          this.state.endDate,
          this.state.initialBuyingPower,
          ownerId,
-         () => {
+         (data) => {
+            const id = data["id"];
+            const inviteCode = data["inviteCode"];
             alert(this.state.nameOfLeague + " has been created.");
+            this.api.createPortfolioWithLeague(
+               this.cookies.get("userId"),
+               this.state.nickname,
+               this.state.initialBuyingPower,
+               id,
+               inviteCode,
+               () => {
+                  console.log("portfolio created");
+               }
+            );
          }
       );
 
-      this.api.createPortfolioWithLeague(
-         this.cookies.get("userId"),
-         this.state.nickname,
-         this.state.initialBuyingPower,
-         this.state.nameOfLeague,
-         () => {}
-      );
    }
 
    render() {
