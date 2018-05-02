@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withCookies } from "react-cookie";
+import { withRouter } from "react-router-dom";
 
 import API from "../api";
 
@@ -102,6 +103,7 @@ class CreateLeague extends Component {
                inviteCode,
                () => {
                   console.log("portfolio created");
+                  this.props.history.push("/");
                }
             );
          }
@@ -138,7 +140,6 @@ class CreateLeague extends Component {
       else {
          return (
             <div className="create-league-area" id="create-league-area-2">
-               <h1>Create a league</h1>
                <label>Your nickname</label>
                <input id="nickname" type="text" value={this.state.nickname} 
                   onChange={this._onChange} />
@@ -154,4 +155,4 @@ class CreateLeague extends Component {
    }
 }
 
-export default withCookies(CreateLeague);
+export default withRouter(withCookies(CreateLeague));
