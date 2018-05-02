@@ -1,10 +1,6 @@
 from flask import Blueprint, request, Response, g
 import simplejson as json
 
-from util import logger
-
-log = logger.Logger(True, True, True)
-
 watchlist_api = Blueprint('watchlist_api', __name__)
 
 

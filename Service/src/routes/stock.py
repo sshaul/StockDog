@@ -5,10 +5,6 @@ import time
 import simplejson as json
 from urllib.parse import urlencode
 
-from util import logger
-
-log = logger.Logger(True, True, True)
-
 TODAY = 0
 DAY_AGO = 1
 WEEK_AGO = 7
@@ -127,7 +123,7 @@ def get_history(ticker, length):
    response = raw_response.json()
    alphaTime = time.time() - startTime
 
-   log.info('API hitting: ' + alphaVantageApi + urlencode(queryParams))
+   g.log.info('API hitting: ' + alphaVantageApi + urlencode(queryParams))
 
    if response.get('Error Message'):
       return Response('Request was formed incorrectly. ' +
@@ -136,8 +132,8 @@ def get_history(ticker, length):
    data = formatData(response, interval, length)
    parseTime = time.time() - startTime
 
-   log.info('Alphavantage time is: ' + str(alphaTime))
-   log.info('Parsing data time is: ' + str(parseTime))
+   g.log.info('Alphavantage time is: ' + str(alphaTime))
+   g.log.info('Parsing data time is: ' + str(parseTime))
    
    return json.dumps(data)
     

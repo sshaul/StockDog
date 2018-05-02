@@ -140,6 +140,12 @@ export default class StockChart extends Component {
     );
   }
 
+  profileHeader = () => {
+    if (this.props.portfolio) {
+      return <Text style={text.money}>{this.props.league}</Text>
+    }
+  }
+
   render() {
     const lastelt = this.state.yData[this.state.yData.length - 1];
     if (this.state.isLoading) {
@@ -151,6 +157,7 @@ export default class StockChart extends Component {
     }
     return (
       <View style={containers.chart}>
+        {this.profileHeader()}
         <Text style={text.money}>${lastelt}</Text>
         {this.createChart()}
       </View>

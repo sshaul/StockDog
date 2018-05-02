@@ -22,23 +22,35 @@ export default class LeagueDrawer extends Component {
   }
 
   componentDidMount() {
+    this.pollPortfolios();
+  }
+
+  static onEnterDrawer = () => {
+    console.log('entered');
+  }
+
+  pollPortfolios() {
     this.api.getPortfolios((portfolios) => {
-      // this.setState({leagues: portfolios});
-      console.log(portfolios);
-      this.setState({leagues: portfolios});
+      if (portfolios.length !== this.state.leagues.length) {
+        this.setState({leagues: portfolios});
+      }
     });
+    setTimeout(this.pollPortfolios.bind(this), 3000);
   }
 
   createNew = () => {
-    Actions.addportfolio();
+    Actions.noportfolios();
   }
 
   keyExtractor = (item, index) => index
 
   handlePress = (item) => {
     AsyncStorage.setItem('currPortfolio', '' + item.item.id).then((value) => {
-      console.log('handling press');
-      Actions.push('profilemain');
+      AsyncStorage.getItem('currPortfolio').then((value) => {
+        Actions.drawerClose();
+        Actions.push('profileMain');
+      })
+      
     })
   }
 
@@ -76,7 +88,7 @@ export default class LeagueDrawer extends Component {
         <View>
           <TouchableOpacity style={containers.leaguesFooter} onPress={this.createNew.bind(this)}>
             <Icon name='plus-circle' size={30} color={colors.dark} />
-            <Text style={text.addGroupText}> Create a new league </Text>
+            <Text style={text.addGroupText}> Add a new league </Text>
           </TouchableOpacity>
         </View>
       </View>

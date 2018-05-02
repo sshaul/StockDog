@@ -1,9 +1,5 @@
 from flask import Blueprint, Response, g
 
-from util import logger
-
-log = logger.Logger(True, True, True)
-
 seed_api = Blueprint('seed_api', __name__)
 
 
