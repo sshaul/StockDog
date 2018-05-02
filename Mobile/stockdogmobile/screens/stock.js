@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput } from 'react-native';
 import { Button, ButtonGroup } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Feather';
 import containers from '../style/containers';
 import elements from '../style/elements';
@@ -10,6 +11,7 @@ import WideButton from '../components/widebutton';
 import StockChart from '../components/stockchart';
 import BuySellModal from '../components/buysellmodal';
 import Api from '../api';
+import NavBar from '../components/navbar';
 
 export default class Stock extends Component {
   constructor(props) {
@@ -20,9 +22,6 @@ export default class Stock extends Component {
       isLoading: true,
       selectedIndex: 0,
       range: 'day',
-      isModalVisible: false,
-      modalType: 'buy',
-      modalVisible: false,
       addedWatch: false
     };
 
@@ -47,15 +46,12 @@ export default class Stock extends Component {
   }
 
   _openBuyModal = () => {
-    this.setState({isModalVisible: true, modalType: 'buy'});
+    Actions.buysellmodal({modalType: 'buy', ticker: this.props.navigation.state.params.ticker,
+      id: this.props.navigation.state.params.pid});
   }
 
   _openSellModal = () => {
-    this.setState({isModalVisible: true, modalType: 'sell'});
-  }
-
-  _closeModal = () => {
-    this.setState({isModalVisible: false});
+    Actions.buysellmodal({modalType: 'sell'});
   }
 
   addToWatchlist = () => {
@@ -79,11 +75,7 @@ export default class Stock extends Component {
 
     return (
       <View style={containers.profileGeneral}>
-        <View style={containers.iconHeaders}>
-          <Icon name='user' size={30} color='white' />
-          <Icon name='chevron-down' size={48} color='grey' />
-          <Icon name='settings' size={30} color='white' />
-        </View>
+        <NavBar stock={true}/>
         <View style={containers.chart}>
             <View style={{flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', paddingLeft: 10}}>
               <Text style={text.money}>{this.props.navigation.state.params.ticker}</Text>
@@ -116,13 +108,6 @@ export default class Stock extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <BuySellModal
-          visibility={this.state.isModalVisible}
-          _close={this._closeModal.bind(this)}
-          type={this.state.modalType}
-          ticker={this.props.navigation.state.params.ticker}
-          id={this.props.navigation.state.params.pid}
-          />
       </View>
     );
   }

@@ -21,15 +21,19 @@ class CreatePortfolio extends Component {
       };
    }
 
-   createPortfolio = () => {
+   createPortfolio = (event) => {
+      event.preventDefault();
+
       this.api.createPortfolio(this.cookies.get("userId"), 
-                               this.state.portfolioName, 1000);
-      window.location.reload();
+                               this.state.portfolioName, 1000,
+                               () => {
+                                 window.location.reload();
+                               });
    };
 
    _onChange = (event) => {
       this.setState({
-         [event.target.id]: event.target.value
+         "portfolioName": event.target.value
       });
    };
 
@@ -37,8 +41,8 @@ class CreatePortfolio extends Component {
       return (
          <div className="CreatePortfolio">
             <div id="create-portfolio-area">
-               <input id="portfolioName create-portfolio-name" type="text" 
-                  placeholder="Name of portfolio" />
+               <input id="portfolioName create-portfolio-name" type="text"
+                  placeholder="Name of portfolio" onChange={this._onChange}/>
                <button className="submit-btn" id="create-portfolio-btn"
                   onClick={this.createPortfolio}>
                   <span>Create a portfolio</span></button>

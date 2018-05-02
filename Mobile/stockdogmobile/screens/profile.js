@@ -7,7 +7,6 @@ import elements from '../style/elements';
 import text from '../style/text';
 import { colors } from '../style/colors'; 
 import ChartView from 'react-native-highcharts';
-import Icon from 'react-native-vector-icons/Feather';
 import StockChart from '../components/stockchart';
 import PortfolioItem from '../components/portfolioItem';
 import Api from '../api';
@@ -15,7 +14,6 @@ import LoadingProfile from '../components/loadingProfile';
 import AddPortfolioModal from '../components/addportfoliomodal';
 import NavBar from '../components/navbar';
 import Drawer from 'react-native-drawer';
-import GroupDrawer from '../components/groupdrawer';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -23,16 +21,43 @@ export default class Profile extends Component {
     this.state = { 
       isLoading: true,
       isPortfolioLoading: true,
-      portfolioid: 1,
+      portfolioid: null,
       selectedIndex: 0,
       range: 'day',
       portfolios: [],
       portfolioStocks: [],
       portfolioWatchlist: [],
-      isModalVisible: false
     };
     this.api = new Api();
   };
+
+  static onEnterPortfolio = () => {
+    Actions.refresh({
+      enterTime: new Date()
+    });
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.enterTime !== nextProps.enterTime) {
+      this.api.getPortfolios((portfolios) => {
+        if (portfolios.length == 0) {
+          Actions.replace('noportfolios', {});
+        }
+        else {
+          AsyncStorage.getItem('currPortfolio').then((value) => {
+            if (value === null) {
+              this.setState({portfolios, isLoading: false, portfolioid: portfolios[0].id});
+              AsyncStorage.setItem('currPortfolio', ''+ portfolios[0].id);
+            }
+            else {
+              this.setState({portfolios, isLoading: false, portfolioid: value});
+            }
+            
+          })
+        }
+      });
+    }
+  }
 
   componentDidMount() {
     this.api.getPortfolios((portfolios) => {
@@ -40,7 +65,16 @@ export default class Profile extends Component {
         Actions.replace('noportfolios', {});
       }
       else {
-        this.setState({portfolios, isLoading: false});
+        AsyncStorage.getItem('currPortfolio').then((value) => {
+          if (value === null) {
+            this.setState({portfolios, isLoading: false, portfolioid: portfolios[0].id});
+            AsyncStorage.setItem('currPortfolio', ''+ portfolios[0].id);
+          }
+          else {
+            this.setState({portfolios, isLoading: false, portfolioid: value});
+          }
+          
+        })
       }
     });
   }
@@ -62,14 +96,6 @@ export default class Profile extends Component {
     this.setState({selectedIndex, range: index});
   }
 
-  _openModal = () => {
-    this.setState({isModalVisible: true});
-  }
-
-  _closeModal = () => {
-    this.setState({isModalVisible: false, isLoading: true});
-  }
-
   _renderItem = ({item}) => {
     return <PortfolioItem 
       ticker={item.ticker}
@@ -79,13 +105,13 @@ export default class Profile extends Component {
   };
 
   render() {
-    console.log(this.state);
     if (this.state.isLoading) {
       return <LoadingProfile />;
     }
     else {
+      var currPort = this.state.portfolios.find(x => x.id === parseInt(this.state.portfolioid));
       if (this.state.isPortfolioLoading) {
-        this.api.getPortfolioStocks(this.state.portfolios[0].id, (stocks) => {
+        this.api.getPortfolioStocks(this.state.portfolioid, (stocks) => {
           var idx = 0;
           stocks.forEach((stock) => {
             stock.key = idx;
@@ -97,7 +123,7 @@ export default class Profile extends Component {
               idx++;
             });
             this.setState({portfolioStocks: stocks, portfolioWatchlist: watching,
-                isPortfolioLoading: false, isLoading: false});
+              isPortfolioLoading: false, isLoading: false});
           });
           
         });
@@ -107,7 +133,7 @@ export default class Profile extends Component {
             <NavBar />
             <View style={{flex: 1, alignItems: 'center'}}>
               <ScrollView style={{flex: 1}}>
-                <StockChart range={this.state.range} portfolio={true}/>
+                <StockChart range={this.state.range} portfolio={true} league={currPort.league}/>
                 <ButtonGroup
                   onPress={this.updateIndex.bind(this)}
                   selectedIndex={this.state.selectedIndex}
@@ -132,7 +158,7 @@ export default class Profile extends Component {
           <NavBar />
           <View style={{flex: 1, alignItems: 'center'}}>
             <ScrollView style={{flex: 1}}>
-              <StockChart range={this.state.range} portfolio={true}/>
+              <StockChart range={this.state.range} portfolio={true} league={currPort.league}/>
               <ButtonGroup
                 onPress={this.updateIndex.bind(this)}
                 selectedIndex={this.state.selectedIndex}

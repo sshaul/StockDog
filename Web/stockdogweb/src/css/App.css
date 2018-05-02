@@ -10,7 +10,8 @@
 
 body {
   background-color: #354854;
-  font-family: 'Lato', sans-serif; }
+  font-family: 'Lato', sans-serif;
+  margin-left: 200px; }
 
 .submit-btn {
   transition: all 0.5s;
@@ -62,6 +63,36 @@ body {
 
 .loading-animation img {
   width: 40px; }
+
+/*===========================================================================*/
+/* Side Nav
+-----------------------------------------------------------------------------*/
+.SideNav {
+  background: #212d35;
+  color: #F7F8F9;
+  width: 200px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0; }
+
+.side-nav-btn {
+  background-color: #212d35;
+  width: 200px; }
+
+.side-nav-btn:hover {
+  background-color: #63CEC2; }
+
+.side-nav-element {
+  padding: 10px;
+  margin: 0;
+  cursor: pointer; }
+
+.side-nav-element p {
+  margin: 0; }
+
+.side-nav-element:hover {
+  background-color: #63CEC2; }
 
 /*===========================================================================*/
 /* Login
@@ -156,7 +187,17 @@ body {
   font-family: 'Lato', sans-serif;
   font-size: 30px;
   font-weight: 800;
-  color: #F7F8F9; }
+  color: #F7F8F9;
+  display: inline-block; }
+
+.stock-watchlist {
+  color: #F7F8F9;
+  display: inline-block; }
+
+.stock-watchlist svg {
+  position: relative;
+  top: 2px;
+  left: 4px; }
 
 .Stock h2 {
   font-family: 'Lato', sans-serif;
@@ -266,6 +307,10 @@ body {
   font-family: 'Lato', sans-serif;
   color: #63CEC2; }
 
+.portfolio-content {
+  margin-left: 60px;
+  margin-bottom: 40px; }
+
 .portfolio-content h1 {
   display: block;
   clear: both;
@@ -334,6 +379,50 @@ body {
   height: 50px;
   width: 260px;
   font-size: 20px; }
+
+/*===========================================================================*/
+/* CreateLeague
+-----------------------------------------------------------------------------*/
+.CreateLeague {
+  font-family: 'Lato', sans-serif; }
+
+.create-league-area {
+  width: 300px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto; }
+
+#create-league-area-1 {
+  height: 500px; }
+
+#create-league-area-2 {
+  height: 280px; }
+
+.create-league-area h1 {
+  color: #F7F8F9;
+  text-align: center;
+  margin-bottom: 20px; }
+
+.create-league-area label {
+  color: #F7F8F9; }
+
+.create-league-area input {
+  padding: 10px;
+  width: 300px;
+  border: none;
+  margin-bottom: 10px; }
+
+.create-league-area button {
+  margin-top: 10px;
+  width: 300px;
+  background-color: #63CEC2; }
+
+#league-back {
+  margin-top: 10px;
+  background-color: #ed4d0a; }
 
 /*===========================================================================*/
 

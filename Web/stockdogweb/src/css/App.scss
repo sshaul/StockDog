@@ -18,6 +18,7 @@ $red-color: #ed4d0a;
 body {
    background-color: $bg-color;
    font-family: 'Lato', sans-serif;
+   margin-left: 200px;
 }
 
 .submit-btn {
@@ -79,6 +80,42 @@ body {
 
 .loading-animation img {
    width: 40px;
+}
+/*===========================================================================*/
+
+/* Side Nav
+-----------------------------------------------------------------------------*/
+.SideNav {
+   background: #212d35;
+   color: $white-color;
+   width: 200px;
+   height: 100%;
+   position: absolute;
+   left: 0;
+   top: 0;
+}
+
+.side-nav-btn {
+   background-color: #212d35;
+   width: 200px;
+}
+
+.side-nav-btn:hover {
+   background-color: $green-color;
+}
+
+.side-nav-element {
+   padding: 10px;
+   margin: 0;
+   cursor: pointer;   
+}
+
+.side-nav-element p {
+   margin: 0;
+}
+
+.side-nav-element:hover {
+   background-color: $green-color;
 }
 /*===========================================================================*/
 
@@ -189,6 +226,19 @@ body {
    font-size: 30px;
    font-weight: 800;
    color: $white-color;
+   display: inline-block;
+   // background-color: red;
+}
+
+.stock-watchlist {
+   color: $white-color;
+   display: inline-block
+}
+
+.stock-watchlist svg {
+   position: relative;
+   top: 2px;
+   left: 4px;
 }
 
 .Stock h2 {
@@ -239,7 +289,7 @@ body {
    padding: 10px;
    font-size: 20px;
    cursor: pointer;
-   margin-bottom: 10px;   
+   margin-bottom: 10px;
 }
 
 .stock-btn:active {
@@ -276,7 +326,7 @@ body {
 }
 
 #transactionAmount {
-   margin-bottom: 10px;   
+   margin-bottom: 10px;
    font-size: 16px;
    padding: 5px;
    border: none;
@@ -318,6 +368,12 @@ body {
 .Portfolio h2 {
    font-family: 'Lato', sans-serif;
    color: $green-color;
+}
+
+.portfolio-content {
+   margin-left: 60px;
+
+   margin-bottom: 40px;
 }
 
 .portfolio-content h1 {
@@ -398,5 +454,58 @@ body {
    height: 50px;
    width: 260px;
    font-size: 20px;
+}
+/*===========================================================================*/
+
+/* CreateLeague
+-----------------------------------------------------------------------------*/
+.CreateLeague {
+   font-family: 'Lato', sans-serif;
+}
+
+.create-league-area {
+   width: 300px;
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   margin: auto;
+}
+
+#create-league-area-1 {
+   height: 500px;
+}
+
+#create-league-area-2 {
+   height: 280px;
+}
+
+.create-league-area h1 {
+   color: $white-color;
+   text-align: center;
+   margin-bottom: 20px;
+}
+
+.create-league-area label {
+   color: $white-color;
+}
+
+.create-league-area input {
+   padding: 10px;
+   width: 300px;
+   border: none;
+   margin-bottom: 10px;
+}
+
+.create-league-area button {
+   margin-top: 10px;
+   width: 300px;
+   background-color: $green-color;
+}
+
+#league-back {
+   margin-top: 10px;
+   background-color: $red-color;
 }
 /*===========================================================================*/

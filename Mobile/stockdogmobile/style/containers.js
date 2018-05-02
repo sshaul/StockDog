@@ -69,7 +69,7 @@ export default containers = StyleSheet.create({
       alignItems: 'center',
     },
     outerModal: {
-      flex: 0.6,
+      // flex: 0.6,
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItems: 'center',
@@ -90,33 +90,46 @@ export default containers = StyleSheet.create({
     },
     groupsDrawer: {
       flex: 1,
+      flexDirection: 'column',
       backgroundColor: colors.white,
       alignItems: 'center',
+      justifyContent: 'space-between',
       paddingTop: 30
     },
-    groupsList: {
+    leaguesList: {
       flex: 1,
       paddingTop: 20,
-      width: '100%'
+      width: '100%',
+      borderBottomWidth: 1
+    },
+    leaguesFooter: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingBottom: 10,
+      marginTop: 10,
     },
     groupItem: {
-      // borderStyle: 'solid', 
-      // borderColor: colors.grey, 
-      // borderWidth: 2
+      borderStyle: 'solid', 
+      borderColor: colors.grey, 
+      borderWidth: 2
     },
     addGroupModalHeader: {
-      flex: 0.3,
-      width: '70%',
-      alignItems: 'flex-end',
+      flex: 0.2,
+      width: '100%',
+      flexDirection: 'row',
+      alignItems: 'center',
       justifyContent: 'center'
     },
     addGroupInnerModal: {
-      flex: 0.9,
+      flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'center',
+      paddingTop: 10
     },
     addGroupOuterModal: {
-      flex: 0.8,
+      flex: 1,
+      width: '80%',
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItems: 'center',

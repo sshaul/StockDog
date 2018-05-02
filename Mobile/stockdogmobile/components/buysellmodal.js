@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, Button } from 'react-native';
+import Lightbox from './baseLightbox';
+import { Actions } from 'react-native-router-flux';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
@@ -21,8 +23,9 @@ export default class BuySellModal extends Component {
   }
 
   buysellstock() {
-    this.api.manageStock(this.props.type, this.props.ticker, parseInt(this.state.amount), 
-      parseFloat(this.state.price), this.props.id, (res) => {
+    var props = this.props.navigation.state.params;
+    this.api.manageStock(props.type, props.ticker, parseInt(this.state.amount), 
+      parseFloat(this.state.price), props.id, (res) => {
         this.setState({transactionComplete: true});
       });
   }
@@ -37,11 +40,12 @@ export default class BuySellModal extends Component {
 
   render() {
     var content;
+    var props = this.props.navigation.state.params;
     if (this.state.transactionComplete) {
-      if (this.props.type == 'buy') {
+      if (this.props.navigation.state.params.modalType == 'buy') {
         content = <Text style={text.profileLabels}>Buy successful!</Text>;
       }
-      else if (this.props.type == 'sell') {
+      else if (this.props.navigation.state.params.modalType == 'sell') {
         content = <Text style={text.profileLabels}>Sell successful!</Text>;
       }
     }
@@ -55,25 +59,20 @@ export default class BuySellModal extends Component {
           type="Amount" 
           onchange={this.onchangeamount.bind(this)} 
           value={this.state.amount}/>
-        <WideButton type={this.props.type} onpress={this.buysellstock.bind(this)}/>
+        <WideButton type={props.modalType} onpress={this.buysellstock.bind(this)}/>
       </View>);
     }
     return (
-      <Modal
-        isVisible={this.props.visibility}
-        animationIn="fadeIn"
-        animationOut="fadeOut"
-        onBackdropPress={this.props._close}
-        onShow={()=>this.setState({transactionComplete: false, amount: '0', price: '0'})}>
+      <Lightbox verticalPercent={0.7} horizontalPercent={0.8}>
         <View style={containers.outerModal}>
           <View style={containers.modalHeaders}>
-            <TouchableOpacity onPress={this.props._close}>
+            <TouchableOpacity onPress={()=>{Actions.pop()}}>
               <Icon name='x' size={30} color='white' />
             </TouchableOpacity>
           </View>
           {content}
         </View>
-      </Modal>
+      </Lightbox>
     );
   }
 };

@@ -33,12 +33,6 @@ export default class Login extends Component {
     Actions.register({});
   };
 
-  setStorage = ((key, value) => {
-    AsyncStorage.setItem(key, value).then((value) => {
-      console.log(value);
-    })
-  });
-
   login() {
     this.api.login(this.state.email, this.state.password,
       () => {Actions.main({})});

@@ -12,8 +12,7 @@ export default elements = StyleSheet.create({
     },
     popoverButton: {
         width: 48, 
-        height: 48, 
-        // backgroundColor: 'red',
+        height: 48,
         alignItems: 'flex-end',
         justifyContent: 'center',
         marginLeft: -15
