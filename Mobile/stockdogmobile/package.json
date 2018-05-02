@@ -37,6 +37,7 @@
     "react-native-svg-charts": "^2.1.0",
     "react-native-tooltip": "^5.0.0",
     "react-native-vector-icons": "^4.5.0",
-    "react-navigation": "^1.0.0-beta.26"
+    "react-navigation": "^1.0.0-beta.26",
+    "uuid": "^3.2.1"
   }
 }

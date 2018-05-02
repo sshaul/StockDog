@@ -72,5 +72,23 @@ export default text = StyleSheet.create({
       fontFamily: 'open-sans',
       fontSize: 24,
       textAlign: 'left'
+    },
+    // ----------------- League Screen ------------- //
+    leagueTitle: {
+      color: colors.white,
+      fontFamily: 'open-sans-bold',
+      fontSize: 36,
+    },
+    inviteCode: {
+      color: colors.white,
+      fontFamily: 'open-sans',
+      fontSize: 20,
+      textAlign: 'left',
+      //backgroundColor: 'black'
+    },
+    members: {
+      color: colors.white,
+      fontFamily: 'open-sans',
+      fontSize: 24
     }
 });

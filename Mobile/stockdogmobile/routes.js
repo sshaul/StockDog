@@ -40,10 +40,11 @@ const Routes = () => (
             labelStyle= {
               {color: '#f7f8f9', fontSize: 12, fontFamily: 'open-sans'}}
             >
+            <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon}/>
             <Scene key="profilemain" hideNavBar title="Profile" iconName="user" icon={TabIcon}>
               <Scene key="profile" component={Profile}/>
             </Scene>
-            <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon}/>
+            
             <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon}/>
             <Scene key="searchmain" hideNavBar title="Search" iconName="search" icon={TabIcon}>
               <Scene key="search" component={Search}/>
