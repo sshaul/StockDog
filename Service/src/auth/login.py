@@ -3,9 +3,7 @@ from flask_login import LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from auth import manageTokens
-from util import logger
 
-log = logger.Logger(True, True, True)
 
 class Login:
 

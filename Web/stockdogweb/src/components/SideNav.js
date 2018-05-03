@@ -49,6 +49,10 @@ class SideNav extends Component {
       }); 
    }
 
+   goToJoinLeague = () => {
+      this.props.history.push("/join-league");
+   }
+
    goToCreateLeague = () => {
       this.props.history.push("/create-league");
    }
@@ -58,7 +62,7 @@ class SideNav extends Component {
          <div className="SideNav">
             <div className="side-nav-btns">
                <button className="submit-btn side-nav-btn" id="league-advance"
-                  onClick={this.advance}>
+                  onClick={this.goToJoinLeague}>
                   <span>Join</span></button>
                <button className="submit-btn side-nav-btn" id="league-advance"
                   onClick={this.goToCreateLeague}>

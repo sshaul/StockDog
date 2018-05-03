@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withCookies } from "react-cookie";
+import { withRouter } from "react-router-dom";
 
 import API from "../api";
 
@@ -90,18 +91,24 @@ class CreateLeague extends Component {
          this.state.endDate,
          this.state.initialBuyingPower,
          ownerId,
-         () => {
+         (data) => {
+            const id = data["id"];
+            const inviteCode = data["inviteCode"];
             alert(this.state.nameOfLeague + " has been created.");
+            this.api.createPortfolioWithLeague(
+               this.cookies.get("userId"),
+               this.state.nickname,
+               this.state.initialBuyingPower,
+               id,
+               inviteCode,
+               () => {
+                  console.log("portfolio created");
+                  this.props.history.push("/");
+               }
+            );
          }
       );
 
-      this.api.createPortfolioWithLeague(
-         this.cookies.get("userId"),
-         this.state.nickname,
-         this.state.initialBuyingPower,
-         this.state.nameOfLeague,
-         () => {}
-      );
    }
 
    render() {
@@ -133,7 +140,6 @@ class CreateLeague extends Component {
       else {
          return (
             <div className="create-league-area" id="create-league-area-2">
-               <h1>Create a league</h1>
                <label>Your nickname</label>
                <input id="nickname" type="text" value={this.state.nickname} 
                   onChange={this._onChange} />
@@ -149,4 +155,4 @@ class CreateLeague extends Component {
    }
 }
 
-export default withCookies(CreateLeague);
+export default withRouter(withCookies(CreateLeague));

@@ -1,10 +1,6 @@
 from flask import Flask, Response, g
 import random
 
-from util import logger
-
-log = logger.Logger(True, True, True)
-
 
 def generateToken():
    return  '%064x' % random.randrange(16**64)

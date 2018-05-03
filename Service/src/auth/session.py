@@ -1,9 +1,6 @@
 from flask import Blueprint, request, Response, jsonify, g
 
-from util import logger
-
 session_api = Blueprint('session_api', __name__)
-log = logger.Logger(True, True, True)
 
 
 @session_api.route('/api/session/validation', methods=['POST'])

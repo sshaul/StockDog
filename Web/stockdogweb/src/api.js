@@ -67,19 +67,20 @@ class API {
          userId, name, buyPower
       }, this.config)
          .then((res) => {
-            callback();
+            callback(res["data"]);
          })
          .catch((err) => {
             console.log(err);
          });
    };
 
-   createPortfolioWithLeague = (userId, name, buyPower, league, callback) => {
+   createPortfolioWithLeague = (userId, name, buyPower, leagueId, inviteCode,
+    callback) => {
       axios.post(this.baseURL + "/portfolio", {
-         userId, name, buyPower, league
+         userId, name, buyPower, leagueId, inviteCode
       }, this.config)
          .then((res) => {
-            callback();
+            callback(res);
          })
          .catch((err) => {
             console.log(err);
@@ -158,7 +159,7 @@ class API {
          name, start, end, startPos: buyPower, ownerId
       }, this.config)
          .then(res => {
-            callback();
+            callback(res["data"]);
          })
          .catch(err => {
             console.log(err);

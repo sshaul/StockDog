@@ -1,10 +1,6 @@
 from flask import Blueprint, request, Response, g
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from util import logger
-
-log = logger.Logger(True, True, True)
-
 user_api = Blueprint('user_api', __name__)
 
 
