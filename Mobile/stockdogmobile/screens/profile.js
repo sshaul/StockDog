@@ -46,11 +46,11 @@ export default class Profile extends Component {
         else {
           AsyncStorage.getItem('currPortfolio').then((value) => {
             if (value === null) {
-              this.setState({portfolios, isLoading: false, portfolioid: portfolios[0].id});
+              this.setState({portfolios, isLoading: false, isPortfolioLoading: true, portfolioid: portfolios[0].id});
               AsyncStorage.setItem('currPortfolio', ''+ portfolios[0].id);
             }
             else {
-              this.setState({portfolios, isLoading: false, portfolioid: value});
+              this.setState({portfolios, isLoading: false, isPortfolioLoading: true, portfolioid: value});
             }
             
           })

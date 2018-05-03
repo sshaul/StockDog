@@ -216,6 +216,7 @@ export default class Api {
         return JSON.parse(response);
       })
       .then((pid) => {
+        console.log('type', type);
         console.log('currp', pid);
         fetch(this.baseurl + '/api/stock/' + type + '/' + ticker, {
           method: 'POST',
@@ -225,7 +226,14 @@ export default class Api {
             sharePrice: price,
             portfolioId: pid
           })
-        }).then((response) => callback(response))
+        }).then((response) => {
+          if (response.status === 400) {
+            callback({status_code: 400, message: response._bodyInit});
+          }
+          else {
+            callback(response);
+          }
+        })
         .catch((error) => console.log(error));
     });
   };
@@ -285,6 +293,23 @@ export default class Api {
       });
   };
 
+  removeFromWatchlist = (watchlistid, callback) => {
+    var portfolios = [];
+    AsyncStorage.getItem('currPortfolio')
+      .then((response) => {
+        return JSON.parse(response);
+      })
+      .then((pid) => {
+        console.log('deleting: ', watchlistid);
+        var url = this.baseurl + '/api/watchlist/' + watchlistid;
+        fetch(url, {
+          method: 'DELETE',
+          headers: this.headers
+        }).then((response) => callback(response))
+        .catch((error) => console.log(error));
+      });
+  };
+
   getWatchlistStocks = (callback) => {
     AsyncStorage.getItem('currPortfolio')
     .then((response) => {return JSON.parse(response);})
@@ -297,5 +322,9 @@ export default class Api {
       .then((responseJson) => callback(responseJson))
       .catch((error) => console.log(error));
     });
-  }
+  };
+
+  getTransactions = (callback) => {
+    
+  };
 }

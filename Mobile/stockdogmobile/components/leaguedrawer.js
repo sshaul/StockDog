@@ -25,10 +25,6 @@ export default class LeagueDrawer extends Component {
     this.pollPortfolios();
   }
 
-  static onEnterDrawer = () => {
-    console.log('entered');
-  }
-
   pollPortfolios() {
     this.api.getPortfolios((portfolios) => {
       if (portfolios.length !== this.state.leagues.length) {

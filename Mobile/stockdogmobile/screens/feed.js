@@ -8,6 +8,7 @@ import { colors } from '../style/colors';
 import NavBar from '../components/navbar';
 import ChartView from 'react-native-highcharts';
 import Icon from 'react-native-vector-icons/Feather';
+import Api from '../api';
 
 export default class Feed extends Component {
   constructor(props) {
@@ -15,6 +16,14 @@ export default class Feed extends Component {
     this.state = {
       text: ''
     };
+
+    this.api = new Api();
+  }
+
+  componentDidMount() {
+    this.api.getTransactions(() => {
+
+    });
   }
 
   render() {

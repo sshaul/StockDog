@@ -17,36 +17,58 @@ export default class BuySellModal extends Component {
     this.state = {
       amount: '',
       price: '',
-      transactionComplete: false
+      transactionComplete: false,
+      errorMessage: ''
     };
     this.api = new Api();
   }
 
   buysellstock() {
     var props = this.props.navigation.state.params;
-    this.api.manageStock(props.type, props.ticker, parseInt(this.state.amount), 
+    this.api.manageStock(props.modalType, props.ticker, parseInt(this.state.amount), 
       parseFloat(this.state.price), props.id, (res) => {
-        this.setState({transactionComplete: true});
+        if (res.status_code === 400) {
+          this.setState({errorMessage: res.message});
+        }
+        else {
+          this.setState({transactionComplete: true});
+        }
       });
   }
 
   onchangeamount(amount) {
-    this.setState({amount});
+    this.setState({
+        amount: amount.replace(/[^0-9]/g, ''),
+    });
   }
 
   onchangeprice(price) {
-    this.setState({price});
+    this.setState({
+      price: price.replace(/[^0-9]/g, ''),
+  });
   }
 
   render() {
     var content;
     var props = this.props.navigation.state.params;
+    var errorMessage;
+    if (this.state.errorMessage) {
+      errorMessage = (<Text style={text.joinLeagueWarning}> 
+        {this.state.errorMessage}
+      </Text>);
+    }
     if (this.state.transactionComplete) {
       if (this.props.navigation.state.params.modalType == 'buy') {
-        content = <Text style={text.profileLabels}>Buy successful!</Text>;
+        content = (<View style={containers.innerModal}>
+          <View style={containers.successMessage}>
+            <Text style={text.profileLabels}>Buy successful!</Text>
+          </View>
+        </View>);
       }
       else if (this.props.navigation.state.params.modalType == 'sell') {
-        content = <Text style={text.profileLabels}>Sell successful!</Text>;
+        content = (<View style={containers.innerModal}>
+          <Text style={text.profileLabels}>Sell successful!</Text>
+        </View>);
       }
     }
     else {
@@ -60,6 +82,7 @@ export default class BuySellModal extends Component {
           onchange={this.onchangeamount.bind(this)} 
           value={this.state.amount}/>
         <WideButton type={props.modalType} onpress={this.buysellstock.bind(this)}/>
+        {errorMessage}
       </View>);
     }
     return (
