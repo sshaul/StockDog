@@ -25,11 +25,11 @@ def get_leagues():
    return json.dumps(leagues, default=Utility.dateToStr)
 
 
-@league_api.route('/api/league/join', methods=['POST'])
-def get_leagueToJoin():
-    body = request.get_json()
-
-    g.cursor.execute("SELECT * FROM League WHERE inviteCode = %s", body['inviteCode'])
+@league_api.route('/api/league/<inviteCode>', methods=['GET'])
+def get_leagueToJoin(inviteCode):
+    #body = request.get_json()
+    
+    g.cursor.execute("SELECT * FROM League WHERE inviteCode = %s", inviteCode)
     leagueInfo = g.cursor.fetchone()
 
     if leagueInfo:
