@@ -44,7 +44,7 @@ def setup():
          g.db = getDBConn()
          g.cursor = g.db.cursor()
       except Exception as e:
-         log.error(e)
+         g.log.error(e)
          return Response('Failed to make connection to database', status=500)
 
 
