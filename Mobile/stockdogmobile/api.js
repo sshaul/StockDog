@@ -141,7 +141,8 @@ export default class Api {
             inviteCode: code,
             leagueId: leagueId
           }),
-        }).then((response) => callback(response))
+        }).then((response) => {return response.json()})
+        .then((res) => callback(res))
         .catch((error) => console.log(error));
       });
   }
@@ -161,7 +162,8 @@ export default class Api {
             leagueId: lid,
             inviteCode: invitecode
           }),
-        }).then((response) => callback(response))
+        }).then((response) => {return response.json()})
+        .then((res) => callback(res))
         .catch((error) => console.log(error));
       });
   };

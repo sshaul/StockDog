@@ -30,27 +30,19 @@ export default class SetNickname extends Component {
 
   handleOnPress = () => {
     // Check if the navigation state params contain a league
-    // If contain a league, when setting nickname pass league into post
-    // Else post to league and create new league, then post to portfolio to make portfolio in league
     var props = this.props.navigation.state.params;
-    console.log(props);
     if (props.hasOwnProperty('buyPower')) {
       this.api.createNewLeague(props.name, props.buyPower, props.startDate, props.endDate, (res) => {
-        console.log(res);
-        console.log('nickname: ' + this.state.nickname);
         this.api.createNewPortfolio(this.state.nickname, res.id, res.inviteCode, (res) => {
-          console.log('created new portfolio');
-          console.log('RESULTS: ');
-          console.log(res);
+          AsyncStorage.setItem('currPortfolio', '' + res.id);
           Actions.drawerOpen();
           Actions.profile();
         })
       });
     }
     else {
-      console.log('HERE!!!!!!!');
-      console.log(props.inviteCode);
       this.api.joinLeague(this.state.nickname, props.league.id, props.inviteCode, (res) => {
+        AsyncStorage.setItem('currPortfolio', '' + res.id);
         Actions.profile();
       });
     }
