@@ -165,6 +165,16 @@ class API {
             console.log(err);
          });
    };
+
+   getLeagueIdViaInviteCode = (inviteCode, callback) => {
+      axios.get(this.baseURL + "/league/" + inviteCode, this.config)
+         .then(res => {
+            callback(res["data"]);
+         })
+         .catch(err => {
+            callback(null);
+         });
+   }
 }
 
 export default API;

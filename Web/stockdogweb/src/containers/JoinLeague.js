@@ -1,42 +1,21 @@
 import React, { Component } from 'react';
 import { withCookies } from 'react-cookie';
+import API from 'api.js';
+import GoHome from '../components/GoHome';
 
 class JoinLeague extends Component {
    constructor(props) {
       super(props);
 
       this.cookies = this.props.cookies;
+      this.api = new API();
 
       this.state = {
-         inviteCode: null,
-         screen: 1
+         inviteCode: "",
+         screen: 1,
+         inviteCodeClass: "",
+         nickname: ""
       }
-
-      this.input1 = 
-         <div className="JoinLeague">
-            <div className="create-league-area" id="join-league-area">
-               <h1>Join a league</h1>
-               <label>Invite code</label>
-               <input id="inviteCode" type="text" 
-                  value={this.state.inviteCode} onChange={this._onChange}/>
-               <button className="submit-btn" id="league-advance"
-                  onClick={this.advance}>
-                  <span>Advance</span></button>
-            </div>
-         </div>;
-
-      this.input2 = 
-         <div className="create-league-area" id="create-league-area-2">
-            <label>Your nickname</label>
-            <input id="nickname" type="text" value={this.state.nickname} 
-               onChange={this._onChange} />
-            <button className="submit-btn" id="league-advance"
-               onClick={this.joinLeague}>
-               <span>Join</span></button>
-            <button className="submit-btn" id="league-back"
-               onClick={this.back}>
-               <span>Back</span></button>
-         </div>;
    }
 
    joinLeague = () => {
@@ -45,13 +24,43 @@ class JoinLeague extends Component {
          this.state.nickname,
          this.state.buyPower,
          this.state.leagueId,
-         this.state.inviteCode
+         this.state.inviteCode,
+         () => {
+         	console.log("portfolio created and joined league");
+            this.props.history.push("/");
+         }
       );
    }
 
    _onChange = (event) => {
+      const id = event.target.id;
+
       this.setState({
-         [event.target.id]: event.target.value
+         [id]: event.target.value
+      }, () => {
+         if (id === "inviteCode") {
+            this.checkInviteCode();
+         } 
+      });
+
+      
+   }
+
+   checkInviteCode = () => {
+      console.log("checkInviteCode");
+      this.api.getLeagueIdViaInviteCode(this.state.inviteCode, (data) => {
+         console.log(data);
+         console.log(this.state.inviteCode);
+         if (data === null && this.state.inviteCodeClass === "") {
+            this.setState({
+               inviteCodeClass: "invalidInput"
+            });
+         }
+         else if (data && this.state.inviteCodeClass === "invalidInput") {
+            this.setState({
+               inviteCodeClass: ""
+            });
+         }
       });
    }
 
@@ -65,10 +74,37 @@ class JoinLeague extends Component {
 
    render() {
       if (this.state.screen === 1) {
-         return this.input1;
+         return (
+            <div className="JoinLeague">
+               <GoHome />
+               <div className="create-league-area" id="join-league-area">
+                  <h1>Join a league</h1>
+                  <label>Invite code</label>
+                  <input id="inviteCode" type="text" 
+                  className={this.state.inviteCodeClass}
+                  value={this.state.inviteCode} onChange={this._onChange}/>
+                  <button className="submit-btn" id="league-advance"
+                     onClick={this.advance}>
+                     <span>Advance</span></button>
+               </div>
+            </div>
+         );
       }
       if (this.state.screen === 2) {
-         return this.input2;
+         return (
+            <div className="create-league-area" id="create-league-area-2">
+               <GoHome />
+               <label>Your nickname</label>
+               <input id="nickname" type="text" value={this.state.nickname} 
+                  onChange={this._onChange} />
+               <button className="submit-btn" id="league-advance"
+                  onClick={this.joinLeague}>
+                  <span>Join</span></button>
+               <button className="submit-btn" id="league-back"
+                  onClick={this.back}>
+                  <span>Back</span></button>
+            </div>
+         );
       }
    }
 }
