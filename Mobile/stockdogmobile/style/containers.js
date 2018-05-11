@@ -75,6 +75,12 @@ export default containers = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: colors.grey
     },
+    successMessage: {
+      width: 250, 
+      height: '70%', 
+      alignItems: 'center', 
+      justifyContent: 'center'
+    },
     profileChart: {
       flex: 1,
       alignItems: 'center',

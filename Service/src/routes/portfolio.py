@@ -63,7 +63,7 @@ def get_portfolios():
 @portfolio_api.route('/api/portfolio/<portfolioId>', methods=['GET'])
 def get_portfolio(portfolioId):
    
-   g.cursor.execute("SELECT ticker, shareCount, avgCost, name, buyPower " +
+   g.cursor.execute("SELECT ticker, shareCount, avgCost, name, buyPower, leagueId " +
       "FROM Portfolio AS p LEFT JOIN PortfolioItem as pi ON p.id = pi.portfolioId " + 
       "WHERE p.id = %s", portfolioId)
 

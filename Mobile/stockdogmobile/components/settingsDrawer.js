@@ -1,37 +1,36 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, AsyncStorage, ScrollView } from 'react-native';
+import { Button, SearchBar, Card, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
-import { Button, SearchBar, ListItem } from 'react-native-elements';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
 import { colors } from '../style/colors'; 
-import NavBar from '../components/navbar';
-import ChartView from 'react-native-highcharts';
+import Drawer from 'react-native-drawer';
 import Icon from 'react-native-vector-icons/Feather';
 import Api from '../api';
 
-export default class Feed extends Component {
+export default class SettingsDrawer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: ''
-    };
+      leagues: []
+    }
 
     this.api = new Api();
   }
 
   componentDidMount() {
-    this.api.getTransactions(() => {
-      console.log('got transactions');
-    });
   }
+
 
   render() {
     return (
-      <View style={containers.profileGeneral}>
-        <NavBar />
-        
+      <View style={containers.groupsDrawer}>
+        <View style={containers.leaguesList}>
+          <Text style={text.groupTitle}>Settings</Text>
+          
+        </View>
       </View>
     );
   }

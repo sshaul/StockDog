@@ -33,8 +33,14 @@ export default class StockChart extends Component {
   getData(range) {
     if (this.props.portfolio) {
       this.api.getPortfolioData((newXData, newYData) => {
-        this.setState({xData: newXData, yData: newYData, isLoading: false});
+        if (true) {
+          this.setState({noData: true, isLoading: false});
+        }
+        else {
+          this.setState({xData: newXData, yData: newYData, isLoading: false});
+        }
       })
+      
       return;
     }
     else {
@@ -154,6 +160,13 @@ export default class StockChart extends Component {
           <SpinningLoader />
         </View>
       );
+    }
+    if (this.state.noData) {
+      return (
+        <View style={{height:300, width: 350, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={text.money}>{this.props.league}</Text>
+        </View>
+      )
     }
     return (
       <View style={containers.chart}>
