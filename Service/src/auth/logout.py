@@ -7,6 +7,6 @@ logout_api = Blueprint('logout_api', __name__)
 def logout_user():
    body = request.get_json()
 
-   g.cursor.execute('UPDATE USER SET token = NULL where id = %s', body['userId'])
+   g.cursor.execute('UPDATE User SET token = NULL where id = %s', body['userId'])
 
    return Response(status=200)
