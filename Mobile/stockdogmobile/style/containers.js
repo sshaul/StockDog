@@ -151,10 +151,14 @@ export default containers = StyleSheet.create({
       //alignItems: 'center',
       paddingTop: 50,
       paddingLeft: 30,
-      paddingRight: 30
+      paddingRight: 30,
+      //borderColor: colors.white,
+      //borderWidth: 3
     },
     memberRow: {
       flexDirection: 'row',
+      borderBottomWidth: 1,
+      borderColor: "gray"
       //backgroundColor: 'green'
     },
     membersName: {
@@ -167,5 +171,10 @@ export default containers = StyleSheet.create({
     membersRank: {
       flex: 0.2,
       alignItems: 'flex-end'
+    },
+    code: {
+      flex: 0.5,
+      padding:10
+      //backgroundColor: 'gray'
     }
 });

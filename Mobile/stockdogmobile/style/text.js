@@ -94,8 +94,8 @@ export default text = StyleSheet.create({
       fontSize: 36,
     },
     inviteCode: {
-      color: colors.white,
-      fontFamily: 'open-sans',
+      color: "gray",
+      fontFamily: 'open-sans-bold',
       fontSize: 20,
       textAlign: 'left',
       //backgroundColor: 'black'
@@ -110,5 +110,14 @@ export default text = StyleSheet.create({
       fontFamily: 'open-sans',
       fontSize: 20,
       textAlign: 'left'
+    },
+    code: {
+      fontSize: 25,
+      color: colors.white,
+      fontFamily: 'open-sans-bold',
+      borderRadius: 5,
+      borderColor: colors.white,
+      //backgroundColor: colors.bright,
+      borderWidth: 1
     }
 });
