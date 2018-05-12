@@ -64,6 +64,8 @@ def post_sell_transaction(ticker):
       "WHERE portfolioId = %s AND ticker = %s",
       [newShareCt, body['portfolioId'], ticker])
 
+   g.cursor.execute("DELETE FROM PortfolioItem WHERE shareCount = 0")
+
    return Response(status=200)
 
 
