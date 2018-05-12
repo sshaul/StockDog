@@ -3,6 +3,8 @@ import { withCookies } from 'react-cookie';
 import { withRouter } from "react-router-dom";
 import API from "api";
 
+import Logout from "./Logout";
+
 class SideNav extends Component {
    constructor(props) {
       super(props);
@@ -32,9 +34,10 @@ class SideNav extends Component {
       var elements = [];
 
       this.state.portfolios.forEach((portfolio) => {
+         console.log(portfolio);
          elements.push(
             <div className="side-nav-element" key={portfolio.id} 
-            onClick={()=> {this.switchToPortfolio(portfolio.id)}}>
+            onClick={()=> {this.switchToPortfolio(portfolio.id, portfolio["league"])}}>
                <div className="side-nav-element-title">
                   <p>{portfolio["league"]}</p>
                </div>
@@ -58,9 +61,11 @@ class SideNav extends Component {
       this.props.history.push("/create-league");
    };
 
-   switchToPortfolio = (portfolioId) => {
+   switchToPortfolio = (portfolioId, leagueName, leagueId) => {
          console.log("Switching to portfolioId: " + portfolioId);
       this.cookies.set("currPortfolio", portfolioId);
+      this.cookies.set("currLeagueName", leagueName);
+      this.cookies.set("currLeagueId", leagueId)
       window.location.reload();
    };
 
@@ -76,6 +81,7 @@ class SideNav extends Component {
                   <span>Create</span></button>
             </div>
             {this.state.elements}
+            <Logout />
          </div>
       );
    }

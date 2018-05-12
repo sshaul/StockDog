@@ -52,6 +52,17 @@ class API {
          });
    };
 
+   logout = (userId, callback) => {
+      console.log(userId);
+      axios.delete(this.baseURL + "/logout", {data: {userId}}, this.config)
+         .then((res) => {
+            callback();
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   }
+
    getAllPortfolios = (userId, callback) => {
       axios.get(this.baseURL + "/portfolio?userId=" + userId, this.config)
          .then((res) => {

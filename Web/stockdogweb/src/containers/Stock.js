@@ -21,7 +21,8 @@ class Stock extends Component {
             <div className="stock-watchlist" onClick={this.addToWatchlist}>
                <Eye />
             </div>,
-         watchlistId: null
+         watchlistId: null,
+         amount: 0
       };
    }
 
@@ -30,6 +31,7 @@ class Stock extends Component {
       // May want to change later
       this.api.getPortfolio(this.state.portfolioId, (portfolio) => {
          portfolio.forEach((stock) => {
+            console.log(stock);
             if (stock["ticker"] === this.state.ticker) {
                // do stuff with the result
             }
@@ -147,6 +149,7 @@ class Stock extends Component {
             <Graph ticker={this.state.ticker}
                updateCurrentPrice={this.updateCurrentPrice} />
             <div className="stock-transaction-area">
+               <h5>Owned: 3</h5>
                <form>
                   <input id="transactionAmount" type="number" min="1"
                      placeholder="Amount" onChange={this._onChange} />

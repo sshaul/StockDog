@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import GoHome from '../components/GoHome';
 
 class LeagueHome extends Component {
    constructor(props) {
@@ -8,6 +9,7 @@ class LeagueHome extends Component {
    render() {
       return (
          <div className="LeagueHome">
+            <GoHome />
             <h1>Penny Stocks</h1>
             <h6>Invite Code</h6>
             <h4>ASDNJA</h4>
