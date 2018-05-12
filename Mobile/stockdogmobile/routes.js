@@ -15,6 +15,7 @@ import JoinLeagueModal from './components/joinLeagueModal';
 import BuySellModal from './components/buysellmodal';
 import SetNickname from './components/setNickname';
 import LeagueDrawer from './components/leaguedrawer';
+import SettingsDrawer from './components/settingsDrawer';
 import TabIcon from './components/tabIcon';
 import Api from './api';
 import containers from './style/containers';
@@ -25,7 +26,6 @@ const Routes = () => (
       key="drawer"  
       contentComponent={LeagueDrawer} 
       type="replace"
-      onOpen={LeagueDrawer.onEnterDrawer}
     >
       <Modal key="modal">
       
@@ -70,7 +70,6 @@ const Routes = () => (
         </Lightbox>
         
       </Modal>
-
     </Drawer>
       
   </Router>

@@ -28,6 +28,15 @@ export default class Stock extends Component {
     this.api = new Api();
   };
 
+  componentDidMount() {
+    this.api.getWatchlistStocks((watchlist) => {
+      var item = watchlist.find(x => x.ticker === this.props.navigation.state.params.ticker)
+      if (item !== undefined) {
+        this.setState({addedWatch: true, watchlistId: item.id});
+      }
+    })
+  }
+
   updateIndex(selectedIndex) {
     var index = '';
     if (selectedIndex == 0) {
@@ -51,13 +60,21 @@ export default class Stock extends Component {
   }
 
   _openSellModal = () => {
-    Actions.buysellmodal({modalType: 'sell'});
+    Actions.buysellmodal({modalType: 'sell', ticker: this.props.navigation.state.params.ticker,
+      id: this.props.navigation.state.params.pid});
   }
 
   addToWatchlist = () => {
-    this.api.addToWatchlist(this.props.navigation.state.params.ticker, () => {
-      this.setState({addedWatch: true});
-    });
+    if (this.state.addedWatch) {
+      this.api.removeFromWatchlist(this.state.watchlistId, () => {
+        this.setState({addedWatch: false});
+      })
+    }
+    else {
+      this.api.addToWatchlist(this.props.navigation.state.params.ticker, () => {
+        this.setState({addedWatch: true});
+      });
+    }
   };
 
   render() {

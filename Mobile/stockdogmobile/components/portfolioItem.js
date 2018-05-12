@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, AsyncStorage } from 'react-native';
 import { Button } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
@@ -13,9 +14,9 @@ export default class PortfolioItem extends Component {
   }
 
   _onPress(ticker) {
-    console.log(this.props);
-    const navigate = this.props.navigation.navigate;
-    navigate('Stock', {ticker: ticker});
+    AsyncStorage.getItem('currPortfolio').then((value) => {
+      Actions.stock({ticker: ticker, pid: parseInt(value)});
+    });
   }
 
   render() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withCookies } from "react-cookie";
+import { withCookies } from 'react-cookie';
 import { withRouter } from "react-router-dom";
 import API from "api";
 
@@ -33,7 +33,8 @@ class SideNav extends Component {
 
       this.state.portfolios.forEach((portfolio) => {
          elements.push(
-            <div className="side-nav-element" key={portfolio.id}>
+            <div className="side-nav-element" key={portfolio.id} 
+            onClick={()=> {this.switchToPortfolio(portfolio.id)}}>
                <div className="side-nav-element-title">
                   <p>{portfolio["league"]}</p>
                </div>
@@ -51,11 +52,17 @@ class SideNav extends Component {
 
    goToJoinLeague = () => {
       this.props.history.push("/join-league");
-   }
+   };
 
    goToCreateLeague = () => {
       this.props.history.push("/create-league");
-   }
+   };
+
+   switchToPortfolio = (portfolioId) => {
+         console.log("Switching to portfolioId: " + portfolioId);
+      this.cookies.set("currPortfolio", portfolioId);
+      window.location.reload();
+   };
 
    render() {
       return (

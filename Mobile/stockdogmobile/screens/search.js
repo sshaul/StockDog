@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button, SearchBar } from 'react-native-elements';
 import containers from '../style/containers';
@@ -17,7 +17,9 @@ export default class Search extends Component {
   }
 
   searchTicker() {
-    Actions.stock({ticker: this.state.text.toUpperCase(), pid: 1});
+    AsyncStorage.getItem('currPortfolio').then((value) => {
+      Actions.stock({ticker: this.state.text.toUpperCase(), pid: parseInt(value)});
+    });
   }
 
   render() {

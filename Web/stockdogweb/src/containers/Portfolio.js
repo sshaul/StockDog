@@ -4,9 +4,9 @@ import Graph from '../components/Graph';
 import { withCookies, Cookies } from 'react-cookie';
 import API from "api";
 import Navbar from "../components/Navbar";
-import SideNav from "../components/SideNav";
 
 import CreatePortfolio from "components/CreatePortfolio";
+import SideNav from "components/SideNav";
 
 class Portfolio extends Component {
    static propTypes = {
@@ -36,7 +36,7 @@ class Portfolio extends Component {
          if (portfolios.length !== 0) {
             this.setState({
                portfolios,
-               portfolioId: portfolios[0]["id"]
+               portfolioId: this.cookies.get("currPortfolio")
             });
             this.getPortfolio();
             this.cookies.set("currPortfolio", this.state.portfolioId);
@@ -63,18 +63,26 @@ class Portfolio extends Component {
 
    createHoldings = () => {
       var holdingComponents = [];
-      console.log("Creating holdings.")
+      console.log("Creating holdings.");
+      console.log(this.state.holdings);
       this.state.holdings.forEach((holding) => {
-         holdingComponents.push(
-            <div className="portfolio-holding" key={holding["ticker"]}>
-               <div className="portfolio-holding-title">
-                  <a href={"/stock/" + holding["ticker"]}>{holding["ticker"]}</a>
+         // Make sure there is something in the holding
+         // This is because if the portfolio has nothing, the array is
+         // of length 1 with a null holding
+         if (holding["ticker"] !== null ) {
+            holdingComponents.push(
+               <div className="portfolio-holding" key={holding["ticker"]}>
+                  <div className="portfolio-holding-title">
+                     <a href={"/stock/" + holding["ticker"]}>
+                        {holding["ticker"]}
+                     </a>
+                  </div>
+                  <div className="portfolio-holding-amount">
+                     {holding["shareCount"]} shares
+                  </div>
                </div>
-               <div className="portfolio-holding-amount">
-                  {holding["shareCount"]} shares
-               </div>
-            </div>
-         );
+            );
+         }
       });
       this.setState({
          holdingComponents
@@ -108,16 +116,18 @@ class Portfolio extends Component {
       }
       return (
          <div className="Portfolio">
-            <Navbar />
             <SideNav />
-            <Graph title="Portfolio" ticker="PORTFOLIO"
-               portfolioId={this.state.portfolioId}/>
-            <div className="portfolio-content">
-               <h1>Owned</h1>
-               {this.state.holdingComponents}
-               <br />
-               <h1>Watchlist</h1>
-               {this.state.watchlistComponents}
+            <div className="portfolio-area">
+               <Navbar />
+               <Graph title="Portfolio" ticker="PORTFOLIO"
+                  portfolioId={this.state.portfolioId}/>
+               <div className="portfolio-content">
+                  <h1>Owned</h1>
+                  {this.state.holdingComponents}
+                  <br />
+                  <h1>Watchlist</h1>
+                  {this.state.watchlistComponents}
+               </div>
             </div>
          </div>
       );

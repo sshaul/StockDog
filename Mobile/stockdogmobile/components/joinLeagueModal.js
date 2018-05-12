@@ -31,7 +31,6 @@ export default class JoinLeagueModal extends Component {
 
   submitCode = () => {
     this.api.isValidInviteCode(this.state.inviteCode, (res) => {
-      console.log(res);
       if (res.valid) {
         Actions.setnickname({league: res.league, inviteCode: this.state.inviteCode});
       }
