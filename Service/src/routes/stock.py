@@ -1,8 +1,8 @@
 from datetime import date, timedelta, datetime
 from flask import Blueprint, request, Response, g
 import requests
-import time
 import simplejson as json
+import time
 from urllib.parse import urlencode
 
 TODAY = 0
@@ -17,6 +17,8 @@ DATE_FORMAT = '%Y-%m-%d'
 DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 stock_api = Blueprint('stock_api', __name__)
+
+URL_PREFIX = ''
 
 
 def get_attr(body, attr):
@@ -36,14 +38,24 @@ def post_sell_transaction(ticker):
 
    userShares = g.cursor.fetchone()
    if not userShares or body['shareCount'] > userShares['shareCount']:
-      return Response('Inadequate shares owned to make sale.', status=400)
+      return Response('Insufficient shares owned to make sale.', status=400)
 
    saleValue = body['sharePrice'] * body['shareCount']
    newShareCt = userShares['shareCount'] - body['shareCount']
 
-   g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " +
+   g.cursor.execute("SELECT leagueId FROM Portfolio WHERE id = %s", 
+      int(body['portfolioId']))
+
+   portfolio = g.cursor.fetchone()
+   try:
+      leagueId = portfolio['leagueId']
+   except:
+      return Response('Portfolio with id ' + str(body['portfolioId']) + ' does not exist.', status=400)
+
+   g.cursor.execute("INSERT INTO Transaction" +
+      "(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " +
       "VALUES (%s, %s, %s, %s, %s, %s, %s)",
-      [body['sharePrice'], body['shareCount'], 0, datetime.now(), body['portfolioId'], ticker, get_attr(body, 'leagueId')])
+      [body['sharePrice'], body['shareCount'], 0, datetime.now(), body['portfolioId'], ticker, leagueId])
 
    g.cursor.execute("UPDATE Portfolio SET buyPower = buyPower + %s WHERE id = %s",
       [saleValue, body['portfolioId']])
@@ -59,10 +71,16 @@ def post_sell_transaction(ticker):
 def post_buy_transaction(ticker):
    body = request.get_json()
 
-   g.cursor.execute("SELECT buyPower FROM Portfolio WHERE id = %s",
+   g.cursor.execute("SELECT leagueId, buyPower FROM Portfolio WHERE id = %s",
       int(body['portfolioId']))
 
-   userBuyPower = g.cursor.fetchone()['buyPower']
+   portfolio = g.cursor.fetchone()
+   try:
+      userBuyPower = portfolio['buyPower']
+      leagueId = portfolio['leagueId']
+   except:
+      return Response('Portfolio with id ' + str(body['portfolioId']) + ' does not exist.', status=400)
+
    purchaseCost = body['sharePrice'] * body['shareCount']
 
    if userBuyPower < purchaseCost:
@@ -72,7 +90,7 @@ def post_buy_transaction(ticker):
 
    g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " + 
       "VALUES (%s, %s, %s, %s, %s, %s, %s)",
-      [body['sharePrice'], body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker, get_attr(body, 'leagueId')])
+      [body['sharePrice'], body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker, leagueId])
 
    g.cursor.execute("UPDATE Portfolio SET buyPower = %s WHERE id = %s",
       [remainingBuyPower, body['portfolioId']])
@@ -83,7 +101,7 @@ def post_buy_transaction(ticker):
    portfolioItem = g.cursor.fetchone()
    if portfolioItem:
       newShareCt = portfolioItem['shareCount'] + body['shareCount']
-      newAvgCost = ((portfolioItem['avgCost'] * portfolioItem['shareCount']) + purchaseCost) // newShareCt
+      newAvgCost = (float((portfolioItem['avgCost']) * portfolioItem['shareCount']) + purchaseCost) // newShareCt
       g.cursor.execute("UPDATE PortfolioItem SET shareCount = %s, avgCost = %s " +
          "WHERE portfolioId = %s AND ticker = %s",
          [newShareCt, newAvgCost, body['portfolioId'], ticker])
@@ -117,13 +135,12 @@ def get_history(ticker, length):
    if interval:
       queryParams['interval'] = interval
 
-   alphaVantageApi = 'https://www.alphavantage.co/query?'
    startTime = time.time()
-   raw_response = requests.get(alphaVantageApi + urlencode(queryParams))
+   raw_response = requests.get(URL_PREFIX + urlencode(queryParams))
    response = raw_response.json()
    alphaTime = time.time() - startTime
 
-   g.log.info('API hitting: ' + alphaVantageApi + urlencode(queryParams))
+   g.log.info('API hitting: ' + URL_PREFIX + urlencode(queryParams))
 
    if response.get('Error Message'):
       return Response('Request was formed incorrectly. ' +

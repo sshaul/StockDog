@@ -27,15 +27,13 @@ def get_leagues():
 
 @league_api.route('/api/league/<inviteCode>', methods=['GET'])
 def get_leagueToJoin(inviteCode):
-    #body = request.get_json()
-    
-    g.cursor.execute("SELECT * FROM League WHERE inviteCode = %s", inviteCode)
-    leagueInfo = g.cursor.fetchone()
+   g.cursor.execute("SELECT * FROM League WHERE inviteCode = %s", inviteCode)
+   leagueInfo = g.cursor.fetchone()
 
-    if leagueInfo:
-        return jsonify(id=leagueInfo['id'], name=leagueInfo['name'])
-    else:
-        return Response("No league exists with that invite code", status=400)
+   if leagueInfo:
+      return jsonify(id=leagueInfo['id'], name=leagueInfo['name'])
+   else:
+      return Response("No league exists with that invite code", status=400)
 
 
 
