@@ -18,14 +18,7 @@ DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 stock_api = Blueprint('stock_api', __name__)
 
-URL_PREFIX = ''
-
-
-def get_attr(body, attr):
-   try:
-      return body[attr]
-   except KeyError:
-      return None
+URL_PREFIX = 'https://www.alphavantage.co/query?'
 
 
 @stock_api.route('/api/stock/sell/<ticker>', methods=['POST'])
@@ -133,20 +126,19 @@ def get_history(ticker, length):
       'outputsize' : outputSize,
       'apikey' : apiKey
    }
-
    if interval:
       queryParams['interval'] = interval
 
+   g.log.info('Alpha Vantage API hitting: ' + URL_PREFIX + urlencode(queryParams))
+   
    startTime = time.time()
-   raw_response = requests.get(URL_PREFIX + urlencode(queryParams))
-   response = raw_response.json()
+   rawResponse = requests.get(URL_PREFIX + urlencode(queryParams))
+   response = rawResponse.json()
    alphaTime = time.time() - startTime
-
-   g.log.info('API hitting: ' + URL_PREFIX + urlencode(queryParams))
 
    if response.get('Error Message'):
       return Response('Request was formed incorrectly. ' +
-         'The stock ticker is either invalid or unsupported.', status=400)
+         'The stock ticker is either invalid or unsupported.', status=404)
 
    data = formatData(response, interval, length)
    parseTime = time.time() - startTime
