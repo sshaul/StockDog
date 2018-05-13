@@ -33,12 +33,10 @@ def get_history(ticker, length):
       return Response('Request was formed incorrectly. ' +
          'The stock ticker is either invalid or unsupported.', status=404)
 
-   g.log.debug(response, isPprint=True)
-
    data = formatData(response, interval)
+   if length == 'now':
+      data = data[-1]
    parseTime = time.time() - startTime
-
-   g.log.info(data, isPprint=True)
    
    g.log.info('IEX time is: ' + str(iexTime))
    g.log.info('Parsing data time is : ' + str(parseTime))
