@@ -3,6 +3,7 @@ import { withCookies } from "react-cookie";
 import { withRouter } from "react-router-dom";
 
 import API from "../api";
+import GoHome from "../components/GoHome";
 
 class CreateLeague extends Component {
    constructor(props) {
@@ -19,44 +20,6 @@ class CreateLeague extends Component {
          nickname: "",
          screen: 1
       }
-
-      this.input1 = 
-         <div className="create-league-area" id="create-league-area-1">
-            <h1>Create a league</h1>
-            <label>Name of league</label>
-            <input id="nameOfLeague" type="text" 
-               value={this.state.nameOfLeague} onChange={this._onChange}/>
-            <label>Initial buying power</label>
-            <input id="initialBuyingPower" type="number" min="1000" 
-               value={this.state.initialBuyingPower} 
-               onChange={this._onChange} />
-            <label>Start date</label>
-            <input id="startDate" type="date" value={this.state.startDate}
-               onChange={this._onChange} />
-            <label>End date</label>
-            <input id="endDate" type="date" value={this.state.endDate} 
-               onChange={this._onChange} />
-            <button className="submit-btn" id="league-advance"
-               onClick={this.advance}>
-               <span>Advance</span></button>
-         </div>
-         ;
-
-      this.input2 = 
-         <div className="create-league-area" id="create-league-area-2">
-            <h1>Create a league</h1>
-            <label>Your nickname</label>
-            <input id="nickname" type="text" value={this.state.nickname} 
-               onChange={this._onChange} />
-            <button className="submit-btn" id="league-advance"
-            >
-               <span>Create</span></button>
-            <button className="submit-btn" id="league-back"
-               onClick={this.back}>
-               <span>Back</span></button>
-         </div>
-         ;
-
    }
 
    componentDidMount() {
@@ -115,6 +78,7 @@ class CreateLeague extends Component {
       if (this.state.screen === 1) {
          return (
             <div className="CreateLeague">
+               <GoHome />
                <div className="create-league-area" id="create-league-area-1">
                   <h1>Create a league</h1>
                   <label>Name of league</label>
@@ -139,16 +103,19 @@ class CreateLeague extends Component {
       }
       else {
          return (
-            <div className="create-league-area" id="create-league-area-2">
-               <label>Your nickname</label>
-               <input id="nickname" type="text" value={this.state.nickname} 
-                  onChange={this._onChange} />
-               <button className="submit-btn" id="league-advance"
-                  onClick={this.createLeague}>
-                  <span>Create</span></button>
-               <button className="submit-btn" id="league-back"
-                  onClick={this.back}>
-                  <span>Back</span></button>
+            <div className="CreateLeague">
+               <GoHome />
+               <div className="create-league-area" id="create-league-area-2">
+                  <label>Your nickname</label>
+                  <input id="nickname" type="text" value={this.state.nickname} 
+                     onChange={this._onChange} />
+                  <button className="submit-btn" id="league-advance"
+                     onClick={this.createLeague}>
+                     <span>Create</span></button>
+                  <button className="submit-btn" id="league-back"
+                     onClick={this.back}>
+                     <span>Back</span></button>
+               </div>
             </div>
          )
       }

@@ -218,8 +218,6 @@ export default class Api {
         return JSON.parse(response);
       })
       .then((pid) => {
-        console.log('type', type);
-        console.log('currp', pid);
         fetch(this.baseurl + '/api/stock/' + type + '/' + ticker, {
           method: 'POST',
           headers: this.headers,
@@ -327,6 +325,28 @@ export default class Api {
   };
 
   getTransactions = (callback) => {
-    
+    AsyncStorage.getItem('currPortfolio')
+    .then((response) => {return JSON.parse(response);})
+    .then((pid) => {
+      var url = this.baseurl + '/api/portfolio/' + pid;
+      fetch(url, {
+        method: 'GET',
+        headers: this.headers
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        console.log('res 1', responseJson);
+        url = this.baseurl + '/api/transaction?leagueId=' + responseJson[0].leagueId;
+        fetch(url, {
+          method: 'GET',
+          headers: this.headers
+        }).then((response) => response.json())
+        .then((responseJson) => {
+          console.log('res 2', responseJson);
+          callback(responseJson)
+        })
+        .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+    });
   };
 }

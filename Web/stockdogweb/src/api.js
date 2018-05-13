@@ -52,6 +52,17 @@ class API {
          });
    };
 
+   logout = (userId, callback) => {
+      console.log(userId);
+      axios.delete(this.baseURL + "/logout", {data: {userId}}, this.config)
+         .then((res) => {
+            callback();
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   }
+
    getAllPortfolios = (userId, callback) => {
       axios.get(this.baseURL + "/portfolio?userId=" + userId, this.config)
          .then((res) => {
@@ -165,6 +176,16 @@ class API {
             console.log(err);
          });
    };
+
+   getLeagueIdViaInviteCode = (inviteCode, callback) => {
+      axios.get(this.baseURL + "/league/" + inviteCode, this.config)
+         .then(res => {
+            callback(res["data"]);
+         })
+         .catch(err => {
+            callback(null);
+         });
+   }
 }
 
 export default API;

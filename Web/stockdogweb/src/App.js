@@ -16,6 +16,7 @@ import Stock from "./containers/Stock";
 import Portfolio from "./containers/Portfolio"
 import JoinLeague from "./containers/JoinLeague";
 import CreateLeague from "./containers/CreateLeague";
+import LeagueHome from "./containers/LeagueHome";
 
 class App extends Component {
    render() {
@@ -34,6 +35,8 @@ class App extends Component {
                 component={JoinLeague} appProps={this.props} />
                <AuthenticatedRoute path="/create-league/"
                 component={CreateLeague} appProps={this.props} />
+               <AuthenticatedRoute path="/league/:id"
+                component={LeagueHome} appProps={this.props} />
             </div>
          </Router>
       );

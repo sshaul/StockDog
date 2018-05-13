@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS } from 'react-native';
-import { Button, SearchBar } from 'react-native-elements';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, AsyncStorage } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import { Button, SearchBar, ListItem } from 'react-native-elements';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
@@ -22,7 +23,7 @@ export default class Feed extends Component {
 
   componentDidMount() {
     this.api.getTransactions(() => {
-
+      console.log('got transactions');
     });
   }
 
