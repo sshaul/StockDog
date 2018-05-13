@@ -26,6 +26,7 @@ URL_PREFIX = 'https://www.alphavantage.co/query?'
 @stock_api.route('/api/stock/sell/<ticker>', methods=['POST'])
 def post_sell_transaction(ticker):
    body = request.get_json()
+   sharePrice = json.loads(get_history(ticker, 'now'))['price']
 
    g.cursor.execute("SELECT shareCount, avgCost FROM PortfolioItem " +
       "WHERE portfolioId = %s AND ticker = %s",
@@ -35,7 +36,7 @@ def post_sell_transaction(ticker):
    if not userShares or body['shareCount'] > userShares['shareCount']:
       return Response('Insufficient shares owned to make sale.', status=400)
 
-   saleValue = body['sharePrice'] * body['shareCount']
+   saleValue = sharePrice * body['shareCount']
    newShareCt = userShares['shareCount'] - body['shareCount']
 
    g.cursor.execute("SELECT leagueId FROM Portfolio WHERE id = %s", 
@@ -50,7 +51,7 @@ def post_sell_transaction(ticker):
    g.cursor.execute("INSERT INTO Transaction" +
       "(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " +
       "VALUES (%s, %s, %s, %s, %s, %s, %s)",
-      [body['sharePrice'], body['shareCount'], 0, datetime.now(), body['portfolioId'], ticker, leagueId])
+      [sharePrice, body['shareCount'], 0, datetime.now(), body['portfolioId'], ticker, leagueId])
 
    g.cursor.execute("UPDATE Portfolio SET buyPower = buyPower + %s WHERE id = %s",
       [saleValue, body['portfolioId']])
@@ -67,6 +68,7 @@ def post_sell_transaction(ticker):
 @stock_api.route('/api/stock/buy/<ticker>', methods=['POST'])
 def post_buy_transaction(ticker):
    body = request.get_json()
+   sharePrice = json.loads(get_history(ticker, 'now'))['price']
 
    g.cursor.execute("SELECT leagueId, buyPower FROM Portfolio WHERE id = %s",
       int(body['portfolioId']))
@@ -78,7 +80,7 @@ def post_buy_transaction(ticker):
    except:
       return Response('Portfolio with id ' + str(body['portfolioId']) + ' does not exist.', status=400)
 
-   purchaseCost = body['sharePrice'] * body['shareCount']
+   purchaseCost = sharePrice * body['shareCount']
 
    if userBuyPower < purchaseCost:
       return Response('Insufficient buying power to make purchase.', status=400)
@@ -87,7 +89,7 @@ def post_buy_transaction(ticker):
 
    g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " + 
       "VALUES (%s, %s, %s, %s, %s, %s, %s)",
-      [body['sharePrice'], body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker, leagueId])
+      [sharePrice, body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker, leagueId])
 
    g.cursor.execute("UPDATE Portfolio SET buyPower = %s WHERE id = %s",
       [remainingBuyPower, body['portfolioId']])
@@ -105,7 +107,7 @@ def post_buy_transaction(ticker):
    else:
       g.cursor.execute("INSERT INTO PortfolioItem(shareCount, avgCost, portfolioId, ticker) " +
          "VALUES (%s, %s, %s, %s)",
-         [body['shareCount'], body['sharePrice'], body['portfolioId'], ticker])
+         [body['shareCount'], sharePrice, body['portfolioId'], ticker])
 
    return Response(status=200)
 
@@ -137,9 +139,12 @@ def get_history(ticker, length):
       g.log.info('Alpha Vantage API hitting: ' + URL_PREFIX + urlencode(queryParams))
       
       startTime = time.time()
-      rawResponse = requests.get(URL_PREFIX + urlencode(queryParams))
-      response = rawResponse.json()
-      alphaTime = time.time() - startTime
+      try:
+         rawResponse = requests.get(URL_PREFIX + urlencode(queryParams))
+         response = rawResponse.json()
+         alphaTime = time.time() - startTime
+      except:
+         return Response('Alphavantage API refused to respond.', status=500)
 
       if response.get('Error Message'):
          return Response('Request was formed incorrectly. ' +
