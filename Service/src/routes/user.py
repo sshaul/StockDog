@@ -8,6 +8,12 @@ user_api = Blueprint('user_api', __name__)
 @user_api.route('/api/user', methods=['POST'])
 def post_user():
    body = request.get_json()
+
+   g.cursor.execute("SELECT * FROM User WHERE email = %s", body['email'])
+   sameEmailUsers = g.cursor.fetchall()
+   if len(sameEmailUsers) > 0:
+      return Response('User with email ' + body['email'] + ' already exists.', status=400)
+
    passHash = generate_password_hash(body['password'])
 
    g.cursor.execute("INSERT INTO User(firstName, lastName, email, password) VALUES (%s, %s, %s, %s)",
