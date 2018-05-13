@@ -5,6 +5,8 @@ import simplejson as json
 import time
 from urllib.parse import urlencode
 
+import routes.iex as iex
+
 TODAY = 0
 DAY_AGO = 1
 WEEK_AGO = 7
@@ -110,43 +112,46 @@ def post_buy_transaction(ticker):
 
 @stock_api.route('/api/stock/<ticker>/history/<length>')
 def get_history(ticker, length):
-   try:
-      function = getFunction(length)
-      outputSize = getOutputSize(length)
-   except Exception as e:
-      return Response('Request was formed incorrectly. ' +
-         'Valid lengths are day, week, month, year.', status=400)
+   if True:
+      return iex.get_history(ticker, length)
+   else:
+      try:
+         function = getFunction(length)
+         outputSize = getOutputSize(length)
+      except Exception as e:
+         return Response('Request was formed incorrectly. ' +
+            'Valid lengths are day, week, month, year.', status=400)
 
-   interval = getInterval(length)
-   apiKey = getApiKey()
+      interval = getInterval(length)
+      apiKey = getApiKey()
 
-   queryParams = {
-      'function' : function,
-      'symbol' : ticker,
-      'outputsize' : outputSize,
-      'apikey' : apiKey
-   }
-   if interval:
-      queryParams['interval'] = interval
+      queryParams = {
+         'function' : function,
+         'symbol' : ticker,
+         'outputsize' : outputSize,
+         'apikey' : apiKey
+      }
+      if interval:
+         queryParams['interval'] = interval
 
-   g.log.info('Alpha Vantage API hitting: ' + URL_PREFIX + urlencode(queryParams))
-   
-   startTime = time.time()
-   rawResponse = requests.get(URL_PREFIX + urlencode(queryParams))
-   response = rawResponse.json()
-   alphaTime = time.time() - startTime
+      g.log.info('Alpha Vantage API hitting: ' + URL_PREFIX + urlencode(queryParams))
+      
+      startTime = time.time()
+      rawResponse = requests.get(URL_PREFIX + urlencode(queryParams))
+      response = rawResponse.json()
+      alphaTime = time.time() - startTime
 
-   if response.get('Error Message'):
-      return Response('Request was formed incorrectly. ' +
-         'The stock ticker is either invalid or unsupported.', status=404)
+      if response.get('Error Message'):
+         return Response('Request was formed incorrectly. ' +
+            'The stock ticker is either invalid or unsupported.', status=404)
 
-   data = formatData(response, interval, length)
-   parseTime = time.time() - startTime
+      data = formatData(response, interval, length)
+      parseTime = time.time() - startTime
 
-   g.log.info('Alphavantage time is: ' + str(alphaTime))
-   g.log.info('Parsing data time is: ' + str(parseTime))
-   
-   return json.dumps(data)
+      g.log.info('Alphavantage time is: ' + str(alphaTime))
+      g.log.info('Parsing data time is: ' + str(parseTime))
+      
+      return json.dumps(data)
     
 
 def getFunction(length):
