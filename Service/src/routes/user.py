@@ -24,7 +24,8 @@ def post_user():
 
 @user_api.route('/api/user/<userId>', methods=['GET'])
 def get_user(userId):
-   g.cursor.execute("SELECT * FROM User WHERE id = %s", userId)
+   g.cursor.execute("SELECT firstName, lastName, email, token FROM User " +
+      "WHERE id = %s", userId)
 
    user = g.cursor.fetchone()
    return json.dumps(user)
