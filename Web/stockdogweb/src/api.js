@@ -108,9 +108,9 @@ class API {
          });
    };
 
-   buy = (ticker, shareCount, sharePrice, portfolioId, callback) => {
+   buy = (ticker, shareCount, portfolioId, callback) => {
       axios.post(this.baseURL + "/stock/buy/" + ticker, {
-         shareCount, sharePrice, portfolioId
+         shareCount, portfolioId
       }, this.config)
          .then((res) => {
             callback();
@@ -120,9 +120,9 @@ class API {
          });
    };
 
-   sell = (ticker, shareCount, sharePrice, portfolioId, callback) => {
+   sell = (ticker, shareCount, portfolioId, callback) => {
       axios.post(this.baseURL + "/stock/sell/" + ticker, {
-         shareCount, sharePrice, portfolioId
+         shareCount, portfolioId
       }, this.config)
          .then((res) => {
             callback();
