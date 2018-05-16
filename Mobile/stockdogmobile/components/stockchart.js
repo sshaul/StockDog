@@ -17,7 +17,8 @@ export default class StockChart extends Component {
       userId : "",
       isLoading: true,
       xData: [],
-      yData: []
+      yData: [],
+      selectedIndex: 0,
     };
     this.api = new Api();
   };
@@ -28,6 +29,23 @@ export default class StockChart extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.getData(nextProps.range);
+  }
+
+  updateIndex(selectedIndex) {
+    var index = '';
+    if (selectedIndex == 0) {
+      index = 'day';
+    }
+    else if (selectedIndex == 1) {
+      index = 'week';
+    }
+    else if (selectedIndex == 2) {
+      index = 'month';
+    }
+    else {
+      index = 'year';
+    }
+    this.setState({selectedIndex, range: index});
   }
   
   getData(range) {
@@ -154,6 +172,11 @@ export default class StockChart extends Component {
 
   render() {
     const lastelt = this.state.yData[this.state.yData.length - 1];
+    var moneyText = '';
+    if (lastelt) {
+      moneyText = '$' + lastelt;
+    }
+
     if (this.state.isLoading) {
       return (
         <View style={{height:300, width: 350, justifyContent: 'center', alignItems: 'center'}}>
@@ -165,14 +188,24 @@ export default class StockChart extends Component {
       return (
         <View style={{height:300, width: 350, justifyContent: 'center', alignItems: 'center'}}>
           <Text style={text.money}>{this.props.league}</Text>
+          <Text style={text.money}>$10.00</Text>
         </View>
       )
     }
     return (
       <View style={containers.chart}>
         {this.profileHeader()}
-        <Text style={text.money}>${lastelt}</Text>
+        <Text style={text.money}>{moneyText}</Text>
         {this.createChart()}
+        <ButtonGroup
+                onPress={this.updateIndex.bind(this)}
+                selectedIndex={this.state.selectedIndex}
+                buttons={['D', 'W', 'M', 'Y']}
+                containerStyle={{flex: 0.3}}
+                textStyle={{color: colors.white}}
+                buttonStyle={{backgroundColor: colors.grey}}
+                selectedButtonStyle={{backgroundColor: colors.white}}
+              />
       </View>
     );
   }

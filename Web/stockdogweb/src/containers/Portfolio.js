@@ -22,7 +22,7 @@ class Portfolio extends Component {
 
       this.state = {
          portfolios: [],
-         portfolioId: null,
+         portfolioId: -1,
          holdings: [],
          holdingComponents: [],
          watchlist: [],
@@ -40,6 +40,11 @@ class Portfolio extends Component {
             });
             this.getPortfolio();
             this.cookies.set("currPortfolio", this.state.portfolioId);
+         }
+         else {
+            this.setState({
+               portfolioId: null
+            });
          }
       });
 
@@ -114,11 +119,25 @@ class Portfolio extends Component {
             <CreatePortfolio />
          )
       }
+      else if (this.cookies.get("currPortfolio") === "undefined") {
+         return (
+            <div>
+               <SideNav />
+               <Navbar />
+               <div className="portfolio-undefined">
+                  <h1>Select a portfolio</h1>
+               </div>
+            </div>
+         )
+      }
       return (
          <div className="Portfolio">
             <SideNav />
             <div className="portfolio-area">
                <Navbar />
+               <div className="portfolio-league-title">
+                  <h1>{this.cookies.get("currLeagueName")}</h1>
+               </div>
                <Graph title="Portfolio" ticker="PORTFOLIO"
                   portfolioId={this.state.portfolioId}/>
                <div className="portfolio-content">

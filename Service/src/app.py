@@ -6,6 +6,7 @@ from auth.login import Login
 from auth.logout import logout_api
 from auth.session import session_api
 
+from routes.iex import iex_api
 from routes.league import league_api
 from routes.nuke import nuke_api
 from routes.portfolio import portfolio_api
@@ -22,17 +23,18 @@ app = Flask(__name__)
 CORS(app)
 login = Login(app)
 
-app.register_blueprint(user_api)
+app.register_blueprint(iex_api)
+app.register_blueprint(league_api)
 app.register_blueprint(login.login_api)
+app.register_blueprint(logout_api)
+app.register_blueprint(nuke_api)
+app.register_blueprint(portfolio_api)
+app.register_blueprint(seed_api)
 app.register_blueprint(session_api)
 app.register_blueprint(stock_api)
-app.register_blueprint(portfolio_api)
-app.register_blueprint(watchlist_api)
 app.register_blueprint(transaction_api)
-app.register_blueprint(league_api)
-app.register_blueprint(seed_api)
-app.register_blueprint(nuke_api)
-app.register_blueprint(logout_api)
+app.register_blueprint(watchlist_api)
+app.register_blueprint(user_api)
 
 
 @app.before_request
@@ -46,7 +48,6 @@ def setup():
       except Exception as e:
          g.log.error(e)
          return Response('Failed to make connection to database', status=500)
-
 
 
 @app.route('/')

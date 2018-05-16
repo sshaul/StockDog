@@ -11,7 +11,6 @@ import StockChart from '../components/stockchart';
 import PortfolioItem from '../components/portfolioItem';
 import Api from '../api';
 import LoadingProfile from '../components/loadingProfile';
-import AddPortfolioModal from '../components/addportfoliomodal';
 import NavBar from '../components/navbar';
 import Drawer from 'react-native-drawer';
 
@@ -22,7 +21,6 @@ export default class Profile extends Component {
       isLoading: true,
       isPortfolioLoading: true,
       portfolioid: null,
-      selectedIndex: 0,
       range: 'day',
       portfolios: [],
       portfolioStocks: [],
@@ -79,23 +77,6 @@ export default class Profile extends Component {
     });
   }
 
-  updateIndex(selectedIndex) {
-    var index = '';
-    if (selectedIndex == 0) {
-      index = 'day';
-    }
-    else if (selectedIndex == 1) {
-      index = 'week';
-    }
-    else if (selectedIndex == 2) {
-      index = 'month';
-    }
-    else {
-      index = 'year';
-    }
-    this.setState({selectedIndex, range: index});
-  }
-
   _renderItem = ({item}) => {
     return <PortfolioItem 
       ticker={item.ticker}
@@ -134,15 +115,6 @@ export default class Profile extends Component {
             <View style={{flex: 1, alignItems: 'center'}}>
               <ScrollView style={{flex: 1}}>
                 <StockChart range={this.state.range} portfolio={true} league={currPort.league}/>
-                <ButtonGroup
-                  onPress={this.updateIndex.bind(this)}
-                  selectedIndex={this.state.selectedIndex}
-                  buttons={['D', 'W', 'M', 'Y']}
-                  containerStyle={{flex: 0.3}}
-                  textStyle={{color: colors.white}}
-                  buttonStyle={{backgroundColor: colors.grey}}
-                  selectedButtonStyle={{backgroundColor: colors.white}}
-                />
                 <View style={{flex: 0.3}}>
                   <Text style={text.profileLabels}>Portfolio</Text>
                   <Text style={text.smallPortfolioText}>Loading...</Text>
@@ -159,15 +131,6 @@ export default class Profile extends Component {
           <View style={{flex: 1, alignItems: 'center'}}>
             <ScrollView style={{flex: 1}}>
               <StockChart range={this.state.range} portfolio={true} league={currPort.league}/>
-              <ButtonGroup
-                onPress={this.updateIndex.bind(this)}
-                selectedIndex={this.state.selectedIndex}
-                buttons={['D', 'W', 'M', 'Y']}
-                containerStyle={{flex: 0.3}}
-                textStyle={{color: colors.white}}
-                buttonStyle={{backgroundColor: colors.grey}}
-                selectedButtonStyle={{backgroundColor: colors.white}}
-              />
               <View style={{flex: 0.3}}>
                 <Text style={text.profileLabels}>Portfolio</Text>
                 <FlatList

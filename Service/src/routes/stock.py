@@ -1,9 +1,11 @@
 from datetime import date, timedelta, datetime
 from flask import Blueprint, request, Response, g
 import requests
-import time
 import simplejson as json
+import time
 from urllib.parse import urlencode
+
+import routes.iex as iex
 
 TODAY = 0
 DAY_AGO = 1
@@ -18,17 +20,13 @@ DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 stock_api = Blueprint('stock_api', __name__)
 
-
-def get_attr(body, attr):
-   try:
-      return body[attr]
-   except KeyError:
-      return None
+URL_PREFIX = 'https://www.alphavantage.co/query?'
 
 
 @stock_api.route('/api/stock/sell/<ticker>', methods=['POST'])
 def post_sell_transaction(ticker):
    body = request.get_json()
+   sharePrice = json.loads(get_history(ticker, 'now'))['price']
 
    g.cursor.execute("SELECT shareCount, avgCost FROM PortfolioItem " +
       "WHERE portfolioId = %s AND ticker = %s",
@@ -36,14 +34,24 @@ def post_sell_transaction(ticker):
 
    userShares = g.cursor.fetchone()
    if not userShares or body['shareCount'] > userShares['shareCount']:
-      return Response('Inadequate shares owned to make sale.', status=400)
+      return Response('Insufficient shares owned to make sale.', status=400)
 
-   saleValue = body['sharePrice'] * body['shareCount']
+   saleValue = sharePrice * body['shareCount']
    newShareCt = userShares['shareCount'] - body['shareCount']
 
-   g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " +
+   g.cursor.execute("SELECT leagueId FROM Portfolio WHERE id = %s", 
+      int(body['portfolioId']))
+
+   portfolio = g.cursor.fetchone()
+   try:
+      leagueId = portfolio['leagueId']
+   except:
+      return Response('Portfolio with id ' + str(body['portfolioId']) + ' does not exist.', status=400)
+
+   g.cursor.execute("INSERT INTO Transaction" +
+      "(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " +
       "VALUES (%s, %s, %s, %s, %s, %s, %s)",
-      [body['sharePrice'], body['shareCount'], 0, datetime.now(), body['portfolioId'], ticker, get_attr(body, 'leagueId')])
+      [sharePrice, body['shareCount'], 0, datetime.now(), body['portfolioId'], ticker, leagueId])
 
    g.cursor.execute("UPDATE Portfolio SET buyPower = buyPower + %s WHERE id = %s",
       [saleValue, body['portfolioId']])
@@ -52,18 +60,27 @@ def post_sell_transaction(ticker):
       "WHERE portfolioId = %s AND ticker = %s",
       [newShareCt, body['portfolioId'], ticker])
 
+   g.cursor.execute("DELETE FROM PortfolioItem WHERE shareCount = 0")
+
    return Response(status=200)
 
 
 @stock_api.route('/api/stock/buy/<ticker>', methods=['POST'])
 def post_buy_transaction(ticker):
    body = request.get_json()
+   sharePrice = json.loads(get_history(ticker, 'now'))['price']
 
-   g.cursor.execute("SELECT buyPower FROM Portfolio WHERE id = %s",
+   g.cursor.execute("SELECT leagueId, buyPower FROM Portfolio WHERE id = %s",
       int(body['portfolioId']))
 
-   userBuyPower = g.cursor.fetchone()['buyPower']
-   purchaseCost = body['sharePrice'] * body['shareCount']
+   portfolio = g.cursor.fetchone()
+   try:
+      userBuyPower = portfolio['buyPower']
+      leagueId = portfolio['leagueId']
+   except:
+      return Response('Portfolio with id ' + str(body['portfolioId']) + ' does not exist.', status=400)
+
+   purchaseCost = sharePrice * body['shareCount']
 
    if userBuyPower < purchaseCost:
       return Response('Insufficient buying power to make purchase.', status=400)
@@ -72,7 +89,7 @@ def post_buy_transaction(ticker):
 
    g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " + 
       "VALUES (%s, %s, %s, %s, %s, %s, %s)",
-      [body['sharePrice'], body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker, get_attr(body, 'leagueId')])
+      [sharePrice, body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker, leagueId])
 
    g.cursor.execute("UPDATE Portfolio SET buyPower = %s WHERE id = %s",
       [remainingBuyPower, body['portfolioId']])
@@ -83,59 +100,63 @@ def post_buy_transaction(ticker):
    portfolioItem = g.cursor.fetchone()
    if portfolioItem:
       newShareCt = portfolioItem['shareCount'] + body['shareCount']
-      newAvgCost = ((portfolioItem['avgCost'] * portfolioItem['shareCount']) + purchaseCost) // newShareCt
+      newAvgCost = (float((portfolioItem['avgCost']) * portfolioItem['shareCount']) + purchaseCost) // newShareCt
       g.cursor.execute("UPDATE PortfolioItem SET shareCount = %s, avgCost = %s " +
          "WHERE portfolioId = %s AND ticker = %s",
          [newShareCt, newAvgCost, body['portfolioId'], ticker])
    else:
       g.cursor.execute("INSERT INTO PortfolioItem(shareCount, avgCost, portfolioId, ticker) " +
          "VALUES (%s, %s, %s, %s)",
-         [body['shareCount'], body['sharePrice'], body['portfolioId'], ticker])
+         [body['shareCount'], sharePrice, body['portfolioId'], ticker])
 
    return Response(status=200)
 
 
 @stock_api.route('/api/stock/<ticker>/history/<length>')
 def get_history(ticker, length):
-   try:
-      function = getFunction(length)
-      outputSize = getOutputSize(length)
-   except Exception as e:
-      return Response('Request was formed incorrectly. ' +
-         'Valid lengths are day, week, month, year.', status=400)
+   if True:
+      return iex.get_history(ticker, length)
+   else:
+      try:
+         function = getFunction(length)
+         outputSize = getOutputSize(length)
+      except Exception as e:
+         return Response('Request was formed incorrectly. ' +
+            'Valid lengths are day, week, month, year.', status=400)
 
-   interval = getInterval(length)
-   apiKey = getApiKey()
+      interval = getInterval(length)
+      apiKey = getApiKey()
 
-   queryParams = {
-      'function' : function,
-      'symbol' : ticker,
-      'outputsize' : outputSize,
-      'apikey' : apiKey
-   }
+      queryParams = {
+         'function' : function,
+         'symbol' : ticker,
+         'outputsize' : outputSize,
+         'apikey' : apiKey
+      }
+      if interval:
+         queryParams['interval'] = interval
 
-   if interval:
-      queryParams['interval'] = interval
+      g.log.info('Alpha Vantage API hitting: ' + URL_PREFIX + urlencode(queryParams))
+      
+      startTime = time.time()
+      try:
+         rawResponse = requests.get(URL_PREFIX + urlencode(queryParams))
+         response = rawResponse.json()
+         alphaTime = time.time() - startTime
+      except:
+         return Response('Alphavantage API refused to respond.', status=500)
 
-   alphaVantageApi = 'https://www.alphavantage.co/query?'
-   startTime = time.time()
-   raw_response = requests.get(alphaVantageApi + urlencode(queryParams))
-   response = raw_response.json()
-   alphaTime = time.time() - startTime
+      if response.get('Error Message'):
+         return Response('Request was formed incorrectly. ' +
+            'The stock ticker is either invalid or unsupported.', status=404)
 
-   g.log.info('API hitting: ' + alphaVantageApi + urlencode(queryParams))
+      data = formatData(response, interval, length)
+      parseTime = time.time() - startTime
 
-   if response.get('Error Message'):
-      return Response('Request was formed incorrectly. ' +
-         'The stock ticker is either invalid or unsupported.', status=400)
-
-   data = formatData(response, interval, length)
-   parseTime = time.time() - startTime
-
-   g.log.info('Alphavantage time is: ' + str(alphaTime))
-   g.log.info('Parsing data time is: ' + str(parseTime))
-   
-   return json.dumps(data)
+      g.log.info('Alphavantage time is: ' + str(alphaTime))
+      g.log.info('Parsing data time is: ' + str(parseTime))
+      
+      return json.dumps(data)
     
 
 def getFunction(length):

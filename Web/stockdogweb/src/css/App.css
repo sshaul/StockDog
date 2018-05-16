@@ -276,6 +276,9 @@ input:focus {
   top: 30px;
   width: 179px; }
 
+.stock-transaction-area {
+  color: #F7F8F9; }
+
 #transactionAmount {
   margin-bottom: 10px;
   font-size: 16px;
@@ -310,13 +313,19 @@ input:focus {
 .portfolio-area {
   margin-left: 200px; }
 
+.portfolio-league-title h1 {
+  margin: 40px;
+  margin-top: 10px; }
+
 .Portfolio h1 {
   font-family: 'Lato', sans-serif;
-  color: #F7F8F9; }
+  color: #F7F8F9;
+  font-size: 24px; }
 
 .Portfolio h2 {
   font-family: 'Lato', sans-serif;
-  color: #63CEC2; }
+  color: #63CEC2;
+  font-size: 16px; }
 
 .portfolio-content {
   margin-left: 60px;
@@ -328,11 +337,14 @@ input:focus {
   padding: 0 10px; }
 
 .portfolio-holding {
-  margin-left: 30px; }
+  margin-left: 30px;
+  max-width: 290px;
+  overflow: hidden;
+  border-bottom: 1px solid #455f70; }
 
 .portfolio-holding-title {
   display: inline-block;
-  font-size: 34px;
+  font-size: 20px;
   color: #63CEC2;
   width: 150px; }
 
@@ -342,8 +354,23 @@ input:focus {
 
 .portfolio-holding-amount {
   display: inline-block;
-  font-size: 34px;
+  font-size: 20px;
   color: #F7F8F9; }
+
+.portfolio-undefined {
+  color: #F7F8F9;
+  width: 500px;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  left: 200px;
+  right: 0;
+  bottom: 0;
+  margin: auto; }
+
+.portfolio-undefined h1 {
+  text-align: center;
+  font-size: 30px; }
 
 /*===========================================================================*/
 /* Graph
@@ -487,6 +514,21 @@ input:focus {
 
 .GoHome a {
   color: #F7F8F9; }
+
+/*===========================================================================*/
+/* Logout
+-----------------------------------------------------------------------------*/
+.Logout {
+  position: absolute;
+  bottom: 10px;
+  left: 10px; }
+
+.Logout button {
+  color: #F7F8F9;
+  border: 2px #63CEC2 solid;
+  background-color: #212d35;
+  padding: 10px;
+  width: 180px; }
 
 /*===========================================================================*/
 

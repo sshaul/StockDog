@@ -5,6 +5,8 @@ $white-color: #F7F8F9;
 $active-color: #d6d7d8;
 $green-color: #63CEC2;
 $red-color: #ed4d0a;
+$alt-bg-color: #455f70;
+$dark-bg-color: #212d35;
 /*===========================================================================*/
 
 /* General
@@ -94,7 +96,7 @@ input:focus{
 /* Side Nav
 -----------------------------------------------------------------------------*/
 .SideNav {
-   background: #212d35;
+   background: $dark-bg-color;
    color: $white-color;
    width: 200px;
    height: 100%;
@@ -333,6 +335,10 @@ input:focus{
    width: 179px;
 }
 
+.stock-transaction-area {
+   color: $white-color;
+}
+
 #transactionAmount {
    margin-bottom: 10px;
    font-size: 16px;
@@ -373,14 +379,21 @@ input:focus{
    margin-left: 200px;
 }
 
+.portfolio-league-title h1 {
+   margin: 40px;
+   margin-top: 10px;
+}
+
 .Portfolio h1 {
    font-family: 'Lato', sans-serif;
    color: $white-color;
+   font-size: 24px;
 }
 
 .Portfolio h2 {
    font-family: 'Lato', sans-serif;
    color: $green-color;
+   font-size: 16px;
 }
 
 .portfolio-content {
@@ -397,11 +410,14 @@ input:focus{
 
 .portfolio-holding {
    margin-left: 30px;
+   max-width: 290px;
+   overflow: hidden;
+   border-bottom: 1px solid $alt-bg-color;
 }
 
 .portfolio-holding-title {
    display: inline-block;
-   font-size: 34px;
+   font-size: 20px;
    color: $green-color;
    width: 150px;
 }
@@ -413,8 +429,25 @@ input:focus{
 
 .portfolio-holding-amount {
    display: inline-block;
-   font-size: 34px;
+   font-size: 20px;
    color: $white-color;
+}
+
+.portfolio-undefined {
+   color: $white-color;
+   width: 500px;
+   height: 50px;
+   position: absolute;
+   top: 0;
+   left: 200px;
+   right: 0;
+   bottom: 0;
+   margin: auto;
+}
+
+.portfolio-undefined h1 {
+   text-align: center;
+   font-size: 30px;
 }
 /*===========================================================================*/
 
@@ -546,7 +579,7 @@ input:focus{
 }
 
 .LeagueHome tr {
-   background-color: #455f70;
+   background-color: $alt-bg-color;
    margin-top: 10px;
 }
 
@@ -586,5 +619,22 @@ input:focus{
 
 .GoHome a {
    color: $white-color;
+}
+/*===========================================================================*/
+
+/* Logout
+-----------------------------------------------------------------------------*/
+.Logout {
+   position: absolute;
+   bottom: 10px;
+   left: 10px;
+}
+
+.Logout button {
+   color: $white-color;
+   border: 2px $green-color solid;
+   background-color: $dark-bg-color;
+   padding: 10px;
+   width: 180px;
 }
 /*===========================================================================*/
