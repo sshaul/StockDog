@@ -63,10 +63,5 @@ export default elements = StyleSheet.create({
     tabNavIcon: {
         height: 24,
         width: 24
-    },
-    // groupDivider: {
-    //     width: '100%',
-    //     color: colors.dark,
-    //     height: 2
-    // }
+    }
 });

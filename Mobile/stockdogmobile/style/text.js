@@ -116,5 +116,18 @@ export default text = StyleSheet.create({
       fontFamily: 'open-sans',
       fontSize: 48, 
       textAlign: 'center',
+    },
+    // ----------------- Feed page ------------- //
+    activityTitle: {
+      color: colors.white
+    },
+    smallIconText: {
+      fontSize: 16
+    },
+    medIconText: {
+      fontSize: 14
+    },
+    largeIconText: {
+      fontSize: 12
     }
 });

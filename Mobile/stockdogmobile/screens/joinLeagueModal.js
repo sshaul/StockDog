@@ -15,8 +15,7 @@ export default class JoinLeagueModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inviteCode: "",
-      notFound: false
+      inviteCode: ""
     };
     this.api = new Api();
   }
@@ -35,7 +34,7 @@ export default class JoinLeagueModal extends Component {
         Actions.setnickname({league: res.league, inviteCode: this.state.inviteCode});
       }
       else {
-        this.setState({notFound: true});
+        alert("Invite code not found.");
       }
     });
   }

@@ -32,6 +32,7 @@ export default class SetNickname extends Component {
     // Check if the navigation state params contain a league
     var props = this.props.navigation.state.params;
     if (props.hasOwnProperty('buyPower')) {
+      console.log(props);
       this.api.createNewLeague(props.name, props.buyPower, props.startDate, props.endDate, (res) => {
         this.api.createNewPortfolio(this.state.nickname, res.id, res.inviteCode, (res) => {
           AsyncStorage.setItem('currPortfolio', '' + res.id);
@@ -50,6 +51,8 @@ export default class SetNickname extends Component {
   }
 
   render() {
+    var disabled = !this.state.nickname;
+
     return (
       <Lightbox verticalPercent={0.7} horizontalPercent={0.8}>
         <View style={containers.addGroupOuterModal}>
@@ -64,7 +67,7 @@ export default class SetNickname extends Component {
               type="Nickname" 
               onchange={this.onchangename.bind(this)} 
               value={this.state.nickname}/>
-            <WideButton type="join" onpress={this.handleOnPress}/>
+            <WideButton disabled={disabled} type="join" onpress={this.handleOnPress}/>
           </View>
         </View>
       </Lightbox>

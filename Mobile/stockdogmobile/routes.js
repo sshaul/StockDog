@@ -51,7 +51,7 @@ const Routes = () => (
                   <Scene key="profile" component={Profile} onEnter={Profile.onEnterPortfolio}/>
                 </Scene>
                 <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon}/>
-                <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon}/>
+                <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon} onEnter={Feed.onEnterFeed}/>
                 <Scene key="searchmain" hideNavBar title="Search" iconName="search" icon={TabIcon}>
                   <Scene key="search" component={Search}/>
                 </Scene>
@@ -65,11 +65,10 @@ const Routes = () => (
             
           </Scene>
         <Lightbox>
-          <Scene key="settings" component={SettingsModal} hideNavBar />
           <Scene key="stock" component={Stock} hideNavBar/>
           <Scene key="buysellmodal" component={BuySellModal} hideNavBar />
         </Lightbox>
-        
+        <Scene key="settings" component={SettingsModal} hideNavBar />
       </Modal>
     </Drawer>
       

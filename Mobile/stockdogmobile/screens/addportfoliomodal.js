@@ -20,7 +20,7 @@ export default class AddPortfolioModal extends Component {
       buyPower: "",
       startDate: "",
       endDate: "",
-      minDate: "2001/01/01"
+      minDate: "01/01/01"
     };
 
     this.api = new Api();
@@ -34,7 +34,7 @@ export default class AddPortfolioModal extends Component {
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
+    var yy = today.getFullYear() % 100;  // Last 2 digits of the date
     
     if(dd<10) {
         dd = '0'+dd
@@ -44,12 +44,21 @@ export default class AddPortfolioModal extends Component {
         mm = '0'+mm
     } 
     
-    today = yyyy + '/' + mm + '/' + dd;
+    today = mm + '/' + dd + '/' + yy;
     return today;
   }
 
   onpress = () => {
-    Actions.setnickname(this.state);
+    if (/[a-zA-Z]/.test(this.state.buyPower)) {
+      alert("Invalid buypower value. Please enter numbers only.");
+    }
+    else if (this.state.startDate && this.state.endDate && 
+      (this.state.startDate >= this.state.endDate)) {
+        alert("Invalid dates. Please make the end date later than the start date.");
+      }
+    else {
+      Actions.setnickname(this.state);
+    }
   }
 
   close = () => {
@@ -85,7 +94,7 @@ export default class AddPortfolioModal extends Component {
                 date={this.state.startDate}
                 mode="date"
                 placeholder="Select start date"
-                format="YYYY/MM/DD"
+                format="MM/DD/YY"
                 minDate={this.state.minDate}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
@@ -110,7 +119,7 @@ export default class AddPortfolioModal extends Component {
                 date={this.state.endDate}
                 mode="date"
                 placeholder="Select end date"
-                format="YYYY/MM/DD"
+                format="MM/DD/YY"
                 minDate={this.state.minDate}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"

@@ -25,15 +25,21 @@ export default class BuySellModal extends Component {
 
   buysellstock() {
     var props = this.props.navigation.state.params;
-    this.api.manageStock(props.modalType, props.ticker, parseInt(this.state.amount), 
+    if (/[a-zA-Z]/.test(this.state.amount)) {
+      alert("Invalid amount value. Please enter numbers only.");
+    }
+    else {
+      this.api.manageStock(props.modalType, props.ticker, parseInt(this.state.amount), 
       parseFloat(this.state.price), props.id, (res) => {
         if (res.status_code === 400) {
-          this.setState({errorMessage: res.message});
+          alert (res.message);
         }
         else {
           this.setState({transactionComplete: true});
         }
       });
+    }
+    
   }
 
   onchangeamount(amount) {
@@ -51,12 +57,6 @@ export default class BuySellModal extends Component {
   render() {
     var content;
     var props = this.props.navigation.state.params;
-    var errorMessage;
-    if (this.state.errorMessage) {
-      errorMessage = (<Text style={text.joinLeagueWarning}> 
-        {this.state.errorMessage}
-      </Text>);
-    }
     if (this.state.transactionComplete) {
       if (this.props.navigation.state.params.modalType == 'buy') {
         content = (<View style={containers.innerModal}>
@@ -82,7 +82,6 @@ export default class BuySellModal extends Component {
           onchange={this.onchangeamount.bind(this)} 
           value={this.state.amount}/>
         <WideButton type={props.modalType} onpress={this.buysellstock.bind(this)}/>
-        {errorMessage}
       </View>);
     }
     return (

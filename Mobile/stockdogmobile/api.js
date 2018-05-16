@@ -110,7 +110,8 @@ export default class Api {
     var uid;
     AsyncStorage.getItem('userid')
       .then((userid) => {
-        uid = userid;
+        uid = parseInt(userid);
+        bp = parseInt(lbuypower);
         fetch(this.baseurl + '/api/league', {
           method: 'POST',
           headers: this.headers,
@@ -119,7 +120,7 @@ export default class Api {
             name: lname,
             start: lstartDate,
             end: lendDate,
-            startPos: lbuypower
+            startPos: bp
           })
         }).then((response) => response.json())
         .then((responseJson) => {
@@ -250,7 +251,6 @@ export default class Api {
           headers: this.headers,
           body: JSON.stringify({
             shareCount: numShares,
-            sharePrice: price,
             portfolioId: pid
           })
         }).then((response) => {
