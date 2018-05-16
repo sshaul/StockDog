@@ -22,7 +22,7 @@ class Stock extends Component {
                <Eye />
             </div>,
          watchlistId: null,
-         amount: 0
+         shareCount: 0
       };
    }
 
@@ -33,6 +33,7 @@ class Stock extends Component {
          portfolio.forEach((stock) => {
             console.log(stock);
             if (stock["ticker"] === this.state.ticker) {
+               this.setState({shareCount: stock["shareCount"]});
                // do stuff with the result
             }
          });
@@ -42,7 +43,7 @@ class Stock extends Component {
    }
 
    goBack = () => {
-      this.props.history.goBack();
+      this.props.history.push("/");
    };
    _onChange = (event) => {
       this.setState({
@@ -61,7 +62,6 @@ class Stock extends Component {
       this.api.buy(
          this.state.ticker,
          parseInt(this.state.transactionAmount, 10),
-         parseFloat(this.state.currentPrice),
          this.state.portfolioId,
          () => {
             alert(this.state.transactionAmount + " shares of " +
@@ -77,7 +77,6 @@ class Stock extends Component {
       this.api.sell(
          this.state.ticker,
          parseInt(this.state.transactionAmount, 10),
-         parseFloat(this.state.currentPrice),
          this.state.portfolioId,
          () => {
             alert(this.state.transactionAmount + " shares of " +
@@ -149,7 +148,7 @@ class Stock extends Component {
             <Graph ticker={this.state.ticker}
                updateCurrentPrice={this.updateCurrentPrice} />
             <div className="stock-transaction-area">
-               <h5>Owned: 3</h5>
+               <h5>Owned: {this.state.shareCount}</h5>
                <form>
                   <input id="transactionAmount" type="number" min="1"
                      placeholder="Amount" onChange={this._onChange} />
