@@ -98,7 +98,6 @@ export default text = StyleSheet.create({
       fontFamily: 'open-sans',
       fontSize: 20,
       textAlign: 'left',
-      //backgroundColor: 'black'
     },
     members: {
       color: colors.white,
@@ -110,5 +109,12 @@ export default text = StyleSheet.create({
       fontFamily: 'open-sans',
       fontSize: 20,
       textAlign: 'left'
+    },
+    // ----------------- Settings Modal ------------- //
+    settingsTitle: {
+      color: colors.white,
+      fontFamily: 'open-sans',
+      fontSize: 48, 
+      textAlign: 'center',
     }
 });

@@ -173,5 +173,20 @@ export default containers = StyleSheet.create({
     membersRank: {
       flex: 0.2,
       alignItems: 'flex-end'
-    }
+    },
+    // ----------------- Settings Modal ------------- //
+    settingsHeader: {
+      flex: 0.3,
+      justifyContent: 'flex-end',
+      // backgroundColor: 'pink'
+    },
+    settingsIconHeaders: {
+      flex: 0.1,
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      justifyContent: 'flex-end',
+      paddingLeft: 10,
+      paddingRight: 10,
+      paddingTop: 5
+    },
 });

@@ -9,8 +9,6 @@ import { colors } from '../style/colors';
 import ChartView from 'react-native-highcharts';
 import Icon from 'react-native-vector-icons/Feather';
 import NavBar from '../components/navbar';
-import AddPortfolioModal from'../components/addportfoliomodal';
-import JoinLeagueModal from '../components/joinLeagueModal';
 
 export default class NoPorfoliosProfile extends Component {
   constructor(props) {

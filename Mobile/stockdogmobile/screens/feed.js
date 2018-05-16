@@ -15,23 +15,53 @@ export default class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: ''
+      text: '',
+      transactions: []
     };
 
     this.api = new Api();
   }
 
   componentDidMount() {
-    this.api.getTransactions(() => {
+    this.api.getTransactions((transactions) => {
       console.log('got transactions');
+      this.setState(transactions);
+      console.log(transactions);
     });
+  }
+
+  _renderItem(item) {
+    console.log(item);
+    return (
+      <ListItem
+        key={item.item.id}
+        title={item.item.id}
+        subtitle={
+          <View style={{
+            flexDirection: 'column',
+            paddingLeft: 10,
+            paddingTop: 5
+          }}>
+            <Text> Buy Power: {item.item.buyPower} </Text>
+          </View>
+        }
+        onPress={() => {this.handlePress(item)}}
+      />
+    );
   }
 
   render() {
     return (
       <View style={containers.profileGeneral}>
         <NavBar />
-        
+
+        <View style={containers.leagueName}>
+          <Text style={text.title}>Feed</Text>
+        </View>
+        <FlatList
+          keyExtractor={this.keyExtractor}
+          data={this.state.leagues}
+          renderItem={this._renderItem.bind(this)}/>
       </View>
     );
   }

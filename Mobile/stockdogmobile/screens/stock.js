@@ -9,99 +9,98 @@ import text from '../style/text';
 import { colors } from '../style/colors'; 
 import WideButton from '../components/widebutton';
 import StockChart from '../components/stockchart';
-import BuySellModal from '../components/buysellmodal';
 import Api from '../api';
 import NavBar from '../components/navbar';
 
 export default class Stock extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+constructor(props) {
+   super(props);
+   this.state = {
       userId : "",
       data: [],
       isLoading: true,
       selectedIndex: 0,
       range: 'day',
       addedWatch: false
-    };
+   };
 
-    this.api = new Api();
-  };
+   this.api = new Api();
+};
 
-  componentDidMount() {
-    this.api.getWatchlistStocks((watchlist) => {
+componentDidMount() {
+   this.api.getWatchlistStocks((watchlist) => {
       var item = watchlist.find(x => x.ticker === this.props.navigation.state.params.ticker)
       if (item !== undefined) {
-        this.setState({addedWatch: true, watchlistId: item.id});
+      this.setState({addedWatch: true, watchlistId: item.id});
       }
-    })
-  }
+   })
+}
 
-  updateIndex(selectedIndex) {
-    var index = '';
-    if (selectedIndex == 0) {
+updateIndex(selectedIndex) {
+   var index = '';
+   if (selectedIndex == 0) {
       index = 'day';
-    }
-    else if (selectedIndex == 1) {
+   }
+   else if (selectedIndex == 1) {
       index = 'week';
-    }
-    else if (selectedIndex == 2) {
+   }
+   else if (selectedIndex == 2) {
       index = 'month';
-    }
-    else {
+   }
+   else {
       index = 'year';
-    }
-    this.setState({selectedIndex, range: index});
-  }
+   }
+   this.setState({selectedIndex, range: index});
+}
 
-  _openBuyModal = () => {
-    Actions.buysellmodal({modalType: 'buy', ticker: this.props.navigation.state.params.ticker,
+_openBuyModal = () => {
+   Actions.buysellmodal({modalType: 'buy', ticker: this.props.navigation.state.params.ticker,
       id: this.props.navigation.state.params.pid});
-  }
+}
 
-  _openSellModal = () => {
-    Actions.buysellmodal({modalType: 'sell', ticker: this.props.navigation.state.params.ticker,
+_openSellModal = () => {
+   Actions.buysellmodal({modalType: 'sell', ticker: this.props.navigation.state.params.ticker,
       id: this.props.navigation.state.params.pid});
-  }
+}
 
-  addToWatchlist = () => {
-    if (this.state.addedWatch) {
+addToWatchlist = () => {
+   if (this.state.addedWatch) {
       this.api.removeFromWatchlist(this.state.watchlistId, () => {
-        this.setState({addedWatch: false});
+      this.setState({addedWatch: false});
       })
-    }
-    else {
+   }
+   else {
       this.api.addToWatchlist(this.props.navigation.state.params.ticker, () => {
-        this.setState({addedWatch: true});
+      this.setState({addedWatch: true});
       });
-    }
-  };
+   }
+};
 
-  render() {
-    var watching;
-    if (this.state.addedWatch) {
+render() {
+   var watching;
+   if (this.state.addedWatch) {
       watching = (<TouchableOpacity onPress={this.addToWatchlist}>
-                    <Icon name='eye-off' size={30} color='white' />
+                  <Icon name='eye-off' size={30} color='white' />
                   </TouchableOpacity>);
-    }
-    else {
+   }
+   else {
       watching = (<TouchableOpacity onPress={this.addToWatchlist}>
-                    <Icon name='eye' size={30} color='white' />
+                  <Icon name='eye' size={30} color='white' />
                   </TouchableOpacity>);
-    }
+   }
 
-    return (
+   return (
       <View style={containers.profileGeneral}>
-        <NavBar stock={true}/>
-        <View style={containers.chart}>
+      <NavBar stock={true}/>
+      <View style={containers.chart}>
             <View style={{flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', paddingLeft: 10}}>
-              <Text style={text.money}>{this.props.navigation.state.params.ticker}</Text>
-              {watching}
+            <Text style={text.money}>{this.props.navigation.state.params.ticker}</Text>
+            {watching}
             </View>
             <StockChart range={this.state.range} ticker={this.props.navigation.state.params.ticker}/>
-        </View>
-        <View style={containers.underChart}>
-          <ButtonGroup
+      </View>
+      <View style={containers.underChart}>
+         <ButtonGroup
             onPress={this.updateIndex.bind(this)}
             selectedIndex={this.state.selectedIndex}
             buttons={['D', 'W', 'M', 'Y']}
@@ -109,23 +108,23 @@ export default class Stock extends Component {
             textStyle={{color: colors.white}}
             buttonStyle={{backgroundColor: colors.grey}}
             selectedButtonStyle={{backgroundColor: colors.white}}
-          />
-          <View style={containers.buttons}>
+         />
+         <View style={containers.buttons}>
             <TouchableOpacity
-              style={elements.buyButton}
-              onPress={this._openBuyModal}
-              >
-              <Text style={text.loginButton}>BUY</Text>
+            style={elements.buyButton}
+            onPress={this._openBuyModal}
+            >
+            <Text style={text.loginButton}>BUY</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={elements.sellButton}
-              onPress={this._openSellModal}
-              >
-              <Text style={text.loginButton}>SELL</Text>
+            style={elements.sellButton}
+            onPress={this._openSellModal}
+            >
+            <Text style={text.loginButton}>SELL</Text>
             </TouchableOpacity>
-          </View>
-        </View>
+         </View>
       </View>
-    );
-  }
+      </View>
+   );
+}
 }

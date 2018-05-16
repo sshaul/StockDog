@@ -11,7 +11,6 @@ import StockChart from '../components/stockchart';
 import PortfolioItem from '../components/portfolioItem';
 import Api from '../api';
 import LoadingProfile from '../components/loadingProfile';
-import AddPortfolioModal from '../components/addportfoliomodal';
 import NavBar from '../components/navbar';
 import Drawer from 'react-native-drawer';
 
