@@ -34,6 +34,9 @@ def get_history(ticker, length):
          'The stock ticker is either invalid or unsupported.', status=404)
 
    data = formatData(response, interval)
+   if len(data) == 0:
+      return Response('Honestly, this probably means that iex is down lol', status=500)
+   
    if length == 'now':
       data = data[-1]
    parseTime = time.time() - startTime
