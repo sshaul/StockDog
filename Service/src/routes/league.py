@@ -29,12 +29,12 @@ def get_leagues():
 def get_leagueToJoin(inviteCode):
    g.cursor.execute("SELECT * FROM League WHERE inviteCode = %s", inviteCode)
    leagueInfo = g.cursor.fetchone()
-   
-    if leagueInfo:
-        return jsonify(id=leagueInfo['id'], name=leagueInfo['name'], start=leagueInfo['start']
-        end=leagueInfo['end'], startPos=leagueInfo['startPos'], ownerId=leagueInfo['ownerId'])
-    else:
-        return Response("No league exists with that invite code", status=400)
+
+   if leagueInfo:
+      return jsonify(id=leagueInfo['id'], name=leagueInfo['name'], start=leagueInfo['start'], 
+              end=leagueInfo['end'], startPos=leagueInfo['startPos'], ownerId=leagueInfo['ownerId'])
+   else:
+      return Response("No league exists with that invite code", status=400)
 
 
 @league_api.route('/api/league/info/<id>', methods=['GET'])
@@ -44,8 +44,9 @@ def get_leagueInfoById(id):
     leagueInfo = g.cursor.fetchone()
 
     if leagueInfo:
-        return jsonify(name=leagueInfo['name'], start=leagueInfo['start'], end=leagueInfo['end']
-        startPos=leagueInfo['startPos'], inviteCode=leagueInfo['inviteCode'], ownerId=leagueInfo['ownerId'])
+        return jsonify(name=leagueInfo['name'], start=leagueInfo['start'], end=leagueInfo['end'], 
+                startPos=leagueInfo['startPos'], inviteCode=leagueInfo['inviteCode'], 
+                ownerId=leagueInfo['ownerId'])
     else:
         return Response("No league with that id exists", status=400)
 
