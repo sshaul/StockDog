@@ -27,6 +27,12 @@ class Stock extends Component {
    }
 
    componentDidMount() {
+      this.getShareCount();
+
+      this.getWatchlist();
+   }
+
+   getShareCount = () => {
       // Getting entire portfolio for stock information currently
       // May want to change later
       this.api.getPortfolio(this.state.portfolioId, (portfolio) => {
@@ -39,7 +45,6 @@ class Stock extends Component {
          });
       });
 
-      this.getWatchlist();
    }
 
    goBack = () => {
@@ -64,6 +69,7 @@ class Stock extends Component {
          parseInt(this.state.transactionAmount, 10),
          this.state.portfolioId,
          () => {
+            this.getShareCount();
             alert(this.state.transactionAmount + " shares of " +
                   this.state.ticker + " bought at " +
                   this.state.currentPrice + ".");
@@ -79,6 +85,7 @@ class Stock extends Component {
          parseInt(this.state.transactionAmount, 10),
          this.state.portfolioId,
          () => {
+            this.getShareCount();
             alert(this.state.transactionAmount + " shares of " +
                   this.state.ticker + " sold at " +
                   this.state.currentPrice + ".");
