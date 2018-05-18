@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { instanceOf } from 'prop-types';
 import Graph from '../components/Graph';
+import { Link } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
 import API from "api";
 import Navbar from "../components/Navbar";
@@ -131,6 +132,11 @@ class Portfolio extends Component {
                <Navbar />
                <div className="portfolio-league-title">
                   <h1>{this.cookies.get("currLeagueName")}</h1>
+               </div>
+               <div className="portfolio-league-home-link">
+                  <Link to={"/league/" + this.cookies.get("currLeagueId")}>
+                     League Info
+                  </Link>
                </div>
                <Graph title="Portfolio" ticker="PORTFOLIO"
                   portfolioId={this.state.portfolioId}/>

@@ -34,7 +34,8 @@ class SideNav extends Component {
       this.state.portfolios.forEach((portfolio) => {
          elements.push(
             <div className="side-nav-element" key={portfolio.id} 
-            onClick={()=> {this.switchToPortfolio(portfolio.id, portfolio["league"])}}>
+               onClick={()=> {this.switchToPortfolio(portfolio.id, 
+                  portfolio["league"], portfolio["leagueId"])}}>
                <div className="side-nav-element-title">
                   <p>{portfolio["league"]}</p>
                </div>
