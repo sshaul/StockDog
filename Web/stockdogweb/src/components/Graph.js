@@ -112,11 +112,7 @@ class Graph extends Component {
          });
       }
 
-      console.log("Getting data for " + timeFrame);
-
       const ticker = this.props.ticker;
-
-      console.log(ticker);
 
       if (ticker !== "PORTFOLIO") {
          this.api.stockHistory(ticker, timeFrame, (history) => {

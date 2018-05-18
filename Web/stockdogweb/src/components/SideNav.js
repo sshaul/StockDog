@@ -20,8 +20,6 @@ class SideNav extends Component {
 
    componentDidMount() {
       this.api.getAllPortfolios(this.cookies.get("userId"), (data) => {
-         console.log("All the portfolios:");
-         console.log(data);
          this.setState({
             portfolios: data,
          });
@@ -34,7 +32,6 @@ class SideNav extends Component {
       var elements = [];
 
       this.state.portfolios.forEach((portfolio) => {
-         console.log(portfolio);
          elements.push(
             <div className="side-nav-element" key={portfolio.id} 
             onClick={()=> {this.switchToPortfolio(portfolio.id, portfolio["league"])}}>
@@ -62,7 +59,6 @@ class SideNav extends Component {
    };
 
    switchToPortfolio = (portfolioId, leagueName, leagueId) => {
-         console.log("Switching to portfolioId: " + portfolioId);
       this.cookies.set("currPortfolio", portfolioId);
       this.cookies.set("currLeagueName", leagueName);
       this.cookies.set("currLeagueId", leagueId)

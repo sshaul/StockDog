@@ -50,7 +50,6 @@ class Portfolio extends Component {
 
       // Get the watchlist
       this.api.getWatchlist(this.cookies.get("currPortfolio"), (watchlist) => {
-         console.log(watchlist);
          this.setState({watchlist});
          this.createWatchlist();
       });
@@ -68,8 +67,6 @@ class Portfolio extends Component {
 
    createHoldings = () => {
       var holdingComponents = [];
-      console.log("Creating holdings.");
-      console.log(this.state.holdings);
       this.state.holdings.forEach((holding) => {
          // Make sure there is something in the holding
          // This is because if the portfolio has nothing, the array is
@@ -96,8 +93,6 @@ class Portfolio extends Component {
 
    createWatchlist = () => {
       var watchlistComponents = [];
-      console.log("Creating watchlist.");
-      console.log(this.state.watchlist);
       this.state.watchlist.forEach((stock) => {
          watchlistComponents.push(
             <div className="portfolio-holding" key={stock["ticker"]}>
@@ -110,7 +105,6 @@ class Portfolio extends Component {
       this.setState({
          watchlistComponents
       });
-      console.log(this.state.watchlistComponents);
    }
 
    render() {
