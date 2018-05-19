@@ -77,7 +77,7 @@ def get_portfolio_value(portfolioId):
    value = 0
    for item in portfolioItems:
       if item['ticker'] is not None:
-         value += float(json.loads(stock.get_history(item['ticker'], 'now'))[0]['price']) * item['shareCount']
+         value += float(json.loads(stock.get_history(item['ticker'], 'now'))['price']) * item['shareCount']
 
    return json.dumps({"value": value + float(portfolioItems[0]['buyPower'])})
 
