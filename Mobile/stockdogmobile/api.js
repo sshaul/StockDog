@@ -373,4 +373,59 @@ export default class Api {
       .catch((error) => console.log(error));
     });
   };
+
+  //------------------------------- League Page ----------------------------------------//
+  getLeagueMemebers = (callback) => {
+    AsyncStorage.getItem('currPortfolio')
+    .then((response) => {return JSON.parse(response);})
+    .then((pid) => {
+      console.log('pid', pid);
+      var url = this.baseurl + '/api/portfolio/' + pid;
+      fetch(url, {
+        method: 'GET',
+        headers: this.headers
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        var lid = responseJson[0].leagueId;
+        url = this.baseurl + '/api/league/members/' + lid;
+        fetch(url, {
+          method: 'GET',
+          headers: this.headers
+        }).then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          callback(responseJson)
+        })
+        .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+    });
+  };
+
+getLeagueName = (callback) => {
+  AsyncStorage.getItem('currPortfolio')
+    .then((response) => {return JSON.parse(response);})
+    .then((pid) => {
+      var url = this.baseurl + '/api/portfolio/' + pid;
+      fetch(url, {
+        method: 'GET',
+        headers: this.headers
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        var lid = responseJson[0].leagueId;
+        console.log(lid);
+        url = this.baseurl + '/api/league/info/' + lid;
+        fetch(url, {
+          method: 'GET',
+          headers: this.headers
+        }).then((response) => response.json())
+        .then((responseJson) => {
+          callback(responseJson)
+        })
+        .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+    });
+  }
+
 }
