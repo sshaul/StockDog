@@ -107,7 +107,7 @@ def post_portfolio_history(portfolioId):
 @portfolio_api.route('/api/portfolio/<portfolioId>/history', methods=['GET'])
 def get_portfolio_history(portfolioId):
 
-   g.cursor.execute("SELECT value, day FROM Portfolio AS p JOIN PortfolioHistory AS ph ON p.id = ph.portfolioId " +
+   g.cursor.execute("SELECT value, datetime FROM Portfolio AS p JOIN PortfolioHistory AS ph ON p.id = ph.portfolioId " +
       "WHERE portfolioId = %s", portfolioId)
 
    portfolio = g.cursor.fetchall()
