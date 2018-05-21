@@ -20,8 +20,8 @@ def get_transactions():
       if leagueId:
          g.cursor.execute("SELECT t.id, sharePrice, shareCount, isBuy, datetime, portfolioId, " +
             "ticker, t.leagueId, p.name as nickname " +
-            "FROM Transaction AS t JOIN Portfolio AS p ON t.porfolioId = p.id " + 
-            "WHERE leagueId = %s", leagueId)
+            "FROM Transaction AS t JOIN Portfolio AS p ON t.portfolioId = p.id " + 
+            "WHERE t.leagueId = %s", leagueId)
       else:
          g.cursor.execute("SELECT t.id, sharePrice, shareCount, isBuy, datetime, portfolioId, " +
             "ticker, t.leagueId, p.name as nickname " +
