@@ -160,29 +160,33 @@ export default containers = StyleSheet.create({
       flex: 0.8,
       //backgroundColor: 'pink',
       flexDirection: 'column',
-      //alignItems: 'center',
       paddingTop: 50,
-      paddingLeft: 30,
-      paddingRight: 30,
-      //borderColor: colors.white,
-      //borderWidth: 3
+      paddingLeft: 50,
+      paddingRight: 50,
+    },
+    dashboard: {
+      borderColor: 'white',
+      borderWidth: 2,
+      paddingTop: 10,
+      paddingBottom: 20
+      //height: 150
     },
     memberRow: {
       flexDirection: 'row',
       borderBottomWidth: 1,
-      borderColor: "gray"
+      borderColor: "gray",
+      paddingLeft: 30,
       //backgroundColor: 'green'
     },
     membersName: {
       justifyContent: 'space-between',
       alignItems: 'flex-start',
-      //backgroundColor: 'blue',
-      flex: 0.8,
-      //flexDirection: 'row'
+      flex: 0.8
     },
     membersRank: {
-      flex: 0.2,
-      alignItems: 'flex-end'
+      flex: 0.3,
+      alignItems: 'flex-end',
+      paddingRight: 10
     },
     code: {
       flex: 0.5,

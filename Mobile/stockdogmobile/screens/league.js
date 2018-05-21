@@ -56,7 +56,7 @@ keyExtractor = (item, index) => index;
 				rank: 4
 			},
 			{
-				name: 'Sal',
+				name: 'Aria',
 				rank: 5
 			},
 			{
@@ -73,15 +73,17 @@ keyExtractor = (item, index) => index;
         	<Text style ={text.leagueTitle}> League 1 </Text>
         	<Text style ={text.inviteCode}> Invite Code </Text>
 					<View style = {containers.code}>
-						<Text style= {text.code} selectable> BLAH </Text>
+						<Text style= {text.code} selectable> OGX5F4 </Text>
 					</View>
         </View>
         <View style = {containers.leagueMembers}>
-        	<FlatList
-        		keyExtractor={this.keyExtractor}
-        		data={members}
-        		renderItem = {this.renderEachItem.bind(this)}
-        	/>
+					<View style = {containers.dashboard}>
+						<FlatList
+							keyExtractor={this.keyExtractor}
+							data={members}
+							renderItem = {this.renderEachItem.bind(this)}
+						/>
+					</View>
         </View>
         
       </View>
