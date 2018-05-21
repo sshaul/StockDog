@@ -178,7 +178,7 @@ class API {
    };
 
    getLeagueIdViaInviteCode = (inviteCode, callback) => {
-      axios.get(this.baseURL + "/league/" + inviteCode, this.config)
+      axios.get(this.baseURL + "/league?inviteCode=" + inviteCode, this.config)
          .then(res => {
             callback(res["data"]);
          })

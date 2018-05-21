@@ -48,7 +48,7 @@ class Stock extends Component {
    }
 
    goBack = () => {
-      this.props.history.push("/");
+      this.props.history.push("/portfolio");
    };
    _onChange = (event) => {
       this.setState({
@@ -170,4 +170,4 @@ class Stock extends Component {
    }
 }
 
-export default withCookies(withRouter(Stock));
+export default withCookies(Stock);
