@@ -53,7 +53,7 @@ def get_leagueInfoById(id):
 @league_api.route('/api/league/members/<id>', methods=['GET'])
 def get_leagueMembers(id):
 
-    g.cursor.execute("SELECT portfolio.name FROM portfolio and league where portfolio.leagueId = league.id and league.id = %d", id)
+    g.cursor.execute("SELECT portfolio.name FROM portfolio, league where portfolio.leagueId = league.id and league.id = %s", id)
     leagueMembers = g.cursor.fetchall()
 
     if leagueMembers:
