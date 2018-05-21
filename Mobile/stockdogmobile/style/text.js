@@ -114,10 +114,10 @@ export default text = StyleSheet.create({
       fontSize: 25,
       color: colors.white,
       fontFamily: 'open-sans-bold',
-      borderRadius: 5,
-      borderColor: colors.white,
+      borderRadius: 0,
+      borderColor: colors.bright,
       //backgroundColor: colors.bright,
-      borderWidth: 1
+      borderWidth: 2
     },
     // ----------------- Settings Modal ------------- //
     settingsTitle: {
