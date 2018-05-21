@@ -49,16 +49,16 @@ def get_leagueInfoById(id):
     else:
         return Response("No league with that id exists", status=400)
 
-'''@league_api.route('/api/league/members/<id>', methods=['GET'])
+@league_api.route('/api/league/members/<id>', methods=['GET'])
 def get_leagueMembers(id):
 
-    g.cursor.execute("SELECT * FROM portfolio and league where portfolio.leagueId = league.id and league.id = %d", id)
+    g.cursor.execute("SELECT portfolio.name FROM portfolio and league where portfolio.leagueId = league.id and league.id = %d", id)
     leagueMembers = g.cursor.fetchall()
 
     if leagueMembers:
         return json.dumps(leagueMembers)
     else:
-        return Response("no members in this league")'''
+        return Response("no members in this league")
         
 
     
