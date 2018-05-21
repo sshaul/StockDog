@@ -22,27 +22,33 @@ class Stock extends Component {
                <Eye />
             </div>,
          watchlistId: null,
-         amount: 0
+         shareCount: 0
       };
    }
 
    componentDidMount() {
+      this.getShareCount();
+
+      this.getWatchlist();
+   }
+
+   getShareCount = () => {
       // Getting entire portfolio for stock information currently
       // May want to change later
       this.api.getPortfolio(this.state.portfolioId, (portfolio) => {
          portfolio.forEach((stock) => {
             console.log(stock);
             if (stock["ticker"] === this.state.ticker) {
+               this.setState({shareCount: stock["shareCount"]});
                // do stuff with the result
             }
          });
       });
 
-      this.getWatchlist();
    }
 
    goBack = () => {
-      this.props.history.goBack();
+      this.props.history.push("/");
    };
    _onChange = (event) => {
       this.setState({
@@ -61,9 +67,9 @@ class Stock extends Component {
       this.api.buy(
          this.state.ticker,
          parseInt(this.state.transactionAmount, 10),
-         parseFloat(this.state.currentPrice),
          this.state.portfolioId,
          () => {
+            this.getShareCount();
             alert(this.state.transactionAmount + " shares of " +
                   this.state.ticker + " bought at " +
                   this.state.currentPrice + ".");
@@ -77,9 +83,9 @@ class Stock extends Component {
       this.api.sell(
          this.state.ticker,
          parseInt(this.state.transactionAmount, 10),
-         parseFloat(this.state.currentPrice),
          this.state.portfolioId,
          () => {
+            this.getShareCount();
             alert(this.state.transactionAmount + " shares of " +
                   this.state.ticker + " sold at " +
                   this.state.currentPrice + ".");
@@ -149,7 +155,7 @@ class Stock extends Component {
             <Graph ticker={this.state.ticker}
                updateCurrentPrice={this.updateCurrentPrice} />
             <div className="stock-transaction-area">
-               <h5>Owned: 3</h5>
+               <h5>Owned: {this.state.shareCount}</h5>
                <form>
                   <input id="transactionAmount" type="number" min="1"
                      placeholder="Amount" onChange={this._onChange} />

@@ -72,6 +72,9 @@ keyExtractor = (item, index) => index;
         <View style = {containers.leagueName}> 
         	<Text style ={text.leagueTitle}> League 1 </Text>
         	<Text style ={text.inviteCode}> Invite Code </Text>
+					<View style = {containers.code}>
+						<Text style= {text.code} selectable> BLAH </Text>
+					</View>
         </View>
         <View style = {containers.leagueMembers}>
         	<FlatList

@@ -26,6 +26,16 @@ export default containers = StyleSheet.create({
       justifyContent: 'flex-start',
       paddingTop: 0
     },
+    iconHeaders: {
+      flex: 0.1,
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      justifyContent: 'space-between',
+      paddingLeft: 10,
+      paddingRight: 10,
+      paddingTop: 5
+    },
+    // ----------------- Stock chart ------------- //
     chart: {
       flex: 0.7,
       alignItems: 'center',
@@ -36,15 +46,6 @@ export default containers = StyleSheet.create({
       flex: 0.5,
       alignItems: 'center',
       justifyContent: 'flex-start'
-    },
-    iconHeaders: {
-      flex: 0.1,
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      justifyContent: 'space-between',
-      paddingLeft: 10,
-      paddingRight: 10,
-      paddingTop: 5
     },
     underChart: {
       flex: 0.2,
@@ -57,6 +58,7 @@ export default containers = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-around'
     },
+    // ----------------- Buy/Sell modals ------------- //
     modalHeaders: {
       flex: 0.3,
       width: '70%',
@@ -81,6 +83,7 @@ export default containers = StyleSheet.create({
       alignItems: 'center', 
       justifyContent: 'center'
     },
+    // ----------------- Portfolio page ------------- //
     profileChart: {
       flex: 1,
       alignItems: 'center',
@@ -94,6 +97,7 @@ export default containers = StyleSheet.create({
       borderColor: colors.white, 
       borderWidth: 2
     },
+    // ----------------- League Drawer ------------- //
     groupsDrawer: {
       flex: 1,
       flexDirection: 'column',
@@ -120,6 +124,7 @@ export default containers = StyleSheet.create({
       borderColor: colors.grey, 
       borderWidth: 2
     },
+    // ----------------- Add group/join group modals ------------- //
     addGroupModalHeader: {
       flex: 0.2,
       width: '100%',
@@ -141,6 +146,7 @@ export default containers = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: colors.grey
     },
+    // ----------------- League Page ------------- //
     leagueName: {
       flex: 0.3,
       flexDirection: 'column',
@@ -157,10 +163,14 @@ export default containers = StyleSheet.create({
       //alignItems: 'center',
       paddingTop: 50,
       paddingLeft: 30,
-      paddingRight: 30
+      paddingRight: 30,
+      //borderColor: colors.white,
+      //borderWidth: 3
     },
     memberRow: {
       flexDirection: 'row',
+      borderBottomWidth: 1,
+      borderColor: "gray"
       //backgroundColor: 'green'
     },
     membersName: {
@@ -173,5 +183,39 @@ export default containers = StyleSheet.create({
     membersRank: {
       flex: 0.2,
       alignItems: 'flex-end'
+    },
+    code: {
+      flex: 0.5,
+      padding:10
+      //backgroundColor: 'gray'
+    },
+    // ----------------- Settings Modal ------------- //
+    settingsHeader: {
+      flex: 0.3,
+      justifyContent: 'flex-end',
+      // backgroundColor: 'pink'
+    },
+    settingsIconHeaders: {
+      flex: 0.1,
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      justifyContent: 'flex-end',
+      paddingLeft: 10,
+      paddingRight: 10,
+      paddingTop: 5
+    },
+    // ----------------- Settings Modal ------------- //
+    activity: {
+      flex: 0.2,
+      // backgroundColor: 'pink' 
+    },
+    feedTitle: {
+      flex: 0.2,
+      alignItems: 'center'
+    },
+    feed: {
+      flex: 0.8,
+      borderWidth: 1,
+      borderColor: colors.white
     }
 });

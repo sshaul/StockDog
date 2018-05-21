@@ -10,12 +10,12 @@ import Search from './screens/search';
 import League from './screens/league';
 import Feed from './screens/feed';
 import noPortfoliosProfile from './screens/noPortfoliosProfile';
-import AddPortfolioModal from './components/addportfoliomodal';
-import JoinLeagueModal from './components/joinLeagueModal';
-import BuySellModal from './components/buysellmodal';
-import SetNickname from './components/setNickname';
+import AddPortfolioModal from './screens/addportfoliomodal';
+import JoinLeagueModal from './screens/joinLeagueModal';
+import BuySellModal from './screens/buysellmodal';
+import SetNickname from './screens/setNickname';
+import SettingsModal from './screens/settingsmodal';
 import LeagueDrawer from './components/leaguedrawer';
-import SettingsDrawer from './components/settingsDrawer';
 import TabIcon from './components/tabIcon';
 import Api from './api';
 import containers from './style/containers';
@@ -51,7 +51,7 @@ const Routes = () => (
                   <Scene key="profile" component={Profile} onEnter={Profile.onEnterPortfolio}/>
                 </Scene>
                 <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon}/>
-                <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon}/>
+                <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon} onEnter={Feed.onEnterFeed}/>
                 <Scene key="searchmain" hideNavBar title="Search" iconName="search" icon={TabIcon}>
                   <Scene key="search" component={Search}/>
                 </Scene>
@@ -68,7 +68,7 @@ const Routes = () => (
           <Scene key="stock" component={Stock} hideNavBar/>
           <Scene key="buysellmodal" component={BuySellModal} hideNavBar />
         </Lightbox>
-        
+        <Scene key="settings" component={SettingsModal} hideNavBar />
       </Modal>
     </Drawer>
       

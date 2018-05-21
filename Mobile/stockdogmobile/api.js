@@ -59,6 +59,34 @@ export default class Api {
     })
   };
 
+  logout = (callback) => {
+    AsyncStorage.getItem('userid')
+      .then((userid) => {
+        AsyncStorage.getItem('token')
+          .then((token) => {
+            console.log(userid, token);
+            fetch(this.baseurl + '/api/logout', {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                token: token,
+                userId: userid
+              })
+            }).then((response) => {
+              console.log('logged out.');
+              AsyncStorage.removeItem('userid', () => {
+                AsyncStorage.removeItem('token', () => {
+                  console.log('removed items.');
+                  callback();
+                }); 
+              });
+            })
+          })
+      })
+  }
+
   //--------------------------- Portfolio Methods -------------------------//
   getPortfolios = (callback) => {
     var uid;
@@ -82,7 +110,8 @@ export default class Api {
     var uid;
     AsyncStorage.getItem('userid')
       .then((userid) => {
-        uid = userid;
+        uid = parseInt(userid);
+        bp = parseInt(lbuypower);
         fetch(this.baseurl + '/api/league', {
           method: 'POST',
           headers: this.headers,
@@ -91,7 +120,7 @@ export default class Api {
             name: lname,
             start: lstartDate,
             end: lendDate,
-            startPos: lbuypower
+            startPos: bp
           })
         }).then((response) => response.json())
         .then((responseJson) => {
@@ -127,7 +156,6 @@ export default class Api {
 
   joinLeague = (pname, leagueId, code, callback) => {
     var uid;
-    console.log(code);
     AsyncStorage.getItem('userid')
       .then((userid) => {
         uid = userid;
@@ -223,7 +251,6 @@ export default class Api {
           headers: this.headers,
           body: JSON.stringify({
             shareCount: numShares,
-            sharePrice: price,
             portfolioId: pid
           })
         }).then((response) => {
@@ -300,7 +327,6 @@ export default class Api {
         return JSON.parse(response);
       })
       .then((pid) => {
-        console.log('deleting: ', watchlistid);
         var url = this.baseurl + '/api/watchlist/' + watchlistid;
         fetch(url, {
           method: 'DELETE',
@@ -334,14 +360,12 @@ export default class Api {
         headers: this.headers
       }).then((response) => response.json())
       .then((responseJson) => {
-        console.log('res 1', responseJson);
         url = this.baseurl + '/api/transaction?leagueId=' + responseJson[0].leagueId;
         fetch(url, {
           method: 'GET',
           headers: this.headers
         }).then((response) => response.json())
         .then((responseJson) => {
-          console.log('res 2', responseJson);
           callback(responseJson)
         })
         .catch((error) => console.log(error));

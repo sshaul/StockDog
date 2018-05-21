@@ -19,17 +19,19 @@ class JoinLeague extends Component {
    }
 
    joinLeague = () => {
-      this.api.createPortfolioWithLeague(
-         this.cookies.get("userId"),
-         this.state.nickname,
-         this.state.buyPower,
-         this.state.leagueId,
-         this.state.inviteCode,
-         () => {
-         	console.log("portfolio created and joined league");
-            this.props.history.push("/");
-         }
-      );
+      this.api.getLeagueIdViaInviteCode(this.state.inviteCode, (data) => {
+         this.api.createPortfolioWithLeague(
+            this.cookies.get("userId"),
+            this.state.nickname,
+            data["startPos"],
+            data["id"],
+            this.state.inviteCode,
+            () => {
+               console.log("portfolio created and joined league");
+               this.props.history.push("/");
+            }
+         );
+      });
    }
 
    _onChange = (event) => {
@@ -47,10 +49,7 @@ class JoinLeague extends Component {
    }
 
    checkInviteCode = () => {
-      console.log("checkInviteCode");
       this.api.getLeagueIdViaInviteCode(this.state.inviteCode, (data) => {
-         console.log(data);
-         console.log(this.state.inviteCode);
          if (data === null && this.state.inviteCodeClass === "") {
             this.setState({
                inviteCodeClass: "invalidInput"
@@ -92,17 +91,19 @@ class JoinLeague extends Component {
       }
       if (this.state.screen === 2) {
          return (
-            <div className="create-league-area" id="create-league-area-2">
+            <div className="JoinLeague">
                <GoHome />
-               <label>Your nickname</label>
-               <input id="nickname" type="text" value={this.state.nickname} 
-                  onChange={this._onChange} />
-               <button className="submit-btn" id="league-advance"
-                  onClick={this.joinLeague}>
-                  <span>Join</span></button>
-               <button className="submit-btn" id="league-back"
-                  onClick={this.back}>
-                  <span>Back</span></button>
+               <div className="create-league-area" id="create-league-area-2">
+                  <label>Your nickname</label>
+                  <input id="nickname" type="text" value={this.state.nickname} 
+                     onChange={this._onChange} />
+                  <button className="submit-btn" id="league-advance"
+                     onClick={this.joinLeague}>
+                     <span>Join</span></button>
+                  <button className="submit-btn" id="league-back"
+                     onClick={this.back}>
+                     <span>Back</span></button>
+               </div>
             </div>
          );
       }

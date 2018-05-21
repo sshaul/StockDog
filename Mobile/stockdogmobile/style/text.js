@@ -94,11 +94,10 @@ export default text = StyleSheet.create({
       fontSize: 36,
     },
     inviteCode: {
-      color: colors.white,
-      fontFamily: 'open-sans',
+      color: "gray",
+      fontFamily: 'open-sans-bold',
       fontSize: 20,
       textAlign: 'left',
-      //backgroundColor: 'black'
     },
     members: {
       color: colors.white,
@@ -110,5 +109,35 @@ export default text = StyleSheet.create({
       fontFamily: 'open-sans',
       fontSize: 20,
       textAlign: 'left'
+    },
+    code: {
+      fontSize: 25,
+      color: colors.white,
+      fontFamily: 'open-sans-bold',
+      borderRadius: 5,
+      borderColor: colors.white,
+      //backgroundColor: colors.bright,
+      borderWidth: 1
+    },
+    // ----------------- Settings Modal ------------- //
+    settingsTitle: {
+      color: colors.white,
+      fontFamily: 'open-sans',
+      fontSize: 48, 
+      textAlign: 'center',
+    },
+    // ----------------- Feed page ------------- //
+    activityTitle: {
+      color: colors.white
+    },
+    smallIconText: {
+      fontSize: 16
+    },
+    medIconText: {
+      fontSize: 14
+    },
+    largeIconText: {
+      fontSize: 12
+
     }
 });

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { instanceOf } from 'prop-types';
 import Graph from '../components/Graph';
+import { Link } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
 import API from "api";
 import Navbar from "../components/Navbar";
@@ -50,7 +51,6 @@ class Portfolio extends Component {
 
       // Get the watchlist
       this.api.getWatchlist(this.cookies.get("currPortfolio"), (watchlist) => {
-         console.log(watchlist);
          this.setState({watchlist});
          this.createWatchlist();
       });
@@ -68,8 +68,6 @@ class Portfolio extends Component {
 
    createHoldings = () => {
       var holdingComponents = [];
-      console.log("Creating holdings.");
-      console.log(this.state.holdings);
       this.state.holdings.forEach((holding) => {
          // Make sure there is something in the holding
          // This is because if the portfolio has nothing, the array is
@@ -96,8 +94,6 @@ class Portfolio extends Component {
 
    createWatchlist = () => {
       var watchlistComponents = [];
-      console.log("Creating watchlist.");
-      console.log(this.state.watchlist);
       this.state.watchlist.forEach((stock) => {
          watchlistComponents.push(
             <div className="portfolio-holding" key={stock["ticker"]}>
@@ -110,7 +106,6 @@ class Portfolio extends Component {
       this.setState({
          watchlistComponents
       });
-      console.log(this.state.watchlistComponents);
    }
 
    render() {
@@ -137,6 +132,11 @@ class Portfolio extends Component {
                <Navbar />
                <div className="portfolio-league-title">
                   <h1>{this.cookies.get("currLeagueName")}</h1>
+               </div>
+               <div className="portfolio-league-home-link">
+                  <Link to={"/league/" + this.cookies.get("currLeagueId")}>
+                     League Info
+                  </Link>
                </div>
                <Graph title="Portfolio" ticker="PORTFOLIO"
                   portfolioId={this.state.portfolioId}/>

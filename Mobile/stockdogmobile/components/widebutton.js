@@ -25,6 +25,8 @@ export default class WideButton extends Component {
       buttonText = 'Next';
     else if (this.props.type == 'join')
       buttonText = 'Join league!';
+    else if (this.props.type == 'logout')
+      buttonText = 'LOGOUT';
 
     var style = elements.loginButton;
     if (this.props.disabled) {
