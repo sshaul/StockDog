@@ -60,9 +60,16 @@ class SideNav extends Component {
    };
 
    switchToPortfolio = (portfolioId, leagueName, leagueId) => {
+      console.log("Switching to:");
+      console.log(portfolioId);
+      console.log(leagueName);
+      console.log(leagueId);
       this.cookies.set("currPortfolio", portfolioId);
       this.cookies.set("currLeagueName", leagueName);
       this.cookies.set("currLeagueId", leagueId)
+      this.cookies.get("currPortfolio");
+      this.cookies.get("currLeagueName");
+      this.cookies.get("currLeagueId");
       window.location.reload();
    };
 
