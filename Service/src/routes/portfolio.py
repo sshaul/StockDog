@@ -57,17 +57,26 @@ def get_portfolios():
          "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id")
 
    portfolios = g.cursor.fetchall()
-   return json.dumps(portfolios, default=Utility.dateToStr)
+   portfoliosWithValues = add_portfolio_values(portfolios)
+
+   return json.dumps(portfoliosWithValues, default=Utility.dateToStr)
+
+
+def add_portfolio_values(portfolios):
+   for portfolio in portfolios:
+      portfolio['value'] = json.loads(get_portfolio(portfolio['id']))['value']
+
+   return portfolios
 
 
 @portfolio_api.route('/api/portfolio/<portfolioId>', methods=['GET'])
 def get_portfolio(portfolioId):
    g.cursor.execute("SELECT ticker, shareCount, avgCost, name, buyPower, leagueId, ph.value " +
       "FROM Portfolio AS p LEFT JOIN PortfolioItem as pi ON p.id = pi.portfolioId " + 
-      "JOIN PortfolioHistory AS ph ON ph.portfolioId = p.id " +
+      "LEFT JOIN PortfolioHistory AS ph ON ph.portfolioId = p.id " +
       "WHERE p.id = %s ORDER BY ph.datetime DESC LIMIT 1", portfolioId)
 
-   portfolio = g.cursor.fetchall()
+   portfolio = g.cursor.fetchone()
    return json.dumps(portfolio)
 
 
