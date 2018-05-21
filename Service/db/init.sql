@@ -33,7 +33,7 @@ CREATE TABLE Transaction (
    sharePrice DECIMAL(13, 2),
    shareCount INT(11),
    isBuy TINYINT(1),
-   datetime DATE,
+   datetime DATETIME,
    portfolioId INT(11) REFERENCES Portfolio(id),
    ticker VARCHAR(8) REFERENCES Ticker(symbol),
    leagueId INT(11) REFERENCES League(id)
@@ -50,7 +50,7 @@ CREATE TABLE Watchlist (
 CREATE TABLE PortfolioHistory (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    portfolioId INT(11) REFERENCES Portfolio(id),
-   day DATE,
+   datetime DATETIME,
    value DECIMAL(8, 2)
 );
 
@@ -67,8 +67,8 @@ CREATE TABLE PortfolioItem (
 CREATE TABLE League (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    name VARCHAR(32),
-   start DATE,
-   end DATE,
+   start DATETIME,
+   end DATETIME,
    startPos DECIMAL(13, 2),
    inviteCode VARCHAR(6) UNIQUE,
    ownerId INT(11) REFERENCES User(id)

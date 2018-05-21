@@ -62,10 +62,10 @@ def get_portfolios():
 
 @portfolio_api.route('/api/portfolio/<portfolioId>', methods=['GET'])
 def get_portfolio(portfolioId):
-   
-   g.cursor.execute("SELECT ticker, shareCount, avgCost, name, buyPower, leagueId " +
+   g.cursor.execute("SELECT ticker, shareCount, avgCost, name, buyPower, leagueId, ph.value " +
       "FROM Portfolio AS p LEFT JOIN PortfolioItem as pi ON p.id = pi.portfolioId " + 
-      "WHERE p.id = %s", portfolioId)
+      "JOIN PortfolioHistory AS ph ON ph.portfolioId = p.id " +
+      "WHERE p.id = %s ORDER BY ph.datetime DESC LIMIT 1", portfolioId)
 
    portfolio = g.cursor.fetchall()
    return json.dumps(portfolio)
@@ -87,8 +87,8 @@ def post_portfolio_history(portfolioId):
    body = request.get_json()
    now = datetime.now()
 
-   g.cursor.execute("INSERT INTO PortfolioHistory(portfolioId, day, value) VALUES (%s, %s, %s)",
-      [portfolioId, now.strftime("%Y-%m-%d"), body['value']])
+   g.cursor.execute("INSERT INTO PortfolioHistory(portfolioId, datetime, value) VALUES (%s, %s, %s)",
+      [portfolioId, str(now), body['value']])
 
    return Response(status=200)
 
