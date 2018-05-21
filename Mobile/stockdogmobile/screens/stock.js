@@ -54,13 +54,11 @@ updateIndex(selectedIndex) {
 }
 
 _openBuyModal = () => {
-   Actions.buysellmodal({modalType: 'buy', ticker: this.props.navigation.state.params.ticker,
-      id: this.props.navigation.state.params.pid});
+   Actions.buysellmodal({modalType: 'buy', ticker: this.props.navigation.state.params.ticker});
 }
 
 _openSellModal = () => {
-   Actions.buysellmodal({modalType: 'sell', ticker: this.props.navigation.state.params.ticker,
-      id: this.props.navigation.state.params.pid});
+   Actions.buysellmodal({modalType: 'sell', ticker: this.props.navigation.state.params.ticker});
 }
 
 addToWatchlist = () => {

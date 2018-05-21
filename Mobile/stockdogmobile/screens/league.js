@@ -20,7 +20,6 @@ export default class League extends Component {
 keyExtractor = (item, index) => index;
 
  renderEachItem(item) {
-  	console.log("item1: ", item.item.name);
   	return (
 			<View style = {containers.memberRow}>
 				<View style = {containers.membersName}>
