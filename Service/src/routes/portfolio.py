@@ -46,8 +46,10 @@ def get_portfolios():
       return Response("Please provide only the userId or only the leagueId", status=400)
 
    if leagueId:
-      g.cursor.execute("SELECT p.id, p.buyPower, p.name AS nickname, p.userId, l.name AS league, l.id AS leagueId, l.start, l.end, l.startPos " +
-         "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id WHERE l.id = %s", leagueId)
+      g.cursor.execute("SELECT p.id, p.buyPower, p.name AS nickname, p.userId, " +
+         "l.name AS league, l.id AS leagueId, l.start, l.end, l.startPos " +
+         "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id " +
+         "WHERE l.id = %s", leagueId)
 
    elif userId:
       g.cursor.execute("SELECT p.id, p.buyPower, p.name AS nickname, p.userId, l.name AS league, l.id AS leagueId, l.start, l.end, l.startPos " +
