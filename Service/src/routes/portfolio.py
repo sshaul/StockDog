@@ -11,6 +11,7 @@ portfolio_api = Blueprint('portfolio_api', __name__)
 @portfolio_api.route('/api/portfolio', methods=['POST'])
 def post_portfolio():
    body = request.get_json()
+   now = datetime.now()
 
    if 'leagueId' in body:
       
@@ -24,15 +25,21 @@ def post_portfolio():
          if body['inviteCode'] == row['inviteCode']:
             g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId, leagueId) VALUES (%s, %s, %s, %s)",
                [body['name'], row['startPos'], body['userId'], body['leagueId']])
+
+            g.cursor.execute("INSERT INTO PortfolioHistory(portfolioId, datetime, value) VALUES (%s, %s, %s)",
+               [g.cursor.lastrowid, str(now), row['startPos']])
          else:
             return Response("Invite code does not match the league's invite code", status=400)
       
       else:
          return Response("Invite code was not provided to join league", status=400)
    
-   else:
+   else:      
       g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)", 
          [body['name'], body['buyPower'], body['userId']])
+
+      g.cursor.execute("INSERT INTO PortfolioHistory(portfolioId, datetime, value) VALUES (%s, %s, %s)",
+         [g.cursor.lastrowid, str(now), body['buyPower']])
 
    return jsonify(id=g.cursor.lastrowid)
 

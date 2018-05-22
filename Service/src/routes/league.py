@@ -1,9 +1,13 @@
 from flask import Blueprint, request, Response, g, jsonify
 import simplejson as json
+import time
 
+import routes.portfolio
 from util.utility import Utility
 
 league_api = Blueprint('league_api', __name__)
+
+DATE_FORMAT = "%m-%d-%Y"
 
 
 @league_api.route('/api/league', methods=['POST'])
@@ -11,8 +15,15 @@ def post_league():
    body = request.get_json()
    inviteCode = Utility.gen_inviteCode()
 
-   g.cursor.execute("INSERT INTO League(name, start, end, startPos, inviteCode, ownerId) VALUES (%s, %s, %s, %s, %s, %s)",
-      [body['name'], body['start'], body['end'], body['startPos'], inviteCode, body['ownerId']])
+   try:
+      start = time.strptime(body['start'], DATE_FORMAT)
+      end = time.strptime(body['end'], DATE_FORMAT)
+   except:
+      return Response('Invalid date format. Please use MM-DD-YYYY.', status=400)
+
+   g.cursor.execute("INSERT INTO League(name, start, end, startPos, inviteCode, ownerId) " + 
+      "VALUES (%s, %s, %s, %s, %s, %s)",
+      [body['name'], start, end, body['startPos'], inviteCode, body['ownerId']])
 
    return jsonify(inviteCode=inviteCode, id=g.cursor.lastrowid)
 
@@ -31,26 +42,25 @@ def get_leagues():
 
 
 @league_api.route('/api/league/<id>', methods=['GET'])
-def get_league(id):
-    g.cursor.execute("SELECT * FROM League WHERE id = %s", id)
-    leagueInfo = g.cursor.fetchone()
+def get_league(leagueId):
+   g.cursor.execute("SELECT * FROM League WHERE id = %s", leagueId)
+   leagueInfo = g.cursor.fetchone()
 
-    if leagueInfo:
-        return json.dumps(leagueInfo, default=Utility.dateToStr)
-    else:
-        return Response("No league with that id exists", status=400)
+   if leagueInfo:
+      return json.dumps(leagueInfo, default=Utility.dateToStr)
+   else:
+      return Response(status=404)
 
 
 @league_api.route('/api/league/<id>/members', methods=['GET'])
-def get_league_members(id):
+def get_league_members(leagueId):
+   g.cursor.execute("SELECT p.name, p.id FROM Portfolio AS p JOIN League l ON p.leagueId = l.id " +
+      "WHERE l.id = %s", leagueId)
 
-    g.cursor.execute("SELECT portfolio.name FROM portfolio, league where portfolio.leagueId = league.id and league.id = %s", id)
-    leagueMembers = g.cursor.fetchall()
+   members = g.cursor.fetchall()
+   membersWithPortfolioValue = portfolio.add_portfolio_value(members)
 
-    if leagueMembers:
-        return json.dumps(leagueMembers)
-    else:
-        return Response("no members in this league")
+   json.dumps(membersWithPortfolioValue)
         
 
     
