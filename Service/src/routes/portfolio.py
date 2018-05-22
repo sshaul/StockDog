@@ -52,10 +52,13 @@ def get_portfolios():
          "WHERE l.id = %s", leagueId)
 
    elif userId:
-      g.cursor.execute("SELECT p.id, p.buyPower, p.name AS nickname, p.userId, l.name AS league, l.id AS leagueId, l.start, l.end, l.startPos " +
-         "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id WHERE userId = %s", userId)
+      g.cursor.execute("SELECT p.id, p.buyPower, p.name AS nickname, p.userId, " +
+         "l.name AS league, l.id AS leagueId, l.start, l.end, l.startPos " +
+         "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id " +
+         "WHERE userId = %s", userId)
    else:
-      g.cursor.execute("SELECT p.id, p.buyPower, p.name AS nickname, p.userId, l.name AS league, l.id AS leagueId, l.start, l.end, l.startPos " +
+      g.cursor.execute("SELECT p.id, p.buyPower, p.name AS nickname, p.userId, " +
+         "l.name AS league, l.id AS leagueId, l.start, l.end, l.startPos " +
          "FROM Portfolio AS p LEFT JOIN League as l ON p.leagueId = l.id")
 
    portfolios = g.cursor.fetchall()
@@ -66,20 +69,31 @@ def get_portfolios():
 
 def add_portfolio_values(portfolios):
    for portfolio in portfolios:
-      portfolio['value'] = json.loads(get_portfolio(portfolio['id']))['value']
+      portfolio['value'] = get_recent_portfolio_value(portfolio['id'])
 
    return portfolios
 
 
+def get_recent_portfolio_value(portfolioId):
+   g.cursor.execute("SELECT * FROM PortfolioHistory " + 
+      "WHERE portfolioId = %s ORDER BY datetime DESC LIMIT 1", portfolioId)
+
+   portfolioValue = g.cursor.fetchone()
+   if portfolioValue:
+      return float(portfolioValue['value'])
+   else:
+      return -1
+
+
 @portfolio_api.route('/api/portfolio/<portfolioId>', methods=['GET'])
 def get_portfolio(portfolioId):
-   g.cursor.execute("SELECT ticker, shareCount, avgCost, name, buyPower, leagueId, ph.value " +
+   g.cursor.execute("SELECT p.id AS id, ticker, shareCount, avgCost, name, buyPower, leagueId " +
       "FROM Portfolio AS p LEFT JOIN PortfolioItem as pi ON p.id = pi.portfolioId " + 
-      "LEFT JOIN PortfolioHistory AS ph ON ph.portfolioId = p.id " +
-      "WHERE p.id = %s ORDER BY ph.datetime DESC LIMIT 1", portfolioId)
+      "WHERE p.id = %s", portfolioId)
 
-   portfolio = g.cursor.fetchone()
-   return json.dumps(portfolio)
+   portfolio = g.cursor.fetchall()
+   portfolioWithValues = add_portfolio_values(portfolio)
+   return json.dumps(portfolioWithValues)
 
 
 @portfolio_api.route('/api/portfolio/<portfolioId>/value', methods=['GET'])
