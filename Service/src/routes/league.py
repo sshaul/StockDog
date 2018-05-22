@@ -2,7 +2,7 @@ from flask import Blueprint, request, Response, g, jsonify
 import simplejson as json
 import time
 
-import routes.portfolio
+import routes.portfolio as portfolio
 from util.utility import Utility
 
 league_api = Blueprint('league_api', __name__)
@@ -41,7 +41,7 @@ def get_leagues():
    return json.dumps(leagues, default=Utility.dateToStr)
 
 
-@league_api.route('/api/league/<id>', methods=['GET'])
+@league_api.route('/api/league/<leagueId>', methods=['GET'])
 def get_league(leagueId):
    g.cursor.execute("SELECT * FROM League WHERE id = %s", leagueId)
    leagueInfo = g.cursor.fetchone()
@@ -52,15 +52,15 @@ def get_league(leagueId):
       return Response(status=404)
 
 
-@league_api.route('/api/league/<id>/members', methods=['GET'])
+@league_api.route('/api/league/<leagueId>/members', methods=['GET'])
 def get_league_members(leagueId):
    g.cursor.execute("SELECT p.name, p.id FROM Portfolio AS p JOIN League l ON p.leagueId = l.id " +
       "WHERE l.id = %s", leagueId)
 
    members = g.cursor.fetchall()
-   membersWithPortfolioValue = portfolio.add_portfolio_value(members)
+   membersWithPortfolioValue = portfolio.add_portfolio_values(members)
 
-   json.dumps(membersWithPortfolioValue)
+   return json.dumps(membersWithPortfolioValue)
         
 
     
