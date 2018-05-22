@@ -20,7 +20,7 @@ export default class AddPortfolioModal extends Component {
       buyPower: "",
       startDate: "",
       endDate: "",
-      minDate: "01/01/01"
+      minDate: "2001-01-01"
     };
 
     this.api = new Api();
@@ -34,7 +34,7 @@ export default class AddPortfolioModal extends Component {
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()+1; //January is 0!
-    var yy = today.getFullYear() % 100;  // Last 2 digits of the date
+    var yyyy = today.getFullYear();  // Last 2 digits of the date
     
     if(dd<10) {
         dd = '0'+dd
@@ -44,7 +44,7 @@ export default class AddPortfolioModal extends Component {
         mm = '0'+mm
     } 
     
-    today = mm + '/' + dd + '/' + yy;
+    today = yyyy + '-' + mm + '-' + dd;
     return today;
   }
 
@@ -94,7 +94,7 @@ export default class AddPortfolioModal extends Component {
                 date={this.state.startDate}
                 mode="date"
                 placeholder="Select start date"
-                format="MM/DD/YY"
+                format="YYYY-MM-DD"
                 minDate={this.state.minDate}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
@@ -119,7 +119,7 @@ export default class AddPortfolioModal extends Component {
                 date={this.state.endDate}
                 mode="date"
                 placeholder="Select end date"
-                format="MM/DD/YY"
+                format="YYYY-MM-DD"
                 minDate={this.state.minDate}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"

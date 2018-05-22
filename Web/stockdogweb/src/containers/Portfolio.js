@@ -40,7 +40,6 @@ class Portfolio extends Component {
                portfolioId: this.cookies.get("currPortfolio")
             });
             this.getPortfolio();
-            this.cookies.set("currPortfolio", this.state.portfolioId);
          }
          else {
             this.setState({
@@ -76,9 +75,9 @@ class Portfolio extends Component {
             holdingComponents.push(
                <div className="portfolio-holding" key={holding["ticker"]}>
                   <div className="portfolio-holding-title">
-                     <a href={"/stock/" + holding["ticker"]}>
+                     <Link to={"/stock/" + holding["ticker"]}>
                         {holding["ticker"]}
-                     </a>
+                     </Link>
                   </div>
                   <div className="portfolio-holding-amount">
                      {holding["shareCount"]} shares
@@ -98,7 +97,9 @@ class Portfolio extends Component {
          watchlistComponents.push(
             <div className="portfolio-holding" key={stock["ticker"]}>
                <div className="portfolio-holding-title">
-                  <a href={"/stock/" + stock["ticker"]}>{stock["ticker"]}</a>
+                  <Link to={"/stock/" + stock["ticker"]}>
+                     {stock["ticker"]}
+                  </Link>
                </div>
             </div>
          );

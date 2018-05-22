@@ -36,10 +36,15 @@ export default class Register extends Component {
   }
 
   register() {
-    this.api.register(this.state.firstname, this.state.lastname,
-      this.state.email, this.state.password, (email) => {
-        Actions.login({email: this.state.email});
-      });
+    if (!this.state.email.includes('@')) {
+      alert('Please enter a valid email address.');
+    }
+    else {
+      this.api.register(this.state.firstname, this.state.lastname,
+        this.state.email, this.state.password, (email) => {
+          Actions.login({email: this.state.email});
+        });
+    }
   }
 
   validatePassword(password) {

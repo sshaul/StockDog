@@ -16,7 +16,6 @@ export default class BuySellModal extends Component {
     super(props);
     this.state = {
       amount: '',
-      price: '',
       transactionComplete: false,
       errorMessage: ''
     };
@@ -30,7 +29,7 @@ export default class BuySellModal extends Component {
     }
     else {
       this.api.manageStock(props.modalType, props.ticker, parseInt(this.state.amount), 
-      parseFloat(this.state.price), props.id, (res) => {
+      (res) => {
         if (res.status_code === 400) {
           alert (res.message);
         }
@@ -46,12 +45,6 @@ export default class BuySellModal extends Component {
     this.setState({
         amount: amount.replace(/^[a-zA-Z]*$/g, ''),
     });
-  }
-
-  onchangeprice(price) {
-    this.setState({
-      price: price.replace(/\s^[a-zA-Z]*$/g, ''),
-  });
   }
 
   render() {
@@ -73,10 +66,6 @@ export default class BuySellModal extends Component {
     }
     else {
       content = (<View style={containers.innerModal}>
-        <RoundInput 
-          type="Price" 
-          onchange={this.onchangeprice.bind(this)} 
-          value={this.state.price}/>
         <RoundInput 
           type="Amount" 
           onchange={this.onchangeamount.bind(this)} 

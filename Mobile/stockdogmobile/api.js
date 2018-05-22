@@ -55,7 +55,7 @@ export default class Api {
       callback();
     })
     .catch((error) => {
-      console.log(error);
+      callback(error);
     })
   };
 
@@ -212,26 +212,25 @@ export default class Api {
   };
 
   getPortfolioData = (callback) => {
-    AsyncStorage.getItem('portfolios')
+    AsyncStorage.getItem('currPortfolio')
       .then((response) => {
         return JSON.parse(response);
       })
-      .then((portfolios) => {
+      .then((pid) => {
         var newXData = [];
         var newYData = [];
-        var url = this.baseurl + '/api/portfolio/' + portfolios[0].id + '/history';
+        var url = this.baseurl + '/api/portfolio/' + pid + '/history';
         fetch(url, {
           method: 'GET'
         }).then((response) => response.json())
         .then((responseJson) => {
           responseJson.forEach(element => {
-            var str = element.time;
-            var d = new Date(str);
-            var month = d.toLocaleString("en-us", {month: "short"});
-            var day = d.toLocaleString("en-us", {day: "numeric"});
-            var date = month + " " + day;
+            var str = element.datetime;
+            var date = "";
+            str = element.datetime.split(" ")[1];
+            date = str.split(":")[0] + ":" + str.split(":")[1];
             newXData.push(date);
-            newYData.push(parseFloat(element.value));
+            newYData.push(element.value);
           })
           callback(newXData, newYData);
         }).catch((error) => console.error(error));
@@ -240,7 +239,7 @@ export default class Api {
 
   //--------------------------- Buy/Sell Stock Methods -------------------------//
   // Buys or sells a stock
-  manageStock = (type, ticker, numShares, price, id, callback) => {
+  manageStock = (type, ticker, numShares, callback) => {
     AsyncStorage.getItem('currPortfolio')
       .then((response) => {
         return JSON.parse(response);
@@ -360,7 +359,79 @@ export default class Api {
         headers: this.headers
       }).then((response) => response.json())
       .then((responseJson) => {
-        url = this.baseurl + '/api/transaction?leagueId=' + responseJson[0].leagueId;
+        if (responseJson) {
+          url = this.baseurl + '/api/transaction?leagueId=' + responseJson[0].leagueId;
+          fetch(url, {
+            method: 'GET',
+            headers: this.headers
+          }).then((response) => response.json())
+          .then((responseJson) => {
+            callback(responseJson)
+          })
+          .catch((error) => console.log(error));
+        }
+        else {
+          callback([]);
+        }
+      })
+      .catch((error) => console.log(error));
+    });
+  };
+
+  addInitialPortfolioValue = (pid, buypower, callback) => {
+    var url = this.baseurl + '/api/portfolio/' + pid + '/history';
+    console.log(url);
+    fetch(url, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({
+        value: buypower
+      })
+    }).then((response) => callback(response))
+    .catch((error) => console.log(error));
+  }
+  
+  //------------------------------- League Page ----------------------------------------//
+  getLeagueMemebers = (callback) => {
+    AsyncStorage.getItem('currPortfolio')
+    .then((response) => {return JSON.parse(response);})
+    .then((pid) => {
+      console.log('pid', pid);
+      var url = this.baseurl + '/api/portfolio/' + pid;
+      fetch(url, {
+        method: 'GET',
+        headers: this.headers
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        var lid = responseJson[0].leagueId;
+        url = this.baseurl + '/api/league/members/' + lid;
+        fetch(url, {
+          method: 'GET',
+          headers: this.headers
+        }).then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          callback(responseJson)
+        })
+        .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+    });
+  };
+
+getLeagueName = (callback) => {
+  AsyncStorage.getItem('currPortfolio')
+    .then((response) => {return JSON.parse(response);})
+    .then((pid) => {
+      var url = this.baseurl + '/api/portfolio/' + pid;
+      fetch(url, {
+        method: 'GET',
+        headers: this.headers
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        var lid = responseJson[0].leagueId;
+        console.log(lid);
+        url = this.baseurl + '/api/league/info/' + lid;
         fetch(url, {
           method: 'GET',
           headers: this.headers
@@ -372,5 +443,6 @@ export default class Api {
       })
       .catch((error) => console.log(error));
     });
-  };
+  }
+
 }

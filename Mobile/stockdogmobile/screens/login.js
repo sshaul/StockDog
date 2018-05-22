@@ -35,7 +35,15 @@ export default class Login extends Component {
 
   login() {
     this.api.login(this.state.email, this.state.password,
-      () => {Actions.main({})});
+      (err) => {
+        if (err) {
+          alert('Invalid login.');
+        }
+        else {
+          Actions.main({});
+        }
+      }
+    );
   };
 
   render() {
