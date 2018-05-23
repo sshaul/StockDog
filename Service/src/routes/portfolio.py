@@ -4,6 +4,7 @@ import simplejson as json
 
 from routes import stock
 from util.utility import Utility
+from util.errMap import errors
 
 portfolio_api = Blueprint('portfolio_api', __name__)
 
@@ -20,7 +21,7 @@ def post_portfolio():
          row = g.cursor.fetchone()
 
          if row is None:
-            return Response("League does not exist", status=400)
+            return Response(errors['nonexistentLeague'], status=404)
          
          if body['inviteCode'] == row['inviteCode']:
             g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId, leagueId) VALUES (%s, %s, %s, %s)",
@@ -29,10 +30,10 @@ def post_portfolio():
             g.cursor.execute("INSERT INTO PortfolioHistory(portfolioId, datetime, value) VALUES (%s, %s, %s)",
                [g.cursor.lastrowid, str(now), row['startPos']])
          else:
-            return Response("Invite code does not match the league's invite code", status=400)
+            return Response(errors['inviteCodeMismatch'], status=400)
       
       else:
-         return Response("Invite code was not provided to join league", status=400)
+         return Response(errors['missingInviteCode'], status=400)
    
    else:      
       g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)", 
@@ -50,7 +51,7 @@ def get_portfolios():
    leagueId = request.args.get('leagueId')
 
    if userId and leagueId:
-      return Response("Please provide only the userId or only the leagueId", status=400)
+      return Response(errors['unsupportedPortfolioGet'], status=400)
 
    if leagueId:
       g.cursor.execute("SELECT p.id, p.buyPower, p.name AS nickname, p.userId, " +

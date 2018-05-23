@@ -4,6 +4,7 @@ import time
 
 import routes.portfolio as portfolio
 from util.utility import Utility
+from util.errMap import errors
 
 league_api = Blueprint('league_api', __name__)
 
@@ -19,7 +20,7 @@ def post_league():
       start = time.strptime(body['start'], DATE_FORMAT)
       end = time.strptime(body['end'], DATE_FORMAT)
    except:
-      return Response('Invalid date format. Please use MM-DD-YYYY.', status=400)
+      return Response(errors['invalidDate'], status=400)
 
    g.cursor.execute("INSERT INTO League(name, start, end, startPos, inviteCode, ownerId) " + 
       "VALUES (%s, %s, %s, %s, %s, %s)",
