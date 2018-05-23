@@ -3,6 +3,7 @@ from flask_login import LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from auth import manageTokens
+from util.errMap import errors
 
 
 class Login:
@@ -30,8 +31,8 @@ class Login:
             return jsonify(userId=user['id'], token=token)
          
          else:
-            return Response('Incorrect password for user with email ' + body['email'], status=401)
+            return Response(errors['passwordMismatch'], status=401)
       
       else:
-         return Response('No user with email ' + body['email'] + ' exists', status=401)
+         return Response(errors['nonexistentUser'], status=401)
 
