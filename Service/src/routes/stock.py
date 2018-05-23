@@ -6,6 +6,7 @@ import time
 from urllib.parse import urlencode
 
 import routes.iex as iex
+from util.errMap as errors
 
 TODAY = 0
 DAY_AGO = 1
@@ -34,7 +35,7 @@ def post_sell_transaction(ticker):
 
    userShares = g.cursor.fetchone()
    if not userShares or body['shareCount'] > userShares['shareCount']:
-      return Response('Insufficient shares owned to make sale.', status=400)
+      return Response(errors['insufficientShares'], status=400)
 
    saleValue = sharePrice * body['shareCount']
    newShareCt = userShares['shareCount'] - body['shareCount']
@@ -46,7 +47,7 @@ def post_sell_transaction(ticker):
    try:
       leagueId = portfolio['leagueId']
    except:
-      return Response('Portfolio with id ' + str(body['portfolioId']) + ' does not exist.', status=400)
+      return Response(errors['nonexistentPortfolio'], status=400)
 
    g.cursor.execute("INSERT INTO Transaction" +
       "(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " +
@@ -78,12 +79,12 @@ def post_buy_transaction(ticker):
       userBuyPower = portfolio['buyPower']
       leagueId = portfolio['leagueId']
    except:
-      return Response('Portfolio with id ' + str(body['portfolioId']) + ' does not exist.', status=400)
+      return Response(errors['nonexistentPortfolio'], status=400)
 
    purchaseCost = sharePrice * body['shareCount']
 
    if userBuyPower < purchaseCost:
-      return Response('Insufficient buying power to make purchase.', status=400)
+      return Response(errors['insufficientBuyPower'], status=400)
 
    remainingBuyPower = float(userBuyPower) - purchaseCost
 
@@ -121,8 +122,7 @@ def get_history(ticker, length):
          function = getFunction(length)
          outputSize = getOutputSize(length)
       except Exception as e:
-         return Response('Request was formed incorrectly. ' +
-            'Valid lengths are day, week, month, year.', status=400)
+         return Response(errors['unsupportedTicker'], status=400)
 
       interval = getInterval(length)
       apiKey = getApiKey()
