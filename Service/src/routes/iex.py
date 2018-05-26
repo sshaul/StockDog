@@ -4,6 +4,8 @@ import requests
 import simplejson as json
 import time
 
+from util.errMap import errors
+
 DAY = '1d'
 MONTH = '1m'
 YEAR = '1y'
@@ -30,12 +32,11 @@ def get_history(ticker, length):
    try:
       response = rawResponse.json()
    except:
-      return Response('Request was formed incorrectly. ' +
-         'The stock ticker is either invalid or unsupported.', status=404)
+      return Response(errors['unsupportedTicker'], status=404)
 
    data = formatData(response, interval)
    if len(data) == 0:
-      return Response('Honestly, this probably means that iex is down lol', status=500)
+      return Response(errors['iexUnavialable'], status=500)
    
    if length == 'now':
       data = data[-1]

@@ -2,6 +2,8 @@ from flask import Blueprint, request, Response, g
 from werkzeug.security import generate_password_hash, check_password_hash
 import simplejson as json
 
+from util.errMap import errors
+
 user_api = Blueprint('user_api', __name__)
 
 
@@ -12,7 +14,7 @@ def post_user():
    g.cursor.execute("SELECT * FROM User WHERE email = %s", body['email'])
    sameEmailUsers = g.cursor.fetchall()
    if len(sameEmailUsers) > 0:
-      return Response('User with email ' + body['email'] + ' already exists.', status=400)
+      return Response(errors['duplicateEmail'], status=400)
 
    passHash = generate_password_hash(body['password'])
 

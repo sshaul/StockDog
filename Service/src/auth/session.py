@@ -1,5 +1,7 @@
 from flask import Blueprint, request, Response, jsonify, g
 
+from util.errMap import errors
+
 session_api = Blueprint('session_api', __name__)
 
 
@@ -11,15 +13,10 @@ def validateSession():
   row = g.cursor.fetchone()
 
   if row is None:
-    return Response('User does not exist.', status=404)
+    return Response(errors['nonexistentUser'], status=404)
   
   else:
-    if row['token'] is None:
-      return Response('User is not logged in.', status=400)
-    
-    else:    
       if row['token'] == body['token']:
         return Response(status=200)
-    
       else:
         return Response(status=401)
