@@ -37,6 +37,7 @@ export default class Feed extends Component {
   }
 
   componentDidMount() {
+    console.log('getting transactions');
     this.api.getTransactions((transactions) => {
       this.setState({transactions});
     });
@@ -59,7 +60,7 @@ export default class Feed extends Component {
       textStyle = text.largeIconText;
     }
 
-    var title = 'Bobby ' + activity + item.item.shareCount + shares + item.item.ticker + ' at $' + item.item.sharePrice;
+    var title = item.item.nickname + ' ' + activity + item.item.shareCount + shares + item.item.ticker + ' at $' + item.item.sharePrice;
 
     var avatar = <Avatar 
                   rounded 

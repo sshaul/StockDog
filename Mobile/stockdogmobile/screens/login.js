@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, View, FlatList, TextInput, AsyncStorage } from 'react-native';
+import { Text, TouchableOpacity, View, FlatList, TextInput, AsyncStorage, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button } from 'react-native-elements';
 import containers from '../style/containers';
@@ -20,12 +20,11 @@ export default class Login extends Component {
       password: ""
     };
 
-    this.focusNextField = this.focusNextField.bind(this);
     this.inputs = {};
     this.api = new Api();
   }
 
-  focusNextField(id) {
+  focusNextField = (id) => {
     this.inputs[id].focus();
   };
   
@@ -36,6 +35,7 @@ export default class Login extends Component {
   login() {
     this.api.login(this.state.email, this.state.password,
       (err) => {
+        console.log(err);
         if (err) {
           alert('Invalid login.');
         }
@@ -49,30 +49,40 @@ export default class Login extends Component {
   render() {
     var disabled = !(this.state.email && this.state.password);
     return (
-      <View style={containers.general}>
+      <ScrollView contentContainerStyle={containers.general}
+        keyboardShouldPersistTaps="handled"
+        scrollEnabled={false}>
         <Text style={text.title}>StockDog</Text>
-        <TextInput
-          style={elements.roundedInput}
-          placeholder="email"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={(email) => this.setState({email})}
-          value={this.state.email}
-          onSubmitEditing={() => {
-            this.focusNextField('two');
-          }}
-          returnKeyType={ "next" }
-          ref={ input => {
-            this.inputs['one'] = input;
-          }}
-        />
-        <TextInput
-          style={elements.roundedInput}
-          placeholder="password"
-          placeholderTextColor="#aaaaaa"
-          secureTextEntry={true}
-          onChangeText={(password) => this.setState({password})}
-          value={this.state.password}
-        />
+          <TextInput
+            style={elements.roundedInput}
+            placeholder="email"
+            placeholderTextColor="#aaaaaa"
+            onChangeText={(email) => this.setState({email})}
+            value={this.state.email}
+            blurOnSubmit={ false }
+            onSubmitEditing={() => {
+              this.focusNextField('two');
+            }}
+            returnKeyType={ "next" }
+            ref={ input => {
+              this.inputs['one'] = input;
+            }}
+          />
+          <TextInput
+            style={elements.roundedInput}
+            placeholder="password"
+            placeholderTextColor="#aaaaaa"
+            secureTextEntry={true}
+            onChangeText={(password) => this.setState({password})}
+            value={this.state.password}
+            onSubmitEditing={() => {
+              this.login.bind(this);
+            }}
+            returnKeyType={ "done" }
+            ref={ input => {
+              this.inputs['two'] = input;
+            }}
+          />
         <WideButton type='login' disabled={disabled} onpress={this.login.bind(this)}/>
         <TouchableOpacity
           style={elements.smallTextButton}>
@@ -86,7 +96,7 @@ export default class Login extends Component {
             Create an account 
           </Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     );
   }
 }

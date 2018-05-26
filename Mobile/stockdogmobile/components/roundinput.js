@@ -24,7 +24,10 @@ export default class RoundInput extends Component {
           placeholderTextColor="#aaaaaa"
           onChangeText={this.props.onchange}
           value={this.props.value}
-          onSubmitEditing={Keyboard.dismiss}
+          blurOnSubmit={false}
+          returnKeyType={this.props.returnKeyType}
+          ref={this.props.refer}
+          onSubmitEditing={this.props.onSubmitEditing}
         />
     );
   }
