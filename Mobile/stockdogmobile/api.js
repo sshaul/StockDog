@@ -111,7 +111,7 @@ export default class Api {
     AsyncStorage.getItem('userid')
       .then((userid) => {
         uid = parseInt(userid);
-        bp = parseInt(lbuypower);
+        bp = parseFloat(lbuypower);
         fetch(this.baseurl + '/api/league', {
           method: 'POST',
           headers: this.headers,
@@ -202,10 +202,10 @@ export default class Api {
       headers: this.headers
     }).then((response) => response.json())
     .then((responseJson) => {
-      if (responseJson[0].ticker === null) {
-        callback([]);
-      }
-      else 
+      // if (responseJson[0].ticker === null) {
+      //   callback([]);
+      // }
+      // else 
         callback(responseJson);
     })
     .catch((error) => console.log(error));
@@ -359,6 +359,7 @@ export default class Api {
         headers: this.headers
       }).then((response) => response.json())
       .then((responseJson) => {
+        console.log('resjson', responseJson);
         if (responseJson) {
           url = this.baseurl + '/api/transaction?leagueId=' + responseJson[0].leagueId;
           fetch(url, {
@@ -366,6 +367,7 @@ export default class Api {
             headers: this.headers
           }).then((response) => response.json())
           .then((responseJson) => {
+            console.log(responseJson);
             callback(responseJson)
           })
           .catch((error) => console.log(error));

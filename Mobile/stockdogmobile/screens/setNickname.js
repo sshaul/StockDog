@@ -35,21 +35,16 @@ export default class SetNickname extends Component {
       console.log(props);
       this.api.createNewLeague(props.name, props.buyPower, props.startDate, props.endDate, (res) => {
         this.api.createNewPortfolio(this.state.nickname, res.id, res.inviteCode, (res) => {
-          this.api.addInitialPortfolioValue(res.id, props.buyPower, () => {
-            console.log('res');
-            AsyncStorage.setItem('currPortfolio', '' + res.id);
-            Actions.drawerOpen();
-            Actions.profile();
-          });
+          AsyncStorage.setItem('currPortfolio', '' + res.id);
+          Actions.drawerOpen();
+          Actions.profile();
         })
       });
     }
     else {
       this.api.joinLeague(this.state.nickname, props.league.id, props.inviteCode, (res) => {
-        this.api.addInitialPortfolioValue(() => {
           AsyncStorage.setItem('currPortfolio', '' + res.id);
           Actions.profile();
-        });
       });
     }
   

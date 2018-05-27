@@ -22,16 +22,19 @@ import containers from './style/containers';
 
 const Routes = () => (
   <Router>
-    <Drawer 
-      key="drawer"  
-      contentComponent={LeagueDrawer} 
-      type="replace"
-    >
-      <Modal key="modal">
-      
-        <Scene key="root" hideNavBar>
+    <Scene key="root" hideNavBar>
           <Scene key="login" component={Login}/>
           <Scene key="register" component={Register}/>
+
+
+          <Drawer 
+            key="drawer"  
+            contentComponent={LeagueDrawer} 
+            type="replace"
+          >
+            <Modal key="modal">
+      
+        
           
             
               <Tabs 
@@ -63,7 +66,7 @@ const Routes = () => (
                 <Scene key="setnickname" component={SetNickname} />
               </Lightbox>
             
-          </Scene>
+          
         <Lightbox>
           <Scene key="stock" component={Stock} hideNavBar/>
           <Scene key="buysellmodal" component={BuySellModal} hideNavBar />
@@ -71,7 +74,7 @@ const Routes = () => (
         <Scene key="settings" component={SettingsModal} hideNavBar />
       </Modal>
     </Drawer>
-      
+    </Scene>
   </Router>
 );
 

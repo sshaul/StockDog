@@ -35,7 +35,7 @@ export default class Register extends Component {
     navigation.goBack(null);
   }
 
-  register() {
+  register = () => {
     if (!this.state.email.includes('@')) {
       alert('Please enter a valid email address.');
     }
@@ -58,27 +58,62 @@ export default class Register extends Component {
       <KeyboardAwareScrollView 
         resetScrollToCoords={{ x: 0, y: 0 }}
         contentContainerStyle={containers.general}
-        scrollEnabled={false}>
+        scrollEnabled={false}
+        keyboardShouldPersistTaps="handled">
         <Text style={text.title}>StockDog</Text>
         <RoundInput 
           type="first name" 
           onchange={(firstname) => this.setState({firstname})}
-          value={this.state.firstname}/>
+          value={this.state.firstname}
+          returnKeyType={ "next" }
+          refer={ input => {
+            this.inputs['one'] = input;
+          }}
+          onSubmitEditing={() => {
+            this.focusNextField('two');
+          }}
+          />
         <RoundInput
           type="last name"
           onchange={(lastname) => this.setState({lastname})}
           value={this.state.lastname}
+          returnKeyType={ "next" }
+          refer={ input => {
+            this.inputs['two'] = input;
+          }}
+          onSubmitEditing={() => {
+            this.focusNextField('three');
+          }}
         />
         <RoundInput
           type="email"
           onchange={(email) => this.setState({email})}
           value={this.state.email}
+          returnKeyType={ "next" }
+          refer={ input => {
+            this.inputs['three'] = input;
+          }}
+          onSubmitEditing={() => {
+            this.focusNextField('four');
+          }}
         />
         <View style={containers.horizontal}>
           <RoundInput
             type="password"
             onchange={(password) => this.setState({password})}
             value={this.state.password}
+            returnKeyType={ "done" }
+            refer={ input => {
+              this.inputs['four'] = input;
+            }}
+            onSubmitEditing={() => {
+              if (disabled) {
+                alert('Invalid registration. Please enter all fields and follow password instructions.');
+              }
+              else {
+                this.register();
+              }
+            }}
           />
           <PopoverTooltip
             ref='tooltip1'
