@@ -108,6 +108,16 @@ class API {
          });
    };
 
+   getPortfolioHistory = (portfolioId, callback) => {
+      axios.get(this.baseURL + "/portfolio/" + portfolioId + "/history")
+         .then(res => {
+            callback(res["data"]);
+         })
+         .catch(err => {
+            console.log(err);
+         })
+   }
+
    buy = (ticker, shareCount, portfolioId, callback) => {
       axios.post(this.baseURL + "/stock/buy/" + ticker, {
          shareCount, portfolioId
