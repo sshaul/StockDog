@@ -186,6 +186,26 @@ class API {
             callback(null);
          });
    }
+
+   getLeague = (id, callback) => {
+      axios.get(this.baseURL + "/league/" + id)
+         .then(res => {
+            callback(res["data"]);
+         })
+         .catch(err => {
+            console.log(err);
+         })
+   };
+
+   getLeagueMembers = (id, callback) => {
+      axios.get(this.baseURL + "/league/" + id + "/members")
+         .then(res => {
+            callback(res["data"]);
+         })
+         .catch(err => {
+            console.log(err);
+         })
+   };
 }
 
 export default API;
