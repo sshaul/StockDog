@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Blueprint, request, Response, g
+from flask import Blueprint, jsonify, make_response, request, Response, g
 import requests
 import simplejson as json
 import time
@@ -32,11 +32,11 @@ def get_history(ticker, length):
    try:
       response = rawResponse.json()
    except:
-      return Response(errors['unsupportedTicker'], status=404)
+      return make_response(jsonify(error=errors['unsupportedTicker']), 404)
 
    data = formatData(response, interval)
    if len(data) == 0:
-      return Response(errors['iexUnavialable'], status=500)
+      return make_response(jsonify(error=errors['iexUnavialable']), 500)
    
    if length == 'now':
       data = data[-1]

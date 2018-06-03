@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response, g
+from flask import Blueprint, request, Response, g, jsonify, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
 import simplejson as json
 
@@ -14,7 +14,7 @@ def post_user():
    g.cursor.execute("SELECT * FROM User WHERE email = %s", body['email'])
    sameEmailUsers = g.cursor.fetchall()
    if len(sameEmailUsers) > 0:
-      return Response(errors['duplicateEmail'], status=400)
+      return make_response(jsonify(error=errors['duplicateEmail']), 400)
 
    passHash = generate_password_hash(body['password'])
 
