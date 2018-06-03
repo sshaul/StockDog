@@ -90,8 +90,6 @@ export default class Profile extends Component {
       return <LoadingProfile />;
     }
     else {
-      console.log('ps', this.state.portfolios);
-      console.log('pid', this.state.portfolioid);
       var currPort = this.state.portfolios.find(x => x.id === parseInt(this.state.portfolioid));
       if (this.state.isPortfolioLoading) {
         this.api.getPortfolioStocks(this.state.portfolioid, (stocks) => {

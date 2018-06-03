@@ -5,8 +5,8 @@ import { AsyncStorage } from 'react-native';
 export default class Api {
 
   constructor () {
-    // this.baseurl = "http://localhost:5005";
-    this.baseurl = "http://198.199.100.209:5005";
+     this.baseurl = "http://localhost:5005";
+    //this.baseurl = "http://198.199.100.209:5005";
     this.headers = {
         'Content-Type': 'application/json'
     }
@@ -437,7 +437,7 @@ getLeagueInfo = (callback) => {
         fetch(url, {
           method: 'GET',
           headers: this.headers
-        }).then((response) => {console.log('response: ', response); response.json()})
+        }).then((response) => {console.log('response: ', response); return response.json();})
         .then((responseJson) => {
           console.log('responseJson: ', responseJson);
           callback(responseJson)
