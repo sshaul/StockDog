@@ -67,6 +67,7 @@ class Portfolio extends Component {
 
    createHoldings = () => {
       var holdingComponents = [];
+      console.log(this.state.holdings);
       this.state.holdings.forEach((holding) => {
          // Make sure there is something in the holding
          // This is because if the portfolio has nothing, the array is
@@ -110,12 +111,13 @@ class Portfolio extends Component {
    }
 
    render() {
+      console.log(this.cookies.get("currPortfolio"));
       if (this.state.portfolioId === null) {
          return (
             <CreatePortfolio />
          )
       }
-      else if (this.cookies.get("currPortfolio") === "undefined") {
+      else if (this.cookies.get("currPortfolio") === undefined) {
          return (
             <div>
                <SideNav />

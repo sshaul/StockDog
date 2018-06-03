@@ -576,7 +576,7 @@ input:focus{
 
 .LeagueHome h4 {
    padding: 5px;
-   width: 110px;
+   width: 115px;
    margin: 0 auto;
    border: solid 3px $green-color;
 }
@@ -594,6 +594,7 @@ input:focus{
 
 .LeagueHome td {
    padding: 10px;
+   border-bottom: 1px solid $bg-color;
 }
 
 .league-home-money {
@@ -610,7 +611,8 @@ input:focus{
    color: $green-color;
 }
 
-#league-home-portfolio-link p {
+#league-home-portfolio-link a {
+   color: $green-color;
    text-decoration: underline;
    cursor: pointer;
    width: 100px;
