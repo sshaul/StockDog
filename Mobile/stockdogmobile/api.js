@@ -131,21 +131,14 @@ export default class Api {
   };
 
   isValidInviteCode = (inviteCode, callback) => {
-    fetch(this.baseurl + '/api/league', {
+    fetch(this.baseurl + '/api/league?invite=' + inviteCode, {
       method: 'GET',
       headers: this.headers,
     }).then((response) => response.json())
     .then((responseJson) => {
-      var valid = false;
-      var el;
-      responseJson.forEach(element => {
-        if (element.inviteCode === inviteCode) {
-          valid = true;
-          el = element;
-        }
-      });
+      var valid = responseJson.length > 0;
       if (valid) {
-        callback({valid: true, league: el});
+        callback({valid: true, league: responseJson[0]});
       }
       else {
         callback({valid: false});
@@ -359,7 +352,6 @@ export default class Api {
         headers: this.headers
       }).then((response) => response.json())
       .then((responseJson) => {
-        console.log('resjson', responseJson);
         if (responseJson) {
           url = this.baseurl + '/api/transaction?leagueId=' + responseJson[0].leagueId;
           fetch(url, {
@@ -367,7 +359,6 @@ export default class Api {
             headers: this.headers
           }).then((response) => response.json())
           .then((responseJson) => {
-            console.log(responseJson);
             callback(responseJson)
           })
           .catch((error) => console.log(error));
@@ -382,7 +373,6 @@ export default class Api {
 
   addInitialPortfolioValue = (pid, buypower, callback) => {
     var url = this.baseurl + '/api/portfolio/' + pid + '/history';
-    console.log(url);
     fetch(url, {
       method: 'POST',
       headers: this.headers,
@@ -398,7 +388,6 @@ export default class Api {
     AsyncStorage.getItem('currPortfolio')
     .then((response) => {return JSON.parse(response);})
     .then((pid) => {
-      console.log('pid', pid);
       var url = this.baseurl + '/api/portfolio/' + pid;
       fetch(url, {
         method: 'GET',
@@ -412,7 +401,6 @@ export default class Api {
           headers: this.headers
         }).then((response) => response.json())
         .then((responseJson) => {
-          console.log(responseJson);
           callback(responseJson)
         })
         .catch((error) => console.log(error));
@@ -432,7 +420,6 @@ getLeagueName = (callback) => {
       }).then((response) => response.json())
       .then((responseJson) => {
         var lid = responseJson[0].leagueId;
-        console.log(lid);
         url = this.baseurl + '/api/league/info/' + lid;
         fetch(url, {
           method: 'GET',

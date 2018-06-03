@@ -42,7 +42,8 @@ export default text = StyleSheet.create({
       color: colors.white,
       fontFamily: 'open-sans',
       fontSize: 16,
-      textAlign: 'left'
+      textAlign: 'left',
+      paddingLeft: 20
     },
     // ----------------- Modals ------------- // 
     joinLeagueTitle: {
