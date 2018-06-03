@@ -21,12 +21,11 @@ export default class League extends Component {
   }
 
 componentDidMount() {
-	this.api.getLeagueMemebers((members) => {
-		this.api.getLeagueName((leagueInfo) => {
-			console.log(leagueInfo.inviteCode)
-			this.setState({leagueName : leagueInfo.name, leagueCode : leagueInfo.inviteCode, members : members})
+	this.api.getLeagueInfo((leagueInfo) => {
+		this.api.getLeagueMembers((members) => {
+			console.log('members: ', members);
+			this.setState({leagueName : leagueInfo.name, leagueCode : leagueInfo.inviteCode, members: members })
 		})
-		console.log(members);
 	});
 }
 

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response, g, jsonify
+from flask import Blueprint, request, Response, g, jsonify, make_response
 import simplejson as json
 import time
 
@@ -20,7 +20,7 @@ def post_league():
       start = time.strptime(body['start'], DATE_FORMAT)
       end = time.strptime(body['end'], DATE_FORMAT)
    except:
-      return Response(errors['invalidDate'], status=400)
+      return make_response(jsonify(error=errors['invalidDate']), 400)
 
    g.cursor.execute("INSERT INTO League(name, start, end, startPos, inviteCode, ownerId) " + 
       "VALUES (%s, %s, %s, %s, %s, %s)",
@@ -36,7 +36,7 @@ def get_leagues():
    if inviteCode:
       g.cursor.execute("SELECT * FROM League WHERE inviteCode = %s", inviteCode)
    else:
-      g.cursor.exeucute("SELECT * FROM League")
+      g.cursor.execute("SELECT * FROM League")
 
    leagues = g.cursor.fetchall()
    return json.dumps(leagues, default=Utility.dateToStr)

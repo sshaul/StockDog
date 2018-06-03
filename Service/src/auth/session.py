@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response, jsonify, g
+from flask import Blueprint, request, Response, jsonify, g, make_response
 
 from util.errMap import errors
 
@@ -13,7 +13,7 @@ def validateSession():
   row = g.cursor.fetchone()
 
   if row is None:
-    return Response(errors['nonexistentUser'], status=404)
+    return make_response(jsonify(error=errors['nonexistentUser']), 404)
   
   else:
       if row['token'] == body['token']:

@@ -5,8 +5,8 @@ import { AsyncStorage } from 'react-native';
 export default class Api {
 
   constructor () {
-    // this.baseurl = "http://localhost:5005";
-    this.baseurl = "http://198.199.100.209:5005";
+     this.baseurl = "http://localhost:5005";
+    //this.baseurl = "http://198.199.100.209:5005";
     this.headers = {
         'Content-Type': 'application/json'
     }
@@ -384,7 +384,7 @@ export default class Api {
   }
   
   //------------------------------- League Page ----------------------------------------//
-  getLeagueMemebers = (callback) => {
+  getLeagueMembers = (callback) => {
     AsyncStorage.getItem('currPortfolio')
     .then((response) => {return JSON.parse(response);})
     .then((pid) => {
@@ -395,7 +395,8 @@ export default class Api {
       }).then((response) => response.json())
       .then((responseJson) => {
         var lid = responseJson[0].leagueId;
-        url = this.baseurl + '/api/league/members/' + lid;
+        console.log('lid: ', lid);
+        url = this.baseurl + '/api/league/' + lid + '/members';
         fetch(url, {
           method: 'GET',
           headers: this.headers
@@ -409,7 +410,7 @@ export default class Api {
     });
   };
 
-getLeagueName = (callback) => {
+getLeagueInfo = (callback) => {
   AsyncStorage.getItem('currPortfolio')
     .then((response) => {return JSON.parse(response);})
     .then((pid) => {
@@ -420,12 +421,13 @@ getLeagueName = (callback) => {
       }).then((response) => response.json())
       .then((responseJson) => {
         var lid = responseJson[0].leagueId;
-        url = this.baseurl + '/api/league/info/' + lid;
+        url = this.baseurl + '/api/league/' + lid;
         fetch(url, {
           method: 'GET',
           headers: this.headers
-        }).then((response) => response.json())
+        }).then((response) => {console.log('response: ', response); return response.json();})
         .then((responseJson) => {
+          console.log('responseJson: ', responseJson);
           callback(responseJson)
         })
         .catch((error) => console.log(error));
