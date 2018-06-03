@@ -37,7 +37,6 @@ export default class Feed extends Component {
   }
 
   componentDidMount() {
-    console.log('getting transactions');
     this.api.getTransactions((transactions) => {
       this.setState({transactions});
     });

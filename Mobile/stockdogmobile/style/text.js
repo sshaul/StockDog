@@ -24,7 +24,8 @@ export default text = StyleSheet.create({
       color: colors.bright,
       fontFamily: 'open-sans',
       fontSize: 48,
-      textAlign: 'center'
+      textAlign: 'center',
+      paddingTop: 10
     },
     profileLabels: {
       color: colors.white,
