@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response, jsonify, g
+from flask import Blueprint, request, Response, jsonify, g, make_response
 from flask_login import LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -31,8 +31,8 @@ class Login:
             return jsonify(userId=user['id'], token=token)
          
          else:
-            return Response(errors['passwordMismatch'], status=401)
+            return make_response(jsonify(error=errors['passwordMismatch']), 401)
       
       else:
-         return Response(errors['nonexistentUser'], status=401)
+         return make_response(jsonify(error=errors['nonexistentUser']), 401)
 

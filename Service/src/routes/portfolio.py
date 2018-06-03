@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Blueprint, request, Response, g, jsonify
+from flask import Blueprint, request, Response, g, jsonify, make_response
 import simplejson as json
 
 from routes import stock
@@ -21,7 +21,7 @@ def post_portfolio():
          row = g.cursor.fetchone()
 
          if row is None:
-            return Response(errors['nonexistentLeague'], status=404)
+            return make_response(jsonify(error=errors['nonexistentLeague']), 404)
          
          if body['inviteCode'] == row['inviteCode']:
             g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId, leagueId) VALUES (%s, %s, %s, %s)",
@@ -31,7 +31,7 @@ def post_portfolio():
             g.cursor.execute("INSERT INTO PortfolioHistory(portfolioId, datetime, value) VALUES (%s, %s, %s)",
                [g.cursor.lastrowid, str(now), row['startPos']])
          else:
-            return Response(errors['inviteCodeMismatch'], status=400)
+            return make_response(jsonify(error=errors['inviteCodeMismatch']), 400)
       
       else:
          return Response(errors['missingInviteCode'], status=400)
@@ -53,7 +53,7 @@ def get_portfolios():
    leagueId = request.args.get('leagueId')
 
    if userId and leagueId:
-      return Response(errors['unsupportedPortfolioGet'], status=400)
+      return make_response(jsonify(error=errors['unsupportedPortfolioGet']), 400)
 
    if leagueId:
       g.cursor.execute("SELECT p.id, p.buyPower, p.name AS nickname, p.userId, " +

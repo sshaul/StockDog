@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response, g, jsonify
+from flask import Blueprint, request, Response, g, jsonify, make_response
 import simplejson as json
 import time
 
@@ -20,7 +20,7 @@ def post_league():
       start = time.strptime(body['start'], DATE_FORMAT)
       end = time.strptime(body['end'], DATE_FORMAT)
    except:
-      return Response(errors['invalidDate'], status=400)
+      return make_response(jsonify(error=errors['invalidDate']), 400)
 
    g.cursor.execute("INSERT INTO League(name, start, end, startPos, inviteCode, ownerId) " + 
       "VALUES (%s, %s, %s, %s, %s, %s)",
