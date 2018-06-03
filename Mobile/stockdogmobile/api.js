@@ -5,8 +5,8 @@ import { AsyncStorage } from 'react-native';
 export default class Api {
 
   constructor () {
-    this.baseurl = "http://localhost:5005";
-    // this.baseurl = "http://198.199.100.209:5005";
+    // this.baseurl = "http://localhost:5005";
+    this.baseurl = "http://198.199.100.209:5005";
     this.headers = {
         'Content-Type': 'application/json'
     }
