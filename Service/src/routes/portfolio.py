@@ -26,6 +26,7 @@ def post_portfolio():
          if body['inviteCode'] == row['inviteCode']:
             g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId, leagueId) VALUES (%s, %s, %s, %s)",
                [body['name'], row['startPos'], body['userId'], body['leagueId']])
+            lastrowid = g.cursor.lastrowid
 
             g.cursor.execute("INSERT INTO PortfolioHistory(portfolioId, datetime, value) VALUES (%s, %s, %s)",
                [g.cursor.lastrowid, str(now), row['startPos']])
@@ -38,11 +39,12 @@ def post_portfolio():
    else:      
       g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)", 
          [body['name'], body['buyPower'], body['userId']])
+      lastrowid = g.cursor.lastrowid
 
       g.cursor.execute("INSERT INTO PortfolioHistory(portfolioId, datetime, value) VALUES (%s, %s, %s)",
          [g.cursor.lastrowid, str(now), body['buyPower']])
 
-   return jsonify(id=g.cursor.lastrowid)
+   return jsonify(id=lastrowid)
 
 
 @portfolio_api.route('/api/portfolio', methods=['GET'])
