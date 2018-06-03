@@ -206,7 +206,7 @@ export default containers = StyleSheet.create({
       paddingRight: 10,
       paddingTop: 5
     },
-    // ----------------- Settings Modal ------------- //
+    // ----------------- Feed ------------- //
     activity: {
       flex: 0.2,
       // backgroundColor: 'pink' 

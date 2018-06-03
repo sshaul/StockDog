@@ -108,6 +108,16 @@ class API {
          });
    };
 
+   getPortfolioHistory = (portfolioId, callback) => {
+      axios.get(this.baseURL + "/portfolio/" + portfolioId + "/history")
+         .then(res => {
+            callback(res["data"]);
+         })
+         .catch(err => {
+            console.log(err);
+         })
+   }
+
    buy = (ticker, shareCount, portfolioId, callback) => {
       axios.post(this.baseURL + "/stock/buy/" + ticker, {
          shareCount, portfolioId
@@ -186,6 +196,26 @@ class API {
             callback(null);
          });
    }
+
+   getLeague = (id, callback) => {
+      axios.get(this.baseURL + "/league/" + id)
+         .then(res => {
+            callback(res["data"]);
+         })
+         .catch(err => {
+            console.log(err);
+         })
+   };
+
+   getLeagueMembers = (id, callback) => {
+      axios.get(this.baseURL + "/league/" + id + "/members")
+         .then(res => {
+            callback(res["data"]);
+         })
+         .catch(err => {
+            console.log(err);
+         })
+   };
 }
 
 export default API;
