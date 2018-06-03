@@ -23,8 +23,8 @@ import containers from './style/containers';
 const Routes = () => (
   <Router>
     <Scene key="root" hideNavBar>
-          <Scene key="login" component={Login}/>
-          <Scene key="register" component={Register}/>
+          {/* <Scene key="login" component={Login}/>
+          <Scene key="register" component={Register}/> */}
 
 
           <Drawer 
@@ -50,9 +50,9 @@ const Routes = () => (
                 labelStyle= {
                   {color: '#f7f8f9', fontSize: 12, fontFamily: 'open-sans'}}
                 >
-                <Scene key="profilemain" hideNavBar title="Portfolio" iconName="user" icon={TabIcon}>
+                {/* <Scene key="profilemain" hideNavBar title="Portfolio" iconName="user" icon={TabIcon}>
                   <Scene key="profile" component={Profile} onEnter={Profile.onEnterPortfolio}/>
-                </Scene>
+                </Scene> */}
                 <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon}/>
                 <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon} onEnter={Feed.onEnterFeed}/>
                 <Scene key="searchmain" hideNavBar title="Search" iconName="search" icon={TabIcon}>

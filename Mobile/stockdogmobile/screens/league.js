@@ -33,16 +33,22 @@ componentDidMount() {
 keyExtractor = (item, index) => index;
 
  renderEachItem(item) {
+	 var rank = item.index + 1;
   	return (
 			<View style = {containers.memberRow}>
+				<View style = {containers.membersRank}>
+					<Text style = {text.members}>
+						{rank}
+					</Text>
+				</View>
 				<View style = {containers.membersName}>
 					<Text style = {text.members} > 
 						{item.item.name}
 					</Text>
 				</View>
-					<View style = {containers.membersRank}>
+					<View style = {containers.membersValue}>
 						<Text style = {text.members} > 
-							{item.item.rank}
+							{item.item.value} 
 						</Text>
 					</View>
 			</View>
@@ -51,21 +57,15 @@ keyExtractor = (item, index) => index;
 
   render() {
 		var mem;
-  	if (this.state.members.length === 0) {
-			mem = (
-				<Text> Invite your friends! </Text>
-			);
-		}
-		else {
-			//flat list
-			mem = (<View style = {containers.dashboard}>
-							<FlatList
-								keyExtractor={this.keyExtractor}
-								data={this.state.members}
-								renderItem = {this.renderEachItem.bind(this)}
-							/>
-							</View>);
-		}
+		//flat list
+		mem = (<View style = {containers.dashboard}>
+						<FlatList
+							keyExtractor={this.keyExtractor}
+							data={this.state.members}
+							renderItem = {this.renderEachItem.bind(this)}
+						/>
+						</View>);
+		
 
     return (
       <View style={containers.profileGeneral}>
