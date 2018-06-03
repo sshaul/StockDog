@@ -34,8 +34,10 @@ export default class SetNickname extends Component {
     if (props.hasOwnProperty('buyPower')) {
       console.log(props);
       this.api.createNewLeague(props.name, props.buyPower, props.startDate, props.endDate, (res) => {
-        this.api.createNewPortfolio(this.state.nickname, res.id, res.inviteCode, (res) => {
-          AsyncStorage.setItem('currPortfolio', '' + res.id);
+        this.api.createNewPortfolio(this.state.nickname, res.id, res.inviteCode, (pres) => {
+          console.log('res new portfolio', pres);
+          console.log('currPortfolio', pres.id);
+          AsyncStorage.setItem('currPortfolio', '' + pres.id);
           Actions.drawerOpen();
           Actions.profile();
         })

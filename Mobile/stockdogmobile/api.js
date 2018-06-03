@@ -5,8 +5,8 @@ import { AsyncStorage } from 'react-native';
 export default class Api {
 
   constructor () {
-    // this.baseurl = "http://localhost:5005";
-    this.baseurl = "http://198.199.100.209:5005";
+     this.baseurl = "http://localhost:5005";
+    //this.baseurl = "http://198.199.100.209:5005";
     this.headers = {
         'Content-Type': 'application/json'
     }
@@ -131,21 +131,14 @@ export default class Api {
   };
 
   isValidInviteCode = (inviteCode, callback) => {
-    fetch(this.baseurl + '/api/league', {
+    fetch(this.baseurl + '/api/league?invite=' + inviteCode, {
       method: 'GET',
       headers: this.headers,
     }).then((response) => response.json())
     .then((responseJson) => {
-      var valid = false;
-      var el;
-      responseJson.forEach(element => {
-        if (element.inviteCode === inviteCode) {
-          valid = true;
-          el = element;
-        }
-      });
+      var valid = responseJson.length > 0;
       if (valid) {
-        callback({valid: true, league: el});
+        callback({valid: true, league: responseJson[0]});
       }
       else {
         callback({valid: false});
@@ -359,7 +352,6 @@ export default class Api {
         headers: this.headers
       }).then((response) => response.json())
       .then((responseJson) => {
-        console.log('resjson', responseJson);
         if (responseJson) {
           url = this.baseurl + '/api/transaction?leagueId=' + responseJson[0].leagueId;
           fetch(url, {
@@ -367,7 +359,6 @@ export default class Api {
             headers: this.headers
           }).then((response) => response.json())
           .then((responseJson) => {
-            console.log(responseJson);
             callback(responseJson)
           })
           .catch((error) => console.log(error));
@@ -382,7 +373,6 @@ export default class Api {
 
   addInitialPortfolioValue = (pid, buypower, callback) => {
     var url = this.baseurl + '/api/portfolio/' + pid + '/history';
-    console.log(url);
     fetch(url, {
       method: 'POST',
       headers: this.headers,
@@ -394,11 +384,10 @@ export default class Api {
   }
   
   //------------------------------- League Page ----------------------------------------//
-  getLeagueMemebers = (callback) => {
+  getLeagueMembers = (callback) => {
     AsyncStorage.getItem('currPortfolio')
     .then((response) => {return JSON.parse(response);})
     .then((pid) => {
-      console.log('pid', pid);
       var url = this.baseurl + '/api/portfolio/' + pid;
       fetch(url, {
         method: 'GET',
@@ -406,13 +395,13 @@ export default class Api {
       }).then((response) => response.json())
       .then((responseJson) => {
         var lid = responseJson[0].leagueId;
-        url = this.baseurl + '/api/league/members/' + lid;
+        console.log('lid: ', lid);
+        url = this.baseurl + '/api/league/' + lid + '/members';
         fetch(url, {
           method: 'GET',
           headers: this.headers
         }).then((response) => response.json())
         .then((responseJson) => {
-          console.log(responseJson);
           callback(responseJson)
         })
         .catch((error) => console.log(error));
@@ -421,7 +410,7 @@ export default class Api {
     });
   };
 
-getLeagueName = (callback) => {
+getLeagueInfo = (callback) => {
   AsyncStorage.getItem('currPortfolio')
     .then((response) => {return JSON.parse(response);})
     .then((pid) => {
@@ -432,13 +421,13 @@ getLeagueName = (callback) => {
       }).then((response) => response.json())
       .then((responseJson) => {
         var lid = responseJson[0].leagueId;
-        console.log(lid);
-        url = this.baseurl + '/api/league/info/' + lid;
+        url = this.baseurl + '/api/league/' + lid;
         fetch(url, {
           method: 'GET',
           headers: this.headers
-        }).then((response) => response.json())
+        }).then((response) => {console.log('response: ', response); return response.json();})
         .then((responseJson) => {
+          console.log('responseJson: ', responseJson);
           callback(responseJson)
         })
         .catch((error) => console.log(error));

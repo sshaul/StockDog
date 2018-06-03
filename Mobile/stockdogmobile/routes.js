@@ -61,9 +61,9 @@ const Routes = () => (
               </Tabs>
               <Lightbox key="lightbox">
                 <Scene key="noportfolios" hideNavBar component={noPortfoliosProfile}/>
-                <Scene key="addportfolio" component={AddPortfolioModal}/>
-                <Scene key="joinportfolio" component={JoinLeagueModal}/>
-                <Scene key="setnickname" component={SetNickname} />
+                <Scene key="addportfolio" hideNavBar component={AddPortfolioModal}/>
+                <Scene key="joinportfolio" hideNavBar component={JoinLeagueModal}/>
+                <Scene key="setnickname" hideNavBar component={SetNickname} />
               </Lightbox>
             
           
