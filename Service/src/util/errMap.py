@@ -16,5 +16,6 @@ errors = {
    'duplicateEmail': 'User with email already exists.',
    'nonexistentUser': 'User does not exist.',
    'passwordMismatch': 'Incorrect password for user.',
-   'alphaVantageDown': 'AlphaVantage failed to respond'
+   'alphaVantageDown': 'AlphaVantage failed to respond',
+   'invalidToken': 'Cannot access this page with this token'
 }

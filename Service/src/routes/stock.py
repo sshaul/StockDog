@@ -4,6 +4,7 @@ import requests
 import simplejson as json
 import time
 from urllib.parse import urlencode
+from auth.login_required import login_required
 
 import routes.iex as iex
 import util.errMap as errors
@@ -25,6 +26,7 @@ URL_PREFIX = 'https://www.alphavantage.co/query?'
 
 
 @stock_api.route('/api/stock/sell/<ticker>', methods=['POST'])
+@login_required
 def post_sell_transaction(ticker):
    body = request.get_json()
    sharePrice = json.loads(get_history(ticker, 'now'))['price']
@@ -67,6 +69,7 @@ def post_sell_transaction(ticker):
 
 
 @stock_api.route('/api/stock/buy/<ticker>', methods=['POST'])
+@login_required
 def post_buy_transaction(ticker):
    body = request.get_json()
    sharePrice = json.loads(get_history(ticker, 'now'))['price']
@@ -114,6 +117,7 @@ def post_buy_transaction(ticker):
 
 
 @stock_api.route('/api/stock/<ticker>/history/<length>')
+@login_required
 def get_history(ticker, length):
    if True:
       return iex.get_history(ticker, length)

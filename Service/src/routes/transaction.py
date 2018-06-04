@@ -2,11 +2,13 @@ from flask import Blueprint, request, Response, g
 import simplejson as json
 
 from util.utility import Utility
+from auth.login_required import login_required
 
 transaction_api = Blueprint('transaction_api', __name__)
 
 
 @transaction_api.route('/api/transaction', methods=['GET'])
+@login_required
 def get_transactions():
    portfolioId = request.args.get('portfolioId')
    leagueId = request.args.get('leagueId')

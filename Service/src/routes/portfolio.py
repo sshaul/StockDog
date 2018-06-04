@@ -5,11 +5,13 @@ import simplejson as json
 from routes import stock
 from util.utility import Utility
 from util.errMap import errors
+from auth.login_required import login_required
 
 portfolio_api = Blueprint('portfolio_api', __name__)
 
 
 @portfolio_api.route('/api/portfolio', methods=['POST'])
+@login_required
 def post_portfolio():
    body = request.get_json()
    now = datetime.now()
@@ -48,6 +50,7 @@ def post_portfolio():
 
 
 @portfolio_api.route('/api/portfolio', methods=['GET'])
+@login_required
 def get_portfolios():
    userId = request.args.get('userId')
    leagueId = request.args.get('leagueId')
@@ -96,6 +99,7 @@ def get_recent_portfolio_value(portfolioId):
 
 
 @portfolio_api.route('/api/portfolio/<portfolioId>', methods=['GET'])
+@login_required
 def get_portfolio(portfolioId):
    g.cursor.execute("SELECT p.id AS id, ticker, shareCount, avgCost, name, buyPower, leagueId " +
       "FROM Portfolio AS p LEFT JOIN PortfolioItem as pi ON p.id = pi.portfolioId " + 
@@ -107,6 +111,7 @@ def get_portfolio(portfolioId):
 
 
 @portfolio_api.route('/api/portfolio/<portfolioId>/value', methods=['GET'])
+@login_required
 def get_portfolio_value(portfolioId):
    portfolioItems = json.loads(get_portfolio(portfolioId))
    value = 0
@@ -118,6 +123,7 @@ def get_portfolio_value(portfolioId):
 
 
 @portfolio_api.route('/api/portfolio/<portfolioId>/history', methods=['POST'])
+@login_required
 def post_portfolio_history(portfolioId):
    body = request.get_json()
    now = datetime.now()
@@ -129,6 +135,7 @@ def post_portfolio_history(portfolioId):
 
 
 @portfolio_api.route('/api/portfolio/<portfolioId>/history', methods=['GET'])
+@login_required
 def get_portfolio_history(portfolioId):
 
    g.cursor.execute("SELECT value, datetime FROM Portfolio AS p JOIN PortfolioHistory AS ph ON p.id = ph.portfolioId " +

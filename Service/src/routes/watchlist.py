@@ -2,11 +2,13 @@ from flask import Blueprint, jsonify, make_response, request, Response, g
 import simplejson as json
 
 from util.errMap import errors
+from auth.login_required import login_required
 
 watchlist_api = Blueprint('watchlist_api', __name__)
 
 
 @watchlist_api.route('/api/watchlist', methods=['POST'])
+@login_required
 def post_watchlist():
    body = request.get_json()
 
@@ -24,6 +26,7 @@ def post_watchlist():
 
 
 @watchlist_api.route('/api/watchlist', methods=['GET'])
+@login_required
 def get_watchlists():
    portfolioId = request.args.get('portfolioId')
 
@@ -37,6 +40,7 @@ def get_watchlists():
 
 
 @watchlist_api.route('/api/watchlist/<watchlistId>', methods=['DELETE'])
+@login_required
 def del_watchlist(watchlistId):
 
    g.cursor.execute("DELETE FROM Watchlist WHERE id = %s", watchlistId)

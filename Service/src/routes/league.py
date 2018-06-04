@@ -5,6 +5,7 @@ import time
 import routes.portfolio as portfolio
 from util.utility import Utility
 from util.errMap import errors
+from auth.login_required import login_required
 
 league_api = Blueprint('league_api', __name__)
 
@@ -12,6 +13,7 @@ DATE_FORMAT = "%m-%d-%Y"
 
 
 @league_api.route('/api/league', methods=['POST'])
+@login_required
 def post_league():
    body = request.get_json()
    inviteCode = Utility.gen_inviteCode()
@@ -30,6 +32,7 @@ def post_league():
 
 
 @league_api.route('/api/league', methods=['GET'])
+@login_required
 def get_leagues():
    inviteCode = request.args.get('invite')
 
@@ -43,6 +46,7 @@ def get_leagues():
 
 
 @league_api.route('/api/league/<leagueId>', methods=['GET'])
+@login_required
 def get_league(leagueId):
    g.cursor.execute("SELECT * FROM League WHERE id = %s", leagueId)
    leagueInfo = g.cursor.fetchone()
@@ -54,6 +58,7 @@ def get_league(leagueId):
 
 
 @league_api.route('/api/league/<leagueId>/members', methods=['GET'])
+@login_required
 def get_league_members(leagueId):
    g.cursor.execute("SELECT p.name, p.id FROM Portfolio AS p JOIN League l ON p.leagueId = l.id " +
       "WHERE l.id = %s", leagueId)
