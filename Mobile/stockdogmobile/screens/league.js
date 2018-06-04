@@ -64,7 +64,7 @@ export default class League extends Component {
 				</View>
 					<View style = {containers.membersValue}>
 						<Text style = {text.value} > 
-							{item.item.value} 
+							${item.item.value} 
 						</Text>
 					</View>
 			</View>

@@ -16,7 +16,8 @@ export default class Feed extends Component {
     super(props);
     this.state = {
       text: '',
-      transactions: []
+      transactions: [],
+      name: ''
     };
 
     this.api = new Api();
@@ -30,25 +31,33 @@ export default class Feed extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (this.props.enterTime !== nextProps.enterTime) {
-      this.api.getTransactions((transactions) => {
-        if (transactions.length === 0) {
-          this.setState({noTransactions: true});
-        }
-        else {
-          this.setState({transactions});
-        }
+      this.api.getLeagueInfo((leagueInfo) => {
+        console.log('leagueinfo:', leagueInfo);
+        this.api.getTransactions((transactions) => {
+          if (transactions.length === 0) {
+            this.setState({noTransactions: true});
+          }
+          else {
+            this.setState({transactions});
+          }
+        });
       });
     }
   }
 
   componentDidMount() {
     this.api.getTransactions((transactions) => {
-      if (transactions.length === 0) {
-        this.setState({noTransactions: true});
-      }
-      else {
-        this.setState({transactions});
-      }
+      this.api.getLeagueInfo((leagueInfo) => {
+        console.log('leagueinfo:', leagueInfo);
+        this.api.getTransactions((transactions) => {
+          if (transactions.length === 0) {
+            this.setState({noTransactions: true, name: leagueInfo.name});
+          }
+          else {
+            this.setState({transactions, name: leagueInfo.name});
+          }
+        });
+      });
     });
   }
 
@@ -113,9 +122,8 @@ export default class Feed extends Component {
     return (
       <View style={containers.profileGeneral}>
         <NavBar />
-
         <View style={containers.feedTitle}>
-          <Text style={text.title}>Feed</Text>
+          <Text style={text.title}>{this.state.name}</Text>
         </View>
         <View style={containers.feed}>
           {transactions}

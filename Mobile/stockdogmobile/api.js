@@ -143,7 +143,7 @@ export default class Api {
   };
 
   isValidInviteCode = (inviteCode, callback) => {
-    fetch(this.baseurl + '/api/league?invite=' + inviteCode, {
+    fetch(this.baseurl + '/api/league?inviteCode=' + inviteCode, {
       method: 'GET',
       headers: this.headers,
     }).then((response) => response.json())
@@ -284,19 +284,21 @@ export default class Api {
             str = element.time.split(" ")[1];
             date = str.split(":")[0] + ":" + str.split(":")[1];
           }
-          else if (range == 'week') {
+          else {
+            console.log(str);
             var d = new Date(str.split(" ")[0]);
             var mo = d.toLocaleString("en-us", {month: "short"});
             var day = d.toLocaleString("en-us", {day: "numeric"});
             var time = str.split(" ")[1];
             date = mo + " " + day + " " + time;
           }
-          else {
-            var d = new Date(element.time);
-            var month = d.toLocaleString("en-us", {month: "short"});
-            var day = d.toLocaleString("en-us", {day: "numeric"});
-            date = month + " " + day;
-          }
+          // else {
+          //   console.log(element.time);
+          //   var d = new Date(element.time);
+          //   var month = d.toLocaleString("en-us", {month: "short"});
+          //   var day = d.toLocaleString("en-us", {day: "numeric"});
+          //   date = month + " " + day;
+          // }
           newXData.push(date);
           newYData.push(parseFloat(element.price));
         })

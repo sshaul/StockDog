@@ -5,8 +5,8 @@ export default text = StyleSheet.create({
     // ------------- Login/Register ----------- // 
     title: {
       color: colors.white,
-      fontFamily: 'open-sans-bold',
-      fontSize: 48
+      fontFamily: 'open-sans',
+      fontSize: 40
     },
     loginButton: {
       fontSize: 20,

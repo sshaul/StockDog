@@ -123,8 +123,12 @@ export default class StockChart extends Component {
             },
             tooltip: {
                 formatter: function () {
+                    if (this.x.split(" ").length > 1) {
+                      return this.x.split(" ")[0] + ' ' + this.x.split(" ")[1] + '<br/>' +
+                        '$' + Highcharts.numberFormat(this.y, 2);
+                    }
                     return this.x + '<br/>' +
-                        Highcharts.numberFormat(this.y, 2);
+                        '$' + Highcharts.numberFormat(this.y, 2);
                 }
             },
             legend: {
