@@ -78,7 +78,6 @@ export default class Profile extends Component {
   }
 
   _renderItem = ({item}) => {
-    console.log(item);
     return <PortfolioItem 
       ticker={item.ticker}
       numShares={item.shareCount}

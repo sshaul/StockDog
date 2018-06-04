@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, ScrollView } from 'react-native';
 import { Button, ButtonGroup } from 'react-native-elements';
 import containers from '../style/containers';
+import { Actions } from 'react-native-router-flux';
 import elements from '../style/elements';
 import text from '../style/text';
 import { colors } from '../style/colors'; 
@@ -55,8 +56,14 @@ export default class StockChart extends Component {
       });
     }
     else {
-      this.api.getChartData(this.props.ticker, range, (newXData, newYData) => {
-        this.setState({xData: newXData, yData: newYData, isLoading: false});
+      this.api.getChartData(this.props.ticker, range, (newXData, newYData, error) => {
+        if (error) {
+          alert(error);
+          Actions.pop();
+        }
+        else {
+          this.setState({xData: newXData, yData: newYData, isLoading: false});
+        }
       });
     };
   }

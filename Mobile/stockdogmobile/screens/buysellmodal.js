@@ -43,7 +43,7 @@ export default class BuySellModal extends Component {
 
   onchangeamount(amount) {
     this.setState({
-        amount: amount.replace(/^[a-zA-Z]*$/g, ''),
+        amount: amount.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{1,}/g,"")
     });
   }
 

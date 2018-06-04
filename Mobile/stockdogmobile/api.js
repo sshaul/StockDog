@@ -272,30 +272,35 @@ export default class Api {
       method: 'GET'
     }).then((response) => response.json())
     .then((responseJson) => {
-      responseJson.forEach(element => {
-        var str = element.time;
-        var date = "";
-        if (range == 'day') {
-          str = element.time.split(" ")[1];
-          date = str.split(":")[0] + ":" + str.split(":")[1];
-        }
-        else if (range == 'week') {
-          var d = new Date(str.split(" ")[0]);
-          var mo = d.toLocaleString("en-us", {month: "short"});
-          var day = d.toLocaleString("en-us", {day: "numeric"});
-          var time = str.split(" ")[1];
-          date = mo + " " + day + " " + time;
-        }
-        else {
-          var d = new Date(element.time);
-          var month = d.toLocaleString("en-us", {month: "short"});
-          var day = d.toLocaleString("en-us", {day: "numeric"});
-          date = month + " " + day;
-        }
-        newXData.push(date);
-        newYData.push(parseFloat(element.price));
-      })
-      callback(newXData, newYData);
+      if (responseJson.error) {
+        callback(null, null, responseJson.error);
+      }
+      else {
+        responseJson.forEach(element => {
+          var str = element.time;
+          var date = "";
+          if (range == 'day') {
+            str = element.time.split(" ")[1];
+            date = str.split(":")[0] + ":" + str.split(":")[1];
+          }
+          else if (range == 'week') {
+            var d = new Date(str.split(" ")[0]);
+            var mo = d.toLocaleString("en-us", {month: "short"});
+            var day = d.toLocaleString("en-us", {day: "numeric"});
+            var time = str.split(" ")[1];
+            date = mo + " " + day + " " + time;
+          }
+          else {
+            var d = new Date(element.time);
+            var month = d.toLocaleString("en-us", {month: "short"});
+            var day = d.toLocaleString("en-us", {day: "numeric"});
+            date = month + " " + day;
+          }
+          newXData.push(date);
+          newYData.push(parseFloat(element.price));
+        })
+        callback(newXData, newYData);
+      }
     }).catch((error) => console.error(error));
   };
 
