@@ -63,7 +63,6 @@ export default class Api {
       }).then((response) => response.json())
       .then((responseJson) => {
         // Sets current portfolio as first portfolio
-        console.log('currP: ', responseJson[0].id);
         AsyncStorage.setItem('currPortfolio', '' + responseJson[0].id)
       });
 
@@ -211,6 +210,24 @@ export default class Api {
     .catch((error) => console.log(error));
   };
 
+  getPortfolioBuyPower = (callback) => {
+    AsyncStorage.getItem('currPortfolio')
+      .then((response) => {
+        return JSON.parse(response);
+      })
+      .then((pid) => {
+        var newXData = [];
+        var newYData = [];
+        var url = this.baseurl + '/api/portfolio/' + pid;
+        fetch(url, {
+          method: 'GET'
+        }).then((response) => response.json())
+        .then((responseJson) => {
+          callback(responseJson[0].buyPower);
+        }).catch((error) => console.error(error));
+      });
+  }
+
   getPortfolioData = (callback) => {
     AsyncStorage.getItem('currPortfolio')
       .then((response) => {
@@ -253,7 +270,6 @@ export default class Api {
             portfolioId: pid
           })
         }).then((response) => {
-          console.log(response);
           if (response.status === 400) {
             callback({status_code: 400, message: response.json().error});
           }
@@ -285,7 +301,6 @@ export default class Api {
             date = str.split(":")[0] + ":" + str.split(":")[1];
           }
           else {
-            console.log(str);
             var d = new Date(str.split(" ")[0]);
             var mo = d.toLocaleString("en-us", {month: "short"});
             var day = d.toLocaleString("en-us", {day: "numeric"});

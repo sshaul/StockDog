@@ -21,19 +21,25 @@ constructor(props) {
       isLoading: true,
       selectedIndex: 0,
       range: 'day',
-      addedWatch: false
+      addedWatch: false,
+      buypower: -1
    };
 
    this.api = new Api();
 };
 
 componentDidMount() {
-   this.api.getWatchlistStocks((watchlist) => {
-      var item = watchlist.find(x => x.ticker === this.props.navigation.state.params.ticker)
-      if (item !== undefined) {
-      this.setState({addedWatch: true, watchlistId: item.id});
-      }
-   })
+   this.api.getPortfolioBuyPower((bp) => {
+      this.api.getWatchlistStocks((watchlist) => {
+         var item = watchlist.find(x => x.ticker === this.props.navigation.state.params.ticker)
+         if (item !== undefined) {
+            this.setState({addedWatch: true, watchlistId: item.id, buypower: bp});
+         }
+         else {
+            this.setState({buypower: bp});
+         }
+      });
+   });
 }
 
 updateIndex(selectedIndex) {
@@ -54,11 +60,11 @@ updateIndex(selectedIndex) {
 }
 
 _openBuyModal = () => {
-   Actions.buysellmodal({modalType: 'buy', ticker: this.props.navigation.state.params.ticker});
+   Actions.buysellmodal({modalType: 'buy', ticker: this.props.navigation.state.params.ticker, buypower: this.state.buypower});
 }
 
 _openSellModal = () => {
-   Actions.buysellmodal({modalType: 'sell', ticker: this.props.navigation.state.params.ticker});
+   Actions.buysellmodal({modalType: 'sell', ticker: this.props.navigation.state.params.ticker, buypower: this.state.buypower});
 }
 
 addToWatchlist = () => {
@@ -92,8 +98,8 @@ render() {
       <NavBar stock={true}/>
       <View style={containers.chart}>
             <View style={{flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', paddingLeft: 10}}>
-            <Text style={text.money}>{this.props.navigation.state.params.ticker}</Text>
-            {watching}
+               <Text style={text.money}>{this.props.navigation.state.params.ticker}</Text>
+               {watching}
             </View>
             <StockChart range={this.state.range} ticker={this.props.navigation.state.params.ticker}/>
       </View>

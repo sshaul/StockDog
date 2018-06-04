@@ -32,13 +32,12 @@ export default class Feed extends Component {
   componentWillReceiveProps (nextProps) {
     if (this.props.enterTime !== nextProps.enterTime) {
       this.api.getLeagueInfo((leagueInfo) => {
-        console.log('leagueinfo:', leagueInfo);
         this.api.getTransactions((transactions) => {
           if (transactions.length === 0) {
-            this.setState({noTransactions: true});
+            this.setState({noTransactions: true, name: leagueInfo.name});
           }
           else {
-            this.setState({transactions});
+            this.setState({transactions, name: leagueInfo.name});
           }
         });
       });
@@ -48,7 +47,6 @@ export default class Feed extends Component {
   componentDidMount() {
     this.api.getTransactions((transactions) => {
       this.api.getLeagueInfo((leagueInfo) => {
-        console.log('leagueinfo:', leagueInfo);
         this.api.getTransactions((transactions) => {
           if (transactions.length === 0) {
             this.setState({noTransactions: true, name: leagueInfo.name});

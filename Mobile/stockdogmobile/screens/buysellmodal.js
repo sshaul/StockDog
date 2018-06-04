@@ -17,7 +17,7 @@ export default class BuySellModal extends Component {
     this.state = {
       amount: '',
       transactionComplete: false,
-      errorMessage: ''
+      errorMessage: '',
     };
     this.api = new Api();
   }
@@ -76,6 +76,7 @@ export default class BuySellModal extends Component {
     }
     else {
       content = (<View style={containers.innerModal}>
+        <Text style={text.profileLabels}>Buy power: {props.buypower}</Text>
         <RoundInput 
           type="Amount" 
           onchange={this.onchangeamount.bind(this)} 
