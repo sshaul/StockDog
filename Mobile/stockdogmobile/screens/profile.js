@@ -78,6 +78,7 @@ export default class Profile extends Component {
   }
 
   _renderItem = ({item}) => {
+    console.log(item);
     return <PortfolioItem 
       ticker={item.ticker}
       numShares={item.shareCount}
@@ -130,23 +131,19 @@ export default class Profile extends Component {
       }
 
       var portfolio = this.state.portfolioStocks.length > 0 ? (
-          <View>
             <FlatList
               style={{flex: 1}}
               data={this.state.portfolioStocks}
               renderItem={this._renderItem}
             />
-          </View>
         ) : <Text style={text.smallPortfolioText}>No stocks owned. </Text>;
 
       var watchlist = this.state.portfolioWatchlist.length > 0 ? (
-        <View>
           <FlatList
             style={{flex: 1}}
             data={this.state.portfolioWatchlist}
             renderItem={this._renderItem}
           />
-        </View>
       ) : <Text style={text.smallPortfolioText}>No stocks watched. </Text>;
 
       return (
