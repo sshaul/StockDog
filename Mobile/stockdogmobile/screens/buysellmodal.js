@@ -53,7 +53,7 @@ export default class BuySellModal extends Component {
     var content;
     var props = this.props.navigation.state.params;
     if (this.state.transactionComplete) {
-      if (this.props.navigation.state.params.modalType == 'buy') {
+      if (props.modalType === 'buy') {
         content = (<View style={containers.innerModal}>
           <View style={containers.successMessage}>
             <Text style={text.profileLabels}>Buy successful!</Text>
@@ -63,7 +63,7 @@ export default class BuySellModal extends Component {
           </View>
         </View>);
       }
-      else if (this.props.navigation.state.params.modalType == 'sell') {
+      else if (props.modalType === 'sell') {
         content = (<View style={containers.innerModal}>
           <View style={containers.successMessage}>
             <Text style={text.profileLabels}>Sell successful!</Text>
@@ -75,14 +75,27 @@ export default class BuySellModal extends Component {
       }
     }
     else {
-      content = (<View style={containers.innerModal}>
-        <Text style={text.profileLabels}>Buy power: {props.buypower}</Text>
-        <RoundInput 
-          type="Amount" 
-          onchange={this.onchangeamount.bind(this)} 
-          value={this.state.amount}/>
-        <WideButton type={props.modalType} onpress={this.buysellstock.bind(this)} disabled={disabled}/>
-      </View>);
+      if (props.modalType === 'buy') {
+        content = (<View style={containers.innerModal}>
+          <Text style={[text.profileLabels, {paddingBottom: 10, paddingTop: 10}]}>Buy power: {props.buypower}</Text>
+          <RoundInput 
+            type="Amount" 
+            onchange={this.onchangeamount.bind(this)} 
+            value={this.state.amount}/>
+          <WideButton type={props.modalType} onpress={this.buysellstock.bind(this)} disabled={disabled}/>
+        </View>);
+      }
+      else if (props.modalType === 'sell') {
+        content = (<View style={containers.innerModal}>
+          <Text style={[text.profileLabels, {paddingBottom: 10, paddingTop: 10}]}>You own {props.shares} shares</Text>
+          <RoundInput 
+            type="Amount" 
+            onchange={this.onchangeamount.bind(this)} 
+            value={this.state.amount}/>
+          <WideButton type={props.modalType} onpress={this.buysellstock.bind(this)} disabled={disabled}/>
+        </View>);
+      }
+      
     }
     return (
       <Lightbox verticalPercent={0.5} horizontalPercent={0.8}>

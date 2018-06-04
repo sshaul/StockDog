@@ -92,7 +92,7 @@ export default class Profile extends Component {
     else {
       var currPort = this.state.portfolios.find(x => x.id === parseInt(this.state.portfolioid));
       if (this.state.isPortfolioLoading) {
-        this.api.getPortfolioStocks(this.state.portfolioid, (stocks) => {
+        this.api.getPortfolioStocks((stocks) => {
           if (stocks.length === 1 && stocks[0].ticker === null) {
             stocks = []
           }

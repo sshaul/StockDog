@@ -199,15 +199,21 @@ export default class Api {
       });
   };
 
-  getPortfolioStocks = (id, callback) => {
-    fetch(this.baseurl + '/api/portfolio/' + id, {
-      method: 'GET',
-      headers: this.headers
-    }).then((response) => response.json())
-    .then((responseJson) => {
-        callback(responseJson);
-    })
-    .catch((error) => console.log(error));
+  getPortfolioStocks = (callback) => {
+    AsyncStorage.getItem('currPortfolio')
+      .then((response) => {
+        return JSON.parse(response);
+      })
+      .then((pid) => {
+        fetch(this.baseurl + '/api/portfolio/' + pid, {
+          method: 'GET',
+          headers: this.headers
+        }).then((response) => response.json())
+        .then((responseJson) => {
+            callback(responseJson);
+        })
+        .catch((error) => console.log(error));
+      });
   };
 
   getPortfolioBuyPower = (callback) => {
