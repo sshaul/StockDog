@@ -36,7 +36,7 @@ keyExtractor = (item, index) => index;
   	return (
 			<View style = {containers.memberRow}>
 				<View style = {containers.membersRank}>
-					<Text style = {text.members}>
+					<Text style = {text.rank}>
 						{rank}
 					</Text>
 				</View>
@@ -46,7 +46,7 @@ keyExtractor = (item, index) => index;
 					</Text>
 				</View>
 					<View style = {containers.membersValue}>
-						<Text style = {text.members} > 
+						<Text style = {text.value} > 
 							{item.item.value} 
 						</Text>
 					</View>
@@ -57,13 +57,12 @@ keyExtractor = (item, index) => index;
   render() {
 		var mem;
 		//flat list
-		mem = (<View style = {containers.dashboard}>
+		mem = (
 						<FlatList
 							keyExtractor={this.keyExtractor}
 							data={this.state.members}
 							renderItem = {this.renderEachItem.bind(this)}
-						/>
-						</View>);
+						/>);
 		
 
     return (

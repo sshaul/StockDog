@@ -150,32 +150,29 @@ export default containers = StyleSheet.create({
     leagueMembers: {
       flex: 0.6,
       flexDirection: 'column',
-      paddingLeft: 50,
-      paddingRight: 50,
-    },
-    dashboard: {
-      borderColor: 'white',
-      borderWidth: 2,
-      paddingTop: 10,
-      paddingBottom: 20
+      paddingLeft: 20,
+      paddingRight: 20,
+      // borderColor: colors.white,
+      // borderWidth: 1,
+      // backgroundColor: 'green'
     },
     memberRow: {
       flex: 2,
       flexDirection: 'row',
       borderBottomWidth: 1,
-      borderColor: "gray"
+      borderColor: "gray",
     },
     membersRank: {
-      flex: 0.2,
+      flex: 0.3,
       alignItems: 'center'
     },
     membersName: {
       justifyContent: 'space-between',
-      alignItems: 'flex-start',
-      flex: 0.6
+      alignItems: 'center',
+      flex: 0.4
     },
     membersValue: {
-      flex: 0.2,
+      flex: 0.3,
       alignItems: 'flex-end',
       paddingRight: 10
     },

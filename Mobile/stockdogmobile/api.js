@@ -52,6 +52,21 @@ export default class Api {
     .then((responseJson) => {
       AsyncStorage.setItem('userid', '' + responseJson.userId);
       AsyncStorage.setItem('token', responseJson.token);
+      
+      // Set current portfolio
+      url = this.baseurl + '/api/portfolio?userId=' + responseJson.userId;
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        // Sets current portfolio as first portfolio
+        console.log('currP: ', responseJson[0].id);
+        AsyncStorage.setItem('currPortfolio', '' + responseJson[0].id)
+      });
+
       callback();
     })
     .catch((error) => {
@@ -154,7 +169,6 @@ export default class Api {
           headers: this.headers,
           body: JSON.stringify({
             userId: uid,
-            buyPower: 600,  // ********************* wrong
             name: pname,
             inviteCode: code,
             leagueId: leagueId
@@ -192,10 +206,6 @@ export default class Api {
       headers: this.headers
     }).then((response) => response.json())
     .then((responseJson) => {
-      // if (responseJson[0].ticker === null) {
-      //   callback([]);
-      // }
-      // else 
         callback(responseJson);
     })
     .catch((error) => console.log(error));
@@ -400,7 +410,7 @@ export default class Api {
         }).then((response) => response.json())
         .then((responseJson) => {
           responseJson.sort(function (x, y) {
-            return x.value >  y.value
+            return x.value <  y.value
           })
           callback(responseJson)
         })
