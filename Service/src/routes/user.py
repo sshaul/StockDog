@@ -1,8 +1,10 @@
 from flask import Blueprint, request, Response, g, jsonify, make_response
+from marshmallow import ValidationError
 from werkzeug.security import generate_password_hash, check_password_hash
 import simplejson as json
 
 from util.errMap import errors
+from validator.userSchema import UserSchema
 
 user_api = Blueprint('user_api', __name__)
 
@@ -10,6 +12,10 @@ user_api = Blueprint('user_api', __name__)
 @user_api.route('/api/user', methods=['POST'])
 def post_user():
    body = request.get_json()
+   try:
+      result = UserSchema().load(body)
+   except ValidationError as err:
+      return make_response(json.dumps(err.messages), 400)
 
    g.cursor.execute("SELECT * FROM User WHERE email = %s", body['email'])
    sameEmailUsers = g.cursor.fetchall()

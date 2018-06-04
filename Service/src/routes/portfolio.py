@@ -1,10 +1,12 @@
 from datetime import datetime
 from flask import Blueprint, request, Response, g, jsonify, make_response
+from marshmallow import ValidationError
 import simplejson as json
 
 from routes import stock
 from util.utility import Utility
 from util.errMap import errors
+from validator.portfolioSchema import PortfolioSchema
 
 portfolio_api = Blueprint('portfolio_api', __name__)
 
@@ -12,6 +14,11 @@ portfolio_api = Blueprint('portfolio_api', __name__)
 @portfolio_api.route('/api/portfolio', methods=['POST'])
 def post_portfolio():
    body = request.get_json()
+   try:
+      result = PortfolioSchema().load(body)
+   except ValidationError as err:
+      return make_response(json.dumps(err.messages), 400)
+
    now = datetime.now()
 
    if 'leagueId' in body:
@@ -120,6 +127,11 @@ def get_portfolio_value(portfolioId):
 @portfolio_api.route('/api/portfolio/<portfolioId>/history', methods=['POST'])
 def post_portfolio_history(portfolioId):
    body = request.get_json()
+   try:
+      result = PortfolioHistorySchema().load(body)
+   except ValidationError as err:
+      return make_response(json.dumps(err.messages), 400)
+   
    now = datetime.now()
 
    g.cursor.execute("INSERT INTO PortfolioHistory(portfolioId, datetime, value) VALUES (%s, %s, %s)",

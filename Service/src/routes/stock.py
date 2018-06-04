@@ -1,12 +1,14 @@
 from datetime import date, timedelta, datetime
 from flask import Blueprint, request, Response, g, jsonify, make_response
+from marshmallow import ValidationError
 import requests
 import simplejson as json
 import time
 from urllib.parse import urlencode
 
-import routes.iex as iex
-import util.errMap as errors
+from routes import iex
+from util.errMap import errors
+from validator.stockSchema import TransSchema
 
 TODAY = 0
 DAY_AGO = 1
@@ -27,6 +29,11 @@ URL_PREFIX = 'https://www.alphavantage.co/query?'
 @stock_api.route('/api/stock/sell/<ticker>', methods=['POST'])
 def post_sell_transaction(ticker):
    body = request.get_json()
+   try:
+      result = TransSchema().load(body)
+   except ValidationError as err:
+      return make_response(json.dumps(err.messages), 400)
+
    sharePrice = json.loads(get_history(ticker, 'now'))['price']
 
    g.cursor.execute("SELECT shareCount, avgCost FROM PortfolioItem " +
@@ -69,6 +76,11 @@ def post_sell_transaction(ticker):
 @stock_api.route('/api/stock/buy/<ticker>', methods=['POST'])
 def post_buy_transaction(ticker):
    body = request.get_json()
+   try:
+      result = TransSchema().load(body)
+   except ValidationError as err:
+      return make_response(json.dumps(err.messages), 400)
+   
    sharePrice = json.loads(get_history(ticker, 'now'))['price']
 
    g.cursor.execute("SELECT leagueId, buyPower FROM Portfolio WHERE id = %s",

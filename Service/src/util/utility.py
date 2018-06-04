@@ -4,7 +4,7 @@ import string
 
 class Utility:
 
-   def gen_inviteCode():
+   def getInviteCode():
       code = random.sample(string.ascii_uppercase + string.digits, 6)
       return ''.join(code)
 
