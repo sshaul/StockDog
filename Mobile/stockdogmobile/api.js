@@ -382,6 +382,7 @@ export default class Api {
   }
   
   //------------------------------- League Page ----------------------------------------//
+
   getLeagueMembers = (callback) => {
     AsyncStorage.getItem('currPortfolio')
     .then((response) => {return JSON.parse(response);})
@@ -400,6 +401,10 @@ export default class Api {
           headers: this.headers
         }).then((response) => response.json())
         .then((responseJson) => {
+          responseJson.sort(function (x, y) {
+            return x.value >  y.value
+          })
+          console.log(responseJson);
           callback(responseJson)
         })
         .catch((error) => console.log(error));
@@ -425,7 +430,6 @@ getLeagueInfo = (callback) => {
           headers: this.headers
         }).then((response) => {console.log('response: ', response); return response.json();})
         .then((responseJson) => {
-          console.log('responseJson: ', responseJson);
           callback(responseJson)
         })
         .catch((error) => console.log(error));

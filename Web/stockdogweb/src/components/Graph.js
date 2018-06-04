@@ -115,7 +115,6 @@ class Graph extends Component {
       }
 
       const ticker = this.props.ticker;
-      console.log(ticker);
 
       if (ticker !== "PORTFOLIO") {
          this.api.stockHistory(ticker, timeFrame, (history) => {
@@ -125,7 +124,8 @@ class Graph extends Component {
             // Getting an array of prices and times
             history.forEach(function(data) {
                prices.push(data['price']);
-               labels.push(data['time'].substring(11, 16));
+               if (timeFrame === "day") labels.push(data['time'].substring(11, 16));
+               else labels.push(data['time'].substring(5, 10))
             });
             // Update the state with new information
             var newData = this.state;
@@ -147,7 +147,6 @@ class Graph extends Component {
       }
       else if (ticker === "PORTFOLIO") {
          this.api.getPortfolioHistory(this.cookies.get("currPortfolio"), history => {
-            console.log(history);
 
             // Sort the array depend on epoch
             var prices = [];

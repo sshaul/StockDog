@@ -118,7 +118,6 @@ export default text = StyleSheet.create({
       fontFamily: 'open-sans-bold',
       borderRadius: 0,
       borderColor: colors.bright,
-      //backgroundColor: colors.bright,
       borderWidth: 2
     },
     // ----------------- Settings Modal ------------- //

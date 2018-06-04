@@ -152,10 +152,11 @@ export default containers = StyleSheet.create({
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItems: 'center',
+      paddingTop: 20,
       marginTop: 10
     },
     leagueMembers: {
-      flex: 0.6,
+      flex: 0.8,
       flexDirection: 'column',
       paddingTop: 50,
       paddingLeft: 50,
@@ -170,16 +171,19 @@ export default containers = StyleSheet.create({
     memberRow: {
       flexDirection: 'row',
       borderBottomWidth: 1,
-      borderColor: "gray",
-      paddingLeft: 30,
+      borderColor: "gray"
+    },
+    membersRank: {
+      flex: 0.2,
+      alignItems: 'center'
     },
     membersName: {
       justifyContent: 'space-between',
       alignItems: 'flex-start',
-      flex: 0.8
+      flex: 0.6
     },
-    membersRank: {
-      flex: 0.3,
+    membersValue: {
+      flex: 0.2,
       alignItems: 'flex-end',
       paddingRight: 10
     },
