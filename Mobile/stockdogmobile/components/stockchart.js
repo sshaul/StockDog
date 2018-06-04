@@ -57,13 +57,7 @@ export default class StockChart extends Component {
     }
     else {
       this.api.getChartData(this.props.ticker, range, (newXData, newYData, error) => {
-        if (error) {
-          alert(error);
-          Actions.pop();
-        }
-        else {
-          this.setState({xData: newXData, yData: newYData, isLoading: false});
-        }
+        this.setState({xData: newXData, yData: newYData, isLoading: false});
       });
     };
   }

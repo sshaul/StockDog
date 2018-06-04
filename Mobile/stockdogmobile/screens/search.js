@@ -7,6 +7,7 @@ import elements from '../style/elements';
 import text from '../style/text';
 import { colors } from '../style/colors'; 
 import NavBar from '../components/navbar';
+import API from '../api';
 
 export default class Search extends Component {
   constructor(props) {
@@ -14,12 +15,22 @@ export default class Search extends Component {
     this.state = {
       text: ''
     };
+
+    this.api = new API();
   }
 
   searchTicker() {
-    AsyncStorage.getItem('currPortfolio').then((value) => {
-      Actions.stock({ticker: this.state.text.toUpperCase(), pid: parseInt(value)});
+    this.api.getChartData(this.state.text, 'day', (newXData, newYData, error) => {
+      if (error) {
+        alert(error);
+      }
+      else {
+        AsyncStorage.getItem('currPortfolio').then((value) => {
+          Actions.stock({ticker: this.state.text.toUpperCase(), pid: parseInt(value)});
+        });
+      }
     });
+    
   }
 
   render() {
@@ -33,7 +44,8 @@ export default class Search extends Component {
             underlineColorAndroid='transparent'
             onChangeText={(text) => this.setState({text})}
             onSubmitEditing={this.searchTicker.bind(this)}
-            value={this.state.text} />
+            value={this.state.text}
+            autocorrect={false} />
         </View>
       </View>
     );
