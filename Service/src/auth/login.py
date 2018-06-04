@@ -38,8 +38,8 @@ class Login:
             return jsonify(userId=user['id'], token=token)
          
          else:
-            return Response(errors['passwordMismatch'], status=401)
+            return make_response(jsonify(error=errors['passwordMismatch']), 401)
       
       else:
-         return Response(errors['nonexistentUser'], status=401)
+         return make_response(jsonify(error=errors['nonexistentUser']), 401)
 

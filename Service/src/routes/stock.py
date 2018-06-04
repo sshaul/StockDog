@@ -1,5 +1,5 @@
 from datetime import date, timedelta, datetime
-from flask import Blueprint, request, Response, g
+from flask import Blueprint, request, Response, g, jsonify, make_response
 import requests
 import simplejson as json
 import time
@@ -35,7 +35,7 @@ def post_sell_transaction(ticker):
 
    userShares = g.cursor.fetchone()
    if not userShares or body['shareCount'] > userShares['shareCount']:
-      return Response(errors['insufficientShares'], status=400)
+      return make_response(jsonify(error=errors['insufficientShares']), 400)
 
    saleValue = sharePrice * body['shareCount']
    newShareCt = userShares['shareCount'] - body['shareCount']
@@ -47,7 +47,7 @@ def post_sell_transaction(ticker):
    try:
       leagueId = portfolio['leagueId']
    except:
-      return Response(errors['nonexistentPortfolio'], status=400)
+      return make_response(jsonify(error=errors['nonexistentPortfolio']), 400)
 
    g.cursor.execute("INSERT INTO Transaction" +
       "(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " +
@@ -79,12 +79,12 @@ def post_buy_transaction(ticker):
       userBuyPower = portfolio['buyPower']
       leagueId = portfolio['leagueId']
    except:
-      return Response(errors['nonexistentPortfolio'], status=400)
+      return make_response(jsonify(error=errors['nonexistentPortfolio']), 400)
 
    purchaseCost = sharePrice * body['shareCount']
 
    if userBuyPower < purchaseCost:
-      return Response(errors['insufficientBuyPower'], status=400)
+      return make_response(jsonify(error=errors['insufficientBuyPower']), 400)
 
    remainingBuyPower = float(userBuyPower) - purchaseCost
 
@@ -122,7 +122,7 @@ def get_history(ticker, length):
          function = getFunction(length)
          outputSize = getOutputSize(length)
       except Exception as e:
-         return Response(errors['unsupportedTicker'], status=400)
+         return make_response(jsonify(error=errors['unsupportedTicker']), 400)
 
       interval = getInterval(length)
       apiKey = getApiKey()
@@ -144,11 +144,10 @@ def get_history(ticker, length):
          response = rawResponse.json()
          alphaTime = time.time() - startTime
       except:
-         return Response('Alphavantage API refused to respond.', status=500)
+         return make_response(jsonify(error=errors['alphaVantageDown']), 500)
 
       if response.get('Error Message'):
-         return Response('Request was formed incorrectly. ' +
-            'The stock ticker is either invalid or unsupported.', status=404)
+         return make_response(jsonify(error=errors['unsupportedTicker']), 404)
 
       data = formatData(response, interval, length)
       parseTime = time.time() - startTime

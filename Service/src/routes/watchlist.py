@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response, g
+from flask import Blueprint, jsonify, make_response, request, Response, g
 import simplejson as json
 
 from util.errMap import errors
@@ -15,7 +15,7 @@ def post_watchlist():
 
    watchlistItem = g.cursor.fetchone()
    if watchlistItem:
-      return Response(errors['duplicateWatchlistItem'], status=400)
+      return make_response(jsonify(error=errors['duplicateWatchlistItem']), 400)
 
    g.cursor.execute("INSERT INTO Watchlist(portfolioId, ticker) VALUES (%s, %s)",
       [body['portfolioId'], body['ticker']])
