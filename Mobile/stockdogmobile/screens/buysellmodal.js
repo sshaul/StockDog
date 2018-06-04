@@ -48,6 +48,8 @@ export default class BuySellModal extends Component {
   }
 
   render() {
+    const disabled = !(this.state.amount.length > 0);
+
     var content;
     var props = this.props.navigation.state.params;
     if (this.state.transactionComplete) {
@@ -55,12 +57,20 @@ export default class BuySellModal extends Component {
         content = (<View style={containers.innerModal}>
           <View style={containers.successMessage}>
             <Text style={text.profileLabels}>Buy successful!</Text>
+            <View style={containers.check}>
+              <Icon name='check-circle' size={48} color='white' />
+            </View>
           </View>
         </View>);
       }
       else if (this.props.navigation.state.params.modalType == 'sell') {
         content = (<View style={containers.innerModal}>
-          <Text style={text.profileLabels}>Sell successful!</Text>
+          <View style={containers.successMessage}>
+            <Text style={text.profileLabels}>Sell successful!</Text>
+            <View style={containers.check}>
+              <Icon name='check-circle' size={48} color='white' />
+            </View>
+          </View>
         </View>);
       }
     }
@@ -70,11 +80,11 @@ export default class BuySellModal extends Component {
           type="Amount" 
           onchange={this.onchangeamount.bind(this)} 
           value={this.state.amount}/>
-        <WideButton type={props.modalType} onpress={this.buysellstock.bind(this)}/>
+        <WideButton type={props.modalType} onpress={this.buysellstock.bind(this)} disabled={disabled}/>
       </View>);
     }
     return (
-      <Lightbox verticalPercent={0.7} horizontalPercent={0.8}>
+      <Lightbox verticalPercent={0.5} horizontalPercent={0.8}>
         <View style={containers.outerModal}>
           <View style={containers.modalHeaders}>
             <TouchableOpacity onPress={()=>{Actions.pop()}}>

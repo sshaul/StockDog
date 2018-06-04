@@ -25,18 +25,12 @@ const Routes = () => (
     <Scene key="root" hideNavBar>
           {/* <Scene key="login" component={Login}/>
           <Scene key="register" component={Register}/> */}
-
-
           <Drawer 
             key="drawer"  
             contentComponent={LeagueDrawer} 
             type="replace"
           >
             <Modal key="modal">
-      
-        
-          
-            
               <Tabs 
                 key="main" 
                 tabBarStyle={ containers.tabBar } 
@@ -53,7 +47,7 @@ const Routes = () => (
                 <Scene key="profilemain" hideNavBar title="Portfolio" iconName="user" icon={TabIcon}>
                   <Scene key="profile" component={Profile} onEnter={Profile.onEnterPortfolio}/>
                 </Scene>
-                <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon}/>
+                <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon} onEnter={League.onEnterLeague}/>
                 <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon} onEnter={Feed.onEnterFeed}/>
                 <Scene key="searchmain" hideNavBar title="Search" iconName="search" icon={TabIcon}>
                   <Scene key="search" component={Search}/>

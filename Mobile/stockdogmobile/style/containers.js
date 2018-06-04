@@ -59,15 +59,16 @@ export default containers = StyleSheet.create({
     },
     // ----------------- Buy/Sell modals ------------- //
     modalHeaders: {
-      flex: 0.3,
-      width: '70%',
+      flex: 0.2,
+      width: '80%',
       alignItems: 'flex-end',
       justifyContent: 'center'
     },
     innerModal: {
-      flex: 0.9,
+      flex: 0.5,
       justifyContent: 'flex-start',
       alignItems: 'center',
+      // backgroundColor: 'yellow'
     },
     outerModal: {
       flexDirection: 'column',
@@ -76,10 +77,14 @@ export default containers = StyleSheet.create({
       backgroundColor: colors.grey
     },
     successMessage: {
-      width: 250, 
-      height: '70%', 
+      width: 270, 
+      height: '100%', 
       alignItems: 'center', 
-      justifyContent: 'center'
+      justifyContent: 'center',
+      // backgroundColor: 'blue'
+    },
+    check: {
+      paddingTop: 20,
     },
     // ----------------- Portfolio page ------------- //
     portfolioItem: {
@@ -151,10 +156,7 @@ export default containers = StyleSheet.create({
       flex: 0.6,
       flexDirection: 'column',
       paddingLeft: 20,
-      paddingRight: 20,
-      // borderColor: colors.white,
-      // borderWidth: 1,
-      // backgroundColor: 'green'
+      paddingRight: 20
     },
     memberRow: {
       flex: 2,
@@ -204,7 +206,6 @@ export default containers = StyleSheet.create({
     },
     feed: {
       flex: 0.7,
-      borderWidth: 1,
-      borderColor: colors.white
+      marginTop: -40
     }
 });

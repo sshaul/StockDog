@@ -4,6 +4,7 @@ import { Button } from 'react-native-elements';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
+import {colors} from '../style/colors';
 
 export default class WideButton extends Component {
   constructor(props) {
@@ -29,6 +30,9 @@ export default class WideButton extends Component {
       buttonText = 'LOGOUT';
 
     var style = elements.loginButton;
+    if (this.props.type == 'sell') {
+      style = elements.sellModalButton;
+    }
     if (this.props.disabled) {
       style = elements.disabledLoginButton;
     };

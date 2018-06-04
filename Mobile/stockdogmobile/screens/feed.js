@@ -31,14 +31,24 @@ export default class Feed extends Component {
   componentWillReceiveProps (nextProps) {
     if (this.props.enterTime !== nextProps.enterTime) {
       this.api.getTransactions((transactions) => {
-        this.setState({transactions});
+        if (transactions.length === 0) {
+          this.setState({noTransactions: true});
+        }
+        else {
+          this.setState({transactions});
+        }
       });
     }
   }
 
   componentDidMount() {
     this.api.getTransactions((transactions) => {
-      this.setState({transactions});
+      if (transactions.length === 0) {
+        this.setState({noTransactions: true});
+      }
+      else {
+        this.setState({transactions});
+      }
     });
   }
 
@@ -91,6 +101,15 @@ export default class Feed extends Component {
   }
 
   render() {
+    const transactions = this.state.noTransactions ?
+      <View style={containers.activity}> 
+        <Text style={text.noActivity}>No activity yet.</Text>
+      </View> : 
+      <FlatList
+            keyExtractor={this.keyExtractor}
+            data={this.state.transactions}
+            renderItem={this._renderItem.bind(this)}/>;
+    
     return (
       <View style={containers.profileGeneral}>
         <NavBar />
@@ -99,10 +118,7 @@ export default class Feed extends Component {
           <Text style={text.title}>Feed</Text>
         </View>
         <View style={containers.feed}>
-          <FlatList
-            keyExtractor={this.keyExtractor}
-            data={this.state.transactions}
-            renderItem={this._renderItem.bind(this)}/>
+          {transactions}
         </View>
       </View>
     );

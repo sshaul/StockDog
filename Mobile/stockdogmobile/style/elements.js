@@ -60,6 +60,15 @@ export default elements = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 10
     },
+    sellModalButton: {
+        height: 45,
+        width: 250,
+        backgroundColor: colors.red,
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10
+    },
     tabNavIcon: {
         height: 24,
         width: 24

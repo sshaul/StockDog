@@ -149,6 +149,10 @@ export default text = StyleSheet.create({
     },
     largeIconText: {
       fontSize: 12
-
+    },
+    noActivity: {
+      fontSize: 24,
+      color: colors.white,
+      textAlign: 'center'
     }
 });

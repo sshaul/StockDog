@@ -253,8 +253,9 @@ export default class Api {
             portfolioId: pid
           })
         }).then((response) => {
+          console.log(response);
           if (response.status === 400) {
-            callback({status_code: 400, message: response._bodyInit});
+            callback({status_code: 400, message: response.json().error});
           }
           else {
             callback(response);

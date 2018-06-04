@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS } from 'react-native';
 import { Button, SearchBar, ListItem } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
@@ -18,18 +19,34 @@ export default class League extends Component {
 			leagueName : '',
 			leagueCode : ''
     };
+	}
+	
+	static onEnterLeague = () => {
+    Actions.refresh({
+      enterTime: new Date()
+    });
+	}
+
+	componentWillReceiveProps (nextProps){
+    if (this.props.enterTime !== nextProps.enterTime) {
+      this.api.getLeagueInfo((leagueInfo) => {
+				this.api.getLeagueMembers((members) => {
+					this.setState({leagueName : leagueInfo.name, leagueCode : leagueInfo.inviteCode, members: members })
+				})
+			});
+    }
   }
 
-componentDidMount() {
-	this.api.getLeagueInfo((leagueInfo) => {
-		this.api.getLeagueMembers((members) => {
-			this.setState({leagueName : leagueInfo.name, leagueCode : leagueInfo.inviteCode, members: members })
-		})
-	});
-}
+	componentDidMount() {
+		this.api.getLeagueInfo((leagueInfo) => {
+			this.api.getLeagueMembers((members) => {
+				this.setState({leagueName : leagueInfo.name, leagueCode : leagueInfo.inviteCode, members: members })
+			})
+		});
+	}
 
 
-keyExtractor = (item, index) => index;
+	keyExtractor = (item, index) => index;
 
  renderEachItem(item) {
 	 var rank = item.index + 1;
