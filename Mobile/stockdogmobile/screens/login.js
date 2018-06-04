@@ -27,7 +27,7 @@ export default class Login extends Component {
   componentDidMount() {
     // Check if user is already logged in
     AsyncStorage.getItem('token', (token) => {
-      console.log(token);
+      // console.log(token);
     })
   }
 

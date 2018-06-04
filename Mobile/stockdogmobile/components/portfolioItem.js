@@ -24,13 +24,17 @@ export default class PortfolioItem extends Component {
       this.props.numShares ? 
         <Text style={text.smallPortfolioText}> {this.props.numShares} shares </Text> 
         : null;
+
+    const price = 
+      this.props.price ? 
+        <Text style={text.bigPortfolioText}> ${this.props.price} </Text> : null;
     return (
       <View style={containers.portfolioItem}>
         <TouchableOpacity onPress={this._onPress.bind(this, this.props.ticker)}>
           <Text style={text.bigPortfolioText}> {this.props.ticker} </Text>
         </TouchableOpacity>
         {numShares}
-        <Text style={text.bigPortfolioText}> ${this.props.price} </Text>
+        {price}
       </View>
     );
   }

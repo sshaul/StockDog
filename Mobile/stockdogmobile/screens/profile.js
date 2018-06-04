@@ -130,29 +130,25 @@ export default class Profile extends Component {
       }
 
       var portfolio = this.state.portfolioStocks.length > 0 ? (
-          <View>
             <FlatList
               style={{flex: 1}}
               data={this.state.portfolioStocks}
               renderItem={this._renderItem}
             />
-          </View>
         ) : <Text style={text.smallPortfolioText}>No stocks owned. </Text>;
 
       var watchlist = this.state.portfolioWatchlist.length > 0 ? (
-        <View>
           <FlatList
             style={{flex: 1}}
             data={this.state.portfolioWatchlist}
             renderItem={this._renderItem}
           />
-        </View>
       ) : <Text style={text.smallPortfolioText}>No stocks watched. </Text>;
 
       return (
         <View style={containers.profileGeneral}>
           <NavBar />
-          <View style={{flex: 1, alignItems: 'center'}}>
+          <View style={{flex: 0.9, alignItems: 'center'}}>
             <ScrollView style={{flex: 1}}>
               <StockChart range={this.state.range} portfolio={true} league={currPort.league}/>
               <View style={{flex: 0.3}}>

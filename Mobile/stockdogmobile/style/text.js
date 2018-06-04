@@ -106,6 +106,16 @@ export default text = StyleSheet.create({
       fontFamily: 'open-sans',
       fontSize: 24
     },
+    rank: {
+      color: colors.white,
+      fontFamily: 'open-sans',
+      fontSize: 24
+    },
+    value: {
+      color: colors.white,
+      fontFamily: 'open-sans',
+      fontSize: 24
+    },
     addGroupText: {
       color: colors.dark,
       fontFamily: 'open-sans',
