@@ -90,11 +90,12 @@ export default class Profile extends Component {
       return <LoadingProfile />;
     }
     else {
-      console.log('ps', this.state.portfolios);
-      console.log('pid', this.state.portfolioid);
       var currPort = this.state.portfolios.find(x => x.id === parseInt(this.state.portfolioid));
       if (this.state.isPortfolioLoading) {
         this.api.getPortfolioStocks(this.state.portfolioid, (stocks) => {
+          if (stocks.length === 1 && stocks[0].ticker === null) {
+            stocks = []
+          }
           var idx = 0;
           stocks.forEach((stock) => {
             stock.key = idx;
@@ -127,6 +128,27 @@ export default class Profile extends Component {
           </View>
         );
       }
+
+      var portfolio = this.state.portfolioStocks.length > 0 ? (
+          <View>
+            <FlatList
+              style={{flex: 1}}
+              data={this.state.portfolioStocks}
+              renderItem={this._renderItem}
+            />
+          </View>
+        ) : <Text style={text.smallPortfolioText}>No stocks owned. </Text>;
+
+      var watchlist = this.state.portfolioWatchlist.length > 0 ? (
+        <View>
+          <FlatList
+            style={{flex: 1}}
+            data={this.state.portfolioWatchlist}
+            renderItem={this._renderItem}
+          />
+        </View>
+      ) : <Text style={text.smallPortfolioText}>No stocks watched. </Text>;
+
       return (
         <View style={containers.profileGeneral}>
           <NavBar />
@@ -135,17 +157,9 @@ export default class Profile extends Component {
               <StockChart range={this.state.range} portfolio={true} league={currPort.league}/>
               <View style={{flex: 0.3}}>
                 <Text style={text.profileLabels}>Portfolio</Text>
-                <FlatList
-                  style={{flex: 1}}
-                  data={this.state.portfolioStocks}
-                  renderItem={this._renderItem}
-                />
+                {portfolio}
                 <Text style={text.profileLabels}>Watchlist</Text>
-                <FlatList
-                  style={{flex: 1}}
-                  data={this.state.portfolioWatchlist}
-                  renderItem={this._renderItem}
-                />
+                {watchlist}
               </View>
             </ScrollView>
           </View>

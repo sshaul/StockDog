@@ -1,6 +1,7 @@
 import React, { Component} from 'react';
 import { Line } from 'react-chartjs-2';
 import { withRouter } from 'react-router-dom';
+import { withCookies } from 'react-cookie';
 import API from '../api';
 import TimeFrame from '../components/TimeFrames'
 import loading from "../img/loading.svg";
@@ -9,6 +10,7 @@ class Graph extends Component {
    constructor(props) {
       super(props);
 
+      this.cookies = this.props.cookies;
       this.api = new API();
 
       this.loadingAnimation =
@@ -122,7 +124,8 @@ class Graph extends Component {
             // Getting an array of prices and times
             history.forEach(function(data) {
                prices.push(data['price']);
-               labels.push(data['time'].substring(11, 16));
+               if (timeFrame === "day") labels.push(data['time'].substring(11, 16));
+               else labels.push(data['time'].substring(5, 10))
             });
             // Update the state with new information
             var newData = this.state;
@@ -133,6 +136,32 @@ class Graph extends Component {
             // Update parent's current price
             this.props.updateCurrentPrice(
                Math.round(prices[prices.length-1]*100)/100);
+            // Make the points smaller
+            newData['data']['datasets'][0]['pointHoverRadius'] = 5;
+            newData['data']['datasets'][0]['pointHitRadius'] = 10;
+            // Turn off loading animation.
+            newData["loadingAnimation"] = <div></div>
+            newData["initialLoad"] = false;
+            this.setState(newData);
+         });
+      }
+      else if (ticker === "PORTFOLIO") {
+         this.api.getPortfolioHistory(this.cookies.get("currPortfolio"), history => {
+
+            // Sort the array depend on epoch
+            var prices = [];
+            var labels = [];
+            // Getting an array of prices and times
+            history.forEach(function(data) {
+               prices.push(data['value']);
+               labels.push(data['datetime'].substring(11, 16));
+            });
+            // Update the state with new information
+            var newData = this.state;
+            newData['data']['datasets'][0]['data'] = prices;
+            newData['data']['labels'] = labels;
+            // Setting the current price and round to the 2nd decimal
+            newData['currentPrice'] = Math.round(prices[prices.length-1]*100)/100;
             // Make the points smaller
             newData['data']['datasets'][0]['pointHoverRadius'] = 5;
             newData['data']['datasets'][0]['pointHitRadius'] = 10;
@@ -164,4 +193,4 @@ class Graph extends Component {
    }
 }
 
-export default withRouter(Graph);
+export default withCookies(withRouter(Graph));

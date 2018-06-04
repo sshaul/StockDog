@@ -51,7 +51,6 @@ export default class StockChart extends Component {
   getData(range) {
     if (this.props.portfolio) {
       this.api.getPortfolioData((newXData, newYData) => {
-        console.log('data', newXData, newYData);
         this.setState({xData: newXData, yData: newYData, isLoading: false});
       });
     }
@@ -160,7 +159,11 @@ export default class StockChart extends Component {
 
   profileHeader = () => {
     if (this.props.portfolio) {
-      return <Text style={text.money}>{this.props.league}</Text>
+      return (
+        <View style={containers.feedTitle}>
+          <Text style={text.title}>{this.props.league}</Text>
+        </View>
+      );
     };
   }
 

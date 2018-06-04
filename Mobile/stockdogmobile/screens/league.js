@@ -21,12 +21,10 @@ export default class League extends Component {
   }
 
 componentDidMount() {
-	this.api.getLeagueMemebers((members) => {
-		this.api.getLeagueName((leagueInfo) => {
-			console.log(leagueInfo.inviteCode)
-			this.setState({leagueName : leagueInfo.name, leagueCode : leagueInfo.inviteCode, members : members})
+	this.api.getLeagueInfo((leagueInfo) => {
+		this.api.getLeagueMembers((members) => {
+			this.setState({leagueName : leagueInfo.name, leagueCode : leagueInfo.inviteCode, members: members })
 		})
-		console.log(members);
 	});
 }
 
@@ -34,16 +32,22 @@ componentDidMount() {
 keyExtractor = (item, index) => index;
 
  renderEachItem(item) {
+	 var rank = item.index + 1;
   	return (
 			<View style = {containers.memberRow}>
+				<View style = {containers.membersRank}>
+					<Text style = {text.members}>
+						{rank}
+					</Text>
+				</View>
 				<View style = {containers.membersName}>
 					<Text style = {text.members} > 
 						{item.item.name}
 					</Text>
 				</View>
-					<View style = {containers.membersRank}>
+					<View style = {containers.membersValue}>
 						<Text style = {text.members} > 
-							{item.item.rank}
+							{item.item.value} 
 						</Text>
 					</View>
 			</View>
@@ -52,28 +56,22 @@ keyExtractor = (item, index) => index;
 
   render() {
 		var mem;
-  	if (this.state.members.length === 0) {
-			mem = (
-				<Text> Invite your friends! </Text>
-			);
-		}
-		else {
-			//flat list
-			mem = (<View style = {containers.dashboard}>
-							<FlatList
-								keyExtractor={this.keyExtractor}
-								data={this.state.members}
-								renderItem = {this.renderEachItem.bind(this)}
-							/>
-							</View>);
-		}
+		//flat list
+		mem = (<View style = {containers.dashboard}>
+						<FlatList
+							keyExtractor={this.keyExtractor}
+							data={this.state.members}
+							renderItem = {this.renderEachItem.bind(this)}
+						/>
+						</View>);
+		
 
     return (
       <View style={containers.profileGeneral}>
         <NavBar />
         
         <View style = {containers.leagueName}> 
-        	<Text style ={text.leagueTitle}> {this.state.leagueName} </Text>
+        	<Text style ={text.title}> {this.state.leagueName} </Text>
         	<Text style ={text.inviteCode}> Invite Code </Text>
 					<View style = {containers.code}>
 						<Text style= {text.code} selectable> {this.state.leagueCode} </Text>

@@ -36,7 +36,7 @@ def get_leagues():
    if inviteCode:
       g.cursor.execute("SELECT * FROM League WHERE inviteCode = %s", inviteCode)
    else:
-      g.cursor.exeucute("SELECT * FROM League")
+      g.cursor.execute("SELECT * FROM League")
 
    leagues = g.cursor.fetchall()
    return json.dumps(leagues, default=Utility.dateToStr)

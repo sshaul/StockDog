@@ -1,32 +1,67 @@
 import React, { Component } from 'react';
+import { withCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 import GoHome from '../components/GoHome';
+import API from '../api';
 
 class LeagueHome extends Component {
    constructor(props) {
       super(props);
+
+      this.cookies = this.props.cookies;
+      this.api = new API();
+
+      this.state = {
+         title: this.cookies.get("currLeagueName"),
+         memberContents: []
+      };
+   }
+
+   componentDidMount() {
+      this.api.getLeague(this.cookies.get("currLeagueId"), (data) => {
+         this.setState({
+            inviteCode: data["inviteCode"]
+         })
+         console.log(data);
+      });
+
+      this.api.getLeagueMembers(this.cookies.get("currLeagueId"), (data) => {
+         console.log(data);
+         var memberContents = [];
+
+         // Sort the array
+         data.sort((a, b) => {
+            return parseFloat(b.value) - parseFloat(a.value);
+         });
+
+         // Generating html for each member
+         data.forEach((member, index) => {
+            memberContents.push(
+               <tr key={member["name"]}>
+                  <td>{index + 1}</td>
+                  <td>{member["name"]}</td>
+                  <td className="league-home-money">${member["value"]}</td>
+               </tr>
+               );
+         });         
+
+         this.setState({
+            memberContents
+         });
+      });
    }
 
    render() {
       return (
          <div className="LeagueHome">
             <GoHome />
-            <h1>Penny Stocks</h1>
+            <h1>{this.state.title}</h1>
             <h6>Invite Code</h6>
-            <h4>ASDNJA</h4>
-            <div id="league-home-portfolio-link"><p>Your Portfolio</p></div>
+            <h4>{this.state.inviteCode}</h4>
+            <div id="league-home-portfolio-link"><Link to="/portfolio">Your Portfolio</Link></div>
             <table>
                <tbody>
-                  <tr>
-                     <td>1</td>
-                     <td>Ash</td>
-                     <td className="league-home-money">$20410.23</td>
-                  </tr>
-                  <tr className="league-home-spacer"></tr>
-                  <tr>
-                     <td>2</td>
-                     <td>Salonee</td>
-                     <td className="league-home-money">$18523.30</td>
-                  </tr>
+                  {this.state.memberContents}
                </tbody>
             </table>
          </div>
@@ -34,4 +69,4 @@ class LeagueHome extends Component {
    }
 }
 
-export default LeagueHome;
+export default withCookies(LeagueHome);
