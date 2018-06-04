@@ -51,7 +51,6 @@ export default class StockChart extends Component {
   getData(range) {
     if (this.props.portfolio) {
       this.api.getPortfolioData((newXData, newYData) => {
-        console.log('data', newXData, newYData);
         this.setState({xData: newXData, yData: newYData, isLoading: false});
       });
     }

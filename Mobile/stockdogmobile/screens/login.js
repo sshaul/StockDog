@@ -24,6 +24,13 @@ export default class Login extends Component {
     this.api = new Api();
   }
 
+  componentDidMount() {
+    // Check if user is already logged in
+    AsyncStorage.getItem('token', (token) => {
+      console.log(token);
+    })
+  }
+
   focusNextField = (id) => {
     this.inputs[id].focus();
   };

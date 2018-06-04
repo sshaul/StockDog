@@ -24,7 +24,8 @@ export default text = StyleSheet.create({
       color: colors.bright,
       fontFamily: 'open-sans',
       fontSize: 48,
-      textAlign: 'center'
+      textAlign: 'center',
+      paddingTop: 10
     },
     profileLabels: {
       color: colors.white,
@@ -117,7 +118,6 @@ export default text = StyleSheet.create({
       fontFamily: 'open-sans-bold',
       borderRadius: 0,
       borderColor: colors.bright,
-      //backgroundColor: colors.bright,
       borderWidth: 2
     },
     // ----------------- Settings Modal ------------- //

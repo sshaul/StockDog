@@ -5,8 +5,8 @@ import { AsyncStorage } from 'react-native';
 export default class Api {
 
   constructor () {
-     this.baseurl = "http://localhost:5005";
-    //this.baseurl = "http://198.199.100.209:5005";
+    // this.baseurl = "http://localhost:5005";
+    this.baseurl = "http://198.199.100.209:5005";
     this.headers = {
         'Content-Type': 'application/json'
     }
@@ -64,7 +64,6 @@ export default class Api {
       .then((userid) => {
         AsyncStorage.getItem('token')
           .then((token) => {
-            console.log(userid, token);
             fetch(this.baseurl + '/api/logout', {
               method: 'DELETE',
               headers: {
@@ -75,7 +74,6 @@ export default class Api {
                 userId: userid
               })
             }).then((response) => {
-              console.log('logged out.');
               AsyncStorage.removeItem('userid', () => {
                 AsyncStorage.removeItem('token', () => {
                   console.log('removed items.');
@@ -384,6 +382,7 @@ export default class Api {
   }
   
   //------------------------------- League Page ----------------------------------------//
+
   getLeagueMembers = (callback) => {
     AsyncStorage.getItem('currPortfolio')
     .then((response) => {return JSON.parse(response);})
@@ -402,6 +401,10 @@ export default class Api {
           headers: this.headers
         }).then((response) => response.json())
         .then((responseJson) => {
+          responseJson.sort(function (x, y) {
+            return x.value >  y.value
+          })
+          console.log(responseJson);
           callback(responseJson)
         })
         .catch((error) => console.log(error));
@@ -427,7 +430,6 @@ getLeagueInfo = (callback) => {
           headers: this.headers
         }).then((response) => {console.log('response: ', response); return response.json();})
         .then((responseJson) => {
-          console.log('responseJson: ', responseJson);
           callback(responseJson)
         })
         .catch((error) => console.log(error));
