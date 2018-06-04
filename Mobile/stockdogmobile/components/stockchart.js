@@ -159,7 +159,11 @@ export default class StockChart extends Component {
 
   profileHeader = () => {
     if (this.props.portfolio) {
-      return <Text style={text.money}>{this.props.league}</Text>
+      return (
+        <View style={containers.feedTitle}>
+          <Text style={text.title}>{this.props.league}</Text>
+        </View>
+      );
     };
   }
 

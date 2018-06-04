@@ -72,7 +72,7 @@ keyExtractor = (item, index) => index;
         <NavBar />
         
         <View style = {containers.leagueName}> 
-        	<Text style ={text.leagueTitle}> {this.state.leagueName} </Text>
+        	<Text style ={text.title}> {this.state.leagueName} </Text>
         	<Text style ={text.inviteCode}> Invite Code </Text>
 					<View style = {containers.code}>
 						<Text style= {text.code} selectable> {this.state.leagueCode} </Text>
