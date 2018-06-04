@@ -152,7 +152,7 @@ export default class Profile extends Component {
       return (
         <View style={containers.profileGeneral}>
           <NavBar />
-          <View style={{flex: 1, alignItems: 'center'}}>
+          <View style={{flex: 0.9, alignItems: 'center'}}>
             <ScrollView style={{flex: 1}}>
               <StockChart range={this.state.range} portfolio={true} league={currPort.league}/>
               <View style={{flex: 0.3}}>

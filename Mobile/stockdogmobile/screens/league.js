@@ -69,9 +69,12 @@ keyExtractor = (item, index) => index;
     return (
       <View style={containers.profileGeneral}>
         <NavBar />
+
+				<View style= {containers.feedTitle}>
+					<Text style ={text.title}> {this.state.leagueName} </Text>
+				</View>
         
         <View style = {containers.leagueName}> 
-        	<Text style ={text.title}> {this.state.leagueName} </Text>
         	<Text style ={text.inviteCode}> Invite Code </Text>
 					<View style = {containers.code}>
 						<Text style= {text.code} selectable> {this.state.leagueCode} </Text>

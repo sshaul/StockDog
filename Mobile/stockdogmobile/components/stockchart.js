@@ -182,19 +182,21 @@ export default class StockChart extends Component {
       );
     }
     return (
-      <View style={containers.chart}>
+      <View>
         {this.profileHeader()}
-        <Text style={text.money}>{moneyText}</Text>
-        {this.createChart()}
-        <ButtonGroup
-                onPress={this.updateIndex.bind(this)}
-                selectedIndex={this.state.selectedIndex}
-                buttons={['D', 'W', 'M', 'Y']}
-                containerStyle={{flex: 0.3}}
-                textStyle={{color: colors.white}}
-                buttonStyle={{backgroundColor: colors.grey}}
-                selectedButtonStyle={{backgroundColor: colors.white}}
-              />
+        <View style={containers.chart}>
+          <Text style={text.money}>{moneyText}</Text>
+          {this.createChart()}
+          <ButtonGroup
+                  onPress={this.updateIndex.bind(this)}
+                  selectedIndex={this.state.selectedIndex}
+                  buttons={['D', 'W', 'M', 'Y']}
+                  containerStyle={{flex: 0.3}}
+                  textStyle={{color: colors.white}}
+                  buttonStyle={{backgroundColor: colors.grey}}
+                  selectedButtonStyle={{backgroundColor: colors.white}}
+                />
+        </View>
       </View>
     );
   }

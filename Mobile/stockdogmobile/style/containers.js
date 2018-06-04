@@ -40,7 +40,6 @@ export default containers = StyleSheet.create({
       flex: 0.7,
       alignItems: 'center',
       justifyContent: 'flex-start',
-      marginTop: -10
     },
     chartOut: {
       flex: 0.5,
@@ -71,7 +70,6 @@ export default containers = StyleSheet.create({
       alignItems: 'center',
     },
     outerModal: {
-      // flex: 0.6,
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItems: 'center',
@@ -84,11 +82,6 @@ export default containers = StyleSheet.create({
       justifyContent: 'center'
     },
     // ----------------- Portfolio page ------------- //
-    profileChart: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
     portfolioItem: {
       flexDirection: 'row', 
       justifyContent: 'space-between', 
@@ -148,17 +141,15 @@ export default containers = StyleSheet.create({
     },
     // ----------------- League Page ------------- //
     leagueName: {
-      flex: 0.3,
+      flex: 0.2,
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      paddingTop: 20,
-      marginTop: 10
+      marginTop: -50
     },
     leagueMembers: {
-      flex: 0.8,
+      flex: 0.6,
       flexDirection: 'column',
-      paddingTop: 50,
       paddingLeft: 50,
       paddingRight: 50,
     },
@@ -169,6 +160,7 @@ export default containers = StyleSheet.create({
       paddingBottom: 20
     },
     memberRow: {
+      flex: 2,
       flexDirection: 'row',
       borderBottomWidth: 1,
       borderColor: "gray"
@@ -195,7 +187,6 @@ export default containers = StyleSheet.create({
     settingsHeader: {
       flex: 0.3,
       justifyContent: 'flex-end',
-      // backgroundColor: 'pink'
     },
     settingsIconHeaders: {
       flex: 0.1,
@@ -209,14 +200,13 @@ export default containers = StyleSheet.create({
     // ----------------- Feed ------------- //
     activity: {
       flex: 0.2,
-      // backgroundColor: 'pink' 
     },
     feedTitle: {
       flex: 0.2,
-      alignItems: 'center'
+      alignItems: 'center',
     },
     feed: {
-      flex: 0.8,
+      flex: 0.7,
       borderWidth: 1,
       borderColor: colors.white
     }
