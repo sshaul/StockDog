@@ -76,7 +76,6 @@ export default class Api {
             }).then((response) => {
               AsyncStorage.removeItem('userid', () => {
                 AsyncStorage.removeItem('token', () => {
-                  console.log('removed items.');
                   callback();
                 }); 
               });
@@ -394,7 +393,6 @@ export default class Api {
       }).then((response) => response.json())
       .then((responseJson) => {
         var lid = responseJson[0].leagueId;
-        console.log('lid: ', lid);
         url = this.baseurl + '/api/league/' + lid + '/members';
         fetch(url, {
           method: 'GET',
@@ -404,7 +402,6 @@ export default class Api {
           responseJson.sort(function (x, y) {
             return x.value >  y.value
           })
-          console.log(responseJson);
           callback(responseJson)
         })
         .catch((error) => console.log(error));
@@ -428,7 +425,7 @@ getLeagueInfo = (callback) => {
         fetch(url, {
           method: 'GET',
           headers: this.headers
-        }).then((response) => {console.log('response: ', response); return response.json();})
+        }).then((response) => {return response.json();})
         .then((responseJson) => {
           callback(responseJson)
         })
