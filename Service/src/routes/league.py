@@ -17,7 +17,7 @@ DATE_FORMAT = "%m-%d-%Y"
 def post_league():
    body = request.get_json()
    try:
-      result = TransSchema().load(body)
+      result = LeagueSchema().load(body)
    except ValidationError as err:
       return make_response(json.dumps(err.messages), 400)
 
