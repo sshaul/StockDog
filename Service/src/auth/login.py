@@ -1,9 +1,12 @@
 from flask import Blueprint, request, Response, jsonify, g, make_response
 from flask_login import LoginManager
+from marshmallow import ValidationError
+import simplejson as json
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from auth import manageTokens
 from util.errMap import errors
+from validator.loginSchema import LoginSchema
 
 
 class Login:
@@ -19,6 +22,10 @@ class Login:
    @login_api.route('/api/login', methods=['POST'])
    def post_login():
       body = request.get_json()
+      try:
+         result = LoginSchema().load(body)
+      except ValidationError as err:
+         return make_response(json.dumps(err.messages), 400)
 
       g.cursor.execute("SELECT * FROM User WHERE email = %s", body['email'])
       user = g.cursor.fetchone()

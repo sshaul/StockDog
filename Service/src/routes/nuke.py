@@ -1,11 +1,18 @@
 from flask import Blueprint, request, Response, g
+from marshmallow import ValidationError
+
+from validator.nukeSchema import NukeSchema
 
 nuke_api = Blueprint('nuke_api', __name__)
 
 
 @nuke_api.route('/api/nuke', methods=['DELETE'])
-def post_nuke():
+def nuke():
    body = request.get_json()
+   try:
+      result = NukeSchema().load(body)
+   except ValidationError as err:
+      return make_response(json.dumps(err.messages), 400)
 
    delete_tables(['League', 'PortfolioItem', 'PortfolioHistory', 'Watchlist', 'Transaction', 
       'Ticker', 'Portfolio', 'User'], body['resetIncrement'])

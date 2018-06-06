@@ -1,7 +1,9 @@
 from flask import Blueprint, jsonify, make_response, request, Response, g
+from marshmallow import ValidationError
 import simplejson as json
 
 from util.errMap import errors
+from validator.watchlistSchema import WatchlistSchema
 
 watchlist_api = Blueprint('watchlist_api', __name__)
 
@@ -9,6 +11,10 @@ watchlist_api = Blueprint('watchlist_api', __name__)
 @watchlist_api.route('/api/watchlist', methods=['POST'])
 def post_watchlist():
    body = request.get_json()
+   try:
+      result = WatchlistSchema().load(body)
+   except ValidationError as err:
+      return make_response(json.dumps(err.messages), 400)
 
    g.cursor.execute("SELECT * FROM Watchlist WHERE portfolioId = %s AND ticker = %s",
       [body['portfolioId'], body['ticker']])

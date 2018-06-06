@@ -1,10 +1,12 @@
 from flask import Blueprint, request, Response, g, jsonify, make_response
+from marshmallow import ValidationError
 import simplejson as json
 import time
 
 import routes.portfolio as portfolio
 from util.utility import Utility
 from util.errMap import errors
+from validator.leagueSchema import LeagueSchema
 
 league_api = Blueprint('league_api', __name__)
 
@@ -14,7 +16,12 @@ DATE_FORMAT = "%m-%d-%Y"
 @league_api.route('/api/league', methods=['POST'])
 def post_league():
    body = request.get_json()
-   inviteCode = Utility.gen_inviteCode()
+   try:
+      result = LeagueSchema().load(body)
+   except ValidationError as err:
+      return make_response(json.dumps(err.messages), 400)
+
+   inviteCode = Utility.getInviteCode()
 
    try:
       start = time.strptime(body['start'], DATE_FORMAT)
