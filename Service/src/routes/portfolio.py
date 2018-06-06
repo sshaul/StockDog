@@ -95,6 +95,11 @@ def get_recent_portfolio_value(portfolioId):
       return -1
 
 
+@portfolio_api.route('/api/portfolio/<portfolioId>/history/now', methods=['GET'])
+def get_most_recent_portfolio__value(portfolioId):
+   return jsonify(value=get_recent_portfolio_value(portfolioId))
+
+
 @portfolio_api.route('/api/portfolio/<portfolioId>', methods=['GET'])
 def get_portfolio(portfolioId):
    g.cursor.execute("SELECT p.id AS id, ticker, shareCount, avgCost, name, buyPower, leagueId " +
