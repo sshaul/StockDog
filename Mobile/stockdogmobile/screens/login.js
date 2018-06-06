@@ -27,7 +27,7 @@ export default class Login extends Component {
   componentDidMount() {
     // Check if user is already logged in
     AsyncStorage.getItem('token', (token) => {
-      console.log(token);
+      // console.log(token);
     })
   }
 
@@ -74,6 +74,7 @@ export default class Login extends Component {
             ref={ input => {
               this.inputs['one'] = input;
             }}
+            autoCapitalize={false}
           />
           <TextInput
             style={elements.roundedInput}
@@ -91,10 +92,10 @@ export default class Login extends Component {
             }}
           />
         <WideButton type='login' disabled={disabled} onpress={this.login.bind(this)}/>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={elements.smallTextButton}>
           <Text style={text.smallText}> Forgot Password? </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={elements.smallTextButton}>
           <Text 

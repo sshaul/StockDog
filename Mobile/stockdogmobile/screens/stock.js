@@ -21,19 +21,36 @@ constructor(props) {
       isLoading: true,
       selectedIndex: 0,
       range: 'day',
-      addedWatch: false
+      addedWatch: false,
+      buypower: -1,
+      shares: 0
    };
 
    this.api = new Api();
 };
 
 componentDidMount() {
-   this.api.getWatchlistStocks((watchlist) => {
-      var item = watchlist.find(x => x.ticker === this.props.navigation.state.params.ticker)
-      if (item !== undefined) {
-      this.setState({addedWatch: true, watchlistId: item.id});
-      }
-   })
+   var props = this.props.navigation.state.params;
+   this.api.getPortfolioBuyPower((bp) => {
+      this.api.getPortfolioStocks((stocks) => {
+         const stock = stocks.find((element) => {return element.ticker === props.ticker;});
+         if (stock != undefined) {
+            shares = stock.shareCount;
+         }
+         else {
+            shares = 0
+         }
+         this.api.getWatchlistStocks((watchlist) => {
+            var item = watchlist.find(x => x.ticker === props.ticker)
+            if (item !== undefined) {
+               this.setState({addedWatch: true, watchlistId: item.id, buypower: bp, shares: shares});
+            }
+            else {
+               this.setState({buypower: bp, shares: shares});
+            }
+         });
+      });
+   });
 }
 
 updateIndex(selectedIndex) {
@@ -54,11 +71,11 @@ updateIndex(selectedIndex) {
 }
 
 _openBuyModal = () => {
-   Actions.buysellmodal({modalType: 'buy', ticker: this.props.navigation.state.params.ticker});
+   Actions.buysellmodal({modalType: 'buy', ticker: this.props.navigation.state.params.ticker, buypower: this.state.buypower});
 }
 
 _openSellModal = () => {
-   Actions.buysellmodal({modalType: 'sell', ticker: this.props.navigation.state.params.ticker});
+   Actions.buysellmodal({modalType: 'sell', ticker: this.props.navigation.state.params.ticker, shares: this.state.shares});
 }
 
 addToWatchlist = () => {
@@ -92,8 +109,8 @@ render() {
       <NavBar stock={true}/>
       <View style={containers.chart}>
             <View style={{flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', paddingLeft: 10}}>
-            <Text style={text.money}>{this.props.navigation.state.params.ticker}</Text>
-            {watching}
+               <Text style={text.money}>{this.props.navigation.state.params.ticker}</Text>
+               {watching}
             </View>
             <StockChart range={this.state.range} ticker={this.props.navigation.state.params.ticker}/>
       </View>

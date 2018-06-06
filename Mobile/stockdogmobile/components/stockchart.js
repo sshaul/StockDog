@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, ScrollView } from 'react-native';
 import { Button, ButtonGroup } from 'react-native-elements';
 import containers from '../style/containers';
+import { Actions } from 'react-native-router-flux';
 import elements from '../style/elements';
 import text from '../style/text';
 import { colors } from '../style/colors'; 
@@ -55,7 +56,7 @@ export default class StockChart extends Component {
       });
     }
     else {
-      this.api.getChartData(this.props.ticker, range, (newXData, newYData) => {
+      this.api.getChartData(this.props.ticker, range, (newXData, newYData, error) => {
         this.setState({xData: newXData, yData: newYData, isLoading: false});
       });
     };
@@ -116,8 +117,12 @@ export default class StockChart extends Component {
             },
             tooltip: {
                 formatter: function () {
+                    if (this.x.split(" ").length > 1) {
+                      return this.x.split(" ")[0] + ' ' + this.x.split(" ")[1] + '<br/>' +
+                        '$' + Highcharts.numberFormat(this.y, 2);
+                    }
                     return this.x + '<br/>' +
-                        Highcharts.numberFormat(this.y, 2);
+                        '$' + Highcharts.numberFormat(this.y, 2);
                 }
             },
             legend: {
@@ -182,19 +187,21 @@ export default class StockChart extends Component {
       );
     }
     return (
-      <View style={containers.chart}>
+      <View>
         {this.profileHeader()}
-        <Text style={text.money}>{moneyText}</Text>
-        {this.createChart()}
-        <ButtonGroup
-                onPress={this.updateIndex.bind(this)}
-                selectedIndex={this.state.selectedIndex}
-                buttons={['D', 'W', 'M', 'Y']}
-                containerStyle={{flex: 0.3}}
-                textStyle={{color: colors.white}}
-                buttonStyle={{backgroundColor: colors.grey}}
-                selectedButtonStyle={{backgroundColor: colors.white}}
-              />
+        <View style={containers.chart}>
+          <Text style={text.money}>{moneyText}</Text>
+          {this.createChart()}
+          <ButtonGroup
+                  onPress={this.updateIndex.bind(this)}
+                  selectedIndex={this.state.selectedIndex}
+                  buttons={['D', 'W', 'M', 'Y']}
+                  containerStyle={{flex: 0.3}}
+                  textStyle={{color: colors.white}}
+                  buttonStyle={{backgroundColor: colors.grey}}
+                  selectedButtonStyle={{backgroundColor: colors.white}}
+                />
+        </View>
       </View>
     );
   }

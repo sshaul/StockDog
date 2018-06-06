@@ -61,6 +61,7 @@ export default class LeagueDrawer extends Component {
             paddingLeft: 10,
             paddingTop: 5
           }}>
+            <Text> Worth: {item.item.value} </Text>
             <Text> Buy Power: {item.item.buyPower} </Text>
           </View>
         }

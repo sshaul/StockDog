@@ -31,7 +31,7 @@ def post_league():
 
 @league_api.route('/api/league', methods=['GET'])
 def get_leagues():
-   inviteCode = request.args.get('invite')
+   inviteCode = request.args.get('inviteCode')
 
    if inviteCode:
       g.cursor.execute("SELECT * FROM League WHERE inviteCode = %s", inviteCode)

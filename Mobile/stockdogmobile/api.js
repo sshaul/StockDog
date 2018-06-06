@@ -52,6 +52,20 @@ export default class Api {
     .then((responseJson) => {
       AsyncStorage.setItem('userid', '' + responseJson.userId);
       AsyncStorage.setItem('token', responseJson.token);
+      
+      // Set current portfolio
+      url = this.baseurl + '/api/portfolio?userId=' + responseJson.userId;
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((response) => response.json())
+      .then((responseJson) => {
+        // Sets current portfolio as first portfolio
+        AsyncStorage.setItem('currPortfolio', '' + responseJson[0].id)
+      });
+
       callback();
     })
     .catch((error) => {
@@ -128,7 +142,7 @@ export default class Api {
   };
 
   isValidInviteCode = (inviteCode, callback) => {
-    fetch(this.baseurl + '/api/league?invite=' + inviteCode, {
+    fetch(this.baseurl + '/api/league?inviteCode=' + inviteCode, {
       method: 'GET',
       headers: this.headers,
     }).then((response) => response.json())
@@ -154,7 +168,6 @@ export default class Api {
           headers: this.headers,
           body: JSON.stringify({
             userId: uid,
-            buyPower: 600,  // ********************* wrong
             name: pname,
             inviteCode: code,
             leagueId: leagueId
@@ -186,20 +199,40 @@ export default class Api {
       });
   };
 
-  getPortfolioStocks = (id, callback) => {
-    fetch(this.baseurl + '/api/portfolio/' + id, {
-      method: 'GET',
-      headers: this.headers
-    }).then((response) => response.json())
-    .then((responseJson) => {
-      // if (responseJson[0].ticker === null) {
-      //   callback([]);
-      // }
-      // else 
-        callback(responseJson);
-    })
-    .catch((error) => console.log(error));
+  getPortfolioStocks = (callback) => {
+    AsyncStorage.getItem('currPortfolio')
+      .then((response) => {
+        return JSON.parse(response);
+      })
+      .then((pid) => {
+        fetch(this.baseurl + '/api/portfolio/' + pid, {
+          method: 'GET',
+          headers: this.headers
+        }).then((response) => response.json())
+        .then((responseJson) => {
+            callback(responseJson);
+        })
+        .catch((error) => console.log(error));
+      });
   };
+
+  getPortfolioBuyPower = (callback) => {
+    AsyncStorage.getItem('currPortfolio')
+      .then((response) => {
+        return JSON.parse(response);
+      })
+      .then((pid) => {
+        var newXData = [];
+        var newYData = [];
+        var url = this.baseurl + '/api/portfolio/' + pid;
+        fetch(url, {
+          method: 'GET'
+        }).then((response) => response.json())
+        .then((responseJson) => {
+          callback(responseJson[0].buyPower);
+        }).catch((error) => console.error(error));
+      });
+  }
 
   getPortfolioData = (callback) => {
     AsyncStorage.getItem('currPortfolio')
@@ -244,7 +277,7 @@ export default class Api {
           })
         }).then((response) => {
           if (response.status === 400) {
-            callback({status_code: 400, message: response._bodyInit});
+            callback({status_code: 400, message: response.json().error});
           }
           else {
             callback(response);
@@ -262,30 +295,36 @@ export default class Api {
       method: 'GET'
     }).then((response) => response.json())
     .then((responseJson) => {
-      responseJson.forEach(element => {
-        var str = element.time;
-        var date = "";
-        if (range == 'day') {
-          str = element.time.split(" ")[1];
-          date = str.split(":")[0] + ":" + str.split(":")[1];
-        }
-        else if (range == 'week') {
-          var d = new Date(str.split(" ")[0]);
-          var mo = d.toLocaleString("en-us", {month: "short"});
-          var day = d.toLocaleString("en-us", {day: "numeric"});
-          var time = str.split(" ")[1];
-          date = mo + " " + day + " " + time;
-        }
-        else {
-          var d = new Date(element.time);
-          var month = d.toLocaleString("en-us", {month: "short"});
-          var day = d.toLocaleString("en-us", {day: "numeric"});
-          date = month + " " + day;
-        }
-        newXData.push(date);
-        newYData.push(parseFloat(element.price));
-      })
-      callback(newXData, newYData);
+      if (responseJson.error) {
+        callback(null, null, responseJson.error);
+      }
+      else {
+        responseJson.forEach(element => {
+          var str = element.time;
+          var date = "";
+          if (range == 'day') {
+            str = element.time.split(" ")[1];
+            date = str.split(":")[0] + ":" + str.split(":")[1];
+          }
+          else {
+            var d = new Date(str.split(" ")[0]);
+            var mo = d.toLocaleString("en-us", {month: "short"});
+            var day = d.toLocaleString("en-us", {day: "numeric"});
+            var time = str.split(" ")[1];
+            date = mo + " " + day + " " + time;
+          }
+          // else {
+          //   console.log(element.time);
+          //   var d = new Date(element.time);
+          //   var month = d.toLocaleString("en-us", {month: "short"});
+          //   var day = d.toLocaleString("en-us", {day: "numeric"});
+          //   date = month + " " + day;
+          // }
+          newXData.push(date);
+          newYData.push(parseFloat(element.price));
+        })
+        callback(newXData, newYData);
+      }
     }).catch((error) => console.error(error));
   };
 
@@ -400,7 +439,7 @@ export default class Api {
         }).then((response) => response.json())
         .then((responseJson) => {
           responseJson.sort(function (x, y) {
-            return x.value >  y.value
+            return x.value <  y.value
           })
           callback(responseJson)
         })

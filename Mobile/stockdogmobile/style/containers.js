@@ -40,7 +40,6 @@ export default containers = StyleSheet.create({
       flex: 0.7,
       alignItems: 'center',
       justifyContent: 'flex-start',
-      marginTop: -10
     },
     chartOut: {
       flex: 0.5,
@@ -60,35 +59,34 @@ export default containers = StyleSheet.create({
     },
     // ----------------- Buy/Sell modals ------------- //
     modalHeaders: {
-      flex: 0.3,
-      width: '70%',
+      flex: 0.2,
+      width: '80%',
       alignItems: 'flex-end',
       justifyContent: 'center'
     },
     innerModal: {
-      flex: 0.9,
+      flex: 0.5,
       justifyContent: 'flex-start',
       alignItems: 'center',
+      // backgroundColor: 'yellow'
     },
     outerModal: {
-      // flex: 0.6,
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItems: 'center',
       backgroundColor: colors.grey
     },
     successMessage: {
-      width: 250, 
-      height: '70%', 
+      width: 270, 
+      height: '100%', 
       alignItems: 'center', 
-      justifyContent: 'center'
+      justifyContent: 'center',
+      // backgroundColor: 'blue'
+    },
+    check: {
+      paddingTop: 20,
     },
     // ----------------- Portfolio page ------------- //
-    profileChart: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
     portfolioItem: {
       flexDirection: 'row', 
       justifyContent: 'space-between', 
@@ -148,30 +146,22 @@ export default containers = StyleSheet.create({
     },
     // ----------------- League Page ------------- //
     leagueName: {
-      flex: 0.3,
+      flex: 0.2,
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      paddingTop: 20,
-      marginTop: 10
     },
     leagueMembers: {
-      flex: 0.8,
+      flex: 0.6,
       flexDirection: 'column',
-      paddingTop: 50,
-      paddingLeft: 50,
-      paddingRight: 50,
-    },
-    dashboard: {
-      borderColor: 'white',
-      borderWidth: 2,
-      paddingTop: 10,
-      paddingBottom: 20
+      paddingLeft: 20,
+      paddingRight: 20
     },
     memberRow: {
+      flex: 2,
       flexDirection: 'row',
       borderBottomWidth: 1,
-      borderColor: "gray"
+      borderColor: "gray",
     },
     membersRank: {
       flex: 0.2,
@@ -179,11 +169,11 @@ export default containers = StyleSheet.create({
     },
     membersName: {
       justifyContent: 'space-between',
-      alignItems: 'flex-start',
-      flex: 0.6
+      alignItems: 'center',
+      flex: 0.3
     },
     membersValue: {
-      flex: 0.2,
+      flex: 0.5,
       alignItems: 'flex-end',
       paddingRight: 10
     },
@@ -195,7 +185,6 @@ export default containers = StyleSheet.create({
     settingsHeader: {
       flex: 0.3,
       justifyContent: 'flex-end',
-      // backgroundColor: 'pink'
     },
     settingsIconHeaders: {
       flex: 0.1,
@@ -209,15 +198,12 @@ export default containers = StyleSheet.create({
     // ----------------- Feed ------------- //
     activity: {
       flex: 0.2,
-      // backgroundColor: 'pink' 
     },
     feedTitle: {
-      flex: 0.2,
-      alignItems: 'center'
+      flex: 0.1,
+      alignItems: 'center',
     },
     feed: {
-      flex: 0.8,
-      borderWidth: 1,
-      borderColor: colors.white
+      flex: 0.7,
     }
 });

@@ -16,7 +16,8 @@ export default class Feed extends Component {
     super(props);
     this.state = {
       text: '',
-      transactions: []
+      transactions: [],
+      name: ''
     };
 
     this.api = new Api();
@@ -30,15 +31,31 @@ export default class Feed extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (this.props.enterTime !== nextProps.enterTime) {
-      this.api.getTransactions((transactions) => {
-        this.setState({transactions});
+      this.api.getLeagueInfo((leagueInfo) => {
+        this.api.getTransactions((transactions) => {
+          if (transactions.length === 0) {
+            this.setState({noTransactions: true, name: leagueInfo.name});
+          }
+          else {
+            this.setState({transactions, name: leagueInfo.name});
+          }
+        });
       });
     }
   }
 
   componentDidMount() {
     this.api.getTransactions((transactions) => {
-      this.setState({transactions});
+      this.api.getLeagueInfo((leagueInfo) => {
+        this.api.getTransactions((transactions) => {
+          if (transactions.length === 0) {
+            this.setState({noTransactions: true, name: leagueInfo.name});
+          }
+          else {
+            this.setState({transactions, name: leagueInfo.name});
+          }
+        });
+      });
     });
   }
 
@@ -91,18 +108,23 @@ export default class Feed extends Component {
   }
 
   render() {
+    const transactions = this.state.noTransactions ?
+      <View style={containers.activity}> 
+        <Text style={text.noActivity}>No activity yet.</Text>
+      </View> : 
+      <FlatList
+            keyExtractor={this.keyExtractor}
+            data={this.state.transactions}
+            renderItem={this._renderItem.bind(this)}/>;
+    
     return (
       <View style={containers.profileGeneral}>
         <NavBar />
-
         <View style={containers.feedTitle}>
-          <Text style={text.title}>Feed</Text>
+          <Text style={text.title}>{this.state.name}</Text>
         </View>
         <View style={containers.feed}>
-          <FlatList
-            keyExtractor={this.keyExtractor}
-            data={this.state.transactions}
-            renderItem={this._renderItem.bind(this)}/>
+          {transactions}
         </View>
       </View>
     );
