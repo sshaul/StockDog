@@ -5,8 +5,8 @@ import { AsyncStorage } from 'react-native';
 export default class Api {
 
   constructor () {
-    // this.baseurl = "http://localhost:5005";
-    this.baseurl = "http://198.199.100.209:5005";
+    this.baseurl = "http://localhost:5005";
+    // this.baseurl = "http://198.199.100.209:5005";
     this.headers = {
         'Content-Type': 'application/json'
     }
@@ -17,9 +17,7 @@ export default class Api {
     var url = this.baseurl + '/api/user';
     fetch(url, {
         method: 'POST',
-        headers: {
-        'Content-Type': 'application/json'
-        },
+        headers: this.headers,
         body: JSON.stringify({
         firstName: firstname,
         lastName: lastname,
@@ -39,15 +37,20 @@ export default class Api {
     var url = this.baseurl + '/api/login';
     fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: this.headers,
       body: JSON.stringify({
         email: email,
         password: password
       })
     }).then((response) => {
-      return response.json();
+      if (response.status === 401) {
+        response.json().then((res) => {
+          callback(res.error);
+        })
+      }
+      else {
+        return response.json();
+      }
     })
     .then((responseJson) => {
       AsyncStorage.setItem('userid', '' + responseJson.userId);
@@ -57,13 +60,13 @@ export default class Api {
       url = this.baseurl + '/api/portfolio?userId=' + responseJson.userId;
       fetch(url, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        headers: this.headers
       }).then((response) => response.json())
       .then((responseJson) => {
-        // Sets current portfolio as first portfolio
-        AsyncStorage.setItem('currPortfolio', '' + responseJson[0].id)
+        if (responseJson.length > 0) {
+          // Sets current portfolio as first portfolio
+          AsyncStorage.setItem('currPortfolio', '' + responseJson[0].id);
+        }
       });
 
       callback();
@@ -80,9 +83,7 @@ export default class Api {
           .then((token) => {
             fetch(this.baseurl + '/api/logout', {
               method: 'DELETE',
-              headers: {
-                'Content-Type': 'application/json'
-              },
+              headers: this.headers,
               body: JSON.stringify({
                 token: token,
                 userId: userid
@@ -105,7 +106,8 @@ export default class Api {
       .then((userid) => {
         uid = userid;
         fetch(this.baseurl + '/api/portfolio?userId=' + uid, {
-          method: 'GET'
+            method: 'GET',
+            headers: this.headers
           }).then((response) => response.json())
           .then((responseJson) => {
             AsyncStorage.setItem('portfolios', JSON.stringify(responseJson));
@@ -222,11 +224,10 @@ export default class Api {
         return JSON.parse(response);
       })
       .then((pid) => {
-        var newXData = [];
-        var newYData = [];
         var url = this.baseurl + '/api/portfolio/' + pid;
         fetch(url, {
-          method: 'GET'
+          method: 'GET',
+          headers: this.headers
         }).then((response) => response.json())
         .then((responseJson) => {
           callback(responseJson[0].buyPower);
@@ -244,7 +245,8 @@ export default class Api {
         var newYData = [];
         var url = this.baseurl + '/api/portfolio/' + pid + '/history';
         fetch(url, {
-          method: 'GET'
+          method: 'GET',
+          headers: this.headers
         }).then((response) => response.json())
         .then((responseJson) => {
           responseJson.forEach(element => {
@@ -277,7 +279,9 @@ export default class Api {
           })
         }).then((response) => {
           if (response.status === 400) {
-            callback({status_code: 400, message: response.json().error});
+            response.json().then((res) => {
+              callback({status_code: 400, message: res.error})
+            });
           }
           else {
             callback(response);
@@ -287,12 +291,13 @@ export default class Api {
     });
   };
 
-  getChartData = (ticker, range, callback) => {
+  getChartData = (ticker, range, callback) => { 
     var newXData = [];
     var newYData = [];
     var url = this.baseurl + '/api/stock/' + ticker + '/history/' + range;
     fetch(url, {
-      method: 'GET'
+      method: 'GET',
+      headers: this.headers
     }).then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.error) {
@@ -395,7 +400,7 @@ export default class Api {
             headers: this.headers
           }).then((response) => response.json())
           .then((responseJson) => {
-            callback(responseJson)
+            callback(responseJson.reverse())
           })
           .catch((error) => console.log(error));
         }
