@@ -1,7 +1,5 @@
 import React from 'react';
 import { Router, Stack, Scene, ActionConst, Tabs, Modal, Drawer, Lightbox } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/Feather';
-import elements from './style/elements';
 import Login from './screens/login';
 import Register from './screens/register';
 import Profile from './screens/profile';
@@ -17,14 +15,15 @@ import SetNickname from './screens/setNickname';
 import SettingsModal from './screens/settingsmodal';
 import LeagueDrawer from './components/leaguedrawer';
 import TabIcon from './components/tabIcon';
-import Api from './api';
 import containers from './style/containers';
+import text from './style/text';
+import { colors } from './style/colors';
 
 const Routes = () => (
   <Router>
     <Scene key="root" hideNavBar>
-          {/* <Scene key="login" component={Login}/>
-          <Scene key="register" component={Register}/> */}
+          <Scene key="login" component={Login}/>
+          <Scene key="register" component={Register}/>
           <Drawer 
             key="drawer"  
             contentComponent={LeagueDrawer} 
@@ -34,15 +33,13 @@ const Routes = () => (
               <Tabs 
                 key="main" 
                 tabBarStyle={ containers.tabBar } 
-                activeTintColor="#f7f8f9"
-                inactiveTintColor="#f7f8f9"
-                inactiveBackgroundColor= '#657a86'
-                activeBackgroundColor= '#434b59'
-                indicatorStyle= {{
-                  backgroundColor: '#434b59',
-                  height: 50}}
-                labelStyle= {
-                  {color: '#f7f8f9', fontSize: 12, fontFamily: 'open-sans'}}
+                tabBarPosition="bottom"
+                activeTintColor={ colors.white }
+                inactiveTintColor={ colors.white }
+                inactiveBackgroundColor= { colors.grey }
+                activeBackgroundColor= { colors.activeTab }
+                indicatorStyle= { containers.indicator }
+                labelStyle= { text.tabLabel }
                 >
                 <Scene key="profilemain" hideNavBar title="Portfolio" iconName="user" icon={TabIcon}>
                   <Scene key="profile" component={Profile} onEnter={Profile.onEnterPortfolio}/>
@@ -60,9 +57,9 @@ const Routes = () => (
                 <Scene key="setnickname" hideNavBar component={SetNickname} />
               </Lightbox>
             
-          
+        
         <Lightbox>
-          <Scene key="stock" component={Stock} hideNavBar/>
+          <Scene key="stock" component={Stock} hideNavBar swipeDownToClose={false}/>
           <Scene key="buysellmodal" component={BuySellModal} hideNavBar />
         </Lightbox>
         <Scene key="settings" component={SettingsModal} hideNavBar />
