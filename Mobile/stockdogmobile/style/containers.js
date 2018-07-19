@@ -20,6 +20,10 @@ export default containers = StyleSheet.create({
       borderTopColor: '#657a86',
       borderTopWidth: 1 / PixelRatio.get()
     },
+    indicator: {
+      backgroundColor: '#434b59',
+      height: 50
+    },
     profileGeneral: {
       flex: 1,
       backgroundColor: colors.dark,
@@ -204,6 +208,6 @@ export default containers = StyleSheet.create({
       alignItems: 'center',
     },
     feed: {
-      flex: 0.7,
+      flex: 0.8,
     }
 });

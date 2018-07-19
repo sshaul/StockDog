@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, FlatList, TextInput, AsyncStorage, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button } from 'react-native-elements';
 import containers from '../style/containers';
 import elements from '../style/elements';
+import {colors} from '../style/colors';
 import text from '../style/text';
 import WideButton from '../components/widebutton';
 import Api from '../api';
@@ -42,7 +44,6 @@ export default class Login extends Component {
   login() {
     this.api.login(this.state.email, this.state.password,
       (err) => {
-        console.log(err);
         if (err) {
           alert('Invalid login.');
         }
@@ -56,9 +57,12 @@ export default class Login extends Component {
   render() {
     var disabled = !(this.state.email && this.state.password);
     return (
-      <ScrollView contentContainerStyle={containers.general}
+      <KeyboardAwareScrollView 
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={containers.general}
+        scrollEnabled={false}
         keyboardShouldPersistTaps="handled"
-        scrollEnabled={false}>
+        enableOnAndroid={true}>
         <Text style={text.title}>StockDog</Text>
           <TextInput
             style={elements.roundedInput}
@@ -74,7 +78,8 @@ export default class Login extends Component {
             ref={ input => {
               this.inputs['one'] = input;
             }}
-            autoCapitalize={false}
+            autoCapitalize={"none"}
+            underlineColorAndroid={colors.white}
           />
           <TextInput
             style={elements.roundedInput}
@@ -90,6 +95,8 @@ export default class Login extends Component {
             ref={ input => {
               this.inputs['two'] = input;
             }}
+            autoCapitalize={"none"}
+            underlineColorAndroid={colors.white}
           />
         <WideButton type='login' disabled={disabled} onpress={this.login.bind(this)}/>
         {/* <TouchableOpacity
@@ -104,7 +111,7 @@ export default class Login extends Component {
             Create an account 
           </Text>
         </TouchableOpacity>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     );
   }
 }

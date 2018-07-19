@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePick
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
+import { colors } from '../style/colors';
 
 export default class RoundInput extends Component {
   constructor(props) {
@@ -28,6 +29,8 @@ export default class RoundInput extends Component {
           returnKeyType={this.props.returnKeyType}
           ref={this.props.refer}
           onSubmitEditing={this.props.onSubmitEditing}
+          autoCapitalize={"none"}
+          underlineColorAndroid={colors.white}
         />
     );
   }

@@ -2,6 +2,12 @@ import { StyleSheet } from 'react-native';
 import { colors } from './colors.js'; 
 
 export default text = StyleSheet.create({
+    // ---------------- Tab Bar --------------- // 
+    tabLabel: {
+      color: colors.white, 
+      fontSize: 12, 
+      fontFamily: 'open-sans'
+    },
     // ------------- Login/Register ----------- // 
     title: {
       color: colors.white,
@@ -92,12 +98,12 @@ export default text = StyleSheet.create({
     // ----------------- League Screen ------------- //
     leagueTitle: {
       color: colors.white,
-      fontFamily: 'open-sans-bold',
+      fontFamily: 'open-sans',
       fontSize: 36,
     },
     inviteCode: {
       color: "gray",
-      fontFamily: 'open-sans-bold',
+      fontFamily: 'open-sans',
       fontSize: 20,
       textAlign: 'left',
     },
@@ -125,7 +131,7 @@ export default text = StyleSheet.create({
     code: {
       fontSize: 25,
       color: colors.white,
-      fontFamily: 'open-sans-bold',
+      fontFamily: 'open-sans',
       borderRadius: 0,
       borderColor: colors.bright,
       borderWidth: 2

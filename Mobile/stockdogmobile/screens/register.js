@@ -59,7 +59,8 @@ export default class Register extends Component {
         resetScrollToCoords={{ x: 0, y: 0 }}
         contentContainerStyle={containers.general}
         scrollEnabled={false}
-        keyboardShouldPersistTaps="handled">
+        keyboardShouldPersistTaps="handled"
+        enableOnAndroid={true}>
         <Text style={text.title}>StockDog</Text>
         <RoundInput 
           type="first name" 

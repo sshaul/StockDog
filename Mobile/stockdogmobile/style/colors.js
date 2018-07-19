@@ -3,6 +3,7 @@ export const colors = {
     bright: '#63cec2',
     dark: '#354854',
     red: "#ed4d0a",
-    grey: '#657a86'
+    grey: '#657a86',
+    activeTab: '#434b59'
 }
 

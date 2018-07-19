@@ -20,17 +20,18 @@ export default class Search extends Component {
   }
 
   searchTicker() {
-    this.api.getChartData(this.state.text, 'day', (newXData, newYData, error) => {
-      if (error) {
-        alert(error);
-      }
-      else {
-        AsyncStorage.getItem('currPortfolio').then((value) => {
-          Actions.stock({ticker: this.state.text.toUpperCase(), pid: parseInt(value)});
-        });
-      }
-    });
-    
+    if (this.state.text.length !== 0) {
+      this.api.getChartData(this.state.text, 'day', (newXData, newYData, error) => {
+        if (error) {
+          alert(error);
+        }
+        else {
+          AsyncStorage.getItem('currPortfolio').then((value) => {
+            Actions.stock({ticker: this.state.text.toUpperCase(), pid: parseInt(value)});
+          });
+        }
+      });
+    }  
   }
 
   render() {
