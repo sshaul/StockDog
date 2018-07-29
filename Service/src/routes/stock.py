@@ -6,7 +6,6 @@ import simplejson as json
 import time
 from urllib.parse import urlencode
 
-from routes import iex
 from util.errMap import errors
 from validator.stockSchema import TransSchema
 

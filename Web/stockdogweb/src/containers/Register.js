@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import sdLogo from '../img/sd1.png';
 import infoIcon from '../img/feather-icons/info.svg';
-import API from "../api.js";
+import API from "../api/api";
 
 class Register extends Component {
    passwordReqs = "Password must be 8 characters long and include a number.";

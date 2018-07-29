@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import API from 'api';
+import API from 'api/api';
 import Graph from '../components/Graph';
 import { ChevronLeft, Eye, EyeOff } from 'react-feather';
 import { withRouter } from "react-router-dom";
 import { withCookies } from 'react-cookie';
+import { withAlert } from 'react-alert';
 
 class Stock extends Component {
    constructor(props) {
@@ -35,6 +36,7 @@ class Stock extends Component {
    getShareCount = () => {
       // Getting entire portfolio for stock information currently
       // May want to change later
+<<<<<<< Updated upstream
       this.api.getPortfolio(this.state.portfolioId, (portfolio) => {
          portfolio.forEach((stock) => {
             console.log(stock);
@@ -45,6 +47,25 @@ class Stock extends Component {
          });
       });
 
+=======
+      this.api.getPortfolio(this.state.portfolioId)
+         .then(response => {
+            const portfolio = response["data"];
+            portfolio.forEach((stock) => {
+               console.log(stock);
+               buyPower = stock["buyPower"];
+               if (stock["ticker"] === this.state.ticker) {
+                  shareCount = stock["shareCount"];
+               }
+            });
+            this.setState({
+               shareCount, buyPower
+            });
+         })
+         .catch(errorMessage => {
+            this.props.alert.error("Error loading portfolio information.");
+         })
+>>>>>>> Stashed changes
    }
 
    goBack = () => {
@@ -170,4 +191,4 @@ class Stock extends Component {
    }
 }
 
-export default withCookies(Stock);
+export default withAlert(withCookies(Stock));

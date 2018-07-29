@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withCookies } from 'react-cookie';
-import API from 'api.js';
+import API from 'api/api';
 import GoHome from '../components/GoHome';
 
 class JoinLeague extends Component {

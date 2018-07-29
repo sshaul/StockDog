@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withCookies } from 'react-cookie';
-import API from '../api';
+import API from '../api/api';
 
 class Logout extends Component {
    constructor(props) {
