@@ -20,14 +20,6 @@ class SideNav extends Component {
    }
 
    componentDidMount() {
-<<<<<<< Updated upstream
-      this.api.getAllPortfolios(this.cookies.get("userId"), (data) => {
-         this.setState({
-            portfolios: data,
-         });
-         this.createSideNavElements();
-      });
-=======
       this.api.getAllPortfolios(this.cookies.get("userId"))
          .then(response => {
             const data = response['data'];
@@ -42,43 +34,21 @@ class SideNav extends Component {
          .catch(errorMessage => {
 				this.props.alert.error('Failed to load portfolios.');
          });
->>>>>>> Stashed changes
-
    }
 
    createSideNavElements = () => {
       var elements = [];
-<<<<<<< Updated upstream
 
-      this.state.portfolios.forEach((portfolio) => {
-         elements.push(
-            <div className="side-nav-element" key={portfolio.id} 
-               onClick={()=> {this.switchToPortfolio(portfolio.id, 
-                  portfolio["league"], portfolio["leagueId"])}}>
-               <div className="side-nav-element-title">
-                  <p>{portfolio["league"]}</p>
-               </div>
-               <div className="side-nav-element-value">
-                  <p>$5000</p>
-               </div>
-            </div>
-         );
-      });
-
-      this.setState({
-         elements
-      }); 
-=======
       const portfolioAmt = this.state.portfolios.length;
-      
+
 
       this.state.portfolios.forEach((portfolio, index) => {
 	  		this.api.getCachedPortfolioValue(portfolio.id)
             .then(response => {
                var data = response["data"];
                elements.push(
-                  <div className="side-nav-element" key={index} 
-                     onClick={()=> {this.switchToPortfolio(portfolio.id, 
+                  <div className="side-nav-element" key={index}
+                     onClick={()=> {this.switchToPortfolio(portfolio.id,
                         portfolio["league"], portfolio["leagueId"])}}>
                         <div className="side-nav-element-title">
                            <p>{portfolio["league"]}</p>
@@ -96,14 +66,13 @@ class SideNav extends Component {
                   });
                   this.setState({
                      elements
-                  }); 
+                  });
                }
             })
             .catch(errorMessage => {
                this.props.alert.error('Failed to load portfolio value.');
             });
 	     	});
->>>>>>> Stashed changes
    }
 
    goToJoinLeague = () => {

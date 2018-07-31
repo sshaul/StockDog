@@ -36,23 +36,12 @@ class Stock extends Component {
    getShareCount = () => {
       // Getting entire portfolio for stock information currently
       // May want to change later
-<<<<<<< Updated upstream
-      this.api.getPortfolio(this.state.portfolioId, (portfolio) => {
-         portfolio.forEach((stock) => {
-            console.log(stock);
-            if (stock["ticker"] === this.state.ticker) {
-               this.setState({shareCount: stock["shareCount"]});
-               // do stuff with the result
-            }
-         });
-      });
-
-=======
       this.api.getPortfolio(this.state.portfolioId)
          .then(response => {
             const portfolio = response["data"];
+            var buyPower;
+            var shareCount;
             portfolio.forEach((stock) => {
-               console.log(stock);
                buyPower = stock["buyPower"];
                if (stock["ticker"] === this.state.ticker) {
                   shareCount = stock["shareCount"];
@@ -65,7 +54,6 @@ class Stock extends Component {
          .catch(errorMessage => {
             this.props.alert.error("Error loading portfolio information.");
          })
->>>>>>> Stashed changes
    }
 
    goBack = () => {

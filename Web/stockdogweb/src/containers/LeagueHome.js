@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import { withCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import GoHome from '../components/GoHome';
-<<<<<<< Updated upstream
-import API from '../api';
-=======
+
 import API from '../api/api';
 import Feed from '../components/Feed';
->>>>>>> Stashed changes
 
 class LeagueHome extends Component {
    constructor(props) {
@@ -48,7 +45,7 @@ class LeagueHome extends Component {
                   <td className="league-home-money">${member["value"]}</td>
                </tr>
                );
-         });         
+         });
 
          this.setState({
             memberContents
