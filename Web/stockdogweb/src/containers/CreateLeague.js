@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { withCookies } from "react-cookie";
 import { withRouter } from "react-router-dom";
+import { withAlert } from 'react-alert';
+
 
 import API from "../api/api";
 import GoHome from "../components/GoHome";
@@ -15,8 +17,8 @@ class CreateLeague extends Component {
       this.state = {
          nameOfLeague: "",
          initialBuyingPower: 1000,
-         startDate: "",
-         endDate: "",
+         startDate: "01-01-1975",
+         endDate: "01-01-1975",
          nickname: "",
          screen: 1
       }
@@ -53,26 +55,30 @@ class CreateLeague extends Component {
          this.state.startDate,
          this.state.endDate,
          this.state.initialBuyingPower,
-         ownerId,
-         (data) => {
+         ownerId)
+         .then(response => {
+            const data = response["data"];
             const id = data["id"];
             const inviteCode = data["inviteCode"];
-            alert(this.state.nameOfLeague + " has been created.");
+            this.props.alert.success(this.state.nameOfLeague + " has been created.");
             this.api.createPortfolioWithLeague(
                this.cookies.get("userId"),
                this.state.nickname,
                this.state.initialBuyingPower,
                id,
-               inviteCode,
-               () => {
+               inviteCode)
+               .then(response => {
                   console.log("portfolio created");
                   this.props.history.push("/");
-               }
-            );
-         }
-      );
-
-   }
+               })
+               .catch(errorMessage => {
+                  this.props.alert.error("Failed to make a new portfolio.");
+               });
+         })
+         .catch(errorMessage => {
+            this.props.alert.error("Failed to create the league");
+         });
+   };
 
    render() {
       if (this.state.screen === 1) {
@@ -82,18 +88,19 @@ class CreateLeague extends Component {
                <div className="create-league-area" id="create-league-area-1">
                   <h1>Create a league</h1>
                   <label>Name of league</label>
-                  <input id="nameOfLeague" type="text" 
+                  <input id="nameOfLeague" type="text"
                      value={this.state.nameOfLeague} onChange={this._onChange}/>
                   <label>Initial buying power</label>
-                  <input id="initialBuyingPower" type="number" min="1000" 
-                     value={this.state.initialBuyingPower} 
+                  <input id="initialBuyingPower" type="number" min="1000"
+                     value={this.state.initialBuyingPower}
                      onChange={this._onChange} />
+                  {/*
                   <label>Start date</label>
                   <input id="startDate" type="date" value={this.state.startDate}
                      onChange={this._onChange} />
                   <label>End date</label>
-                  <input id="endDate" type="date" value={this.state.endDate} 
-                     onChange={this._onChange} />
+                  <input id="endDate" type="date" value={this.state.endDate}
+                     onChange={this._onChange} />*/}
                   <button className="submit-btn" id="league-advance"
                      onClick={this.advance}>
                      <span>Advance</span></button>
@@ -107,7 +114,7 @@ class CreateLeague extends Component {
                <GoHome />
                <div className="create-league-area" id="create-league-area-2">
                   <label>Your nickname</label>
-                  <input id="nickname" type="text" value={this.state.nickname} 
+                  <input id="nickname" type="text" value={this.state.nickname}
                      onChange={this._onChange} />
                   <button className="submit-btn" id="league-advance"
                      onClick={this.createLeague}>
@@ -122,4 +129,4 @@ class CreateLeague extends Component {
    }
 }
 
-export default withRouter(withCookies(CreateLeague));
+export default withAlert(withRouter(withCookies(CreateLeague)));

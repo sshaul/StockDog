@@ -76,36 +76,40 @@ class Stock extends Component {
       this.api.buy(
          this.state.ticker,
          parseInt(this.state.transactionAmount, 10),
-         this.state.portfolioId,
-         () => {
-            this.getShareCount();
-            alert(this.state.transactionAmount + " shares of " +
-                  this.state.ticker + " bought at " +
-                  this.state.currentPrice + ".");
-         }
-      );
+         this.state.portfolioId)
+            .then(response => {
+               this.getShareCount();
+               alert(this.state.transactionAmount + " shares of " +
+                     this.state.ticker + " bought at " +
+                     this.state.currentPrice + ".");
+            })
+            .catch(errorMessage => {
+               this.props.alert.error("Failed to buy.");
+            });
    }
 
    sell = (event) => {
       event.preventDefault();
-
       this.api.sell(
          this.state.ticker,
          parseInt(this.state.transactionAmount, 10),
-         this.state.portfolioId,
-         () => {
-            this.getShareCount();
-            alert(this.state.transactionAmount + " shares of " +
-                  this.state.ticker + " sold at " +
-                  this.state.currentPrice + ".");
-         }
-      );
+         this.state.portfolioId)
+            .then(response => {
+               this.getShareCount();
+               alert(this.state.transactionAmount + " shares of " +
+                     this.state.ticker + " sold at " +
+                     this.state.currentPrice + ".");
+            })
+            .catch(errorMessage => {
+               this.props.alert.error("Failed to sell.");
+            });
    }
 
    getWatchlist = () => {
       // Getting watchlist information
-      this.api.getWatchlist(this.state.portfolioId,
-         (watchlist) => {
+      this.api.getWatchlist(this.state.portfolioId)
+         .then(res => {
+            const watchlist = res["data"];
             watchlist.forEach((stock) => {
                if (stock["ticker"] === this.state.ticker) {
                   this.setState({
@@ -117,13 +121,14 @@ class Stock extends Component {
                      watchlistId: stock["id"]
                   });
                }
-            })
-         });
+            });
+         })
+         .catch(errMsg => {this.props.alert.error("Failed to check for watchlist.")});
    };
 
    addToWatchlist = () => {
-      this.api.addToWatchlist(
-         this.state.ticker, this.state.portfolioId, () => {
+      this.api.addToWatchlist(this.state.ticker, this.state.portfolioId)
+         .then(res => {
             this.setState({
                watchlistDiv:
                   <div className="stock-watchlist"
@@ -132,13 +137,15 @@ class Stock extends Component {
                   </div>
             });
             this.getWatchlist();
-         }
-      );
+         })
+         .catch(errorMessage => {
+            this.props.alert.error("Failed to add to watchlist.");
+         });
    };
 
    deleteFromWatchlist = () => {
-      this.api.deleteFromWatchlist(
-         this.state.watchlistId, () => {
+      this.api.deleteFromWatchlist(this.state.watchlistId)
+         .then(res => {
             this.setState({
                watchlistId: null,
                watchlistDiv:
@@ -146,8 +153,8 @@ class Stock extends Component {
                      <Eye />
                   </div>,
             });
-         }
-      )
+         })
+         .catch(errMsg => {this.props.alert.error("Failed to delete off watchlist.")});
    };
 
    render() {
@@ -179,4 +186,4 @@ class Stock extends Component {
    }
 }
 
-export default withAlert(withCookies(Stock));
+export default withRouter(withAlert(withCookies(Stock)));

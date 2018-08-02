@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { get, post } from './apiUtils';
+import { get, post, del } from './apiUtils';
 
 // Contains all of the API calls
 class API {
@@ -95,17 +95,12 @@ class API {
          });
    };
 
-   createPortfolioWithLeague = (userId, name, buyPower, leagueId, inviteCode,
-    callback) => {
-      axios.post(this.urls['portfolio'], {
-         userId, name, buyPower, leagueId, inviteCode
-      }, this.config)
-         .then((res) => {
-            callback(res);
-         })
-         .catch((err) => {
-            console.log(err);
-         });
+   createPortfolioWithLeague = (userId, name, buyPower, leagueId, inviteCode) => {
+      return new Promise((resolve, reject) => {
+         post(`/portfolio`, {userId, name, buyPower, leagueId, inviteCode})
+            .then(response => {resolve(response)})
+            .catch(errorMessage => {reject(errorMessage)});
+      });
    };
 
    getPortfolio = (portfolioId) => {
@@ -117,7 +112,7 @@ class API {
    };
 
    getPortfolioValue = (portfolioId, callback) => {
-      axios.get(this.urls['portfolio'] + portfolioId + "/value", 
+      axios.get(this.urls['portfolio'] + portfolioId + "/value",
          this.config)
          .then(res => {
             callback(res["data"]);
@@ -143,28 +138,20 @@ class API {
       });
    }
 
-   buy = (ticker, shareCount, portfolioId, callback) => {
-      axios.post(this.urls['stock'] + "buy/" + ticker, {
-         shareCount, portfolioId
-      }, this.config)
-         .then((res) => {
-            callback();
-         })
-         .catch((err) => {
-            console.log(err);
-         });
+   buy = (ticker, shareCount, portfolioId) => {
+      return new Promise((resolve, reject) => {
+         post(`/stock/buy/${ticker}`, {shareCount, portfolioId})
+            .then(response => {resolve(response)})
+            .catch(errorMessage => {reject(errorMessage)});
+      });
    };
 
-   sell = (ticker, shareCount, portfolioId, callback) => {
-      axios.post(this.urls['stock'] + "sell/" + ticker, {
-         shareCount, portfolioId
-      }, this.config)
-         .then((res) => {
-            callback();
-         })
-         .catch((err) => {
-            console.log(err);
-         });
+   sell = (ticker, shareCount, portfolioId) => {
+      return new Promise((resolve, reject) => {
+         post(`/stock/sell/${ticker}`, {shareCount, portfolioId})
+            .then(response => {resolve(response)})
+            .catch(errorMessage => {reject(errorMessage)});
+      });
    };
 
    getWatchlist = (portfolioId) => {
@@ -175,48 +162,36 @@ class API {
       });
    };
 
-   addToWatchlist = (ticker, portfolioId, callback) => {
-      axios.post(this.baseURL + "/watchlist", {
-         ticker, portfolioId
-      }, this.config)
-         .then((res) => {
-            callback();
-         })
-         .catch((err) => {
-            console.log(err);
-         });
+   addToWatchlist = (ticker, portfolioId) => {
+      return new Promise((resolve, reject) => {
+         post(`/watchlist`, {ticker, portfolioId})
+            .then(res => {resolve(res)})
+            .catch(errorMessage => {reject(errorMessage)});
+      });
    };
 
-   deleteFromWatchlist = (watchlistId, callback) => {
-      axios.delete(this.baseURL + "/watchlist/" + watchlistId, this.config)
-         .then((res) => {
-            callback();
-         })
-         .catch((err) => {
-            console.log(err);
-         });
+   deleteFromWatchlist = (watchlistId) => {
+      return new Promise((resolve, reject) => {
+         del(`/watchlist/${watchlistId}`)
+            .then(res => {resolve(res)})
+            .catch(errMsg => {reject(errMsg)});
+      });
    };
 
-   createLeague = (name, start, end, buyPower, ownerId, callback) => {
-      axios.post(this.baseURL + "/league", {
-         name, start, end, startPos: buyPower, ownerId
-      }, this.config)
-         .then(res => {
-            callback(res["data"]);
-         })
-         .catch(err => {
-            console.log(err);
-         });
+   createLeague = (name, start, end, buyPower, ownerId) => {
+      return new Promise((resolve, reject) => {
+         post(`/league`, {name, start, end, startPos: buyPower, ownerId})
+         .then(response => {resolve(response)})
+         .catch(errorMessage => {reject(errorMessage)});
+      })
    };
 
-   getLeagueIdViaInviteCode = (inviteCode, callback) => {
-      axios.get(this.baseURL + "/league?inviteCode=" + inviteCode, this.config)
-         .then(res => {
-            callback(res["data"]);
-         })
-         .catch(err => {
-            callback(null);
-         });
+   getLeagueIdViaInviteCode = (inviteCode) => {
+      return new Promise((resolve, reject) => {
+         get(`/league?inviteCode=${inviteCode}`)
+            .then(response => {resolve(response)})
+            .catch(errorMessage => {reject(errorMessage)});
+      });
    }
 
    getLeague = (id, callback) => {
@@ -239,15 +214,13 @@ class API {
          })
    };
 
-   getLeagueTransactions = (id, callback) => {
-      axios.get(this.baseURL + "/transaction?leagueId=" + id, this.config)
-         .then(res => {
-            callback(res["data"]);
-         })
-         .catch(err => {
-            console.log(err);
-         })
-   }
+   getLeagueTransactions = (id) => {
+      return new Promise((resolve, reject) => {
+         get(`/transaction?leagueId=${id}`)
+            .then(res => {resolve(res)})
+            .catch(errorMsg => {reject(errorMsg)});
+      });
+   };
 }
 
 export default API;

@@ -60,7 +60,11 @@ class LeagueHome extends Component {
             <h1>{this.state.title}</h1>
             <h6>Invite Code</h6>
             <h4>{this.state.inviteCode}</h4>
-            <div id="league-home-portfolio-link"><Link to="/portfolio">Your Portfolio</Link></div>
+            <div id="league-home-portfolio-link"><Link to="/portfolio">
+               Your Portfolio</Link></div>
+            <h3>Feed</h3>
+            <Feed currLeagueId={this.cookies.get("currLeagueId")}/>
+            <h3>Rankings</h3>
             <table>
                <tbody>
                   {this.state.memberContents}
@@ -68,7 +72,7 @@ class LeagueHome extends Component {
             </table>
          </div>
       );
-   }
+   }   
 }
 
 export default withCookies(LeagueHome);

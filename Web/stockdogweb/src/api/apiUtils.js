@@ -13,7 +13,7 @@ const getHeaders = () => {
    };
 };
 
-// HTTP GET call 
+// HTTP GET call
 export const get = (path) => {
    return new Promise((resolve, reject) => {
       axios.get(`${SERVER_DOMAIN}${path}`, getHeaders())
@@ -30,3 +30,12 @@ export const post = (path, data) => {
          .catch(error => {reject(handleError(error))});
    });
 }
+
+// HTTP DELETE call
+export const del = (path: string) => {
+  return new Promise((resolve, reject) => {
+    axios.delete(`${SERVER_DOMAIN}${path}`, getHeaders())
+      .then(response => { resolve(response) })
+      .catch(error => { reject(handleError(error)) });
+  });
+};
