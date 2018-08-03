@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import sdLogo from '../img/sd1.png';
 import infoIcon from '../img/feather-icons/info.svg';
+import { withAlert } from 'react-alert';
 import API from "../api/api";
 
 class Register extends Component {
@@ -10,7 +11,7 @@ class Register extends Component {
 
    constructor(props) {
       super(props);
-      
+
       this.api = new API();
 
       this.state = {
@@ -28,12 +29,14 @@ class Register extends Component {
          this.state.fname,
          this.state.lname,
          this.state.email,
-         this.state.pass,
-         () => {
-            alert(this.state.email + " has been registered.");
+         this.state.pass)
+         .then((res) => {
+            this.props.alert.success(`${this.state.email} has been registered. Please log in.`);
             this.props.history.push('/');
-         }
-      );
+         })
+         .catch((errMsg) => {
+            this.props.alert.error("Email is already taken.");
+         });
    };
 
    registerOnChange = (event) => {
@@ -48,14 +51,14 @@ class Register extends Component {
             <div className="register-area">
                <Link to="/"> <img alt="StockDog Logo" src={sdLogo}/></Link>
                <form onSubmit={this.register}>
-                  <input id="fname" type="text" placeholder="first name" 
+                  <input id="fname" type="text" placeholder="first name"
                      onChange={this.registerOnChange} />
                   <input id="lname" type="text" placeholder="last name"
                      onChange={this.registerOnChange} />
-                  <input id="email" type="email" placeholder="email" 
+                  <input id="email" type="email" placeholder="email"
                      onChange={this.registerOnChange} />
                   <div className="register-password-field">
-                     <input id="pass" type="password" placeholder="password" 
+                     <input id="pass" type="password" placeholder="password"
                         onChange={this.registerOnChange} />
                      <div className="register-password-tt">
                         <img src={infoIcon} alt="tooltip"
@@ -72,4 +75,4 @@ class Register extends Component {
    }
 }
 
-export default Register;
+export default withAlert(Register);

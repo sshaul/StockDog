@@ -41,19 +41,17 @@ class API {
       });
    };
 
-   register = (fname, lname, email, pass, callback) => {
-      axios.post(this.urls['user'], {
-         "firstName": fname,
-         "lastName": lname,
-         "email": email,
-         "password": pass
-      }, this.config)
-         .then((res) => {
-            callback();
+   register = (fname, lname, email, pass) => {
+      return new Promise((resolve, reject) => {
+         post(`/user`, {
+            "firstName": fname,
+            "lastName": lname,
+            email,
+            "password": pass
          })
-         .catch((err) => {
-            console.log(err);
-         });
+         .then(res => {resolve(res)})
+         .catch(errMsg => {reject(errMsg)});
+      });
    };
 
 
@@ -83,18 +81,6 @@ class API {
       });
    }
 
-   createPortfolio = (userId, name, buyPower, callback) => {
-      axios.post(this.urls['portfolio'], {
-         userId, name, buyPower
-      }, this.config)
-         .then((res) => {
-            callback(res["data"]);
-         })
-         .catch((err) => {
-            console.log(err);
-         });
-   };
-
    createPortfolioWithLeague = (userId, name, buyPower, leagueId, inviteCode) => {
       return new Promise((resolve, reject) => {
          post(`/portfolio`, {userId, name, buyPower, leagueId, inviteCode})
@@ -110,17 +96,6 @@ class API {
             .catch(errorMessage => {reject(errorMessage)});
       });
    };
-
-   getPortfolioValue = (portfolioId, callback) => {
-      axios.get(this.urls['portfolio'] + portfolioId + "/value",
-         this.config)
-         .then(res => {
-            callback(res["data"]);
-         })
-         .catch(err => {
-            console.log(err);
-         });
-   }
 
    getCachedPortfolioValue = (portfolioId) => {
       return new Promise((resolve, reject) => {

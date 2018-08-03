@@ -472,7 +472,6 @@ input:focus {
 /* League Home
 -----------------------------------------------------------------------------*/
 .LeagueHome {
-  font-family: 'Lato', sans-serif;
   text-align: center;
   color: #F7F8F9;
   margin-top: 10px; }
@@ -505,8 +504,7 @@ input:focus {
 
 #league-home-portfolio-link {
   margin-top: 5px;
-  color: #63CEC2;
-  margin-bottom: 20px; }
+  color: #63CEC2; }
 
 #league-home-portfolio-link a {
   color: #63CEC2;
@@ -514,53 +512,6 @@ input:focus {
   cursor: pointer;
   width: 100px;
   margin: 0 auto; }
-
-/*===========================================================================*/
-/* Feed
------------------------------------------------------------------------------*/
-.Feed {
-  font-family: 'Lato', sans-serif;
-  width: 500px;
-  max-height: 300px;
-  margin: 0 auto;
-  margin-bottom: 20px;
-  overflow-y: auto;
-  overflow-x: hidden; }
-
-.feed-item {
-  width: 500px;
-  height: 70px;
-  background-color: #455f70;
-  position: relative;
-  margin-bottom: 1px; }
-
-.feed-component {
-  float: left;
-  position: absolute; }
-
-.feed-ticker {
-  top: 10px;
-  left: 16px;
-  font-size: 1.3em; }
-
-.feed-ticker a {
-  color: #63CEC2;
-  cursor: pointer; }
-
-.feed-date {
-  left: 16px;
-  top: 38px;
-  font-size: .8em; }
-
-.feed-owner {
-  top: 10px;
-  right: 24px;
-  font-size: 1.3em; }
-
-.feed-info {
-  top: 38px;
-  right: 24px;
-  font-size: .8em; }
 
 /*===========================================================================*/
 /* GoHome
