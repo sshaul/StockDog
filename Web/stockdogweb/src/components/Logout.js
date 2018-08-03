@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { withCookies } from 'react-cookie';
+import { withAlert } from 'react-alert';
+
 import API from '../api/api';
 
 class Logout extends Component {
@@ -11,14 +13,17 @@ class Logout extends Component {
    }
 
    logout = () => {
-      this.api.logout(this.cookies.get("userId"),
-         () => {
+      this.api.logout(this.cookies.get("userId"))
+         .then(res => {
             this.cookies.remove("currLeagueId");
             this.cookies.remove("currLeagueName");
             this.cookies.remove("currPortfolio");
             this.cookies.remove("token");
             this.cookies.remove("userId");
             window.location.reload();
+         })
+         .catch(errMsg => {
+            this.props.alert.error("Failed to logout.")
          });
    }
 
@@ -31,4 +36,4 @@ class Logout extends Component {
    }
 }
 
-export default withCookies(Logout);
+export default withAlert(withCookies(Logout));

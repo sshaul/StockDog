@@ -63,14 +63,12 @@ class API {
       });
    }
 
-   logout = (userId, callback) => {
-      axios.delete(this.urls['logout'], {data: {userId}}, this.config)
-         .then((res) => {
-            callback();
-         })
-         .catch((err) => {
-            console.log(err);
-         });
+   logout = (userId) => {
+      return new Promise((resolve, reject) => {
+         del(`/logout?userId=${userId}`)
+            .then(res => resolve(res))
+            .catch(errMsg => reject(errMsg));
+      });
    }
 
    getAllPortfolios = (userId) => {
