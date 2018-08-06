@@ -177,14 +177,12 @@ class API {
          })
    };
 
-   getLeagueMembers = (id, callback) => {
-      axios.get(this.baseURL + "/league/" + id + "/members", this.config)
-         .then(res => {
-            callback(res["data"]);
-         })
-         .catch(err => {
-            console.log(err);
-         })
+   getLeagueMembers = (id) => {
+      return new Promise((resolve, reject) => {
+         get(`/league/${id}/members`)
+            .then(res => resolve(res))
+            .catch(errMsg => reject(errMsg));
+      });
    };
 
    getLeagueTransactions = (id) => {

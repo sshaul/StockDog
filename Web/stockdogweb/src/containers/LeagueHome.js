@@ -27,31 +27,35 @@ class LeagueHome extends Component {
          console.log(data);
       });
 
-      this.api.getLeagueMembers(this.cookies.get("currLeagueId"), (data) => {
-         console.log(data);
-         var memberContents = [];
+      this.api.getLeagueMembers(this.cookies.get("currLeagueId"))
+         .then(res =>{
+            const data = res["data"];
+            var memberContents = [];
 
-         // Sort the array
-         data.sort((a, b) => {
-            return parseFloat(b.value) - parseFloat(a.value);
-         });
+            // Sort the array
+            data.sort((a, b) => {
+               return parseFloat(b.value) - parseFloat(a.value);
+            });
 
-         // Generating html for each member
-         data.forEach((member, index) => {
-            memberContents.push(
-               <tr key={member["name"]}>
-                  <td>{index + 1}</td>
-                  <td>{member["name"]}</td>
-                  <td className="league-home-money">${member["value"]}</td>
-               </tr>
-               );
-         });
+            // Generating html for each member
+            data.forEach((member, index) => {
+               memberContents.push(
+                  <tr key={member["name"]}>
+                     <td>{index + 1}</td>
+                     <td>{member["name"]}</td>
+                     <td className="league-home-money">${member["value"]}</td>
+                  </tr>
+                  );
+            });
 
-         this.setState({
-            memberContents
+            this.setState({
+               memberContents
+            });
+         })
+         .catch(errMsg => {
+            this.props.alert.error("Failed to load league members.");
          });
-      });
-   }
+      }
 
    render() {
       return (
@@ -72,7 +76,7 @@ class LeagueHome extends Component {
             </table>
          </div>
       );
-   }   
+   }
 }
 
 export default withCookies(LeagueHome);
