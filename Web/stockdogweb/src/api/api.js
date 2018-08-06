@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { get, post, del } from './apiUtils';
 
 // Contains all of the API calls
@@ -32,7 +31,6 @@ class API {
    }
 
    // Gets the stock history of a given stock and timeFrame
-   // Accepts a callback to do something with the history list
    stockHistory = (ticker, timeFrame) => {
       return new Promise((resolve, reject) => {
          get(`/stock/${ticker}/history/${timeFrame}`)
@@ -167,14 +165,12 @@ class API {
       });
    }
 
-   getLeague = (id, callback) => {
-      axios.get(this.baseURL + "/league/" + id, this.config)
-         .then(res => {
-            callback(res["data"]);
-         })
-         .catch(err => {
-            console.log(err);
-         })
+   getLeague = (id) => {
+      return new Promise((resolve, reject) => {
+         get(`/league/${id}`)
+            .then(res => {resolve(res)})
+            .catch(errMsg => {reject(errMsg)});
+      });
    };
 
    getLeagueMembers = (id) => {

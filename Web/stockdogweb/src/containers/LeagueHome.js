@@ -20,12 +20,16 @@ class LeagueHome extends Component {
    }
 
    componentDidMount() {
-      this.api.getLeague(this.cookies.get("currLeagueId"), (data) => {
-         this.setState({
-            inviteCode: data["inviteCode"]
+      this.api.getLeague(this.cookies.get("currLeagueId"))
+         .then(res => {
+            const data = res["data"];
+            this.setState({
+               inviteCode: data["inviteCode"]
+            })
          })
-         console.log(data);
-      });
+         .catch(errMsg => {
+            this.props.alert.error("Failed to get league invite code.");
+         });
 
       this.api.getLeagueMembers(this.cookies.get("currLeagueId"))
          .then(res =>{
