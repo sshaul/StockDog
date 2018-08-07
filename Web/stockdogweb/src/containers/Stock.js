@@ -72,6 +72,11 @@ class Stock extends Component {
    }
 
    buy = (event) => {
+      if (parseInt(this.state.transactionAmount, 10) <= 0) {
+         this.props.alert.error("Buy amount must be a positive value");
+         return;
+      }
+
       event.preventDefault();
       this.api.buy(
          this.state.ticker,
@@ -79,16 +84,22 @@ class Stock extends Component {
          this.state.portfolioId)
             .then(response => {
                this.getShareCount();
-               alert(this.state.transactionAmount + " shares of " +
+               this.props.alert.show(this.state.transactionAmount + " shares of " +
                      this.state.ticker + " bought at " +
                      this.state.currentPrice + ".");
             })
             .catch(errorMessage => {
+               console.log(errorMessage);
                this.props.alert.error("Failed to buy.");
             });
    }
 
    sell = (event) => {
+      if (parseInt(this.state.transactionAmount, 10) <= 0) {
+         this.props.alert.error("Sell amount must be a positive value");
+         return;
+      }
+
       event.preventDefault();
       this.api.sell(
          this.state.ticker,
@@ -96,7 +107,7 @@ class Stock extends Component {
          this.state.portfolioId)
             .then(response => {
                this.getShareCount();
-               alert(this.state.transactionAmount + " shares of " +
+               this.props.alert.show(this.state.transactionAmount + " shares of " +
                      this.state.ticker + " sold at " +
                      this.state.currentPrice + ".");
             })
