@@ -86,7 +86,7 @@ SERVICE_MODULE_DIR="${REPOSITORY_ROOT_DIR}/Service"
 echo -e "${BLUE}Setting up the service (${REPOSITORY_ROOT_DIR})${RESTORE}"
 cd "$REPOSITORY_ROOT_DIR"
 echo "Installing python3 dependencies"
-if ! pip3 install -r requirements.txt 1>>"$LOG_FILE" 2>&1; then
+if ! pip3 install -r requirements.txt --user 1>>"$LOG_FILE" 2>&1; then
    echo -e "${RED}Failed to install python3 dependencies for service module${RESTORE}"; exit 1
 fi
 echo -e "${GREEN}Successfully setup service module${RESTORE}\n"

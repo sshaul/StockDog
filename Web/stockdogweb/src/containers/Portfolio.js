@@ -3,7 +3,8 @@ import { instanceOf } from 'prop-types';
 import Graph from '../components/Graph';
 import { Link } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
-import API from "api";
+import { withAlert } from 'react-alert';
+import API from "api/api";
 import Navbar from "../components/Navbar";
 
 import CreatePortfolio from "components/CreatePortfolio";
@@ -33,36 +34,49 @@ class Portfolio extends Component {
 
    componentDidMount() {
       // Get the owned portfolios
-      this.api.getAllPortfolios(this.cookies.get("userId"), (portfolios) => {
-         if (portfolios.length !== 0) {
-            this.setState({
-               portfolios,
-               portfolioId: this.cookies.get("currPortfolio")
-            });
-            this.getPortfolio();
-         }
-         else {
-            this.setState({
-               portfolioId: null
-            });
-         }
-      });
+      this.api.getAllPortfolios(this.cookies.get("userId"))
+         .then(response => {
+            const portfolios = response["data"];
+            if (portfolios.length !== 0) {
+               this.setState({
+                  portfolios,
+                  portfolioId: this.cookies.get("currPortfolio")
+               });
+               this.getPortfolio();
+            }
+            else {
+               this.setState({
+                  portfolioId: null
+               });
+            }
+         })
+         .catch(errorMessage => {
+				this.props.alert.error('Error loading portfolios.');
+         });
 
       // Get the watchlist
-      this.api.getWatchlist(this.cookies.get("currPortfolio"), (watchlist) => {
-         this.setState({watchlist});
-         this.createWatchlist();
-      });
+      this.api.getWatchlist(this.cookies.get("currPortfolio"))
+         .then(response => {
+            const watchlist = response["data"];
+            this.setState({watchlist});
+            this.createWatchlist();
+         })
+         .catch(errorMessage => {
+            this.props.alert.error("Error loading watchlist");
+         });
    }
 
    // Get the portfolio's holdings
    getPortfolio = () => {
-      this.api.getPortfolio(this.state.portfolioId, (holdings) => {
-         this.setState({
-            holdings
+      this.api.getPortfolio(this.state.portfolioId)
+         .then(response => {
+            var holdings = response["data"];
+            this.setState({holdings});
+            this.createHoldings();
+         })
+         .catch(errorMessage => {
+				this.props.alert.error('Error loading portfolio.');
          });
-         this.createHoldings();
-      });
    };
 
    createHoldings = () => {
@@ -156,4 +170,4 @@ class Portfolio extends Component {
    }
 }
 
-export default withCookies(Portfolio);
+export default withAlert(withCookies(Portfolio));

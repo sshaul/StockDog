@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import API from 'api';
+import API from 'api/api';
 import Graph from '../components/Graph';
 import { ChevronLeft, Eye, EyeOff } from 'react-feather';
 import { withRouter } from "react-router-dom";
 import { withCookies } from 'react-cookie';
+import { withAlert } from 'react-alert';
 
 class Stock extends Component {
    constructor(props) {
@@ -35,16 +36,24 @@ class Stock extends Component {
    getShareCount = () => {
       // Getting entire portfolio for stock information currently
       // May want to change later
-      this.api.getPortfolio(this.state.portfolioId, (portfolio) => {
-         portfolio.forEach((stock) => {
-            console.log(stock);
-            if (stock["ticker"] === this.state.ticker) {
-               this.setState({shareCount: stock["shareCount"]});
-               // do stuff with the result
-            }
-         });
-      });
-
+      this.api.getPortfolio(this.state.portfolioId)
+         .then(response => {
+            const portfolio = response["data"];
+            var buyPower;
+            var shareCount;
+            portfolio.forEach((stock) => {
+               buyPower = stock["buyPower"];
+               if (stock["ticker"] === this.state.ticker) {
+                  shareCount = stock["shareCount"];
+               }
+            });
+            this.setState({
+               shareCount, buyPower
+            });
+         })
+         .catch(errorMessage => {
+            this.props.alert.error("Error loading portfolio information.");
+         })
    }
 
    goBack = () => {
@@ -67,36 +76,40 @@ class Stock extends Component {
       this.api.buy(
          this.state.ticker,
          parseInt(this.state.transactionAmount, 10),
-         this.state.portfolioId,
-         () => {
-            this.getShareCount();
-            alert(this.state.transactionAmount + " shares of " +
-                  this.state.ticker + " bought at " +
-                  this.state.currentPrice + ".");
-         }
-      );
+         this.state.portfolioId)
+            .then(response => {
+               this.getShareCount();
+               alert(this.state.transactionAmount + " shares of " +
+                     this.state.ticker + " bought at " +
+                     this.state.currentPrice + ".");
+            })
+            .catch(errorMessage => {
+               this.props.alert.error("Failed to buy.");
+            });
    }
 
    sell = (event) => {
       event.preventDefault();
-
       this.api.sell(
          this.state.ticker,
          parseInt(this.state.transactionAmount, 10),
-         this.state.portfolioId,
-         () => {
-            this.getShareCount();
-            alert(this.state.transactionAmount + " shares of " +
-                  this.state.ticker + " sold at " +
-                  this.state.currentPrice + ".");
-         }
-      );
+         this.state.portfolioId)
+            .then(response => {
+               this.getShareCount();
+               alert(this.state.transactionAmount + " shares of " +
+                     this.state.ticker + " sold at " +
+                     this.state.currentPrice + ".");
+            })
+            .catch(errorMessage => {
+               this.props.alert.error("Failed to sell.");
+            });
    }
 
    getWatchlist = () => {
       // Getting watchlist information
-      this.api.getWatchlist(this.state.portfolioId,
-         (watchlist) => {
+      this.api.getWatchlist(this.state.portfolioId)
+         .then(res => {
+            const watchlist = res["data"];
             watchlist.forEach((stock) => {
                if (stock["ticker"] === this.state.ticker) {
                   this.setState({
@@ -108,13 +121,14 @@ class Stock extends Component {
                      watchlistId: stock["id"]
                   });
                }
-            })
-         });
+            });
+         })
+         .catch(errMsg => {this.props.alert.error("Failed to check for watchlist.")});
    };
 
    addToWatchlist = () => {
-      this.api.addToWatchlist(
-         this.state.ticker, this.state.portfolioId, () => {
+      this.api.addToWatchlist(this.state.ticker, this.state.portfolioId)
+         .then(res => {
             this.setState({
                watchlistDiv:
                   <div className="stock-watchlist"
@@ -123,13 +137,15 @@ class Stock extends Component {
                   </div>
             });
             this.getWatchlist();
-         }
-      );
+         })
+         .catch(errorMessage => {
+            this.props.alert.error("Failed to add to watchlist.");
+         });
    };
 
    deleteFromWatchlist = () => {
-      this.api.deleteFromWatchlist(
-         this.state.watchlistId, () => {
+      this.api.deleteFromWatchlist(this.state.watchlistId)
+         .then(res => {
             this.setState({
                watchlistId: null,
                watchlistDiv:
@@ -137,8 +153,8 @@ class Stock extends Component {
                      <Eye />
                   </div>,
             });
-         }
-      )
+         })
+         .catch(errMsg => {this.props.alert.error("Failed to delete off watchlist.")});
    };
 
    render() {
@@ -170,4 +186,4 @@ class Stock extends Component {
    }
 }
 
-export default withCookies(Stock);
+export default withRouter(withAlert(withCookies(Stock)));

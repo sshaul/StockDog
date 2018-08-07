@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { instanceOf } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
-import API from 'api';
+import { withAlert } from 'react-alert';
+import API from '../api/api';
 
 import sdLogo from '../img/sd1.png';
 
@@ -33,16 +34,17 @@ class Login extends Component {
    login = (event) => {
       event.preventDefault();
 
-      this.api.login(
-         this.state.username,
-         this.state.pass,
-         (userId, token) => {
+		this.api.login(this.state.username, this.state.pass)
+			.then(response => {
+				const { userId, token } = response['data'];
             // Save userId and token in cookie
             this.cookies.set("userId", userId);
             this.cookies.set("token", token);
             this.props.history.push('/portfolio'); 
-         }
-      );
+			})
+			.catch(errorMessage => {
+				this.props.alert.error('Invalid login email or password.');
+			});
    }
 
    render() {
@@ -69,4 +71,4 @@ class Login extends Component {
    }
 }
 
-export default withCookies(Login);
+export default withAlert(withCookies(Login));
