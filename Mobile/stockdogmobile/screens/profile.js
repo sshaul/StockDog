@@ -157,6 +157,7 @@ export default class Profile extends Component {
                 <Text style={text.profileLabels}>Watchlist</Text>
                 {watchlist}
               </View>
+              <View style={{height: 20}}/>
             </ScrollView>
           </View>
         </View>

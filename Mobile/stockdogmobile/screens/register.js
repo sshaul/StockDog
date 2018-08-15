@@ -5,6 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
+import { LinearGradient } from 'expo';
 import Icon from 'react-native-vector-icons/Feather';
 import PopoverTooltip from 'react-native-popover-tooltip';
 import WideButton from '../components/widebutton';
@@ -61,6 +62,10 @@ export default class Register extends Component {
         scrollEnabled={false}
         keyboardShouldPersistTaps="handled"
         enableOnAndroid={true}>
+        <LinearGradient
+            colors={['transparent', 'rgb(87, 122, 142)']}
+            style={containers.generalGradient}
+            >
         <Text style={text.title}>StockDog</Text>
         <RoundInput 
           type="first name" 
@@ -140,6 +145,7 @@ export default class Register extends Component {
             Return to log in 
           </Text>
         </TouchableOpacity>
+        </LinearGradient>
       </KeyboardAwareScrollView>
     );
   }

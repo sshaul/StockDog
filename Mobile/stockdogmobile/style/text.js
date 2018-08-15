@@ -12,7 +12,8 @@ export default text = StyleSheet.create({
     title: {
       color: colors.white,
       fontFamily: 'open-sans',
-      fontSize: 40
+      fontSize: 40,
+      backgroundColor: 'transparent'
     },
     loginButton: {
       fontSize: 20,
@@ -35,7 +36,7 @@ export default text = StyleSheet.create({
     },
     profileLabels: {
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'open-sans-bold',
       fontSize: 24,
       textAlign: 'left'
     },
@@ -98,7 +99,7 @@ export default text = StyleSheet.create({
     // ----------------- League Screen ------------- //
     leagueTitle: {
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'open-sans-bold',
       fontSize: 36,
     },
     inviteCode: {

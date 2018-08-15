@@ -30,6 +30,7 @@
     "react-native-elements": "^0.19.0",
     "react-native-highcharts": "^1.0.2",
     "react-native-keyboard-aware-scroll-view": "^0.4.4",
+    "react-native-linear-gradient": "^2.4.0",
     "react-native-modal": "^4.1.1",
     "react-native-pathjs-charts": "0.0.33",
     "react-native-popover-tooltip": "^1.1.4",

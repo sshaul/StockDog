@@ -37,7 +37,7 @@ export default elements = StyleSheet.create({
     },
     smallTextButton: {
         height: 25,
-        backgroundColor: colors.dark,
+        backgroundColor: 'transparent',
         marginTop: 10,
         alignItems: 'center',
         justifyContent: 'center'

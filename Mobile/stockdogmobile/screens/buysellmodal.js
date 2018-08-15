@@ -92,7 +92,10 @@ export default class BuySellModal extends Component {
             type="Amount" 
             onchange={this.onchangeamount.bind(this)} 
             value={this.state.amount}/>
-          <WideButton type={props.modalType} onpress={this.buysellstock.bind(this)} disabled={disabled}/>
+          <View style={containers.buttons}>
+            <WideButton type={props.modalType} onpress={this.buysellstock.bind(this)} disabled={disabled}/>
+            <WideButton type="cancel" onpress={() => Actions.pop()}/>
+          </View>
         </View>);
       }
       
@@ -101,9 +104,9 @@ export default class BuySellModal extends Component {
       <Lightbox verticalPercent={0.5} horizontalPercent={0.8}>
         <View style={containers.outerModal}>
           <View style={containers.modalHeaders}>
-            <TouchableOpacity onPress={()=>{Actions.pop()}}>
+            {/* <TouchableOpacity onPress={()=>{Actions.pop()}}>
               <Icon name='x' size={30} color='white' />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           {content}
         </View>
