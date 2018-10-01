@@ -53,14 +53,18 @@ export default containers = StyleSheet.create({
       paddingTop: 5
     },
     logo: {
-      width: 300,
-      height: 260
+      width: 305,
+      height: 193
     },
     // ----------------- Stock chart ------------- //
     chart: {
       flex: 0.7,
       alignItems: 'center',
       justifyContent: 'flex-start',
+      backgroundColor: colors.grey,
+      borderWidth: 1, 
+      borderColor: colors.white, 
+      borderRadius: 8
     },
     chartOut: {
       flex: 0.5,
@@ -112,6 +116,11 @@ export default containers = StyleSheet.create({
       justifyContent: 'space-between', 
       alignItems: 'center',
       backgroundColor: colors.grey,
+      shadowColor: 'black',
+      shadowOffset: { width: 10, height: 10 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2
+      // shadowOpacity: 0.8,
       // borderStyle: 'solid', 
       // borderColor: colors.white, 
       // borderWidth: 1

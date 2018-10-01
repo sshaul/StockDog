@@ -10,7 +10,7 @@ export default text = StyleSheet.create({
     },
     // ------------- Login/Register ----------- // 
     title: {
-      color: colors.white,
+      color: colors.bright,
       fontFamily: 'open-sans',
       fontSize: 40,
       backgroundColor: 'transparent'
@@ -30,9 +30,8 @@ export default text = StyleSheet.create({
     money: {
       color: colors.bright,
       fontFamily: 'open-sans',
-      fontSize: 48,
+      fontSize: 36,
       textAlign: 'center',
-      paddingTop: 10
     },
     profileLabels: {
       color: colors.white,

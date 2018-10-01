@@ -65,13 +65,15 @@ export default class Login extends Component {
         keyboardShouldPersistTaps="handled"
         enableOnAndroid={true}>
           <LinearGradient
-            colors={['transparent', 'rgb(87, 122, 142)']}
+            colors={['transparent', '#404040']}
             style={containers.generalGradient}
             >
-          <Image source={require('../assets/logo.png')} style={containers.logo}/>
+            <Image source={require('../assets/logoCrop.png')} style={containers.logo}/>
+            <Text style={text.title}>StockDog</Text>
             <TextInput
               style={elements.roundedInput}
               placeholder="email"
+              color={colors.white}
               placeholderTextColor="#aaaaaa"
               onChangeText={(email) => this.setState({email})}
               value={this.state.email}
@@ -89,6 +91,7 @@ export default class Login extends Component {
             <TextInput
               style={elements.roundedInput}
               placeholder="password"
+              color={colors.white}
               placeholderTextColor="#aaaaaa"
               secureTextEntry={true}
               onChangeText={(password) => this.setState({password})}
@@ -102,6 +105,7 @@ export default class Login extends Component {
               }}
               autoCapitalize={"none"}
               underlineColorAndroid={colors.white}
+              
             />
           <WideButton type='login' disabled={disabled} onpress={this.login.bind(this)}/>
           {/* <TouchableOpacity

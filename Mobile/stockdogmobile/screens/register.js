@@ -63,7 +63,7 @@ export default class Register extends Component {
         keyboardShouldPersistTaps="handled"
         enableOnAndroid={true}>
         <LinearGradient
-            colors={['transparent', 'rgb(87, 122, 142)']}
+            colors={['transparent', '#404040']}
             style={containers.generalGradient}
             >
         <Text style={text.title}>StockDog</Text>

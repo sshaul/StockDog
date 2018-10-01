@@ -5,8 +5,10 @@ export default elements = StyleSheet.create({
     roundedInput: {
         height: 45,
         width: 250,
-        backgroundColor: colors.white,
-        borderRadius: 12,
+        backgroundColor: 'transparent',
+        // borderRadius: 12,
+        borderBottomWidth: 1,
+        borderColor: '#929292',
         paddingLeft: 20,
         margin: 10
     },
@@ -20,7 +22,8 @@ export default elements = StyleSheet.create({
     loginButton: {
         height: 45,
         width: 250,
-        backgroundColor: colors.bright,
+        borderColor: colors.bright,
+        borderWidth: 2,
         borderRadius: 12,
         alignItems: 'center',
         justifyContent: 'center',
@@ -29,7 +32,8 @@ export default elements = StyleSheet.create({
     disabledLoginButton: {
         height: 45,
         width: 250,
-        backgroundColor: colors.grey,
+        borderColor: colors.grey,
+        borderWidth: 2,
         borderRadius: 12,
         alignItems: 'center',
         justifyContent: 'center',
