@@ -117,7 +117,7 @@ input:focus{
 .side-nav-element {
    padding: 10px;
    margin: 0;
-   cursor: pointer;   
+   cursor: pointer;
 }
 
 .side-nav-element p {
@@ -618,6 +618,54 @@ input:focus{
    width: 100px;
    margin: 0 auto;
 }
+/*===========================================================================*/
+
+/* Feed
+-----------------------------------------------------------------------------*/
+.Feed {
+  font-family: 'Lato', sans-serif;
+  width: 500px;
+  max-height: 300px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  overflow-y: auto;
+  overflow-x: hidden; }
+
+.feed-item {
+  width: 500px;
+  height: 70px;
+  background-color: $alt-bg-color;
+  position: relative;
+  margin-bottom: 1px; }
+
+.feed-component {
+  float: left;
+  position: absolute; }
+
+.feed-ticker {
+  top: 10px;
+  left: 16px;
+  font-size: 1.3em; }
+
+.feed-ticker a {
+  color: $green-color;
+  cursor: pointer; }
+
+.feed-date {
+  left: 16px;
+  top: 38px;
+  font-size: .8em; }
+
+.feed-owner {
+  top: 10px;
+  right: 24px;
+  font-size: 1.3em; }
+
+.feed-info {
+  top: 38px;
+  right: 24px;
+  font-size: .8em; }
+
 /*===========================================================================*/
 
 /* GoHome

@@ -2,7 +2,8 @@ import React, { Component} from 'react';
 import { Line } from 'react-chartjs-2';
 import { withRouter } from 'react-router-dom';
 import { withCookies } from 'react-cookie';
-import API from '../api';
+import { withAlert } from 'react-alert';
+import API from '../api/api';
 import TimeFrame from '../components/TimeFrames'
 import loading from "../img/loading.svg";
 
@@ -117,59 +118,69 @@ class Graph extends Component {
       const ticker = this.props.ticker;
 
       if (ticker !== "PORTFOLIO") {
-         this.api.stockHistory(ticker, timeFrame, (history) => {
-            // Sort the array depend on epoch
-            var prices = [];
-            var labels = [];
-            // Getting an array of prices and times
-            history.forEach(function(data) {
-               prices.push(data['price']);
-               if (timeFrame === "day") labels.push(data['time'].substring(11, 16));
-               else labels.push(data['time'].substring(5, 10))
+         this.api.stockHistory(ticker, timeFrame)
+            .then(response => {
+               const history = response["data"];
+               // Sort the array depend on epoch
+               var prices = [];
+               var labels = [];
+               // Getting an array of prices and times
+               history.forEach(function(data) {
+                  prices.push(data['price']);
+                  if (timeFrame === "day") labels.push(data['time'].substring(11, 16));
+                  else labels.push(data['time'].substring(5, 10))
+               });
+               // Update the state with new information
+               var newData = this.state;
+               newData['data']['datasets'][0]['data'] = prices;
+               newData['data']['labels'] = labels;
+               // Setting the current price and round to the 2nd decimal
+               newData['currentPrice'] = Math.round(prices[prices.length-1]*100)/100;
+               // Update parent's current price
+               this.props.updateCurrentPrice(
+                  Math.round(prices[prices.length-1]*100)/100);
+               // Make the points smaller
+               newData['data']['datasets'][0]['pointHoverRadius'] = 5;
+               newData['data']['datasets'][0]['pointHitRadius'] = 10;
+               // Turn off loading animation.
+               newData["loadingAnimation"] = <div></div>
+                  newData["initialLoad"] = false;
+               this.setState(newData);
+            })
+            .catch(errorMessage => {
+               this.props.alert.error("Ticker " + ticker + " not found.");
+               window.history.back()
             });
-            // Update the state with new information
-            var newData = this.state;
-            newData['data']['datasets'][0]['data'] = prices;
-            newData['data']['labels'] = labels;
-            // Setting the current price and round to the 2nd decimal
-            newData['currentPrice'] = Math.round(prices[prices.length-1]*100)/100;
-            // Update parent's current price
-            this.props.updateCurrentPrice(
-               Math.round(prices[prices.length-1]*100)/100);
-            // Make the points smaller
-            newData['data']['datasets'][0]['pointHoverRadius'] = 5;
-            newData['data']['datasets'][0]['pointHitRadius'] = 10;
-            // Turn off loading animation.
-            newData["loadingAnimation"] = <div></div>
-            newData["initialLoad"] = false;
-            this.setState(newData);
-         });
       }
       else if (ticker === "PORTFOLIO") {
-         this.api.getPortfolioHistory(this.cookies.get("currPortfolio"), history => {
-
-            // Sort the array depend on epoch
-            var prices = [];
-            var labels = [];
-            // Getting an array of prices and times
-            history.forEach(function(data) {
-               prices.push(data['value']);
-               labels.push(data['datetime'].substring(11, 16));
+         this.api.getPortfolioHistory(this.cookies.get("currPortfolio"))
+            .then(response => {
+               var history = response["data"];
+               // Sort the array depend on epoch
+               var prices = [];
+               var labels = [];
+               // Getting an array of prices and times
+               history.forEach(function(data) {
+                  prices.push(data['value']);
+                  labels.push(data['datetime'].substring(11, 16));
+               });
+               // Update the state with new information
+               var newData = this.state;
+               newData['data']['datasets'][0]['data'] = prices;
+               newData['data']['labels'] = labels;
+               // Setting the current price and round to the 2nd decimal
+               newData['currentPrice'] = Math.round(prices[prices.length-1]*100)/100;
+               // Make the points smaller
+               newData['data']['datasets'][0]['pointHoverRadius'] = 5;
+               newData['data']['datasets'][0]['pointHitRadius'] = 10;
+               // Turn off loading animation.
+               newData["loadingAnimation"] = <div></div>
+                  newData["initialLoad"] = false;
+               this.setState(newData);
+            })
+            .catch(errorMessage => {
+               this.props.alert.error("Error loading history data.")
             });
-            // Update the state with new information
-            var newData = this.state;
-            newData['data']['datasets'][0]['data'] = prices;
-            newData['data']['labels'] = labels;
-            // Setting the current price and round to the 2nd decimal
-            newData['currentPrice'] = Math.round(prices[prices.length-1]*100)/100;
-            // Make the points smaller
-            newData['data']['datasets'][0]['pointHoverRadius'] = 5;
-            newData['data']['datasets'][0]['pointHitRadius'] = 10;
-            // Turn off loading animation.
-            newData["loadingAnimation"] = <div></div>
-            newData["initialLoad"] = false;
-            this.setState(newData);
-         });
       }
 
    }
@@ -193,4 +204,4 @@ class Graph extends Component {
    }
 }
 
-export default withCookies(withRouter(Graph));
+export default withAlert(withCookies(withRouter(Graph)));

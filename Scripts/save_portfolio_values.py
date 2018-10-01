@@ -29,6 +29,7 @@ def save_values(portfolios):
 # Checks to see if the market is open
 def is_market_open():
     req = requests.get("https://api.iextrading.com/1.0/deep/system-event")
+    print(req.text);
     status = req.json()["systemEvent"]
     if (status == "R"):
         print("Market is in regular trading hours")
