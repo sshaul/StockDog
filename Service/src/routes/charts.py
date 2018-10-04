@@ -1,10 +1,12 @@
 from datetime import datetime
 from flask import Blueprint, jsonify, make_response, request, Response, g
-from flask_request_validator import (GET, Param, validate_params)
 import requests
 import simplejson as json
 import time
 
+
+from request_validator import validator, charts_schema
+from request_validator.validation_error import ValidationError
 from util.errMap import errors
 
 DAY = '1d'
@@ -21,11 +23,12 @@ URL_PREFIX = 'https://api.iextrading.com/1.0/stock/'
 
 
 @charts_api.route('/api/charts', methods=['GET'])
-@validate_params(
-   Param('ticker', GET, str),
-   Param('length', GET, str)
-)
-def get_history(ticker, length):
+def get_history():
+   try:
+      validator.validate(request.args, charts_schema.fields)
+   except ValidationError as e:
+      return make_response(json.dumps(e.errors), 400)
+
    ticker = request.args.get('ticker')
    length = request.args.get('length')
 
@@ -40,14 +43,14 @@ def get_history(ticker, length):
    try:
       response = rawResponse.json()
    except:
-      return make_response(jsonify(error=errors['unsupportedTicker']), 400)
+      return make_response(jsonify(InvalidTicker=errors['unsupportedTicker']), 400)
 
    data = formatData(response, interval)
    if len(data) == 0:
-      return make_response(jsonify(error=errors['iexUnavailable']), 500)
+      return make_response(jsonify(IEXUnavailable=errors['iexUnavailable']), 500)
    
    if length == 'recent':
-      data = data[-1]
+      data = [data[-1]]
    
    parseTime = time.time() - startTime
    g.log.info('IEX time is: ' + str(iexTime))
