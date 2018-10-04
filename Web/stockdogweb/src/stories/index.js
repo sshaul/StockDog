@@ -1,19 +1,39 @@
 import React from 'react';
 
+import Listing from '../components/Listing/Listing';
+
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import { Button, Welcome } from '@storybook/react/demo';
 
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
+var listingProps = {
+  listings: [
+    {
+      title: "RAD",
+      desc: "Rite Aid Corporation",
+      price: 200.53,
+      priceChange: 27.21,
+      amount: 20
+    },
+    {
+      title: "CAMT",
+      desc: "Camtek LTD",
+      price: 4021.21,
+      priceChange: -120.23,
+      amount: 87
+    },
+    {
+      title: "WMT",
+      desc: "Walmart Corporation",
+      price: 185.62,
+      priceChange: 2.45,
+      amount: 0
+    }
+  ]
+}
 
-storiesOf('Button', module)
-  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-  .add('with some emoji', () => (
-    <Button onClick={action('clicked')}>
-      <span role="img" aria-label="so cool">
-        😀 😎 👍 💯
-      </span>
-    </Button>
-  ));
+storiesOf('Listing', module)
+  .add('one listing', () =>
+    <Listing {...listingProps}/>);
