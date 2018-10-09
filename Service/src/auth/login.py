@@ -6,7 +6,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from auth import manageTokens
 from util.errMap import errors
-from validator.loginSchema import LoginSchema
 
 
 class Login:

@@ -8,7 +8,6 @@ from urllib.parse import urlencode
 
 from routes import iex
 from util.errMap import errors
-from validator.stockSchema import TransSchema
 
 TODAY = 0
 DAY_AGO = 1
