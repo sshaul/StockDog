@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import Routes from './routes.js';
 import { Font } from 'expo';
 
@@ -19,6 +19,7 @@ export default class App extends Component {
   }
 
   render() {
+    console.log('wtf');
     return(
       this.state.fontLoaded ? 
        Routes() : null

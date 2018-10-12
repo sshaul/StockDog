@@ -24,7 +24,7 @@ const Routes = () => (
     <Scene key="root" hideNavBar>
           <Scene key="login" component={Login}/>
           <Scene key="register" component={Register}/>
-          <Drawer 
+          {/* <Drawer 
             key="drawer"  
             contentComponent={LeagueDrawer} 
             type="replace"
@@ -64,7 +64,7 @@ const Routes = () => (
         </Lightbox>
         <Scene key="settings" component={SettingsModal} hideNavBar />
       </Modal>
-    </Drawer>
+    </Drawer> */}
     </Scene>
   </Router>
 );

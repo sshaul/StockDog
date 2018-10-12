@@ -59,6 +59,7 @@ export default class Login extends Component {
   };
 
   render() {
+    console.log('what');
     var disabled = !(this.state.email && this.state.password);
     return (
       <KeyboardAwareScrollView 
