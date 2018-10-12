@@ -6,7 +6,7 @@ import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
 import Modal from 'react-native-modal';
-import RoundInput from '../components/roundinput';
+import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Icon from 'react-native-vector-icons/Feather';
 import Api from '../api';
@@ -55,7 +55,7 @@ export default class JoinLeagueModal extends Component {
           </View>
           <View style={containers.addGroupInnerModal}>
             <Text style={text.joinLeagueTitle}> Invite Code: </Text>
-            <RoundInput 
+            <FormInput 
               type="Code" 
               onchange={this.onchangename.bind(this)} 
               value={this.state.inviteCode}/>

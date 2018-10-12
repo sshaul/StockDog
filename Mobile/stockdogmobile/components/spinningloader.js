@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { View, TextInput, Animated, Easing } from 'react-native';
+import { Animated, Easing } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import containers from '../style/containers';
-import elements from '../style/elements';
-import text from '../style/text';
 
 export default class SpinningLoader extends Component {
   constructor(props) {
