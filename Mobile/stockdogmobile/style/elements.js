@@ -8,7 +8,7 @@ export default elements = StyleSheet.create({
         backgroundColor: 'transparent',
         // borderRadius: 12,
         borderBottomWidth: 1,
-        borderColor: colors.placeholders,
+        borderColor: '#929292',
         paddingLeft: 20,
         margin: 10
     },
