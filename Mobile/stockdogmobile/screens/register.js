@@ -31,7 +31,7 @@ export default class Register extends Component {
     this.inputs[id].focus();
   }
 
-  navToLogin() {
+  navToLogin = () => {
     const navigation = this.props.navigation;
     navigation.goBack(null);
   }
@@ -113,12 +113,12 @@ export default class Register extends Component {
                   onPress: () => {}
                 }]}/>
           </View>
-          <WideButton type='register' disabled={disabled} onpress={this.register.bind(this)}/>
+          <WideButton type='register' disabled={disabled} onpress={this.register}/>
           <TouchableOpacity
             style={elements.smallTextButton}>
             <Text 
               style={text.smallText} 
-              onPress={this.navToLogin.bind(this)}> 
+              onPress={this.navToLogin}> 
               Return to log in 
             </Text>
           </TouchableOpacity>

@@ -11,6 +11,8 @@ import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Api from '../api';
 
+var logoImage = require('../assets/logoCrop.png');
+
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -38,11 +40,11 @@ export default class Login extends Component {
     this.inputs[id].focus();
   };
   
-  navToRegister() {
+  navToRegister = () => {
     Actions.register({});
   };
 
-  login() {
+  login = () => {
     this.api.login(this.state.email, this.state.password,
       (err) => {
         if (err) {
@@ -68,7 +70,7 @@ export default class Login extends Component {
             colors={['transparent', colors.lightBackground]}
             style={containers.generalGradient}>
             <Image 
-              source={require('../assets/logoCrop.png')} 
+              source={logoImage} 
               style={containers.logo}/>
             <Text style={text.title}>StockDog</Text>
             <FormInput
@@ -82,12 +84,12 @@ export default class Login extends Component {
               value={this.state.password}
               onchange={(password) => this.setState({password})}
               returnKeyType={ "done" }
-              onSubmitEditing={this.login.bind(this)}
+              onSubmitEditing={this.login}
               refer={ input => {this.inputs['password'] = input;}}/>
             <WideButton 
               type='login' 
               disabled={disabled} 
-              onpress={this.login.bind(this)}/>
+              onpress={this.login}/>
             {/* <TouchableOpacity
               style={elements.smallTextButton}>
               <Text style={text.smallText}> Forgot Password? </Text>
@@ -95,7 +97,7 @@ export default class Login extends Component {
             <TouchableOpacity style={elements.smallTextButton}>
               <Text 
                 style={text.smallText} 
-                onPress={this.navToRegister.bind(this)}> 
+                onPress={this.navToRegister}> 
                 Create an account 
               </Text>
             </TouchableOpacity>
