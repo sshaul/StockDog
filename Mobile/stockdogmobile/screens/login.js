@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, Image, TextInput, AsyncStorage } from 'react-native';
+import { Text, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LinearGradient } from 'expo';
@@ -7,6 +7,7 @@ import containers from '../style/containers';
 import elements from '../style/elements';
 import {colors} from '../style/colors';
 import text from '../style/text';
+import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Api from '../api';
 
@@ -70,31 +71,19 @@ export default class Login extends Component {
               source={require('../assets/logoCrop.png')} 
               style={containers.logo}/>
             <Text style={text.title}>StockDog</Text>
-            <TextInput
-              style={elements.roundedInput}
-              placeholder="email"
-              color={colors.white}
-              placeholderTextColor={colors.placeholders}
-              onChangeText={(email) => this.setState({email})}
+            <FormInput
+              type="email"
               value={this.state.email}
-              blurOnSubmit={ false }
-              onSubmitEditing={() => {this.focusNextField('password');}}
+              onchange={(email) => this.setState({email})}
               returnKeyType={ "next" }
-              autoCapitalize={"none"}
-              underlineColorAndroid={colors.white}/>
-            <TextInput
-              style={elements.roundedInput}
-              placeholder="password"
-              color={colors.white}
-              placeholderTextColor={colors.placeholders}
-              secureTextEntry={true}
-              onChangeText={(password) => this.setState({password})}
+              onSubmitEditing={() => {this.focusNextField('password');}}/>
+            <FormInput
+              type="password"
               value={this.state.password}
-              onSubmitEditing={this.login.bind(this)}
+              onchange={(password) => this.setState({password})}
               returnKeyType={ "done" }
-              ref={ input => {this.inputs['password'] = input;}}
-              autoCapitalize={"none"}
-              underlineColorAndroid={colors.white}/>
+              onSubmitEditing={this.login.bind(this)}
+              refer={ input => {this.inputs['password'] = input;}}/>
             <WideButton 
               type='login' 
               disabled={disabled} 

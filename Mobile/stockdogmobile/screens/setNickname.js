@@ -4,7 +4,7 @@ import Lightbox from '../components/baseLightbox';
 import { Actions } from 'react-native-router-flux';
 import containers from '../style/containers';
 import text from '../style/text';
-import RoundInput from '../components/roundinput';
+import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Icon from 'react-native-vector-icons/Feather';
 import Api from '../api';
@@ -60,7 +60,7 @@ export default class SetNickname extends Component {
           </View>
           <View style={containers.addGroupInnerModal}>
             <Text style={text.joinLeagueTitle}> Set your nickname: </Text>
-            <RoundInput 
+            <FormInput 
               type="Nickname" 
               onchange={this.onchangename.bind(this)} 
               value={this.state.nickname}/>

@@ -6,7 +6,7 @@ import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
 import Modal from 'react-native-modal';
-import RoundInput from '../components/roundinput';
+import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Icon from 'react-native-vector-icons/Feather';
 import Api from '../api';
@@ -78,7 +78,7 @@ export default class BuySellModal extends Component {
       if (props.modalType === 'buy') {
         content = (<View style={containers.innerModal}>
           <Text style={[text.profileLabels, {paddingBottom: 10, paddingTop: 10}]}>Buy power: {props.buypower}</Text>
-          <RoundInput 
+          <FormInput 
             type="Amount" 
             onchange={this.onchangeamount.bind(this)} 
             value={this.state.amount}/>
@@ -88,7 +88,7 @@ export default class BuySellModal extends Component {
       else if (props.modalType === 'sell') {
         content = (<View style={containers.innerModal}>
           <Text style={[text.profileLabels, {paddingBottom: 10, paddingTop: 10}]}>You own {props.shares} shares</Text>
-          <RoundInput 
+          <FormInput 
             type="Amount" 
             onchange={this.onchangeamount.bind(this)} 
             value={this.state.amount}/>

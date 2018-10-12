@@ -12,8 +12,8 @@ export default class App extends Component {
   
   async componentDidMount() {
     await Font.loadAsync({
-      'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
-      'open-sans': require('./assets/fonts/OpenSans-Regular.ttf')
+      'assistant-bold': require('./assets/fonts/Assistant-Bold.otf'),
+      'assistant': require('./assets/fonts/Assistant-Regular.otf')
     });
     this.setState({fontLoaded: true});
   }
