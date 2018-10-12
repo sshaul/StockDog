@@ -6,7 +6,6 @@ import time
 import routes.portfolio as portfolio
 from util.utility import Utility
 from util.errMap import errors
-from validator.leagueSchema import LeagueSchema
 
 league_api = Blueprint('league_api', __name__)
 

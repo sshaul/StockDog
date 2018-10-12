@@ -6,7 +6,6 @@ import simplejson as json
 from routes import stock
 from util.utility import Utility
 from util.errMap import errors
-from validator.portfolioSchema import PortfolioSchema
 
 portfolio_api = Blueprint('portfolio_api', __name__)
 

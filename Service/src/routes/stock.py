@@ -8,7 +8,6 @@ from urllib.parse import urlencode
 
 from routes import iex
 from util.errMap import errors
-from validator.stockSchema import TransSchema
 
 TODAY = 0
 DAY_AGO = 1
@@ -47,7 +46,7 @@ def post_sell_transaction(ticker):
    saleValue = sharePrice * body['shareCount']
    newShareCt = userShares['shareCount'] - body['shareCount']
 
-   g.cursor.execute("SELECT leagueId FROM Portfolio WHERE id = %s", 
+   g.cursor.execute("SELECT leagueId FROM Portfolio WHERE id = %s",
       int(body['portfolioId']))
 
    portfolio = g.cursor.fetchone()
@@ -64,7 +63,7 @@ def post_sell_transaction(ticker):
    g.cursor.execute("UPDATE Portfolio SET buyPower = buyPower + %s WHERE id = %s",
       [saleValue, body['portfolioId']])
 
-   g.cursor.execute("UPDATE PortfolioItem SET shareCount = %s " 
+   g.cursor.execute("UPDATE PortfolioItem SET shareCount = %s "
       "WHERE portfolioId = %s AND ticker = %s",
       [newShareCt, body['portfolioId'], ticker])
 
@@ -80,7 +79,7 @@ def post_buy_transaction(ticker):
       result = TransSchema().load(body)
    except ValidationError as err:
       return make_response(json.dumps(err.messages), 400)
-   
+
    sharePrice = json.loads(get_history(ticker, 'now'))['price']
 
    g.cursor.execute("SELECT leagueId, buyPower FROM Portfolio WHERE id = %s",
@@ -100,7 +99,7 @@ def post_buy_transaction(ticker):
 
    remainingBuyPower = float(userBuyPower) - purchaseCost
 
-   g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " + 
+   g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, isBuy, datetime, portfolioId, ticker, leagueId) " +
       "VALUES (%s, %s, %s, %s, %s, %s, %s)",
       [sharePrice, body['shareCount'], 1, datetime.now(), body['portfolioId'], ticker, leagueId])
 
@@ -149,7 +148,7 @@ def get_history(ticker, length):
          queryParams['interval'] = interval
 
       g.log.info('Alpha Vantage API hitting: ' + URL_PREFIX + urlencode(queryParams))
-      
+
       startTime = time.time()
       try:
          rawResponse = requests.get(URL_PREFIX + urlencode(queryParams))
@@ -166,9 +165,9 @@ def get_history(ticker, length):
 
       g.log.info('Alphavantage time is: ' + str(alphaTime))
       g.log.info('Parsing data time is: ' + str(parseTime))
-      
+
       return json.dumps(data)
-    
+
 
 def getFunction(length):
    if length == 'day' or length == 'week' or length == 'now':
@@ -185,7 +184,7 @@ def getOutputSize(length):
    elif length == 'week' or length == 'year':
       return 'full'
    else:
-      raise Exception('Invalid length provided') 
+      raise Exception('Invalid length provided')
 
 
 def getInterval(length):
@@ -221,19 +220,19 @@ def formatData(jsonData, interval, length):
    if length == 'day':
       startTime = getStartTime(getLastWeekdayDelta())
       slicedTimeSeriesData = formatDataInRange(timeSeriesData, startTime, DATETIME_FORMAT)
-   
+
    elif length == 'week':
       startTime = getStartTime(WEEK_AGO)
       slicedTimeSeriesData = formatDataInRange(timeSeriesData, startTime, DATETIME_FORMAT)
-   
+
    elif length == 'month':
       startTime = getStartTime(MONTH_AGO)
       slicedTimeSeriesData = formatDataInRange(timeSeriesData, startTime, DATE_FORMAT)
-   
+
    elif length == 'year':
       startTime = getStartTime(YEAR_AGO)
       slicedTimeSeriesData = formatDataInRange(timeSeriesData, startTime, DATE_FORMAT)
-   
+
    elif length == 'now':
       slicedTimeSeriesData = getRecentDatum(timeSeriesData, DATETIME_FORMAT)
 

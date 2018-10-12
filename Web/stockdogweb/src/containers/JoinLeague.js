@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { withCookies } from 'react-cookie';
-import API from 'api.js';
+import API from 'api/api';
 import GoHome from '../components/GoHome';
+import { withAlert } from 'react-alert';
+
 
 class JoinLeague extends Component {
    constructor(props) {
@@ -19,20 +21,27 @@ class JoinLeague extends Component {
    }
 
    joinLeague = () => {
-      this.api.getLeagueIdViaInviteCode(this.state.inviteCode, (data) => {
-         this.api.createPortfolioWithLeague(
-            this.cookies.get("userId"),
-            this.state.nickname,
-            data["startPos"],
-            data["id"],
-            this.state.inviteCode,
-            () => {
-               console.log("portfolio created and joined league");
-               this.props.history.push("/");
-            }
-         );
-      });
-   }
+      this.api.getLeagueIdViaInviteCode(this.state.inviteCode)
+         .then(response => {
+            const data = response["data"];
+            this.api.createPortfolioWithLeague(
+               this.cookies.get("userId"),
+               this.state.nickname,
+               data["startPos"],
+               data["id"],
+               this.state.inviteCode)
+               .then(response => {
+                  this.props.alert.success("You have successfully joined the league.");
+                  this.props.history.push("/");
+               })
+               .catch(errorMessage => {
+                  this.props.alert.error("Failed to create portfolio.");
+               });
+         })
+         .catch(errorMessage => {
+            this.props.alert.error("Invalid league ID.");
+         });
+   };
 
    _onChange = (event) => {
       const id = event.target.id;
@@ -42,25 +51,27 @@ class JoinLeague extends Component {
       }, () => {
          if (id === "inviteCode") {
             this.checkInviteCode();
-         } 
+         }
       });
 
-      
+
    }
 
    checkInviteCode = () => {
-      this.api.getLeagueIdViaInviteCode(this.state.inviteCode, (data) => {
-         if (data === null && this.state.inviteCodeClass === "") {
-            this.setState({
-               inviteCodeClass: "invalidInput"
-            });
-         }
-         else if (data && this.state.inviteCodeClass === "invalidInput") {
-            this.setState({
-               inviteCodeClass: ""
-            });
-         }
-      });
+      this.api.getLeagueIdViaInviteCode(this.state.inviteCode)
+         .then(response => {
+            const data = response["data"];
+            if (data.length === 0 && this.state.inviteCodeClass === "") {
+               this.setState({
+                  inviteCodeClass: "invalidInput"
+               });
+            }
+            else if (data.length !== 0 && this.state.inviteCodeClass === "invalidInput") {
+               this.setState({
+                  inviteCodeClass: ""
+               });
+            }
+         });
    }
 
    advance = () => {
@@ -79,7 +90,7 @@ class JoinLeague extends Component {
                <div className="create-league-area" id="join-league-area">
                   <h1>Join a league</h1>
                   <label>Invite code</label>
-                  <input id="inviteCode" type="text" 
+                  <input id="inviteCode" type="text"
                   className={this.state.inviteCodeClass}
                   value={this.state.inviteCode} onChange={this._onChange}/>
                   <button className="submit-btn" id="league-advance"
@@ -95,7 +106,7 @@ class JoinLeague extends Component {
                <GoHome />
                <div className="create-league-area" id="create-league-area-2">
                   <label>Your nickname</label>
-                  <input id="nickname" type="text" value={this.state.nickname} 
+                  <input id="nickname" type="text" value={this.state.nickname}
                      onChange={this._onChange} />
                   <button className="submit-btn" id="league-advance"
                      onClick={this.joinLeague}>
@@ -110,4 +121,4 @@ class JoinLeague extends Component {
    }
 }
 
-export default withCookies(JoinLeague);
+export default withAlert(withCookies(JoinLeague));

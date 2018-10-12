@@ -6,6 +6,7 @@ from auth.login import Login
 from auth.logout import logout_api
 from auth.session import session_api
 
+from routes.charts import charts_api
 from routes.iex import iex_api
 from routes.league import league_api
 from routes.nuke import nuke_api
@@ -23,6 +24,7 @@ app = Flask(__name__)
 CORS(app)
 login = Login(app)
 
+app.register_blueprint(charts_api)
 app.register_blueprint(iex_api)
 app.register_blueprint(league_api)
 app.register_blueprint(login.login_api)

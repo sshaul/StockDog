@@ -2,7 +2,7 @@ import simplejson as json
 
 
 errors = {
-   'unsupportedTicker': 'Request was formed incorrectly. The stock ticker is either invalid or unsupported.',
+   'unsupportedTicker': 'The stock ticker is either invalid or unsupported.',
    'iexUnavailable': 'Honestly, this probably means that iex is down lol.',
    'invalidDate': 'Invalid date format. Please use MM-DD-YYYY.',
    'nonexistentLeague': 'League does not exist.',

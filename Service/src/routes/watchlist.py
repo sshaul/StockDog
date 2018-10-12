@@ -3,7 +3,6 @@ from marshmallow import ValidationError
 import simplejson as json
 
 from util.errMap import errors
-from validator.watchlistSchema import WatchlistSchema
 
 watchlist_api = Blueprint('watchlist_api', __name__)
 

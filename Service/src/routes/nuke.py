@@ -1,8 +1,6 @@
 from flask import Blueprint, request, Response, g
 from marshmallow import ValidationError
 
-from validator.nukeSchema import NukeSchema
-
 nuke_api = Blueprint('nuke_api', __name__)
 
 

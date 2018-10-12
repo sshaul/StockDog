@@ -4,7 +4,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import simplejson as json
 
 from util.errMap import errors
-from validator.userSchema import UserSchema
 
 user_api = Blueprint('user_api', __name__)
 
