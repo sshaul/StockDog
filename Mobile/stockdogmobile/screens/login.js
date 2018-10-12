@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, Image, View, FlatList, TextInput, AsyncStorage, ScrollView } from 'react-native';
+import { Text, TouchableOpacity, Image, TextInput, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Button } from 'react-native-elements';
 import { LinearGradient } from 'expo';
 import containers from '../style/containers';
 import elements from '../style/elements';
@@ -30,7 +29,7 @@ export default class Login extends Component {
   componentDidMount() {
     // Check if user is already logged in
     AsyncStorage.getItem('token', (token) => {
-      // console.log(token);
+      // TODO: Add session validation
     })
   }
 
@@ -65,61 +64,52 @@ export default class Login extends Component {
         keyboardShouldPersistTaps="handled"
         enableOnAndroid={true}>
           <LinearGradient
-            colors={['transparent', '#404040']}
-            style={containers.generalGradient}
-            >
-            <Image source={require('../assets/logoCrop.png')} style={containers.logo}/>
+            colors={['transparent', colors.lightBackground]}
+            style={containers.generalGradient}>
+            <Image 
+              source={require('../assets/logoCrop.png')} 
+              style={containers.logo}/>
             <Text style={text.title}>StockDog</Text>
             <TextInput
               style={elements.roundedInput}
               placeholder="email"
               color={colors.white}
-              placeholderTextColor="#aaaaaa"
+              placeholderTextColor={colors.placeholders}
               onChangeText={(email) => this.setState({email})}
               value={this.state.email}
               blurOnSubmit={ false }
-              onSubmitEditing={() => {
-                this.focusNextField('two');
-              }}
+              onSubmitEditing={() => {this.focusNextField('password');}}
               returnKeyType={ "next" }
-              ref={ input => {
-                this.inputs['one'] = input;
-              }}
               autoCapitalize={"none"}
-              underlineColorAndroid={colors.white}
-            />
+              underlineColorAndroid={colors.white}/>
             <TextInput
               style={elements.roundedInput}
               placeholder="password"
               color={colors.white}
-              placeholderTextColor="#aaaaaa"
+              placeholderTextColor={colors.placeholders}
               secureTextEntry={true}
               onChangeText={(password) => this.setState({password})}
               value={this.state.password}
-              onSubmitEditing={() => {
-                this.login.bind(this);
-              }}
+              onSubmitEditing={this.login.bind(this)}
               returnKeyType={ "done" }
-              ref={ input => {
-                this.inputs['two'] = input;
-              }}
+              ref={ input => {this.inputs['password'] = input;}}
               autoCapitalize={"none"}
-              underlineColorAndroid={colors.white}
-              
-            />
-          <WideButton type='login' disabled={disabled} onpress={this.login.bind(this)}/>
-          {/* <TouchableOpacity
-            style={elements.smallTextButton}>
-            <Text style={text.smallText}> Forgot Password? </Text>
-          </TouchableOpacity> */}
-          <TouchableOpacity
-            style={elements.smallTextButton}>
-            <Text 
-              style={text.smallText} 
-              onPress={this.navToRegister.bind(this)}> 
-              Create an account 
-            </Text>
-          </TouchableOpacity>
+              underlineColorAndroid={colors.white}/>
+            <WideButton 
+              type='login' 
+              disabled={disabled} 
+              onpress={this.login.bind(this)}/>
+            {/* <TouchableOpacity
+              style={elements.smallTextButton}>
+              <Text style={text.smallText}> Forgot Password? </Text>
+            </TouchableOpacity> */}
+            <TouchableOpacity style={elements.smallTextButton}>
+              <Text 
+                style={text.smallText} 
+                onPress={this.navToRegister.bind(this)}> 
+                Create an account 
+              </Text>
+            </TouchableOpacity>
           </LinearGradient>
       </KeyboardAwareScrollView>
     );
