@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Listing from '../components/Listing/Listing';
+import Graph from '../components/Graph/Graph';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
@@ -37,3 +38,7 @@ var listingProps = {
 storiesOf('Listing', module)
   .add('one listing', () =>
     <Listing {...listingProps}/>);
+
+storiesOf('Graph', module)
+  .add('basic', () => 
+    <Graph />);
