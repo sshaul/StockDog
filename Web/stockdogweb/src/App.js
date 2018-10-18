@@ -5,6 +5,8 @@ import {
 import AuthenticatedRoute from "components/AuthenticatedRoute";
 import UnauthenticatedRoute from "components/UnauthenticatedRoute";
 import { withCookies } from "react-cookie";
+import { Provider } from 'react-redux';
+import store from "./store";
 
 // CSS
 import './css/App.css';
@@ -18,27 +20,31 @@ import JoinLeague from "./containers/JoinLeague";
 import CreateLeague from "./containers/CreateLeague";
 import LeagueHome from "./containers/LeagueHome";
 
+const store = createStore(() => [], {}, applyMiddleware());
+
 class App extends Component {
    render() {
       return (
-         <Router>
-            <div className="App">
-               <UnauthenticatedRoute exact path="/" component={Login}
-                  appProps={this.props}/>
-               <UnauthenticatedRoute exact path="/register"
-                  component={Register} appProps={this.props} />
-               <AuthenticatedRoute exact path="/portfolio" component={Portfolio}
-                  appProps={this.props}/>
-               <AuthenticatedRoute path="/stock/:ticker"
-                  component={Stock} appProps={this.props}/>
-               <AuthenticatedRoute path="/join-league/"
-                component={JoinLeague} appProps={this.props} />
-               <AuthenticatedRoute path="/create-league/"
-                component={CreateLeague} appProps={this.props} />
-               <AuthenticatedRoute path="/league/:id"
-                component={LeagueHome} appProps={this.props} />
-            </div>
-         </Router>
+        <Provider store={store}>
+           <Router>
+              <div className="App">
+                 <UnauthenticatedRoute exact path="/" component={Login}
+                    appProps={this.props}/>
+                 <UnauthenticatedRoute exact path="/register"
+                    component={Register} appProps={this.props} />
+                 <AuthenticatedRoute exact path="/portfolio" component={Portfolio}
+                    appProps={this.props}/>
+                 <AuthenticatedRoute path="/stock/:ticker"
+                    component={Stock} appProps={this.props}/>
+                 <AuthenticatedRoute path="/join-league/"
+                  component={JoinLeague} appProps={this.props} />
+                 <AuthenticatedRoute path="/create-league/"
+                  component={CreateLeague} appProps={this.props} />
+                 <AuthenticatedRoute path="/league/:id"
+                  component={LeagueHome} appProps={this.props} />
+              </div>
+           </Router>
+         </Provider>
       );
    }
 }
