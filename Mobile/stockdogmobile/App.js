@@ -19,10 +19,9 @@ export default class App extends Component {
   }
 
   render() {
-    console.log('wtf');
     return(
       this.state.fontLoaded ? 
-       Routes() : null
+        Routes() : null
     );
   }
 };

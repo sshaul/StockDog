@@ -1,21 +1,12 @@
-// import { combineReducers } from 'redux';
+import { ACTION_TYPES } from '../actions/actionTypes';
 
-// const INITIAL_STATE = {
-//     user: null,
-//     token: null
-// };
-
-// const INITIAL_STATE = {
-
-// };
-
-// const loginReducer = (state = INITIAL_STATE, action) => {
-//     switch(action.type) {
-//         default:
-//             return state;
-//     }
-// };
-
-// export default combineReducers({
-//     login: loginReducer,
-// });
+export default loginReducer = (state = {user: null, password: null}, action) => {
+    console.log('in login reducer: ', action.type);
+    switch(action.type) {
+        case ACTION_TYPES.LOGIN_USER:
+            console.log('logging in: ', action);
+            return { user: action.creds.user, password: action.creds.password};
+        default:
+            return state;
+    }
+};

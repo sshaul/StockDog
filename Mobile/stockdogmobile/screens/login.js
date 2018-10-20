@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, Image, AsyncStorage } from 'react-native';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Button } from 'react-native-elements';
 import { LinearGradient } from 'expo';
 import containers from '../style/containers';
 import elements from '../style/elements';
@@ -11,10 +11,20 @@ import text from '../style/text';
 import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Api from '../api';
+import { loginUser } from '../actions';
+
+mapStateToProps = (state) => { return {} }
+
+mapDispatchToProps = (dispatch) => ({
+  loginUser: (username, password) => {
+      console.log('creds: ', username, password);
+      dispatch(loginUser(username, password));
+  },
+});
 
 var logoImage = require('../assets/logoCrop.png');
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     var user = "";
@@ -46,20 +56,22 @@ export default class Login extends Component {
   };
 
   login = () => {
-    this.api.login(this.state.email, this.state.password,
-      (err) => {
-        if (err) {
-          alert('Invalid login.');
-        }
-        else {
-          Actions.main({});
-        }
-      }
-    );
+    // this.api.login(this.state.email, this.state.password,
+    //   (err) => {
+    //     if (err) {
+    //       alert('Invalid login.');
+    //     }
+    //     else {
+    //       Actions.main({});
+    //     }
+    //   }
+    // );
+    console.log('in login');
+    this.props.loginUser(this.state.email, this.state.password);
   };
 
   render() {
-    console.log('what');
+    var loginUser = this.props.loginUser;
     var disabled = !(this.state.email && this.state.password);
     return (
       <KeyboardAwareScrollView 
@@ -108,3 +120,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
