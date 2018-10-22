@@ -5,24 +5,97 @@ import "./Graph.css";
 import loading from "../../img/loading.svg";
 
 class Graph extends Component {
-   constructor(props) {
-      super(props);
-      this.state = { isLoading: true }
+   loadingAnimation = (
+      <div className="Graph-loading-animation-wrapper">
+         <div className="Graph-loading-animation">
+            <img src={loading} alt="Loading" />
+         </div>
+      </div>
+   )
+   
+   data = {
+      labels: this.props.labels,
+      datasets: [
+         {
+            fill: false,
+            lineTension: 0,
+            borderColor: 'rgb(247, 248, 249)',
+            borderCapStyle: 'butt',
+            borderJoinStyle: 'miter',
+            borderWidth: 1,
+            pointRadius: 3,
+            pointBorderColor: 'rgb(247, 248, 249)',
+            pointBackgroundColor: 'rgb(247, 248, 249)',
+            pointHoverRadius: 10,
+            pointHoverBackgroundColor: 'rgb(247, 248, 249)',
+            pointHoverBorderWidth: 0,
+            pointHitRadius: 30,
+            lineTension: .4,
+            data: this.props.data
+         }
+      ]
    }
 
-   loadingAnimation =
-   <div className="Graph-loading-animation-wrapper">
-      <div className="Graph-loading-animation">
-         <img src={loading} alt="Loading" />
-      </div>
-   </div>
+   // Options for the chart
+   options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      legend: {
+         display: false
+      },
+      showAllTooltips: true,
+      tooltips: {
+         custom: function(tooltip) {
+            if (!tooltip) return;
+            // disable displaying the color box;
+            tooltip.displayColors = false;
+         },
+         callbacks: {
+            label: function(tooltipItem) {
+               return '$' + tooltipItem.yLabel;
+            }
+         },
+         mode: 'x-axis'
+      },
+      scales: {
+         yAxes: [{
+            ticks: {
+               fontColor: "#929292",
+               fontSize: 12,
+               callback: function(label, index, labels) {
+                  return Math.round(label * 100) / 100;
+               },
+               fontFamily: "Assistant",
+               fontStyle: "600"
+            },
+            gridLines: {
+               display: false
+            }
+         }],
+         xAxes: [{
+            ticks: {
+               fontColor: "#929292",
+               fontSize: 12,
+               stepSize: 1,
+               maxTicksLimit: 5,
+               fontFamily: "Assistant",
+               fontStyle: "600"
+            },
+            gridLines: {
+               display: false
+            }
+         }]
+      }
+   }
    
    render() { 
       return ( 
          <div class="Graph">
-            {this.state.isLoading ? 
-            this.loadingAnimation :
-            <div></div>}
+            {this.props.isLoading ? 
+               this.loadingAnimation :
+               <div class="Graph-graph">
+                  <Line data={this.data} options={this.options} />
+               </div>}
          </div>
        );
    }
