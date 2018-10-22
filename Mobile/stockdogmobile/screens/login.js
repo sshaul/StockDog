@@ -13,13 +13,10 @@ import WideButton from '../components/widebutton';
 import Api from '../api';
 import { loginUser } from '../actions';
 
-mapStateToProps = (state) => { return {} }
-
 mapDispatchToProps = (dispatch) => ({
   loginUser: (username, password) => {
-      console.log('creds: ', username, password);
-      dispatch(loginUser(username, password));
-  },
+    dispatch(loginUser(username, password));
+  }
 });
 
 var logoImage = require('../assets/logoCrop.png');
@@ -56,22 +53,10 @@ class Login extends Component {
   };
 
   login = () => {
-    // this.api.login(this.state.email, this.state.password,
-    //   (err) => {
-    //     if (err) {
-    //       alert('Invalid login.');
-    //     }
-    //     else {
-    //       Actions.main({});
-    //     }
-    //   }
-    // );
-    console.log('in login');
     this.props.loginUser(this.state.email, this.state.password);
   };
 
   render() {
-    var loginUser = this.props.loginUser;
     var disabled = !(this.state.email && this.state.password);
     return (
       <KeyboardAwareScrollView 
@@ -121,4 +106,4 @@ class Login extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);

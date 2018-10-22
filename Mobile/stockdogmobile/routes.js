@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router, Stack, Scene, ActionConst, Tabs, Modal, Drawer, Lightbox } from 'react-native-router-flux';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { createStore } from 'redux';
 import reducers from './reducers/index';
 import Login from './screens/login';
@@ -23,10 +23,12 @@ import text from './style/text';
 import { colors } from './style/colors';
 
 const store = createStore(reducers);
+const mapStateToProps = state => ({state: state.nav});
+const ConnectedRouter = connect(mapStateToProps)(Router);
 
 const Routes = () => (
   <Provider store={store}>
-    <Router>
+    <ConnectedRouter>
       <Scene key="root" hideNavBar>
             <Scene key="login" component={Login}/>
             <Scene key="register" component={Register}/>
@@ -72,7 +74,7 @@ const Routes = () => (
         </Modal>
       </Drawer> */}
       </Scene>
-    </Router>
+    </ConnectedRouter>
   </Provider>
 );
 

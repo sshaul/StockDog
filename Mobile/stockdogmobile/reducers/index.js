@@ -5,6 +5,8 @@ import { combineReducers } from 'redux';
 import loginReducer from './loginReducer';
 
 const sceneReducer = (state = {}, {type, scene}) => {
+    console.log('in scene reducer');
+    console.log(type);
     switch(type){
         case ActionConst.FOCUS:
             return { ...state, scene };
