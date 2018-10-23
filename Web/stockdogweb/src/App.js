@@ -20,8 +20,6 @@ import JoinLeague from "./containers/JoinLeague";
 import CreateLeague from "./containers/CreateLeague";
 import LeagueHome from "./containers/LeagueHome";
 
-const store = createStore(() => [], {}, applyMiddleware());
-
 class App extends Component {
    render() {
       return (
