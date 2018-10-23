@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, Image, AsyncStorage } from 'react-native';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LinearGradient } from 'expo';
@@ -10,10 +11,17 @@ import text from '../style/text';
 import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Api from '../api';
+import { loginUser } from '../actions';
+
+mapDispatchToProps = (dispatch) => ({
+  loginUser: (username, password) => {
+    dispatch(loginUser(username, password));
+  }
+});
 
 var logoImage = require('../assets/logoCrop.png');
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     var user = "";
@@ -32,7 +40,7 @@ export default class Login extends Component {
   componentDidMount() {
     // Check if user is already logged in
     AsyncStorage.getItem('token', (token) => {
-      // TODO: Add session validation
+      // console.log(token);
     })
   }
 
@@ -45,16 +53,7 @@ export default class Login extends Component {
   };
 
   login = () => {
-    this.api.login(this.state.email, this.state.password,
-      (err) => {
-        if (err) {
-          alert('Invalid login.');
-        }
-        else {
-          Actions.main({});
-        }
-      }
-    );
+    this.props.loginUser(this.state.email, this.state.password);
   };
 
   render() {
@@ -106,3 +105,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default connect(null, mapDispatchToProps)(Login);

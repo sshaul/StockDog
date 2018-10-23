@@ -39,6 +39,8 @@
     "react-native-tooltip": "^5.0.0",
     "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^1.0.0-beta.26",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
     "uuid": "^3.2.1"
   }
 }
