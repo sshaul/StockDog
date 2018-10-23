@@ -4,6 +4,9 @@ import "./Graph.css";
 
 import loading from "../../img/loading.svg";
 
+const offWhite = 'rgb(247, 248, 249)';
+const gray = '#929292';
+
 class Graph extends Component {
    loadingAnimation = (
       <div className="Graph-loading-animation-wrapper">
@@ -19,15 +22,15 @@ class Graph extends Component {
          {
             fill: false,
             lineTension: 0,
-            borderColor: 'rgb(247, 248, 249)',
+            borderColor: offWhite,
             borderCapStyle: 'butt',
             borderJoinStyle: 'miter',
             borderWidth: 1,
             pointRadius: 3,
-            pointBorderColor: 'rgb(247, 248, 249)',
-            pointBackgroundColor: 'rgb(247, 248, 249)',
+            pointBorderColor: offWhite,
+            pointBackgroundColor: offWhite,
             pointHoverRadius: 10,
-            pointHoverBackgroundColor: 'rgb(247, 248, 249)',
+            pointHoverBackgroundColor: offWhite,
             pointHoverBorderWidth: 0,
             pointHitRadius: 30,
             lineTension: .4,
@@ -60,7 +63,7 @@ class Graph extends Component {
       scales: {
          yAxes: [{
             ticks: {
-               fontColor: "#929292",
+               fontColor: gray,
                fontSize: 12,
                callback: function(label, index, labels) {
                   return Math.round(label * 100) / 100;
@@ -74,7 +77,7 @@ class Graph extends Component {
          }],
          xAxes: [{
             ticks: {
-               fontColor: "#929292",
+               fontColor: gray,
                fontSize: 12,
                stepSize: 1,
                maxTicksLimit: 5,
