@@ -23,9 +23,7 @@ import containers from './style/containers';
 import text from './style/text';
 import { colors } from './style/colors';
 
-const store = createStore(reducers);
-
-const Routes = () => (
+const Routes = (store) => (
   <Provider store={store}>
     <CustomRouter>
       <Scene key="root" hideNavBar>
