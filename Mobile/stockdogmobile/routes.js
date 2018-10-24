@@ -5,7 +5,7 @@ import { createStore } from 'redux';
 import reducers from './reducers/index';
 import Login from './screens/login';
 import Register from './screens/register';
-import Profile from './screens/profile';
+import Portfolio from './screens/portfolio';
 import Stock from './screens/stock';
 import Search from './screens/search';
 import League from './screens/league';
@@ -30,8 +30,8 @@ const Routes = () => (
   <Provider store={store}>
     <ConnectedRouter>
       <Scene key="root" hideNavBar>
-            <Scene key="login" component={Login}/>
-            <Scene key="register" component={Register}/>
+            {/* <Scene key="login" component={Login}/>
+            <Scene key="register" component={Register}/> */}
             {/* <Drawer 
               key="drawer"  
               contentComponent={LeagueDrawer} 
@@ -48,10 +48,10 @@ const Routes = () => (
                   activeBackgroundColor= { colors.activeTab }
                   indicatorStyle= { containers.indicator }
                   labelStyle= { text.tabLabel }
-                  >
-                  <Scene key="profilemain" hideNavBar title="Portfolio" iconName="user" icon={TabIcon}>
-                    <Scene key="profile" component={Profile} onEnter={Profile.onEnterPortfolio}/>
-                  </Scene>
+                  > 
+                  <Scene key="portfoliomain" hideNavBar title="Portfolio" iconName="user" icon={TabIcon}> */}
+                    <Scene key="portfolio" component={Portfolio} onEnter={Portfolio.onEnterPortfolio}/>
+                  {/*</Scene>
                   <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon} onEnter={League.onEnterLeague}/>
                   <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon} onEnter={Feed.onEnterFeed}/>
                   <Scene key="searchmain" hideNavBar title="Search" iconName="search" icon={TabIcon}>

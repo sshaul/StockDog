@@ -12,9 +12,8 @@ import PortfolioItem from '../components/portfolioItem';
 import Api from '../api';
 import LoadingProfile from '../components/loadingProfile';
 import NavBar from '../components/navbar';
-import Drawer from 'react-native-drawer';
 
-export default class Profile extends Component {
+export default class Portfolio extends Component {
   constructor(props) {
     super(props);
     this.state = { 
