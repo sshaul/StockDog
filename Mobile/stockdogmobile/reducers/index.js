@@ -4,10 +4,10 @@ import { combineReducers } from 'redux';
 // import the other reducers
 import loginReducer from './loginReducer';
 
-const sceneReducer = (state = {}, {type, scene}) => {
-    switch(type){
+const sceneReducer = (state = {}, action) => {
+    switch(action.type){
         case ActionConst.FOCUS:
-            return { ...state, scene };
+            return { ...state, "route": action.routeName };
         default:
             return state;
     }    
