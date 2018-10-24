@@ -3,7 +3,7 @@ import { Router, Reducer } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
 class CustomRouter extends Component {
-   reducerCreate (params) {
+   routerReducer (params) {
       const defaultReducer = new Reducer(params);
       return (state, action) => {
          this.props.dispatch(action);
@@ -13,7 +13,7 @@ class CustomRouter extends Component {
 
    render () {
       return (
-         <Router createReducer={this.reducerCreate.bind(this)} >
+         <Router createReducer={this.routerReducer.bind(this)} >
             {this.props.children}
          </Router>
       );
