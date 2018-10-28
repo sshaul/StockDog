@@ -7,7 +7,7 @@ import time
 from urllib.parse import urlencode
 
 from routes import iex
-from util.errMap import errors
+from util.error_map import errors
 
 TODAY = 0
 DAY_AGO = 1

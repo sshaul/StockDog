@@ -1,5 +1,8 @@
-from flask import g
+from flask import g, make_response, request
+from functools import update_wrapper
 from pprint import pprint
+import simplejson as json
+
 from .validation_error import ValidationError
 
 def validate(data, fields):
@@ -44,8 +47,35 @@ def validate_str(datum, field, errors):
    
    return errors
 
+
 def validate_int(datum, field, errors):
    if type(datum) != int:
       errors.append({'InvalidField' : field.name + ' is not an int or formatted incorrecly'})
    
    return errors
+
+
+def validate_params(fields):
+   def decorator(fn):
+      def wrap(*args, **kwargs):
+         try:
+            validate(request.args, fields)
+         except ValidationError as e:
+            return make_response(json.dumps(e.errors), 400)
+         
+         return fn(*args, **kwargs)
+      return update_wrapper(wrap, fn)
+   return decorator
+
+
+def validate_body(fields):
+   def decorator(fn):
+      def wrap(*args, **kwargs):
+         try:
+            validate(request.args, fields)
+         except ValidationError as e:
+            return make_response(json.dumps(e.errors), 400)
+         
+         return fn(*args, **kwargs)
+      return update_wrapper(wrap, fn)
+   return decorator
