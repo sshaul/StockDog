@@ -61,13 +61,13 @@ class Login extends Component {
     return (
       <KeyboardAwareScrollView 
         resetScrollToCoords={{ x: 0, y: 0 }}
-        contentContainerStyle={containers.general}
+        contentContainerStyle={containers.centeredDark}
         scrollEnabled={false}
         keyboardShouldPersistTaps="handled"
         enableOnAndroid={true}>
           <LinearGradient
             colors={['transparent', colors.lightBackground]}
-            style={containers.generalGradient}>
+            style={containers.gradient}>
             <Image 
               source={logoImage} 
               style={containers.logo}/>

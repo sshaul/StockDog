@@ -30,8 +30,8 @@ const Routes = () => (
   <Provider store={store}>
     <ConnectedRouter>
       <Scene key="root" hideNavBar>
-            {/* <Scene key="login" component={Login}/>
-            <Scene key="register" component={Register}/> */}
+        {/* <Scene key="login" component={Login}/>
+        <Scene key="register" component={Register}/> */}
             {/* <Drawer 
               key="drawer"  
               contentComponent={LeagueDrawer} 

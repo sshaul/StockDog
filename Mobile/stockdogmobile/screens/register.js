@@ -58,13 +58,13 @@ export default class Register extends Component {
     return (
       <KeyboardAwareScrollView 
         resetScrollToCoords={{ x: 0, y: 0 }}
-        contentContainerStyle={containers.general}
+        contentContainerStyle={containers.centeredDark}
         scrollEnabled={false}
         keyboardShouldPersistTaps="handled"
         enableOnAndroid={true}>
         <LinearGradient
             colors={['transparent', colors.lightBackground]}
-            style={containers.generalGradient}>
+            style={containers.gradient}>
           <Text style={text.title}>StockDog</Text>
           <FormInput 
             type="first name" 
@@ -86,7 +86,7 @@ export default class Register extends Component {
             returnKeyType={ "next" }
             refer={ input => {this.inputs['email'] = input;}}
             onSubmitEditing={() => {this.focusNextField('password');}}/>
-          <View style={containers.horizontal}>
+          <View style={containers.horizontalRegister}>
             <FormInput
               type="password"
               onchange={(password) => this.setState({password})}
