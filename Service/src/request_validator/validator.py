@@ -1,6 +1,5 @@
 from flask import g, make_response, request
 from functools import update_wrapper
-from pprint import pprint
 import simplejson as json
 
 from .validation_error import ValidationError
@@ -11,7 +10,7 @@ def validate(data, fields):
    check_required_fields(data, fields, errors)
    if (len(errors) > 0):
       raise ValidationError(errors)
-   print("after required check")
+
    check_field_validity(data, fields, errors)
    if (len(errors) > 0):
       raise ValidationError(errors)
@@ -72,7 +71,7 @@ def validate_body(fields):
    def decorator(fn):
       def wrap(*args, **kwargs):
          try:
-            validate(request.args, fields)
+            validate(request.get_json(), fields)
          except ValidationError as e:
             return make_response(json.dumps(e.errors), 400)
          

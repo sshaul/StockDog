@@ -4,7 +4,7 @@ import requests
 import simplejson as json
 import time
 
-
+from auth import auth
 from request_validator import validator
 from request_validator.schemas import charts_schema
 from util.error_map import errors
@@ -23,6 +23,7 @@ URL_PREFIX = 'https://api.iextrading.com/1.0/stock/'
 
 
 @charts_api.route('/api/charts', methods=['GET'])
+@auth.login_required
 @validator.validate_params(charts_schema.fields)
 def get_history():
 
