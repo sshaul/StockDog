@@ -14,4 +14,5 @@ if __name__ == '__main__':
    )
 
    runner = TextTestRunner()
-   runner.run(suite)
+   result = runner.run(suite)
+   sys.exit(not result.wasSuccessful())
