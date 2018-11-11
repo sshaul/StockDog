@@ -39,11 +39,10 @@ class DeleteSessionTests(TestConfiguration):
 
 
    def test_logout_userTwice(self):
-      response1 = requests.delete(url=self.url, headers=self.headers)
-      response2 = requests.delete(url=self.url, headers=self.headers)
+      requests.delete(url=self.url, headers=self.headers)
+      response = requests.delete(url=self.url, headers=self.headers)
       try:
-         self.assertEqual(response1.status_code, 200)
-         self.assertEqual(response2.status_code, 200)
+         self.assertEqual(response.status_code, 401)
       except AssertionError as e:
          raise e
 
