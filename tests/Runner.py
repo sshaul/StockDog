@@ -1,3 +1,4 @@
+import sys
 from unittest import TestLoader, TestSuite, TextTestRunner
 
 from authTests.PostUserTests import PostUserTests

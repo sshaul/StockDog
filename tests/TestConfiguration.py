@@ -19,7 +19,7 @@ class TestConfiguration(Chai):
          raise e
 
       cls.headers = {'content-type' : 'application/json'}
-      cls.baseUrl = 'http://localhost:5005/api'
+      cls.baseUrl = "http://0.0.0.0:5005/api"
 
    
    @classmethod
