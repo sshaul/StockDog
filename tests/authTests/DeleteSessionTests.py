@@ -37,6 +37,16 @@ class DeleteSessionTests(TestConfiguration):
       except AssertionError as e:
          raise e
 
+
+   def test_logout_userTwice(self):
+      response1 = requests.delete(url=self.url, headers=self.headers)
+      response2 = requests.delete(url=self.url, headers=self.headers)
+      try:
+         self.assertEqual(response1.status_code, 200)
+         self.assertEqual(response2.status_code, 200)
+      except AssertionError as e:
+         raise e
+
    
    def test_logout_wrongUser(self):
       url = self.baseUrl + '/users/' + str(self.userId + 30) + '/session'
