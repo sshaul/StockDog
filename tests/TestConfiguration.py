@@ -12,7 +12,7 @@ class TestConfiguration(Chai):
    def setUpClass(cls):
       cls.log = Logger(True, True, True)
       try:
-         cls.db = getDBConn()
+         cls.db = getDBConn('travis')
          cls.cursor = cls.db.cursor()
       except Exception as e:
          cls.log.error(e)
@@ -22,7 +22,6 @@ class TestConfiguration(Chai):
       cls.baseUrl = 'http://localhost:5005/api'
 
    
-
    @classmethod
    def tearDownClass(cls):
       tables = ['User']
