@@ -14,8 +14,10 @@ install:
 
 before_script:
   - cd Service/src/ && python3 app.py --environment travis &
+  - sleep 10
 
 script:
+  - sleep 10
   - cd tests/ && python3 Runner.py
 
 notifications:
