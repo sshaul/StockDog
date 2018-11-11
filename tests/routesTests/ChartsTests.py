@@ -5,7 +5,7 @@ from TestConfiguration import TestConfiguration
 class ChartsTests(TestConfiguration):
 
    def test_1_get_recent(self):
-      self.assert_equals(1, 1)
+      self.assertEquals(1, 1)
       
 
 
