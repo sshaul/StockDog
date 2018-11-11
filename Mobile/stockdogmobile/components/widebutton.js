@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS } from 'react-native';
-import { Button } from 'react-native-elements';
-import containers from '../style/containers';
+import { Text, TouchableOpacity } from 'react-native';
 import elements from '../style/elements';
 import text from '../style/text';
-import {colors} from '../style/colors';
 
 export default class WideButton extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   render() {
@@ -26,6 +22,8 @@ export default class WideButton extends Component {
       buttonText = 'Next';
     else if (this.props.type == 'join')
       buttonText = 'Join league!';
+    else if (this.props.type == 'cancel')
+      buttonText = 'CANCEL';
     else if (this.props.type == 'logout')
       buttonText = 'LOGOUT';
 
@@ -43,7 +41,7 @@ export default class WideButton extends Component {
           onPress={this.props.onpress}
           disabled={this.props.disabled}
           >
-          <Text style={text.loginButton}>{buttonText}</Text>
+          <Text style={text.wideButton}>{buttonText}</Text>
         </TouchableOpacity>
     );
   }

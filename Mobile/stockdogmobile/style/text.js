@@ -6,48 +6,48 @@ export default text = StyleSheet.create({
     tabLabel: {
       color: colors.white, 
       fontSize: 12, 
-      fontFamily: 'open-sans'
+      fontFamily: 'assistant'
     },
     // ------------- Login/Register ----------- // 
     title: {
-      color: colors.white,
-      fontFamily: 'open-sans',
-      fontSize: 40
+      color: colors.bright,
+      fontFamily: 'assistant',
+      fontSize: 40,
+      backgroundColor: 'transparent'
     },
-    loginButton: {
+    wideButton: {
       fontSize: 20,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       color: colors.white
     },
     smallText: {
       fontSize: 16,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       color: colors.bright,
       textDecorationLine: 'underline'
     },
     // ---------------- Profile page ------------ //
     money: {
       color: colors.bright,
-      fontFamily: 'open-sans',
-      fontSize: 48,
+      fontFamily: 'assistant',
+      fontSize: 36,
       textAlign: 'center',
-      paddingTop: 10
     },
     profileLabels: {
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 24,
       textAlign: 'left'
     },
     bigPortfolioText: {
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 20,
       textAlign: 'left'
     },
     smallPortfolioText: {
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 16,
       textAlign: 'left',
       paddingLeft: 20
@@ -55,83 +55,83 @@ export default text = StyleSheet.create({
     // ----------------- Modals ------------- // 
     joinLeagueTitle: {
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 24,
       textAlign: 'left'
     },
     joinLeagueWarning: {
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 14,
       paddingTop: 10
     },
     modalHeader: {
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 32
     },
     // ----------------- Stock page ------------- // 
     stock: {
       color: colors.bright,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 36
     },
     stockMoney: {
       color: colors.bright,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 42,
       textAlign: 'center'
     },
     // ----------------- Groups Drawer ------------- //
     groupTitle: {
       color: colors.dark,
-      fontFamily: 'open-sans-bold',
+      fontFamily: 'assistant',
       fontSize: 36,
       paddingLeft: 10
     },
     groupText: {
       color: colors.dark,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 24,
       textAlign: 'left'
     },
     // ----------------- League Screen ------------- //
     leagueTitle: {
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 36,
     },
     inviteCode: {
       color: "gray",
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 20,
       textAlign: 'left',
     },
     members: {
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 24
     },
     rank: {
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 24
     },
     value: {
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 24
     },
     addGroupText: {
       color: colors.dark,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 20,
       textAlign: 'left'
     },
     code: {
       fontSize: 25,
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       borderRadius: 0,
       borderColor: colors.bright,
       borderWidth: 2
@@ -139,7 +139,7 @@ export default text = StyleSheet.create({
     // ----------------- Settings Modal ------------- //
     settingsTitle: {
       color: colors.white,
-      fontFamily: 'open-sans',
+      fontFamily: 'assistant',
       fontSize: 48, 
       textAlign: 'center',
     },

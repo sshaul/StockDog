@@ -6,7 +6,7 @@ import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
 import Modal from 'react-native-modal';
-import RoundInput from '../components/roundinput';
+import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Icon from 'react-native-vector-icons/Feather';
 import Api from '../api';
@@ -78,7 +78,7 @@ export default class BuySellModal extends Component {
       if (props.modalType === 'buy') {
         content = (<View style={containers.innerModal}>
           <Text style={[text.profileLabels, {paddingBottom: 10, paddingTop: 10}]}>Buy power: {props.buypower}</Text>
-          <RoundInput 
+          <FormInput 
             type="Amount" 
             onchange={this.onchangeamount.bind(this)} 
             value={this.state.amount}/>
@@ -88,11 +88,14 @@ export default class BuySellModal extends Component {
       else if (props.modalType === 'sell') {
         content = (<View style={containers.innerModal}>
           <Text style={[text.profileLabels, {paddingBottom: 10, paddingTop: 10}]}>You own {props.shares} shares</Text>
-          <RoundInput 
+          <FormInput 
             type="Amount" 
             onchange={this.onchangeamount.bind(this)} 
             value={this.state.amount}/>
-          <WideButton type={props.modalType} onpress={this.buysellstock.bind(this)} disabled={disabled}/>
+          <View style={containers.buttons}>
+            <WideButton type={props.modalType} onpress={this.buysellstock.bind(this)} disabled={disabled}/>
+            <WideButton type="cancel" onpress={() => Actions.pop()}/>
+          </View>
         </View>);
       }
       
@@ -101,9 +104,9 @@ export default class BuySellModal extends Component {
       <Lightbox verticalPercent={0.5} horizontalPercent={0.8}>
         <View style={containers.outerModal}>
           <View style={containers.modalHeaders}>
-            <TouchableOpacity onPress={()=>{Actions.pop()}}>
+            {/* <TouchableOpacity onPress={()=>{Actions.pop()}}>
               <Icon name='x' size={30} color='white' />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           {content}
         </View>

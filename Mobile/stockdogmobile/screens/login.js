@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, View, FlatList, TextInput, AsyncStorage, ScrollView } from 'react-native';
+import { Text, TouchableOpacity, Image, AsyncStorage } from 'react-native';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Button } from 'react-native-elements';
+import { LinearGradient } from 'expo';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import {colors} from '../style/colors';
 import text from '../style/text';
+import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Api from '../api';
+import { loginUser } from '../actions';
 
-export default class Login extends Component {
+mapDispatchToProps = (dispatch) => ({
+  loginUser: (username, password) => {
+    dispatch(loginUser(username, password));
+  }
+});
+
+var logoImage = require('../assets/logoCrop.png');
+
+class Login extends Component {
   constructor(props) {
     super(props);
     var user = "";
@@ -37,21 +48,12 @@ export default class Login extends Component {
     this.inputs[id].focus();
   };
   
-  navToRegister() {
+  navToRegister = () => {
     Actions.register({});
   };
 
-  login() {
-    this.api.login(this.state.email, this.state.password,
-      (err) => {
-        if (err) {
-          alert('Invalid login.');
-        }
-        else {
-          Actions.main({});
-        }
-      }
-    );
+  login = () => {
+    this.props.loginUser(this.state.email, this.state.password);
   };
 
   render() {
@@ -63,55 +65,45 @@ export default class Login extends Component {
         scrollEnabled={false}
         keyboardShouldPersistTaps="handled"
         enableOnAndroid={true}>
-        <Text style={text.title}>StockDog</Text>
-          <TextInput
-            style={elements.roundedInput}
-            placeholder="email"
-            placeholderTextColor="#aaaaaa"
-            onChangeText={(email) => this.setState({email})}
-            value={this.state.email}
-            blurOnSubmit={ false }
-            onSubmitEditing={() => {
-              this.focusNextField('two');
-            }}
-            returnKeyType={ "next" }
-            ref={ input => {
-              this.inputs['one'] = input;
-            }}
-            autoCapitalize={"none"}
-            underlineColorAndroid={colors.white}
-          />
-          <TextInput
-            style={elements.roundedInput}
-            placeholder="password"
-            placeholderTextColor="#aaaaaa"
-            secureTextEntry={true}
-            onChangeText={(password) => this.setState({password})}
-            value={this.state.password}
-            onSubmitEditing={() => {
-              this.login.bind(this);
-            }}
-            returnKeyType={ "done" }
-            ref={ input => {
-              this.inputs['two'] = input;
-            }}
-            autoCapitalize={"none"}
-            underlineColorAndroid={colors.white}
-          />
-        <WideButton type='login' disabled={disabled} onpress={this.login.bind(this)}/>
-        {/* <TouchableOpacity
-          style={elements.smallTextButton}>
-          <Text style={text.smallText}> Forgot Password? </Text>
-        </TouchableOpacity> */}
-        <TouchableOpacity
-          style={elements.smallTextButton}>
-          <Text 
-            style={text.smallText} 
-            onPress={this.navToRegister.bind(this)}> 
-            Create an account 
-          </Text>
-        </TouchableOpacity>
+          <LinearGradient
+            colors={['transparent', colors.lightBackground]}
+            style={containers.generalGradient}>
+            <Image 
+              source={logoImage} 
+              style={containers.logo}/>
+            <Text style={text.title}>StockDog</Text>
+            <FormInput
+              type="email"
+              value={this.state.email}
+              onchange={(email) => this.setState({email})}
+              returnKeyType={ "next" }
+              onSubmitEditing={() => {this.focusNextField('password');}}/>
+            <FormInput
+              type="password"
+              value={this.state.password}
+              onchange={(password) => this.setState({password})}
+              returnKeyType={ "done" }
+              onSubmitEditing={this.login}
+              refer={ input => {this.inputs['password'] = input;}}/>
+            <WideButton 
+              type='login' 
+              disabled={disabled} 
+              onpress={this.login}/>
+            {/* <TouchableOpacity
+              style={elements.smallTextButton}>
+              <Text style={text.smallText}> Forgot Password? </Text>
+            </TouchableOpacity> */}
+            <TouchableOpacity style={elements.smallTextButton}>
+              <Text 
+                style={text.smallText} 
+                onPress={this.navToRegister}> 
+                Create an account 
+              </Text>
+            </TouchableOpacity>
+          </LinearGradient>
       </KeyboardAwareScrollView>
     );
   }
 }
+
+export default connect(null, mapDispatchToProps)(Login);

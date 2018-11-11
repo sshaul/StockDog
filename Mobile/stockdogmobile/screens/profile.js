@@ -150,6 +150,9 @@ export default class Profile extends Component {
           <NavBar />
           <View style={{flex: 0.9, alignItems: 'center'}}>
             <ScrollView style={{flex: 1}}>
+              <View style={containers.feedTitle}>
+                <Text style={text.title}>{currPort.league}</Text>
+              </View>
               <StockChart range={this.state.range} portfolio={true} league={currPort.league}/>
               <View style={{flex: 0.3}}>
                 <Text style={text.profileLabels}>Portfolio</Text>
@@ -157,6 +160,7 @@ export default class Profile extends Component {
                 <Text style={text.profileLabels}>Watchlist</Text>
                 {watchlist}
               </View>
+              <View style={{height: 20}}/>
             </ScrollView>
           </View>
         </View>
