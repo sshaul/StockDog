@@ -1,5 +1,4 @@
 from flask import Blueprint, request, Response, g, jsonify, make_response
-from marshmallow import ValidationError
 import simplejson as json
 import time
 

@@ -1,6 +1,5 @@
 from datetime import date, timedelta, datetime
 from flask import Blueprint, request, Response, g, jsonify, make_response
-from marshmallow import ValidationError
 import requests
 import simplejson as json
 import time
