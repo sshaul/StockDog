@@ -1,6 +1,6 @@
 import json
-from unittest import main
 import requests
+from unittest import main
 
 from TestConfiguration import TestConfiguration
 

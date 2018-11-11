@@ -37,8 +37,10 @@ def login_user():
    user = g.cursor.fetchone()
 
    if user:
-      passHash = user['password']
+      if user['token']:
+         return jsonify(userId=user['id'], token=user['token'])
 
+      passHash = user['password']
       if check_password_hash(passHash, body['password']):
          token = getUniqueToken()
          g.cursor.execute("UPDATE User SET token = %s WHERE id = %s", [token, user['id']])

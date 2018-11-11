@@ -34,7 +34,24 @@ class PostSessionTests(TestConfiguration):
          self.assertTrue(responseData['token'] != "")
       except AssertionError as e:
          self.log.error(responseData)
-         raise e 
+         raise e
+
+
+   def test_login_user_twice(self):
+      body = {
+         'email' : 'dave.janzen18@gmail.com',
+         'password' : 'Stockd2g'
+      }
+      loginResponse1 = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
+      loginResponse1Data = loginResponse1.json()
+      
+      loginResponse2 = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
+      loginResponse2Data = loginResponse2.json()
+
+      try:
+         self.assertEquals(loginResponse1Data, loginResponse2Data)
+      except AssertionError as e:
+         raise e
 
 
    def test_login_user_noEmail(self):
