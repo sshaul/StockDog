@@ -29,6 +29,8 @@ app.register_blueprint(transaction_api)
 app.register_blueprint(watchlist_api)
 app.register_blueprint(user_api)
 
+DEFAULT_PORT_NUM = 5005
+DEFAULT_ENV = 'local'
 
 @app.before_request
 def setup():
@@ -36,7 +38,7 @@ def setup():
 
    if getattr(g, 'db', None) is None:
       try:
-         g.db = getDBConn()
+         g.db = getDBConn(getEnv())
          g.cursor = g.db.cursor()
       except Exception as e:
          g.log.error(e)
@@ -54,11 +56,19 @@ def not_found(error):
    return Response('Not Found', status=404)
 
 
-def getPortNum(defaultPort=5005):
+def argParser():
    parser = argparse.ArgumentParser()
    parser.add_argument('-p','--port', type=int, help='specify the port number')
+   parser.add_argument('-e', '--environment', type=str, help='specify the environment')
    args = parser.parse_args()
-   return args.port or defaultPort
+   return args
+
+def getPortNum():
+   return argParser().port or DEFAULT_PORT_NUM
+
+
+def getEnv():
+   return argParser().environment or DEFAULT_ENV
 
 
 @app.after_request
