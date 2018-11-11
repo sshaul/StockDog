@@ -1,4 +1,3 @@
-from chai import Chai
 from unittest import TestCase
 import sys
 
