@@ -22,7 +22,7 @@ def getDBConn(envType='local'):
       conn = pymysql.connect(host='127.0.0.1', user=config['user'], password=config['password'], 
          database=config['database'], cursorclass=pymysql.cursors.DictCursor, autocommit=True)
    else:
-      conn = pymysql.connect(host='127.0.0.1', user='root', password='', 
+      conn = pymysql.connect(host='0.0.0.0', user='root', password='', 
          database='StockDog', cursorclass=pymysql.cursors.DictCursor, autocommit=True)
    
    return conn
