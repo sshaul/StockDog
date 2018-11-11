@@ -10,7 +10,7 @@ def getConfigFilePath():
    return cwd[:strIdx + 9] + CONFIG_FILE_PATH
 
 
-def getDBConn():
+def getDBConn(configFile=None):
    try:
       configFile = open(getConfigFilePath(), 'r')
       config = json.load(configFile)

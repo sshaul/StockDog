@@ -20,7 +20,6 @@ def validate(data, fields):
 def check_required_fields(data, fields, errors):
    for field in fields:
       if field.isRequired and data.get(field.name) is None:
-         print("here")
          errors.append({'MissingField' : field.name + ' is a required field'})
       
    return errors
