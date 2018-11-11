@@ -7,7 +7,7 @@ from TestConfiguration import TestConfiguration
 class PostSessionTests(TestConfiguration):
 
    def setUp(self):
-      self.url = self.baseUrl + '/users/sessions'
+      self.url = self.baseUrl + '/users/session'
       
       url = self.baseUrl + '/users'
       body = {

@@ -1,5 +1,5 @@
-from flask import g, jsonify, make_response, request
-from functools import wraps
+from flask import g, jsonify, make_response, request, Response
+from functools import update_wrapper, wraps
 
 from util.error_map import errors
 
@@ -13,8 +13,12 @@ def login_required(f):
          g.user = g.cursor.fetchone()
          if g.user is None:
             raise Exception('Invalid token')
-         return f(*args, **kwargs)
-      except:
+      except Exception as e:
          return make_response(jsonify(NotLoggedIn=errors['notLoggedIn']),401)
-
+      
+      return f(*args, **kwargs)
+      
    return decorator
+
+def session_belongsTo_user(userId):
+   return str(g.user['id']) == userId

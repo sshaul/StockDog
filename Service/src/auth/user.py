@@ -2,6 +2,7 @@ from flask import Blueprint, request, Response, g, jsonify, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
 import simplejson as json
 
+from auth import auth
 from request_validator import validator
 from request_validator.schemas import user_schema, login_schema
 from .token_manager import getUniqueToken
@@ -27,7 +28,7 @@ def post_user():
    return Response(status=200)
 
 
-@user_api.route('/api/users/sessions', methods=['POST'])
+@user_api.route('/api/users/session', methods=['POST'])
 @validator.validate_body(login_schema.fields)
 def login_user():
    body = request.get_json()
@@ -50,10 +51,12 @@ def login_user():
       return make_response(jsonify(NonexistentUser=errors['nonexistentUser']), 401)
 
 
-@user_api.route('/api/users/<userId>/sessions', methods=['DELETE'])
-def logout_user():
-   userId = request.args.get('userId')
-
+@user_api.route('/api/users/<userId>/session', methods=['DELETE'])
+@auth.login_required
+def logout_user(userId):
+   if not auth.session_belongsTo_user(userId):
+      return Response(status=403)
+      
    g.cursor.execute("UPDATE User SET token = NULL WHERE id = %s", userId)
 
    return Response(status=200)
