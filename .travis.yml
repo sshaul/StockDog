@@ -13,7 +13,7 @@ install:
   # - cd Web/stockdogweb && npm install && cd ../.. --commenting out to speed up testing
 
 before_script:
-  - cd Service/src/ && python3 app.py
+  - cd Service/src/ && python3 app.py &
 
 script:
   - cd tests/ && python3 Runner.py
