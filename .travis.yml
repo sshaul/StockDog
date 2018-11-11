@@ -10,7 +10,7 @@ before_install:
 
 install:
   - pip install -r requirements.txt
-  - cd Web/stockdogweb && npm install && cd ../.. --commenting out to speed up testing
+  - cd Web/stockdogweb && npm install && cd ../..
 
 before_script:
   - cd Service/src/ && python3 app.py --environment travis &
