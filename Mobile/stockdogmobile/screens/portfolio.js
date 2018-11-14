@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Dimensions } from 'react-native';
 import containers from '../style/containers';
 import text from '../style/text';
 import StockChart from '../components/stockchart';
@@ -10,20 +10,20 @@ export default class Portfolio extends Component {
 
    render() {
       return (
-         <ScrollView contentContainerStyle={containers.profileBackground}>
-            <View style={containers.profileBackgroundCircle}>
-            </View>
-            <View style={containers.screenContent}>
+         <View style={containers.profileBackground}>
+            <ScrollView contentContainerStyle={{flexGrow: 1}}  >
+               <View style={containers.profileBackgroundCircle}></View>
                <NavBar/>
-               <View style={containers.portfolioValue}>
-                  <Text style={text.value}>$20.05</Text>
+               <View style={{flex: 0.9, alignItems: 'center'}}>
+                  <View style={containers.portfolioValue}>
+                     <Text style={text.value}>$20.05</Text>
+                  </View>
+                  <StockChart />
+                  <PortfolioStockList listType='portfolio'/>
+                  <PortfolioStockList listType='watchlist'/>
                </View>
-               <StockChart />
-               <PortfolioStockList listType='portfolio'/>
-               {/* <PortfolioStockList listType='watchlist'/> */}
-               {/* <PortfolioStockList listType='watchlist'/> */}
-            </View>
-         </ScrollView>
+            </ScrollView>
+         </View>
       );
    }
 }

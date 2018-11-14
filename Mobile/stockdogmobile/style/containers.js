@@ -1,5 +1,7 @@
-import { StyleSheet, PixelRatio } from 'react-native';
+import { StyleSheet, PixelRatio, Dimensions } from 'react-native';
 import { colors } from './colors.js'; 
+
+const { width, height } = Dimensions.get('window');
 
 export default containers = StyleSheet.create({
     centeredDark: {
@@ -28,33 +30,25 @@ export default containers = StyleSheet.create({
       flex: 1,
       backgroundColor: colors.dark,
       justifyContent: 'flex-start',
-      paddingTop: 0,
     },
     profileBackgroundCircle: {
       flex: 0,
       backgroundColor: colors.bright,
-      // width: 1978,
-      width: '600%',
-      height: '153%',
+      width: 1978,
+      // width: '600%',
+      height: 1243,
+      // height: '153%',
       position: 'absolute',
-      // top: -850,
-      top: '-105%',
-      // right: -650,
-      right: '-180%',
+      top: -850,
+      // top: '-105%',
+      right: -650,
+      // right: '-180%',
+      zIndex: -1,
       borderBottomLeftRadius: 1978/2,
       borderBottomRightRadius: 1978/2
     },
-    screenContent: {
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0,
-      alignItems: 'center',
-      backgroundColor: 'transparent'
-    },
     iconHeaders: {
-      flex: 0.1,
+      height: height * 0.1,
       width:'100%',
       flexDirection: 'row',
       alignItems: 'flex-end',
@@ -75,7 +69,7 @@ export default containers = StyleSheet.create({
     },
     // ----------------- Stock chart ------------- //
     chartContainer: {
-      flex: 0.3,
+      height: height * 0.3,
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: colors.grey,
@@ -85,7 +79,7 @@ export default containers = StyleSheet.create({
     },
     // // ----------------- Portfolio page ------------- //
     portfolioValue: {
-      flex: 0.1,
+      height: height * 0.1,
       justifyContent: 'center',
       alignItems: 'center',
     },

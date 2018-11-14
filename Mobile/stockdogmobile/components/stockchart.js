@@ -176,7 +176,7 @@ export default class StockChart extends Component {
     }
     return (
       <View>
-        <View style={containers.chart}>
+        <View style={containers.chartContainer}>
           <Text style={text.money}>{moneyText}</Text>
           {this.createChart()}
           {/* <ButtonGroup
