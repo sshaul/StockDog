@@ -1,0 +1,53 @@
+@import '../../css/Global.scss';
+
+.Navbar {
+   height: 60px;
+   background-color: $bg-color;
+   box-shadow: 0px 3px 10px #000;
+}
+
+.navbar-sidebar-menu-btn {
+   height: 36px;
+   width: 36px;
+   position: absolute;
+   top: 12px;
+   left: 10px;
+   cursor: pointer;
+}
+
+.navbar-portfolio-dropdown {
+   position: absolute;
+   margin: 0 auto;
+   width: 160px;
+   top: 10px;
+   left: 50%;
+   margin-left: -80px;
+   background-color: #302f2f;
+   padding: 10px 0;
+   color: $white-color;
+   text-align: center;
+   cursor: pointer;
+}
+
+.navbar-portfolio-dropdown-content {
+   background-color: $bg-color;
+   display: none;
+   position: absolute;
+   top: 40px;
+   width: 160px;
+   text-align: center;
+   box-shadow: 0px 8px 16px 0px #000;
+   cursor: pointer;
+}
+
+.navbar-portfolio-dropdown-content p {
+   padding: 12px 6px;
+}
+
+.navbar-portfolio-dropdown-content p:hover {
+   color: $primary-color;
+}
+
+.navbar-portfolio-dropdown:hover .navbar-portfolio-dropdown-content {
+   display: block;
+}

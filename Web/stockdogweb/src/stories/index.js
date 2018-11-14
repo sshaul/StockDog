@@ -2,6 +2,7 @@ import React from 'react';
 
 import Listing from '../components/Listing/Listing';
 import Graph from '../components/Graph/Graph';
+import Navbar from '../components/Navigation/Navbar';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
@@ -49,6 +50,10 @@ storiesOf('Graph', module)
          data={[14.21, 23.21, 20.53, 19.23, 15.67, 16.23]} 
       />
    );
+
+storiesOf('Navbar', module)
+   .add('no links', () =>
+    <Navbar />);
 
 
 
