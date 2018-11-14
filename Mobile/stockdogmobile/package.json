@@ -22,7 +22,7 @@
     "d3-shape": "^1.2.0",
     "expo": "^23.0.4",
     "react": "16.0.0",
-    "react-native": "0.50.3",
+    "react-native": "0.52.0",
     "react-native-chart": "^1.0.8-beta",
     "react-native-chartjs": "^1.0.2",
     "react-native-datepicker": "^1.7.1",
