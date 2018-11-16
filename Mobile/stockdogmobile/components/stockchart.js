@@ -14,7 +14,7 @@ export default class StockChart extends Component {
     this.state = { 
       userId : "",
       isLoading: true,
-      xData: [],
+      xData: [1, 2, 3, 4, 5, 6],
       yData: [1, 2, 3, 6, 4, 8],
       selectedIndex: 0,
     };
@@ -60,49 +60,21 @@ export default class StockChart extends Component {
   // }
 
   createChart() {
-    var intervals = parseInt(this.state.xData.length / 5);
-    var Highcharts='Highcharts';
     var conf={
             chart: {
-                type: 'line',
-                animation: Highcharts.svg,
+                type: 'spline',
                 marginRight: 10,
-                lineColor: colors.grey,
-                backgroundColor: colors.grey,
-                gridLineColor: colors.grey
-            },
-            title: {
-                text: ''
-            },
-            xAxis: {
-                type: 'category',
-                categories: this.state.xData,
-                gridLineColor: colors.grey,
-                tickInterval: intervals,
-                tickColor: colors.white,
-                labels: {
-                    enabled: true,
-                    formatter: function() {
-                      if (this.value.split(" ").length > 2) {
-                        return this.value.split(" ")[0] + " " + this.value.split(" ")[1];
-                      }
-                      return this.value
-                    },
-                    rotation: 0,
-                    style: {
-                      color: colors.white,
-                      fontSize: '11px'
-                    }
-                },
                 lineColor: colors.white,
-                lineWidth: 1
+                backgroundColor: 'transparent',
+                gridLineColor: colors.white
+            },
+            title: { text: '' },
+            xAxis: {
+              visible: false
             },
             yAxis: {
-                title: {
-                    text: ''
-                },
-                lineColor: colors.white,
-                lineWidth: 1,
+                title: { text: '' },
+                lineWidth: 0,
                 gridLineColor: colors.grey,
                 plotLines: [{
                     value: 0,
@@ -110,17 +82,20 @@ export default class StockChart extends Component {
                     color: colors.white
                 }],
                 labels: {
-                    enabled: false
-                }
+                  style: {
+                    color: colors.white
+                  }
+                },
             },
             tooltip: {
                 formatter: function () {
-                    if (this.x.split(" ").length > 1) {
-                      return this.x.split(" ")[0] + ' ' + this.x.split(" ")[1] + '<br/>' +
-                        '$' + Highcharts.numberFormat(this.y, 2);
-                    }
-                    return this.x + '<br/>' +
-                        '$' + Highcharts.numberFormat(this.y, 2);
+                    // if (this.x.split(" ").length > 1) {
+                    //   return this.x.split(" ")[0] + ' ' + this.x.split(" ")[1] + '<br/>' +
+                    //     '$' + Highcharts.numberFormat(this.y, 2);
+                    // }
+                    // return this.x + '<br/>' +
+                    //     '$' + Highcharts.numberFormat(this.y, 2);
+                    return this.x + ', ' + this.y;
                 }
             },
             legend: {
@@ -134,7 +109,7 @@ export default class StockChart extends Component {
             }],
             plotOptions: {
               series: {
-                  color: colors.bright,
+                  color: colors.white,
                   marker: {
                     enabled: false
                   }
@@ -156,18 +131,12 @@ export default class StockChart extends Component {
     };
  
     return (
-      <ChartView style={{height:300, width: 350}} config={conf} options={options}></ChartView>
+      <ChartView style={containers.chart} config={conf} options={options}></ChartView>
     );
   }
 
   render() {
-    const lastelt = this.state.yData[this.state.yData.length - 1];
-    var moneyText = '';
-    if (lastelt) {
-      moneyText = '$' + lastelt;
-    }
-
-    if (this.state.isLoading) {
+    if (!this.state.isLoading) {
       return (
         <View style={containers.chartContainer}>
           <SpinningLoader />
@@ -177,17 +146,7 @@ export default class StockChart extends Component {
     return (
       <View>
         <View style={containers.chartContainer}>
-          <Text style={text.money}>{moneyText}</Text>
           {this.createChart()}
-          {/* <ButtonGroup
-            onPress={this.updateIndex.bind(this)}
-            selectedIndex={this.state.selectedIndex}
-            buttons={['D', 'W', 'M', 'Y']}
-            containerStyle={{flex: 0.3}}
-            textStyle={{color: colors.white}}
-            buttonStyle={{backgroundColor: colors.grey}}
-            selectedButtonStyle={{backgroundColor: colors.white}}
-          /> */}
         </View>
       </View>
     );

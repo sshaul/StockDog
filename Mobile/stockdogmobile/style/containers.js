@@ -34,15 +34,19 @@ export default containers = StyleSheet.create({
     profileBackgroundCircle: {
       flex: 0,
       backgroundColor: colors.bright,
-      width: 1978,
-      // width: '600%',
-      height: 1243,
+      // width: 1978,
+      // width: '400%',
+      width: width * 4,
+      // height: 1243,
       // height: '153%',
+      height: height * 1.82,
       position: 'absolute',
-      top: -850,
-      // top: '-105%',
-      right: -650,
-      // right: '-180%',
+      // top: -850,
+      // top: '-112%',
+      top: height * -1.34,
+      // right: -650,
+      // right: '-110%',
+      right: width * -1.1,
       zIndex: -1,
       borderBottomLeftRadius: 1978/2,
       borderBottomRightRadius: 1978/2
@@ -73,11 +77,25 @@ export default containers = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: colors.grey,
-      width: '85%',
+      width: width * 0.85,
       opacity: 0.95,
       borderRadius: 10,
     },
-    // // ----------------- Portfolio page ------------- //
+    chart: {
+      height: height * 0.3,
+      width: width * 0.8,
+      backgroundColor: 'transparent'
+    },
+    dateRangeButtonGroup: {
+      marginTop: 10,
+      height: height * 0.05,
+      width: width * 0.8,
+      borderWidth: 1,
+      borderColor: colors.bright,
+      borderRadius: 8,
+      backgroundColor: 'transparent'
+    },
+    // ----------------- Portfolio page ------------- //
     portfolioValue: {
       height: height * 0.1,
       justifyContent: 'center',
