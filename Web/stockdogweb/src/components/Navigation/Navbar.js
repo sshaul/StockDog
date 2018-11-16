@@ -4,6 +4,8 @@ import "./Navbar.css";
 
 import { Menu, Award, User } from "react-feather";
 
+const primaryColor = "#3ee7ad";
+
 class Navbar extends Component {
 
    constructor(props) {
@@ -54,18 +56,18 @@ class Navbar extends Component {
                      <div className="navbar-portfolio-dropdown-content">
                         {this.generateDropdownLinks()}
                      </div> :
-                     <div></div>
+                     null
                }
             </div>
             <div className="navbar-sidebar-points">
                <div className="navbar-sidebar-points-circle">
-                  <Award color="#3ee7ad" size={18} />
+                  <Award color={primaryColor} size={18} />
                </div>
                <p>29321</p>
             </div>
             <div className="navbar-sidebar-profile"
                onClick={this.goToProfile}>
-               <User color="#3ee7ad" size={21} />
+               <User color={primaryColor} size={21} />
             </div>
          </div>
       );
