@@ -1,9 +1,43 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import "./Navbar.css";
 
-import { Menu } from "react-feather";
+import { Menu, Award, User } from "react-feather";
 
 class Navbar extends Component {
+
+   constructor(props) {
+      super(props);
+
+      this.state = {
+         dropdownActive: false
+      }
+   }
+
+   generateDropdownLinks = () => {
+      var linkHtmls = [];
+      const links = this.props.links;
+
+      links.forEach(link => {
+         linkHtmls.push(
+            <p onClick={() => this.props.history.push(link.location)}>
+               {link.title}
+            </p>
+         );
+      });
+
+      return linkHtmls;
+   }
+
+   toggleDropdown = () => {
+      this.setState({ dropdownActive: !this.state.dropdownActive });
+   }
+
+   goToProfile = () => {
+      this.props.history.push("/profile");
+   }
+
+
    render() {
       return (
          <div className="Navbar">
@@ -11,16 +45,31 @@ class Navbar extends Component {
                <Menu color="white" size={36} />
             </div>
             <div className="navbar-portfolio-dropdown">
-               <span>Week league</span>
-               <div className="navbar-portfolio-dropdown-content">
-                  <p>Month league</p>
-                  <p>Friend league</p>
-                  <p>Long league title wooo</p>
+               <div className="navbar-portfolio-dropdown-btn"
+                  onClick={this.toggleDropdown}>
+                  <span>Week league</span>
                </div>
+               {
+                  this.state.dropdownActive ?
+                     <div className="navbar-portfolio-dropdown-content">
+                        {this.generateDropdownLinks()}
+                     </div> :
+                     <div></div>
+               }
+            </div>
+            <div className="navbar-sidebar-points">
+               <div className="navbar-sidebar-points-circle">
+                  <Award color="#3ee7ad" size={18} />
+               </div>
+               <p>29321</p>
+            </div>
+            <div className="navbar-sidebar-profile"
+               onClick={this.goToProfile}>
+               <User color="#3ee7ad" size={21} />
             </div>
          </div>
       );
    }
 }
 
-export default Navbar;
+export default withRouter(Navbar);
