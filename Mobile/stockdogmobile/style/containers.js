@@ -4,6 +4,9 @@ import { colors } from './colors.js';
 const { width, height } = Dimensions.get('window');
 
 export default containers = StyleSheet.create({
+    transparentBackground: {
+      backgroundColor: 'transparent'
+    },
     centeredDark: {
       flex: 1,
       backgroundColor: colors.dark,
@@ -94,6 +97,9 @@ export default containers = StyleSheet.create({
       borderColor: colors.bright,
       borderRadius: 8,
       backgroundColor: 'transparent'
+    },
+    buttonGroupSelected: {
+      backgroundColor: colors.bright
     },
     // ----------------- Portfolio page ------------- //
     portfolioValue: {

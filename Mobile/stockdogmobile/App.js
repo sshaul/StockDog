@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
 import Routes from './routes.js';
 import { Font } from 'expo';
 

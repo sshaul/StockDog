@@ -8,6 +8,10 @@ export default text = StyleSheet.create({
     //   fontSize: 12, 
     //   fontFamily: 'assistant'
     // },
+    // ------------- General ----------- // 
+    whiteText: {
+      color: colors.white
+    },
     // ------------- Login/Register ----------- // 
     title: {
       color: colors.bright,
