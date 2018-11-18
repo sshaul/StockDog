@@ -7,6 +7,10 @@ from .validation_error import ValidationError
 def validate(data, fields):
    errors = []
    
+   check_headers(errors)
+   if (len(errors) > 0):
+      raise ValidationError(errors)
+
    check_required_fields(data, fields, errors)
    if (len(errors) > 0):
       raise ValidationError(errors)
@@ -16,6 +20,17 @@ def validate(data, fields):
       raise ValidationError(errors)
 
    return None
+
+
+def check_headers(errors):
+   contentTypeHeader = request.headers.get('Content-Type')
+   if contentTypeHeader is None:
+      errors.append({'MissingHeader' : 'Content-Type is a required header'})
+   elif contentTypeHeader and contentTypeHeader != 'application/json':
+      errors.append({'InvalidHeader' : 'API only accepts Content-Type of application/json'})
+   
+   return errors
+
 
 def check_required_fields(data, fields, errors):
    for field in fields:
