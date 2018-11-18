@@ -1,5 +1,5 @@
-import json
 import requests
+import simplejson as json
 from unittest import main
 
 from TestConfiguration import TestConfiguration
@@ -14,15 +14,13 @@ class PostUserTests(TestConfiguration):
          'firstName' : 'Dave',
          'lastName' : 'Janzen',
          'email' : 'dave.janzen18@gmail.com',
-         'password' : 'Stockd2g'
+         'password' : 'StockD2g'
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      try:
-         self.assertEquals(response.status_code, 200)
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
+   
+      self.assertEquals(self.getJson(response), None)
+      self.assertEquals(response.status_code, 200)
 
    
    def test_register_user_noFirstName(self):
@@ -33,14 +31,11 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('MissingField' in responseData[0])
-         self.assertEquals(responseData[0]['MissingField'], 'firstName is a required field')
-      except AssertionError as e:
-         self.log.error(responseData)
-         raise e
+      responseData = self.getJson(response)
+   
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('MissingField' in responseData[0])
+      self.assertEquals(responseData[0]['MissingField'], 'firstName is a required field')
 
 
    def test_register_user_noLastName(self):
@@ -51,14 +46,11 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('MissingField' in responseData[0])
-         self.assertEquals(responseData[0]['MissingField'], 'lastName is a required field')
-      except AssertionError as e:
-         self.log.error(responseData)
-         raise e
+      responseData = self.getJson(response)
+   
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('MissingField' in responseData[0])
+      self.assertEquals(responseData[0]['MissingField'], 'lastName is a required field')
 
    
    def test_register_user_noEmail(self):
@@ -69,14 +61,12 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('MissingField' in responseData[0])
-         self.assertEquals(responseData[0]['MissingField'], 'email is a required field')
-      except AssertionError as e:
-         self.log.error(responseData)
-         raise e
+      responseData = self.getJson(response)
+
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('MissingField' in responseData[0])
+      self.assertEquals(responseData[0]['MissingField'], 'email is a required field')
+
 
 
    def test_register_user_noPassword(self):
@@ -87,14 +77,11 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('MissingField' in responseData[0])
-         self.assertEquals(responseData[0]['MissingField'], 'password is a required field')
-      except AssertionError as e:
-         self.log.error(responseData)
-         raise e
+      responseData = self.getJson(response)
+
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('MissingField' in responseData[0])
+      self.assertEquals(responseData[0]['MissingField'], 'password is a required field')
 
 
    def test_register_user_noBody(self):
@@ -102,13 +89,10 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertEquals(len(responseData), 4)
-      except AssertionError as e:
-         self.log.error(responseData)
-         raise e
+      responseData = self.getJson(response)
+   
+      self.assertEquals(response.status_code, 400)
+      self.assertEquals(len(responseData), 4)
 
 
    def test_register_user_invalidFirstName(self):
@@ -120,15 +104,12 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('InvalidField' in responseData[0])
-         self.assertEquals(responseData[0]['InvalidField'], 'firstName is not a string or formatted incorrectly')
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
-
+      responseData = self.getJson(response)
+      
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('InvalidField' in responseData[0])
+      self.assertEquals(responseData[0]['InvalidField'], 'firstName is not a string or formatted incorrectly')
+   
 
    def test_register_user_invalidLastName(self):
       body = {
@@ -139,15 +120,12 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('InvalidField' in responseData[0])
-         self.assertEquals(responseData[0]['InvalidField'], 'lastName is not a string or formatted incorrectly')
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
-
+      responseData = self.getJson(response)
+   
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('InvalidField' in responseData[0])
+      self.assertEquals(responseData[0]['InvalidField'], 'lastName is not a string or formatted incorrectly')
+   
 
    def test_register_user_invalidEmail(self):
       body = {
@@ -158,14 +136,11 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('InvalidField' in responseData[0])
-         self.assertEquals(responseData[0]['InvalidField'], 'email is an invalid address')
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
+      responseData = self.getJson(response)
+      
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('InvalidField' in responseData[0])
+      self.assertEquals(responseData[0]['InvalidField'], 'email is an invalid address')
 
 
    def test_register_user_invalidPassword_noNumbers(self):
@@ -177,16 +152,13 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('InvalidField' in responseData[0])
-         self.assertEquals(responseData[0]['InvalidField'], "password must have 8 characters, 1 uppercase letter " +
-            "1 lowercase letter, and 1 number")
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
-
+      responseData = self.getJson(response)
+   
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('InvalidField' in responseData[0])
+      self.assertEquals(responseData[0]['InvalidField'], "password must have 8 characters, 1 uppercase letter " +
+         "1 lowercase letter, and 1 number")
+   
 
    def test_register_user_invalidPassword_noLetters(self):
       body = {
@@ -197,16 +169,13 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('InvalidField' in responseData[0])
-         self.assertEquals(responseData[0]['InvalidField'], "password must have 8 characters, 1 uppercase letter " +
-            "1 lowercase letter, and 1 number")
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
-
+      responseData = self.getJson(response)
+      
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('InvalidField' in responseData[0])
+      self.assertEquals(responseData[0]['InvalidField'], "password must have 8 characters, 1 uppercase letter " +
+         "1 lowercase letter, and 1 number")
+   
 
    def test_register_user_invalidPassword_tooShort(self):
       body = {
@@ -217,16 +186,13 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('InvalidField' in responseData[0])
-         self.assertEquals(responseData[0]['InvalidField'], "password must have 8 characters, 1 uppercase letter " +
-            "1 lowercase letter, and 1 number")
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
-
+      responseData = self.getJson(response)
+      
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('InvalidField' in responseData[0])
+      self.assertEquals(responseData[0]['InvalidField'], "password must have 8 characters, 1 uppercase letter " +
+         "1 lowercase letter, and 1 number")
+   
    
    def test_register_user_invalidPassword_lowercaseOnly(self):
       body = {
@@ -237,16 +203,13 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('InvalidField' in responseData[0])
-         self.assertEquals(responseData[0]['InvalidField'], "password must have 8 characters, 1 uppercase letter " +
-            "1 lowercase letter, and 1 number")
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
-
+      responseData = self.getJson(response)
+      
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('InvalidField' in responseData[0])
+      self.assertEquals(responseData[0]['InvalidField'], "password must have 8 characters, 1 uppercase letter " +
+         "1 lowercase letter, and 1 number")
+   
    
    def test_register_user_invalidPassword_UppercaseOnly(self):
       body = {
@@ -257,16 +220,13 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('InvalidField' in responseData[0])
-         self.assertEquals(responseData[0]['InvalidField'], "password must have 8 characters, 1 uppercase letter " +
-            "1 lowercase letter, and 1 number")
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
-
+      responseData = self.getJson(response)
+   
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('InvalidField' in responseData[0])
+      self.assertEquals(responseData[0]['InvalidField'], "password must have 8 characters, 1 uppercase letter " +
+         "1 lowercase letter, and 1 number")
+   
 
    def test_register_user_longFirstName(self):
       body = {
@@ -277,15 +237,12 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('InvalidField' in responseData[0])
-         self.assertEquals(responseData[0]['InvalidField'], 'firstName is too long')
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
-
+      responseData = self.getJson(response)
+   
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('InvalidField' in responseData[0])
+      self.assertEquals(responseData[0]['InvalidField'], 'firstName is too long')
+   
 
    def test_register_user_longLastName(self):
       body = {
@@ -296,16 +253,13 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('InvalidField' in responseData[0])
-         self.assertEquals(responseData[0]['InvalidField'], 'lastName is too long')
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
-
+      responseData = self.getJson(response)
+      
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('InvalidField' in responseData[0])
+      self.assertEquals(responseData[0]['InvalidField'], 'lastName is too long')
    
+
    def test_register_user_duplicateEmail(self):
       body = {
          'firstName' : 'Davison',
@@ -314,22 +268,18 @@ class PostUserTests(TestConfiguration):
          'password' : 'normaLpas1'
       }
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      try:
-         self.assertEquals(response.status_code, 200)
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
 
+      self.assertEquals(response.status_code, 200)
+      self.assertEquals(self.getJson(response), None)
+   
       responseDuplicate = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = responseDuplicate.json()
-      try:
-         self.assertEquals(responseDuplicate.status_code, 400)
-         self.assertTrue('DuplicateEmail' in responseData)
-         self.assertEquals(responseData['DuplicateEmail'], 'User with email already exists.')
-      except AssertionError as e:
-         self.log.error(responseData)
-         raise e
-
+      responseData = self.getJson(responseDuplicate)
+      
+      self.assertEquals(responseDuplicate.status_code, 400)
+      self.assertTrue('DuplicateEmail' in responseData)
+      self.assertEquals(responseData['DuplicateEmail'], 'User with email already exists.')
+   
+   
    def tearDown(self):
       self.cursor.execute("DELETE FROM User")
       self.cursor.execute("ALTER TABLE User AUTO_INCREMENT=1")

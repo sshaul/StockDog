@@ -1,3 +1,5 @@
+import requests
+import simplejson
 from unittest import TestCase
 import sys
 
@@ -25,6 +27,13 @@ class TestConfiguration(TestCase):
 
       cls.headers = {'content-type' : 'application/json'}
       cls.baseUrl = LOCAL_URL
+
+   
+   def getJson(cls, res):
+      try:
+         return res.json()
+      except simplejson.errors.JSONDecodeError as e:
+         return None
 
    
    @classmethod

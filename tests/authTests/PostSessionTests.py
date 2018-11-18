@@ -1,3 +1,4 @@
+import sys
 import json
 from unittest import main
 import requests
@@ -17,7 +18,7 @@ class PostSessionTests(TestConfiguration):
          'password' : 'Stockd2g'
       }
       response = requests.post(url=url, data=json.dumps(body), headers=self.headers)
-
+      self.assertEqual(response.status_code, 200)
 
    def test_login_user(self):
       body = {

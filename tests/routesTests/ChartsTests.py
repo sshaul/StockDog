@@ -15,6 +15,7 @@ class ChartsTests(TestConfiguration):
          'password' : 'Stockd2g'
       }
       registerResponse = requests.post(url=registerUrl, data=json.dumps(registerBody), headers=self.headers)
+      self.assertEqual(registerResponse.status_code, 200)
 
       loginUrl = self.baseUrl + '/users/session'
       loginBody = {
@@ -22,6 +23,7 @@ class ChartsTests(TestConfiguration):
          'password' : 'Stockd2g'
       }
       loginResponse = requests.post(url=loginUrl, data=json.dumps(loginBody), headers=self.headers)
+      self.assertEqual(loginResponse.status_code, 200)
       loginResponseData = loginResponse.json()
       self.userId = loginResponseData['userId']
       self.token = loginResponseData['token']
