@@ -88,8 +88,8 @@ class Login extends Component {
               disabled={disabled} 
               onpress={this.login}/>
             {/* <TouchableOpacity
-              style={login.smallTextButton}>
-              <Text style={login.smallText}> Forgot Password? </Text>
+              style={loginRegister.smallTextButton}>
+              <Text style={loginRegister.smallText}> Forgot Password? </Text>
             </TouchableOpacity> */}
             <TouchableOpacity style={loginRegister.smallTextButton}>
               <Text 
