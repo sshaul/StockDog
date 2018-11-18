@@ -8,7 +8,10 @@ def login_required(f):
    @wraps(f)
    def decorator(*args, **kwargs):
       try: 
-         authToken = request.headers.get('Authorization').split(' ')[1]
+         authHeader = request.headers.get('Authorization').split(' ')
+         if len(authHeader) != 2 or authHeader[0] != "token":
+            raise Exception('Invalid token')
+         authToken = authHeader[1]
          g.cursor.execute("SELECT * FROM User WHERE token = %s", authToken)
          g.user = g.cursor.fetchone()
          if g.user is None:

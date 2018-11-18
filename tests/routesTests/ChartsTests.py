@@ -57,6 +57,51 @@ class ChartsTests(TestConfiguration):
          self.log.error(responseData)
          raise e
 
+   
+   def test_getCharts_wrongAuthHeader(self):
+      self.headers['Authorization'] = 'notToken ' + self.token
+
+      url = self.url + '?ticker=AMD&length=recent'
+      response = requests.get(url=url, headers=self.headers)
+      responseData = response.json()
+      try:
+         self.assertEquals(response.status_code, 401)
+         self.assertTrue('NotLoggedIn' in responseData)
+         self.assertEquals(responseData['NotLoggedIn'], "User must be logged in.")
+      except AssertionError as e:
+         self.log.error(responseData)
+         raise e
+
+
+   def test_getCharts_missingToken(self):
+      self.headers['Authorization'] = 'token '
+
+      url = self.url + '?ticker=AMD&length=recent'
+      response = requests.get(url=url, headers=self.headers)
+      responseData = response.json()
+      try:
+         self.assertEquals(response.status_code, 401)
+         self.assertTrue('NotLoggedIn' in responseData)
+         self.assertEquals(responseData['NotLoggedIn'], "User must be logged in.")
+      except AssertionError as e:
+         self.log.error(responseData)
+         raise e
+
+
+   def test_getCharts_wrongToken(self):
+      self.headers['Authorization'] = 'Token ' + 'some1131nonsensetoken'
+
+      url = self.url + '?ticker=AMD&length=recent'
+      response = requests.get(url=url, headers=self.headers)
+      responseData = response.json()
+      try:
+         self.assertEquals(response.status_code, 401)
+         self.assertTrue('NotLoggedIn' in responseData)
+         self.assertEquals(responseData['NotLoggedIn'], "User must be logged in.")
+      except AssertionError as e:
+         self.log.error(responseData)
+         raise e
+
 
    def test_getCharts_day(self):
       url = self.url + '?ticker=MSFT&length=day'
