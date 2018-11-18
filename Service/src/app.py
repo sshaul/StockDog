@@ -63,12 +63,14 @@ def argParser():
    args = parser.parse_args()
    return args
 
+args = argParser()
+
 def getPortNum():
-   return argParser().port or DEFAULT_PORT_NUM
+   return args.port or DEFAULT_PORT_NUM
 
 
 def getEnv():
-   return argParser().environment or DEFAULT_ENV
+   return args.environment or DEFAULT_ENV
 
 
 @app.after_request
