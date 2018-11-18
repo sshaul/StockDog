@@ -1,6 +1,6 @@
 from flask import Blueprint, request, Response, jsonify, g, make_response
 
-from util.errMap import errors
+from util.error_map import errors
 
 session_api = Blueprint('session_api', __name__)
 

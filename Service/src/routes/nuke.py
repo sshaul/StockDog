@@ -1,5 +1,4 @@
 from flask import Blueprint, request, Response, g
-from marshmallow import ValidationError
 
 nuke_api = Blueprint('nuke_api', __name__)
 

@@ -1,14 +1,23 @@
 language: python
 python:
   - "3.6"
-# command to install dependencies - this file needs to be updated everytime there are new things to be added to install
+
+services:
+  - mysql
+
+before_install:
+  - mysql -u root --password="" < Service/db/init.sql
+
 install:
   - pip install -r requirements.txt
   - cd Web/stockdogweb && npm install && cd ../..
-#running dummy tests
+
+before_script:
+  - cd Service/src/ && python3 app.py --environment travis &
+  - sleep 10
+
 script:
-  - pytest tests/suite_3_6.py
-  #- cd Web/stockdogweb && npm test && cd ../..
+  - cd tests/ && python3 Runner.py
 
 notifications:
    slack: stockdog-app:Q4crKXH7YschvHLyBoOVytQS

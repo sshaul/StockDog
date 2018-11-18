@@ -1,4 +1,4 @@
-from field import Field
+from ..field import Field
 
 def validateLength(lengthStr, field, errors):
    if type(lengthStr) != str or lengthStr not in ['day', 'week', 'month', 'year', 'recent']:

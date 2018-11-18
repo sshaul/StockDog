@@ -15,6 +15,7 @@ errors = {
    'duplicateWatchlistItem': 'Ticker already exists in the watchlist of portfolio.',
    'duplicateEmail': 'User with email already exists.',
    'nonexistentUser': 'User does not exist.',
+   'notLoggedIn': 'User must be logged in.',
    'passwordMismatch': 'Incorrect password for user.',
    'alphaVantageDown': 'AlphaVantage failed to respond'
 }

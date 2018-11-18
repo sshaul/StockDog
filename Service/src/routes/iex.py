@@ -4,7 +4,7 @@ import requests
 import simplejson as json
 import time
 
-from util.errMap import errors
+from util.error_map import errors
 
 DAY = '1d'
 MONTH = '1m'

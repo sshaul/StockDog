@@ -1,11 +1,10 @@
 from flask import Blueprint, request, Response, g, jsonify, make_response
-from marshmallow import ValidationError
 import simplejson as json
 import time
 
 import routes.portfolio as portfolio
 from util.utility import Utility
-from util.errMap import errors
+from util.error_map import errors
 
 league_api = Blueprint('league_api', __name__)
 
