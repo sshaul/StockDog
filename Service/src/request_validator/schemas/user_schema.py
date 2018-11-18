@@ -3,6 +3,8 @@ from validate_email import validate_email
 
 from ..field import Field
 
+NAME_CHAR_LIMIT = 32
+
 def validateEmail(emailStr, field, errors):
    if not validate_email(emailStr):
       errors.append({
@@ -20,9 +22,18 @@ def validatePassword(passwordStr, field, errors):
    
    return errors
 
+def validateName(nameStr, field, errors):
+   if type(nameStr) != str:
+      errors.append({'InvalidField' : field.name + ' is not a string or formatted incorrectly'})
+   elif type(nameStr) == str and len(nameStr) > NAME_CHAR_LIMIT:
+      errors.append({'InvalidField' : field.name + ' is too long'})
+
+   return errors
+
+
 fields = [
-   Field('firstName', str, True),
-   Field('lastName', str, True),
+   Field('firstName', str, True, validateName),
+   Field('lastName', str, True, validateName),
    Field('email', str, True, validateEmail),
    Field('password', str, True, validatePassword)
 ]

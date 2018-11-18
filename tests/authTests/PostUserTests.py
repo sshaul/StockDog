@@ -267,6 +267,44 @@ class PostUserTests(TestConfiguration):
          self.log.error(response.json())
          raise e
 
+
+   def test_register_user_longFirstName(self):
+      body = {
+         'firstName' : 'DavisoneDavisoneDavisoneDavisoneD',
+         'lastName' : 'James',
+         'email' : 'dave.janzen18@gmail.com',
+         'password' : 'Stockd2g'
+      }
+
+      response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
+      responseData = response.json()
+      try:
+         self.assertEquals(response.status_code, 400)
+         self.assertTrue('InvalidField' in responseData[0])
+         self.assertEquals(responseData[0]['InvalidField'], 'firstName is too long')
+      except AssertionError as e:
+         self.log.error(response.json())
+         raise e
+
+
+   def test_register_user_longLastName(self):
+      body = {
+         'firstName' : 'Davisone',
+         'lastName' : 'JamesJamesJamesJamesJamesJamesJames',
+         'email' : 'dave.janzen18@gmail.com',
+         'password' : 'Stockd2g'
+      }
+
+      response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
+      responseData = response.json()
+      try:
+         self.assertEquals(response.status_code, 400)
+         self.assertTrue('InvalidField' in responseData[0])
+         self.assertEquals(responseData[0]['InvalidField'], 'lastName is too long')
+      except AssertionError as e:
+         self.log.error(response.json())
+         raise e
+
    
    def test_register_user_duplicateEmail(self):
       body = {
@@ -292,6 +330,9 @@ class PostUserTests(TestConfiguration):
          self.log.error(responseData)
          raise e
 
+   def tearDown(self):
+      self.cursor.execute("DELETE FROM User")
+      self.cursor.execute("ALTER TABLE User AUTO_INCREMENT=1")
 
 if __name__ == "__main__":
    main()
