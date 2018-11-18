@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { Text, TouchableOpacity, View} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import containers from '../style/containers';
-import elements from '../style/elements';
-import text from '../style/text';
 import { colors } from '../style/colors';
+import loginRegister from '../style/screens/loginRegister';
 import { LinearGradient } from 'expo';
 import Icon from 'react-native-vector-icons/Feather';
 import PopoverTooltip from 'react-native-popover-tooltip';
@@ -58,14 +56,14 @@ export default class Register extends Component {
     return (
       <KeyboardAwareScrollView 
         resetScrollToCoords={{ x: 0, y: 0 }}
-        contentContainerStyle={containers.general}
+        contentContainerStyle={loginRegister.background}
         scrollEnabled={false}
         keyboardShouldPersistTaps="handled"
         enableOnAndroid={true}>
         <LinearGradient
             colors={['transparent', colors.lightBackground]}
-            style={containers.generalGradient}>
-          <Text style={text.title}>StockDog</Text>
+            style={loginRegister.gradientBackground}>
+          <Text style={loginRegister.title}>StockDog</Text>
           <FormInput 
             type="first name" 
             onchange={(firstname) => this.setState({firstname})}
@@ -86,7 +84,7 @@ export default class Register extends Component {
             returnKeyType={ "next" }
             refer={ input => {this.inputs['email'] = input;}}
             onSubmitEditing={() => {this.focusNextField('password');}}/>
-          <View style={containers.horizontal}>
+          <View style={loginRegister.horizontal}>
             <FormInput
               type="password"
               onchange={(password) => this.setState({password})}
@@ -104,7 +102,7 @@ export default class Register extends Component {
             <PopoverTooltip
               ref='tooltip1'
               buttonComponent={
-                <View style={elements.popoverButton}>
+                <View style={loginRegister.popoverButton}>
                   <Icon name='info' size={30} color='white' />
                 </View>
               }
@@ -115,9 +113,9 @@ export default class Register extends Component {
           </View>
           <WideButton type='register' disabled={disabled} onpress={this.register}/>
           <TouchableOpacity
-            style={elements.smallTextButton}>
+            style={loginRegister.smallTextButton}>
             <Text 
-              style={text.smallText} 
+              style={loginRegister.smallText} 
               onPress={this.navToLogin}> 
               Return to log in 
             </Text>
