@@ -27,8 +27,8 @@ export default class PortfolioStockList extends Component {
       }
    }
 
-   renderItem = (item, index) => {
-      var difference = item.difference > 0 ? 
+   renderStockListingItem = (item, index) => {
+      var difference = item.difference >= 0 ? 
          (<Text style={text.greenValue}>(+{item.difference})</Text>) :
          (<Text style={text.redValue}>({item.difference})</Text>)
 
@@ -58,7 +58,7 @@ export default class PortfolioStockList extends Component {
                </Text>
             </View>
             <View style={containers.portfolioListGroup}>
-               {this.state.stockList.map((item, index) => {return this.renderItem(item, index);})}
+               {this.state.stockList.map((item, index) => {return this.renderStockListingItem(item, index);})}
             </View>
          </View>
       );
