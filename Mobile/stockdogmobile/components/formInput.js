@@ -1,28 +1,32 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS, Keyboard } from 'react-native';
-import containers from '../style/containers';
+import { TextInput } from 'react-native';
 import elements from '../style/elements';
-import text from '../style/text';
 import { colors } from '../style/colors';
 
-export default class RoundInput extends Component {
+// Input component for form pages like Login and Register
+// Props:
+//    type: string indicating what type of input and the placeholder
+//    onchange: function that will update the state of parent component
+//    value: model for the input value
+//    returnKeyType: what the return key will look like
+//    refer: reference for tab control if necessary
+//    onSubmitEditing: behavior for submitting input value
+export default class FormInput extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   render() {
     var placeholder = this.props.type;
-    var secure = false;
-    if (placeholder == 'password')
-      secure = true;
+    var secure = placeholder === 'password';
     return (
       <TextInput
           style={elements.roundedInput}
+          color={colors.white}
           autoCorrect={false}
           placeholder={placeholder}
           secureTextEntry={secure}
-          placeholderTextColor="#aaaaaa"
+          placeholderTextColor={colors.placeholders}
           onChangeText={this.props.onchange}
           value={this.props.value}
           blurOnSubmit={false}

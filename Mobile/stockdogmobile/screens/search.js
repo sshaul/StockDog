@@ -38,7 +38,7 @@ export default class Search extends Component {
     return (
       <View style={containers.profileGeneral}>
         <NavBar />
-        <View style={containers.general}>
+        <View style={containers.generalWithHeaders}>
           <TextInput
             style={[elements.roundedInput, {textAlign: 'center', paddingLeft: 0}]}
             placeholder="Search a ticker"

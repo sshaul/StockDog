@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, ScrollView } from 'react-native';
-import { Button, ButtonGroup } from 'react-native-elements';
+import { Text, View } from 'react-native';
+import { ButtonGroup } from 'react-native-elements';
 import containers from '../style/containers';
-import { Actions } from 'react-native-router-flux';
-import elements from '../style/elements';
 import text from '../style/text';
 import { colors } from '../style/colors'; 
 import ChartView from 'react-native-highcharts';
-import Icon from 'react-native-vector-icons/Feather';
 import Api from '../api';
 import SpinningLoader from './spinningloader';
 
@@ -71,8 +68,8 @@ export default class StockChart extends Component {
                 animation: Highcharts.svg,
                 marginRight: 10,
                 lineColor: colors.grey,
-                backgroundColor: colors.dark,
-                gridLineColor: colors.dark
+                backgroundColor: colors.grey,
+                gridLineColor: colors.grey
             },
             title: {
                 text: ''
@@ -80,8 +77,9 @@ export default class StockChart extends Component {
             xAxis: {
                 type: 'category',
                 categories: this.state.xData,
-                gridLineColor: colors.dark,
+                gridLineColor: colors.grey,
                 tickInterval: intervals,
+                tickColor: colors.white,
                 labels: {
                     enabled: true,
                     formatter: function() {
@@ -97,15 +95,15 @@ export default class StockChart extends Component {
                     }
                 },
                 lineColor: colors.white,
-                lineWidth: 2
+                lineWidth: 1
             },
             yAxis: {
                 title: {
                     text: ''
                 },
                 lineColor: colors.white,
-                lineWidth: 2,
-                gridLineColor: colors.dark,
+                lineWidth: 1,
+                gridLineColor: colors.grey,
                 plotLines: [{
                     value: 0,
                     width: 1,
@@ -162,16 +160,6 @@ export default class StockChart extends Component {
     );
   }
 
-  profileHeader = () => {
-    if (this.props.portfolio) {
-      return (
-        <View style={containers.feedTitle}>
-          <Text style={text.title}>{this.props.league}</Text>
-        </View>
-      );
-    };
-  }
-
   render() {
     const lastelt = this.state.yData[this.state.yData.length - 1];
     var moneyText = '';
@@ -188,19 +176,18 @@ export default class StockChart extends Component {
     }
     return (
       <View>
-        {this.profileHeader()}
         <View style={containers.chart}>
           <Text style={text.money}>{moneyText}</Text>
           {this.createChart()}
           <ButtonGroup
-                  onPress={this.updateIndex.bind(this)}
-                  selectedIndex={this.state.selectedIndex}
-                  buttons={['D', 'W', 'M', 'Y']}
-                  containerStyle={{flex: 0.3}}
-                  textStyle={{color: colors.white}}
-                  buttonStyle={{backgroundColor: colors.grey}}
-                  selectedButtonStyle={{backgroundColor: colors.white}}
-                />
+            onPress={this.updateIndex.bind(this)}
+            selectedIndex={this.state.selectedIndex}
+            buttons={['D', 'W', 'M', 'Y']}
+            containerStyle={{flex: 0.3}}
+            textStyle={{color: colors.white}}
+            buttonStyle={{backgroundColor: colors.grey}}
+            selectedButtonStyle={{backgroundColor: colors.white}}
+          />
         </View>
       </View>
     );

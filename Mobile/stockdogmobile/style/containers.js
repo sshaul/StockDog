@@ -1,10 +1,23 @@
-import React, { Component } from 'react';
 import { StyleSheet, Text, View, PixelRatio } from 'react-native';
 import { colors } from './colors.js'; 
 
 export default containers = StyleSheet.create({
     general: {
       flex: 1,
+      backgroundColor: colors.dark,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingTop: 0
+    },
+    generalGradient: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingTop: 0,
+      width: '100%'
+    },
+    generalWithHeaders: {
+      flex: 0.9,
       backgroundColor: colors.dark,
       alignItems: 'center',
       justifyContent: 'center',
@@ -39,11 +52,19 @@ export default containers = StyleSheet.create({
       paddingRight: 10,
       paddingTop: 5
     },
+    logo: {
+      width: 305,
+      height: 193
+    },
     // ----------------- Stock chart ------------- //
     chart: {
       flex: 0.7,
       alignItems: 'center',
       justifyContent: 'flex-start',
+      backgroundColor: colors.grey,
+      borderWidth: 1, 
+      borderColor: colors.white, 
+      borderRadius: 8
     },
     chartOut: {
       flex: 0.5,
@@ -72,20 +93,19 @@ export default containers = StyleSheet.create({
       flex: 0.5,
       justifyContent: 'flex-start',
       alignItems: 'center',
-      // backgroundColor: 'yellow'
     },
     outerModal: {
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      backgroundColor: colors.grey
+      backgroundColor: colors.grey,
+      borderRadius: 10
     },
     successMessage: {
       width: 270, 
       height: '100%', 
       alignItems: 'center', 
       justifyContent: 'center',
-      // backgroundColor: 'blue'
     },
     check: {
       paddingTop: 20,
@@ -95,9 +115,15 @@ export default containers = StyleSheet.create({
       flexDirection: 'row', 
       justifyContent: 'space-between', 
       alignItems: 'center',
-      borderStyle: 'solid', 
-      borderColor: colors.white, 
-      borderWidth: 2
+      backgroundColor: colors.grey,
+      shadowColor: 'black',
+      shadowOffset: { width: 10, height: 10 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2
+      // shadowOpacity: 0.8,
+      // borderStyle: 'solid', 
+      // borderColor: colors.white, 
+      // borderWidth: 1
     },
     // ----------------- League Drawer ------------- //
     groupsDrawer: {

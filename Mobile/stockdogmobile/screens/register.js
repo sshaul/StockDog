@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, DatePickerIOS } from 'react-native';
+import { Text, TouchableOpacity, View} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import containers from '../style/containers';
 import elements from '../style/elements';
 import text from '../style/text';
+import { colors } from '../style/colors';
+import { LinearGradient } from 'expo';
 import Icon from 'react-native-vector-icons/Feather';
 import PopoverTooltip from 'react-native-popover-tooltip';
 import WideButton from '../components/widebutton';
-import RoundInput from '../components/roundinput';
+import FormInput from '../components/formInput';
 import Api from '../api';
 
 export default class Register extends Component {
@@ -22,7 +24,6 @@ export default class Register extends Component {
     };
 
     this.api = new Api();
-    this.focusNextField = this.focusNextField.bind(this);
     this.inputs = {};
   }
 
@@ -30,7 +31,7 @@ export default class Register extends Component {
     this.inputs[id].focus();
   }
 
-  navToLogin() {
+  navToLogin = () => {
     const navigation = this.props.navigation;
     navigation.goBack(null);
   }
@@ -42,7 +43,7 @@ export default class Register extends Component {
     else {
       this.api.register(this.state.firstname, this.state.lastname,
         this.state.email, this.state.password, (email) => {
-          Actions.login({email: this.state.email});
+          Actions.login({email});
         });
     }
   }
@@ -61,85 +62,67 @@ export default class Register extends Component {
         scrollEnabled={false}
         keyboardShouldPersistTaps="handled"
         enableOnAndroid={true}>
-        <Text style={text.title}>StockDog</Text>
-        <RoundInput 
-          type="first name" 
-          onchange={(firstname) => this.setState({firstname})}
-          value={this.state.firstname}
-          returnKeyType={ "next" }
-          refer={ input => {
-            this.inputs['one'] = input;
-          }}
-          onSubmitEditing={() => {
-            this.focusNextField('two');
-          }}
-          />
-        <RoundInput
-          type="last name"
-          onchange={(lastname) => this.setState({lastname})}
-          value={this.state.lastname}
-          returnKeyType={ "next" }
-          refer={ input => {
-            this.inputs['two'] = input;
-          }}
-          onSubmitEditing={() => {
-            this.focusNextField('three');
-          }}
-        />
-        <RoundInput
-          type="email"
-          onchange={(email) => this.setState({email})}
-          value={this.state.email}
-          returnKeyType={ "next" }
-          refer={ input => {
-            this.inputs['three'] = input;
-          }}
-          onSubmitEditing={() => {
-            this.focusNextField('four');
-          }}
-        />
-        <View style={containers.horizontal}>
-          <RoundInput
-            type="password"
-            onchange={(password) => this.setState({password})}
-            value={this.state.password}
-            returnKeyType={ "done" }
-            refer={ input => {
-              this.inputs['four'] = input;
-            }}
-            onSubmitEditing={() => {
-              if (disabled) {
-                alert('Invalid registration. Please enter all fields and follow password instructions.');
+        <LinearGradient
+            colors={['transparent', colors.lightBackground]}
+            style={containers.generalGradient}>
+          <Text style={text.title}>StockDog</Text>
+          <FormInput 
+            type="first name" 
+            onchange={(firstname) => this.setState({firstname})}
+            value={this.state.firstname}
+            returnKeyType={ "next" }
+            onSubmitEditing={() => {this.focusNextField('last name');}}/>
+          <FormInput
+            type="last name"
+            onchange={(lastname) => this.setState({lastname})}
+            value={this.state.lastname}
+            returnKeyType={ "next" }
+            refer={ input => {this.inputs['last name'] = input;}}
+            onSubmitEditing={() => {this.focusNextField('email');}}/>
+          <FormInput
+            type="email"
+            onchange={(email) => this.setState({email})}
+            value={this.state.email}
+            returnKeyType={ "next" }
+            refer={ input => {this.inputs['email'] = input;}}
+            onSubmitEditing={() => {this.focusNextField('password');}}/>
+          <View style={containers.horizontal}>
+            <FormInput
+              type="password"
+              onchange={(password) => this.setState({password})}
+              value={this.state.password}
+              returnKeyType={ "done" }
+              refer={ input => {this.inputs['password'] = input;}}
+              onSubmitEditing={() => {
+                if (disabled) {
+                  alert('Invalid registration. Please enter all fields and follow password instructions.');
+                }
+                else {
+                  this.register();
+                }
+              }}/>
+            <PopoverTooltip
+              ref='tooltip1'
+              buttonComponent={
+                <View style={elements.popoverButton}>
+                  <Icon name='info' size={30} color='white' />
+                </View>
               }
-              else {
-                this.register();
-              }
-            }}
-          />
-          <PopoverTooltip
-            ref='tooltip1'
-            buttonComponent={
-              <View style={elements.popoverButton}>
-                <Icon name='info' size={30} color='white' />
-              </View>
-            }
-            items={[
-              {
-                label: 'Password must be at least 8 characters long and contain at least 1 number.',
-                onPress: () => {}
-              }
-            ]}
-            />
-        </View>
-        <WideButton type='register' disabled={disabled} onpress={this.register.bind(this)}/>
-        <TouchableOpacity
-          style={elements.smallTextButton}>
-          <Text 
-            style={text.smallText} 
-            onPress={this.navToLogin.bind(this)}> 
-            Return to log in 
-          </Text>
-        </TouchableOpacity>
+              items={[{
+                  label: 'Password must be at least 8 characters long and contain at least 1 number.',
+                  onPress: () => {}
+                }]}/>
+          </View>
+          <WideButton type='register' disabled={disabled} onpress={this.register}/>
+          <TouchableOpacity
+            style={elements.smallTextButton}>
+            <Text 
+              style={text.smallText} 
+              onPress={this.navToLogin}> 
+              Return to log in 
+            </Text>
+          </TouchableOpacity>
+        </LinearGradient>
       </KeyboardAwareScrollView>
     );
   }
