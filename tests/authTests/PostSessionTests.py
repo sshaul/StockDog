@@ -18,7 +18,9 @@ class PostSessionTests(TestConfiguration):
          'password' : 'Stockd2g'
       }
       response = requests.post(url=url, data=json.dumps(body), headers=self.headers)
+      self.assertEqual(self.getJson(response), None)
       self.assertEqual(response.status_code, 200)
+
 
    def test_login_user(self):
       body = {
@@ -26,16 +28,13 @@ class PostSessionTests(TestConfiguration):
          'password' : 'Stockd2g'
       }
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 200)
-         self.assertTrue('userId' in responseData)
-         self.assertTrue(responseData['userId'] > 0)
-         self.assertTrue('token' in responseData)
-         self.assertTrue(responseData['token'] != "")
-      except AssertionError as e:
-         self.log.error(responseData)
-         raise e
+      responseData = self.getJson(response)
+      
+      self.assertEquals(response.status_code, 200)
+      self.assertTrue('userId' in responseData)
+      self.assertTrue(responseData['userId'] > 0)
+      self.assertTrue('token' in responseData)
+      self.assertTrue(responseData['token'] != "")
 
 
    def test_login_user_twice(self):
@@ -44,15 +43,12 @@ class PostSessionTests(TestConfiguration):
          'password' : 'Stockd2g'
       }
       loginResponse1 = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      loginResponse1Data = loginResponse1.json()
+      loginResponse1Data = self.getJson(loginResponse1)
       
       loginResponse2 = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      loginResponse2Data = loginResponse2.json()
+      loginResponse2Data = self.getJson(loginResponse2)
 
-      try:
-         self.assertEquals(loginResponse1Data, loginResponse2Data)
-      except AssertionError as e:
-         raise e
+      self.assertEquals(loginResponse1Data, loginResponse2Data)
 
 
    def test_login_user_noEmail(self):
@@ -60,42 +56,34 @@ class PostSessionTests(TestConfiguration):
          'password' : 'Stockd2g'
       }
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('MissingField' in responseData[0])
-         self.assertEquals(responseData[0]['MissingField'], 'email is a required field')      
-      except AssertionError as e:
-         self.log.error(responseData)
-         raise e 
-
+      responseData = self.getJson(response)
+      
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('MissingField' in responseData[0])
+      self.assertEquals(responseData[0]['MissingField'], 'email is a required field')      
+   
 
    def test_login_user_noPassword(self):
       body = {
          'email' : 'dave.janzen18@gmail.com'
       }
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('MissingField' in responseData[0])
-         self.assertEquals(responseData[0]['MissingField'], 'password is a required field')      
-      except AssertionError as e:
-         self.log.error(responseData)
-         raise e 
+      responseData = self.getJson(response)
+      
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('MissingField' in responseData[0])
+      self.assertEquals(responseData[0]['MissingField'], 'password is a required field')      
+   
 
    def test_login_user_noBody(self):
       body = {
       }
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertEquals(len(responseData), 2)
-      except AssertionError as e:
-         self.log.error(responseData)
-         raise e 
-
+      responseData = self.getJson(response)
+   
+      self.assertEquals(response.status_code, 400)
+      self.assertEquals(len(responseData), 2)
+   
 
    def test_login_user_invalidEmail(self):
       body = {
@@ -104,15 +92,12 @@ class PostSessionTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 400)
-         self.assertTrue('InvalidField' in responseData[0])
-         self.assertEquals(responseData[0]['InvalidField'], 'email is an invalid address')
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
-
+      responseData = self.getJson(response)
+      
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('InvalidField' in responseData[0])
+      self.assertEquals(responseData[0]['InvalidField'], 'email is an invalid address')
+      
 
    def test_login_user_nonExistentEmail(self):
       body = {
@@ -121,15 +106,12 @@ class PostSessionTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 401)
-         self.assertTrue('NonexistentUser' in responseData)
-         self.assertEquals(responseData['NonexistentUser'], 'User does not exist.')
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
-
+      responseData = self.getJson(response)
+      
+      self.assertEquals(response.status_code, 401)
+      self.assertTrue('NonexistentUser' in responseData)
+      self.assertEquals(responseData['NonexistentUser'], 'User does not exist.')
+   
 
    def test_login_user_wrongPassword(self):
       body = {
@@ -138,15 +120,12 @@ class PostSessionTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = response.json()
-      try:
-         self.assertEquals(response.status_code, 401)
-         self.assertTrue('PasswordMismatch' in responseData)
-         self.assertEquals(responseData['PasswordMismatch'], 'Incorrect password for user.')
-      except AssertionError as e:
-         self.log.error(response.json())
-         raise e
-
+      responseData = self.getJson(response)
+      
+      self.assertEquals(response.status_code, 401)
+      self.assertTrue('PasswordMismatch' in responseData)
+      self.assertEquals(responseData['PasswordMismatch'], 'Incorrect password for user.')
+   
 
    def tearDown(self):
       self.cursor.execute("DELETE FROM User")
