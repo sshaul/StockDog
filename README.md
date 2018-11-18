@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sshaul/StockDog.svg?branch=master)](https://travis-ci.org/sshaul/StockDog)
+
 ![Stockdog](https://github.com/sshaul/StockDog/blob/master/Assets/logoColor.png)
 ## Learn to invest while competing with friends!
 
