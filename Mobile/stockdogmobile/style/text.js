@@ -3,10 +3,14 @@ import { colors } from './colors.js';
 
 export default text = StyleSheet.create({
     // ---------------- Tab Bar --------------- // 
-    tabLabel: {
-      color: colors.white, 
-      fontSize: 12, 
-      fontFamily: 'assistant'
+    // tabLabel: {
+    //   color: colors.white, 
+    //   fontSize: 12, 
+    //   fontFamily: 'assistant'
+    // },
+    // ------------- General ----------- // 
+    whiteText: {
+      color: colors.white
     },
     // ------------- Login/Register ----------- // 
     title: {
@@ -26,139 +30,150 @@ export default text = StyleSheet.create({
       color: colors.bright,
       textDecorationLine: 'underline'
     },
-    // ---------------- Profile page ------------ //
-    money: {
-      color: colors.bright,
-      fontFamily: 'assistant',
-      fontSize: 36,
-      textAlign: 'center',
-    },
-    profileLabels: {
-      color: colors.white,
-      fontFamily: 'assistant',
-      fontSize: 24,
-      textAlign: 'left'
-    },
-    bigPortfolioText: {
-      color: colors.white,
-      fontFamily: 'assistant',
-      fontSize: 20,
-      textAlign: 'left'
-    },
-    smallPortfolioText: {
-      color: colors.white,
-      fontFamily: 'assistant',
-      fontSize: 16,
-      textAlign: 'left',
-      paddingLeft: 20
-    },
-    // ----------------- Modals ------------- // 
-    joinLeagueTitle: {
-      color: colors.white,
-      fontFamily: 'assistant',
-      fontSize: 24,
-      textAlign: 'left'
-    },
-    joinLeagueWarning: {
-      color: colors.white,
-      fontFamily: 'assistant',
-      fontSize: 14,
-      paddingTop: 10
-    },
-    modalHeader: {
-      color: colors.white,
-      fontFamily: 'assistant',
-      fontSize: 32
-    },
-    // ----------------- Stock page ------------- // 
-    stock: {
-      color: colors.bright,
-      fontFamily: 'assistant',
-      fontSize: 36
-    },
-    stockMoney: {
-      color: colors.bright,
-      fontFamily: 'assistant',
-      fontSize: 42,
-      textAlign: 'center'
-    },
-    // ----------------- Groups Drawer ------------- //
-    groupTitle: {
-      color: colors.dark,
-      fontFamily: 'assistant',
-      fontSize: 36,
-      paddingLeft: 10
-    },
-    groupText: {
-      color: colors.dark,
-      fontFamily: 'assistant',
-      fontSize: 24,
-      textAlign: 'left'
-    },
-    // ----------------- League Screen ------------- //
-    leagueTitle: {
-      color: colors.white,
-      fontFamily: 'assistant',
-      fontSize: 36,
-    },
-    inviteCode: {
-      color: "gray",
-      fontFamily: 'assistant',
-      fontSize: 20,
-      textAlign: 'left',
-    },
-    members: {
-      color: colors.white,
-      fontFamily: 'assistant',
-      fontSize: 24
-    },
-    rank: {
-      color: colors.white,
-      fontFamily: 'assistant',
-      fontSize: 24
-    },
+    // ---------------- Portfolio page ------------ //
     value: {
       color: colors.white,
       fontFamily: 'assistant',
-      fontSize: 24
+      fontSize: 36,
+      textAlign: 'center',
     },
-    addGroupText: {
-      color: colors.dark,
+    portfolioStockListHeader: {
+      color: colors.bright,
       fontFamily: 'assistant',
       fontSize: 20,
       textAlign: 'left'
     },
-    code: {
-      fontSize: 25,
+    listingTickerAndValue: {
       color: colors.white,
       fontFamily: 'assistant',
-      borderRadius: 0,
-      borderColor: colors.bright,
-      borderWidth: 2
+      fontSize: 18,
+      textAlign: 'left'
     },
-    // ----------------- Settings Modal ------------- //
-    settingsTitle: {
-      color: colors.white,
+    smallListingText: {
+      color: colors.darkGrey,
       fontFamily: 'assistant',
-      fontSize: 48, 
-      textAlign: 'center',
+      fontSize: 10,
+      textAlign: 'left',
     },
-    // ----------------- Feed page ------------- //
-    activityTitle: {
-      color: colors.white
+    greenValue: {
+      color: colors.green,
+      fontFamily: 'assistant',
+      fontSize: 18,
+      textAlign: 'left'
     },
-    smallIconText: {
-      fontSize: 16
+    redValue: {
+      color: colors.red,
+      fontFamily: 'assistant',
+      fontSize: 18,
+      textAlign: 'left'
     },
-    medIconText: {
-      fontSize: 14
-    },
-    largeIconText: {
-      fontSize: 12
-    },
-    noActivity: {
-      fontSize: 24,
-      color: colors.white,
-      textAlign: 'center'
-    }
+    // // ----------------- Modals ------------- // 
+    // joinLeagueTitle: {
+    //   color: colors.white,
+    //   fontFamily: 'assistant',
+    //   fontSize: 24,
+    //   textAlign: 'left'
+    // },
+    // joinLeagueWarning: {
+    //   color: colors.white,
+    //   fontFamily: 'assistant',
+    //   fontSize: 14,
+    //   paddingTop: 10
+    // },
+    // modalHeader: {
+    //   color: colors.white,
+    //   fontFamily: 'assistant',
+    //   fontSize: 32
+    // },
+    // // ----------------- Stock page ------------- // 
+    // stock: {
+    //   color: colors.bright,
+    //   fontFamily: 'assistant',
+    //   fontSize: 36
+    // },
+    // stockMoney: {
+    //   color: colors.bright,
+    //   fontFamily: 'assistant',
+    //   fontSize: 42,
+    //   textAlign: 'center'
+    // },
+    // // ----------------- Groups Drawer ------------- //
+    // groupTitle: {
+    //   color: colors.dark,
+    //   fontFamily: 'assistant',
+    //   fontSize: 36,
+    //   paddingLeft: 10
+    // },
+    // groupText: {
+    //   color: colors.dark,
+    //   fontFamily: 'assistant',
+    //   fontSize: 24,
+    //   textAlign: 'left'
+    // },
+    // // ----------------- League Screen ------------- //
+    // leagueTitle: {
+    //   color: colors.white,
+    //   fontFamily: 'assistant',
+    //   fontSize: 36,
+    // },
+    // inviteCode: {
+    //   color: "gray",
+    //   fontFamily: 'assistant',
+    //   fontSize: 20,
+    //   textAlign: 'left',
+    // },
+    // members: {
+    //   color: colors.white,
+    //   fontFamily: 'assistant',
+    //   fontSize: 24
+    // },
+    // rank: {
+    //   color: colors.white,
+    //   fontFamily: 'assistant',
+    //   fontSize: 24
+    // },
+    // value: {
+    //   color: colors.white,
+    //   fontFamily: 'assistant',
+    //   fontSize: 24
+    // },
+    // addGroupText: {
+    //   color: colors.dark,
+    //   fontFamily: 'assistant',
+    //   fontSize: 20,
+    //   textAlign: 'left'
+    // },
+    // code: {
+    //   fontSize: 25,
+    //   color: colors.white,
+    //   fontFamily: 'assistant',
+    //   borderRadius: 0,
+    //   borderColor: colors.bright,
+    //   borderWidth: 2
+    // },
+    // // ----------------- Settings Modal ------------- //
+    // settingsTitle: {
+    //   color: colors.white,
+    //   fontFamily: 'assistant',
+    //   fontSize: 48, 
+    //   textAlign: 'center',
+    // },
+    // // ----------------- Feed page ------------- //
+    // activityTitle: {
+    //   color: colors.white
+    // },
+    // smallIconText: {
+    //   fontSize: 16
+    // },
+    // medIconText: {
+    //   fontSize: 14
+    // },
+    // largeIconText: {
+    //   fontSize: 12
+    // },
+    // noActivity: {
+    //   fontSize: 24,
+    //   color: colors.white,
+    //   textAlign: 'center'
+    // }
 });

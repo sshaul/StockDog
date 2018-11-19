@@ -20,7 +20,7 @@ export default class SpinningLoader extends Component {
       this.spinValue,
       {
         toValue: 1,
-        duration: 5000,
+        duration: 2000,
         easing: Easing.linear,
         useNativeDriver: true
       }

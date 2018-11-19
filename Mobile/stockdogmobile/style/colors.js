@@ -1,11 +1,13 @@
 export const colors = {
-    white : '#f7f8f9',
-    bright: '#3ee7ad',
     dark: '#2a2a2a',
-    red: "#ed4d0a",
-    grey: '#657a86',
-    activeTab: '#434b59',
+    bright: '#3ee7ad',
+    white : '#ffffff',
+    grey: '#383838',
     placeholders: '#929292',
+    green: '#6fda42',
+    red: "#ff413b",
+    darkGrey: '#808080',
+    // activeTab: '#434b59',
     lightBackground: '#404040'
 }
 
