@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { colors } from '../colors';
 
-export default loginRegister = StyleSheet.create({
+export default styles = StyleSheet.create({
    // ----------------- Containers ------------- //
    background: {
       flex: 1,

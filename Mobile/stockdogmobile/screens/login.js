@@ -5,7 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LinearGradient } from 'expo';
 import { colors } from '../style/colors';
-import loginRegister from '../style/screens/loginRegister';
+import styles from '../style/screens/loginRegister';
 import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Api from '../api';
@@ -59,17 +59,17 @@ class Login extends Component {
     return (
       <KeyboardAwareScrollView 
         resetScrollToCoords={{ x: 0, y: 0 }}
-        contentContainerStyle={loginRegister.background}
+        contentContainerStyle={styles.background}
         scrollEnabled={false}
         keyboardShouldPersistTaps="handled"
         enableOnAndroid={true}>
           <LinearGradient
             colors={['transparent', colors.lightBackground]}
-            style={loginRegister.gradientBackground}>
+            style={styles.gradientBackground}>
             <Image 
               source={logoImage} 
-              style={loginRegister.logo}/>
-            <Text style={loginRegister.title}>StockDog</Text>
+              style={styles.logo}/>
+            <Text style={styles.title}>StockDog</Text>
             <FormInput
               type="email"
               value={this.state.email}
@@ -88,12 +88,12 @@ class Login extends Component {
               disabled={disabled} 
               onpress={this.login}/>
             {/* <TouchableOpacity
-              style={loginRegister.smallTextButton}>
-              <Text style={loginRegister.smallText}> Forgot Password? </Text>
+              style={styles.smallTextButton}>
+              <Text style={styles.smallText}> Forgot Password? </Text>
             </TouchableOpacity> */}
-            <TouchableOpacity style={loginRegister.smallTextButton}>
+            <TouchableOpacity style={styles.smallTextButton}>
               <Text 
-                style={loginRegister.smallText} 
+                style={styles.smallText} 
                 onPress={this.navToRegister}> 
                 Create an account 
               </Text>
