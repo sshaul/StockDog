@@ -1,24 +1,40 @@
-from flask import g
-from pprint import pprint
+from flask import g, make_response, request
+from functools import update_wrapper
+import simplejson as json
+
 from .validation_error import ValidationError
 
 def validate(data, fields):
    errors = []
    
+   check_headers(errors)
+   if (len(errors) > 0):
+      raise ValidationError(errors)
+
    check_required_fields(data, fields, errors)
    if (len(errors) > 0):
       raise ValidationError(errors)
-   print("after required check")
+
    check_field_validity(data, fields, errors)
    if (len(errors) > 0):
       raise ValidationError(errors)
 
    return None
 
+
+def check_headers(errors):
+   contentTypeHeader = request.headers.get('Content-Type')
+   if contentTypeHeader is None:
+      errors.append({'MissingHeader' : 'Content-Type is a required header'})
+   elif contentTypeHeader and contentTypeHeader != 'application/json':
+      errors.append({'InvalidHeader' : 'API only accepts Content-Type of application/json'})
+   
+   return errors
+
+
 def check_required_fields(data, fields, errors):
    for field in fields:
       if field.isRequired and data.get(field.name) is None:
-         print("here")
          errors.append({'MissingField' : field.name + ' is a required field'})
       
    return errors
@@ -44,8 +60,35 @@ def validate_str(datum, field, errors):
    
    return errors
 
+
 def validate_int(datum, field, errors):
    if type(datum) != int:
       errors.append({'InvalidField' : field.name + ' is not an int or formatted incorrecly'})
    
    return errors
+
+
+def validate_params(fields):
+   def decorator(fn):
+      def wrap(*args, **kwargs):
+         try:
+            validate(request.args, fields)
+         except ValidationError as e:
+            return make_response(json.dumps(e.errors), 400)
+         
+         return fn(*args, **kwargs)
+      return update_wrapper(wrap, fn)
+   return decorator
+
+
+def validate_body(fields):
+   def decorator(fn):
+      def wrap(*args, **kwargs):
+         try:
+            validate(request.get_json(), fields)
+         except ValidationError as e:
+            return make_response(json.dumps(e.errors), 400)
+         
+         return fn(*args, **kwargs)
+      return update_wrapper(wrap, fn)
+   return decorator

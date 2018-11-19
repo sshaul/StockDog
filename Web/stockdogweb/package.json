@@ -31,7 +31,7 @@
     "eject": "react-scripts eject",
     "build-and-deploy": "npm run build && s3cmd sync build/* s3://www.stockdogapp.com && echo '🚀  Deployed!'",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "npm-run-all -p build-storybook -s public watch-css"
   },
   "devDependencies": {
     "enzyme": "^3.3.0",
