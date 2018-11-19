@@ -20,7 +20,7 @@ export default styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       marginLeft: 30
-    },
+   },
    logo: {
       width: 305,
       height: 193
@@ -33,11 +33,20 @@ export default styles = StyleSheet.create({
       justifyContent: 'center'
    },
    popoverButton: {
-      width: 48, 
+      width: 48,
       height: 48,
       alignItems: 'flex-end',
       justifyContent: 'center',
       marginLeft: -15
+   },
+   roundedInput: {
+      height: 45,
+      width: 250,
+      backgroundColor: 'transparent',
+      borderBottomWidth: 1,
+      borderColor: colors.placeholders,
+      paddingLeft: 20,
+      margin: 10
    },
    // ----------------- Text ------------- //
    title: {

@@ -3,9 +3,6 @@ import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput } from 'r
 import { Button, ButtonGroup } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Feather';
-import containers from '../style/containers';
-import elements from '../style/elements';
-import text from '../style/text';
 import { colors } from '../style/colors'; 
 import WideButton from '../components/widebutton';
 import StockChart from '../components/stockchart';

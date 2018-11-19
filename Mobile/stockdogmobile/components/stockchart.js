@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
-import containers from '../style/containers';
-import text from '../style/text';
 import { colors } from '../style/colors'; 
 import ChartView from 'react-native-highcharts';
 import Api from '../api';
@@ -176,8 +174,8 @@ export default class StockChart extends Component {
     }
     return (
       <View>
-        <View style={containers.chart}>
-          <Text style={text.money}>{moneyText}</Text>
+        <View>
+          <Text >{moneyText}</Text>
           {this.createChart()}
           <ButtonGroup
             onPress={this.updateIndex.bind(this)}
