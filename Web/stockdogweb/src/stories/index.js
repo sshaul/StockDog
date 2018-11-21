@@ -6,6 +6,7 @@ import {
 import Listing from '../components/Listing/Listing';
 import Graph from '../components/Graph/Graph';
 import Navbar from '../components/Navigation/Navbar';
+import News from '../components/News/News';
 
 import { storiesOf } from '@storybook/react';
 
@@ -65,7 +66,7 @@ const navbarLinks = [
    },
    {
       title: "Swing Stocks",
-      location:"/league/swingStocks"
+      location: "/league/swingStocks"
    }
 ]
 
@@ -74,6 +75,27 @@ storiesOf('Navbar', module)
       <Router><Navbar links={navbarLinks} /></Router>);
 
 
+const headlines = [
+   {
+      title: "China may reject new trade talks if more tariffs imposed",
+      link: "/article1"
+   },
+   {
+      title: "Shiller: The market is experiencing 'irrational exuberance aaaaaaaaaaaaaaaaaaaaaa",
+      link: "/article2"
+   },
+   {
+      title: "3 Incredibly Cheap Technology Stocks",
+      link: "/article3"
+   },
+   {
+      title: "3 Things to Watch in the Stock Market This Week",
+      link: "/article4"
+   }
+]
+storiesOf('News', module)
+   .add('default', () =>
+   <Router><News headlines={headlines} /></Router>);
 
 
 
