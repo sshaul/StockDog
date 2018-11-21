@@ -28,7 +28,7 @@ export default class NavBar extends Component {
       return (
          <View style={containers.iconHeaders}>
             <TouchableOpacity>
-               <Icon name='user' size={30} color='white' />
+               <Icon name='menu' size={30} color='white' />
             </TouchableOpacity>
             <TouchableOpacity>
                <Icon name='settings' size={30} color='white' />
