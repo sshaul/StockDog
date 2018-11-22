@@ -9,14 +9,6 @@ export default class Stock extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         userId: "",
-         data: [],
-         isLoading: true,
-         selectedIndex: 0,
-         range: 'day',
-         addedWatch: false,
-         buypower: -1,
-         shares: 0
       };
 
    };
