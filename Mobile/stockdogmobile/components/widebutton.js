@@ -9,23 +9,32 @@ export default class WideButton extends Component {
 
    render() {
       var buttonText = "";
-      if (this.props.type == 'login')
-         buttonText = 'LOGIN';
-      else if (this.props.type == 'register')
-         buttonText = 'REGISTER';
-      else if (this.props.type == 'buy')
-         buttonText = 'BUY';
-      else if (this.props.type == 'sell')
-         buttonText = 'SELL';
-      else if (this.props.type == 'portfolio')
-         buttonText = 'Next';
-      else if (this.props.type == 'join')
-         buttonText = 'Join league!';
-      else if (this.props.type == 'cancel')
-         buttonText = 'CANCEL';
-      else if (this.props.type == 'logout')
-         buttonText = 'LOGOUT';
-
+      switch (this.props.type) {
+         case 'login':
+            buttonText = 'LOGIN';
+            break;
+         case 'register':
+            buttonText = 'REGISTER';
+            break;
+         case 'buy':
+            buttonText = 'BUY';
+            break;
+         case 'sell':
+            buttonText = 'SELL';
+            break;
+         case 'portfolio':
+            buttonText = 'Next';
+            break;
+         case 'join':
+            buttonText = 'Join league!';
+            break;
+         case 'cancel':
+            buttonText = 'CANCEL';
+            break;
+         case 'logout':
+            buttonText = 'LOGOUT';
+            break;
+      }
       var style = styles.loginButton;
       if (this.props.type == 'sell') {
          style = styles.sellModalButton;
