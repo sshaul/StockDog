@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, AsyncStorage, ScrollView } from 'react-native';
 import { Button, SearchBar, Card, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
-import containers from '../style/containers';
-import elements from '../style/elements';
-import text from '../style/text';
 import { colors } from '../style/colors'; 
 import SpinningLoader from './spinningloader';
 import Drawer from 'react-native-drawer';
@@ -72,20 +69,19 @@ export default class LeagueDrawer extends Component {
 
   render() {
     return (
-      <View style={containers.groupsDrawer}>
-        <View style={containers.leaguesList}>
+      <View>
+        <View>
           <Text style={text.groupTitle}>My Leagues</Text>
           <FlatList
-            // style={containers.groupsList}
             keyExtractor={this.keyExtractor}
             data={this.state.leagues}
             renderItem={this._renderItem.bind(this)}
           />
         </View>
         <View>
-          <TouchableOpacity style={containers.leaguesFooter} onPress={this.createNew.bind(this)}>
+          <TouchableOpacity onPress={this.createNew.bind(this)}>
             <Icon name='plus-circle' size={30} color={colors.dark} />
-            <Text style={text.addGroupText}> Add a new league </Text>
+            <Text> Add a new league </Text>
           </TouchableOpacity>
         </View>
       </View>

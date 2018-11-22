@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, AsyncStorage } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
-import containers from '../style/containers';
-import elements from '../style/elements';
-import text from '../style/text';
 import { colors } from '../style/colors.js'; 
 
 export default class PortfolioItem extends Component {
@@ -29,7 +26,7 @@ export default class PortfolioItem extends Component {
       this.props.price ? 
         <Text style={text.bigPortfolioText}> ${this.props.price} </Text> : null;
     return (
-      <View elevation={2} style={containers.portfolioItem}>
+      <View elevation={2} >
         <TouchableOpacity onPress={this._onPress.bind(this, this.props.ticker)}>
           <Text style={text.bigPortfolioText}> {this.props.ticker} </Text>
         </TouchableOpacity>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TextInput } from 'react-native';
-import elements from '../style/elements';
+import styles from '../style/screens/loginRegister';
 import { colors } from '../style/colors';
 
 // Input component for form pages like Login and Register
@@ -21,7 +21,7 @@ export default class FormInput extends Component {
     var secure = placeholder === 'password';
     return (
       <TextInput
-          style={elements.roundedInput}
+          style={styles.roundedInput}
           color={colors.white}
           autoCorrect={false}
           placeholder={placeholder}
