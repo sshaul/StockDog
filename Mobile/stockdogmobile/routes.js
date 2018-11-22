@@ -44,9 +44,9 @@ const Routes = (store) => (
                   indicatorStyle= { containers.indicator }
                   labelStyle= { text.tabLabel }
                   > 
-                  <Scene key="portfoliomain" hideNavBar title="Portfolio" iconName="user" icon={TabIcon}> */}
+                  <Scene key="portfoliomain" hideNavBar title="Portfolio" iconName="user" icon={TabIcon}>
                     <Scene key="portfolio" component={Portfolio} onEnter={Portfolio.onEnterPortfolio}/>
-                  {/*</Scene>
+                  </Scene>
                   <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon} onEnter={League.onEnterLeague}/>
                   <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon} onEnter={Feed.onEnterFeed}/>
                   <Scene key="searchmain" hideNavBar title="Search" iconName="search" icon={TabIcon}>
@@ -62,8 +62,9 @@ const Routes = (store) => (
               
           
           <Lightbox>
+            */}
             <Scene key="stock" component={Stock} hideNavBar swipeDownToClose={false}/>
-            <Scene key="buysellmodal" component={BuySellModal} hideNavBar />
+            {/*<Scene key="buysellmodal" component={BuySellModal} hideNavBar />
           </Lightbox>
           <Scene key="settings" component={SettingsModal} hideNavBar />
         </Modal>
