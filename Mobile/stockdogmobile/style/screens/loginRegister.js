@@ -43,15 +43,18 @@ export default styles = StyleSheet.create({
       height: 45,
       width: 250,
       backgroundColor: 'transparent',
-      borderBottomWidth: 1,
+      borderBottomWidth: 2,
       borderColor: colors.placeholders,
-      paddingLeft: 20,
-      margin: 10
+      margin: 10,
+      opacity: 0.50,
+      fontFamily: 'assistant',
+      fontSize: 18
    },
    // ----------------- Text ------------- //
    title: {
       color: colors.bright,
-      fontFamily: 'assistant',
+      fontFamily: 'assistant-bold',
+      // fontFamily: 'assistant-semibold',
       fontSize: 40,
       backgroundColor: 'transparent'
    },

@@ -7,8 +7,8 @@ export default styles = StyleSheet.create({
       height: 45,
       width: 250,
       borderColor: colors.bright,
-      borderWidth: 2,
-      borderRadius: 12,
+      borderWidth: 1,
+      borderRadius: 25,
       alignItems: 'center',
       justifyContent: 'center',
       marginTop: 10
@@ -26,8 +26,8 @@ export default styles = StyleSheet.create({
       height: 45,
       width: 250,
       borderColor: colors.grey,
-      borderWidth: 2,
-      borderRadius: 12,
+      borderWidth: 1,
+      borderRadius: 25,
       alignItems: 'center',
       justifyContent: 'center',
       marginTop: 10

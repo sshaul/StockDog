@@ -17,7 +17,7 @@ mapDispatchToProps = (dispatch) => ({
   }
 });
 
-var logoImage = require('../assets/logoCrop.png');
+var logoImage = require('../assets/logo.png');
 
 class Login extends Component {
   constructor(props) {
