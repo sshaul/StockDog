@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import Routes from './routes.js';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -13,7 +13,7 @@ export default class App extends Component {
     this.state = {
       fontLoaded: false,
     };
-}
+  }
   
   async componentDidMount() {
     await Font.loadAsync({

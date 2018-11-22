@@ -41,7 +41,7 @@ export default class LeagueDrawer extends Component {
     AsyncStorage.setItem('currPortfolio', '' + item.item.id).then((value) => {
       AsyncStorage.getItem('currPortfolio').then((value) => {
         Actions.drawerClose();
-        Actions.push('profileMain');
+        // Actions.push('profileMain');
       })
       
     })

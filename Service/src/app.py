@@ -2,42 +2,35 @@ import argparse
 from flask import Flask, request, g, Response
 from flask_cors import CORS
 
-from auth.login import Login
-from auth.logout import logout_api
-from auth.session import session_api
+from auth.user import user_api
 
 from routes.charts import charts_api
 from routes.iex import iex_api
 from routes.league import league_api
 from routes.nuke import nuke_api
 from routes.portfolio import portfolio_api
-from routes.seed import seed_api
 from routes.stock import stock_api
 from routes.transaction import transaction_api
 from routes.watchlist import watchlist_api
-from routes.user import user_api
 
-from util.dbConn import getDBConn
+from util.db_connection import getDBConn
 from util.logger import Logger
 
 app = Flask(__name__)
 CORS(app)
-login = Login(app)
 
 app.register_blueprint(charts_api)
 app.register_blueprint(iex_api)
 app.register_blueprint(league_api)
-app.register_blueprint(login.login_api)
-app.register_blueprint(logout_api)
 app.register_blueprint(nuke_api)
 app.register_blueprint(portfolio_api)
-app.register_blueprint(seed_api)
-app.register_blueprint(session_api)
 app.register_blueprint(stock_api)
 app.register_blueprint(transaction_api)
 app.register_blueprint(watchlist_api)
 app.register_blueprint(user_api)
 
+DEFAULT_PORT_NUM = 5005
+DEFAULT_ENV = 'local'
 
 @app.before_request
 def setup():
@@ -45,7 +38,7 @@ def setup():
 
    if getattr(g, 'db', None) is None:
       try:
-         g.db = getDBConn()
+         g.db = getDBConn(getEnv())
          g.cursor = g.db.cursor()
       except Exception as e:
          g.log.error(e)
@@ -63,11 +56,21 @@ def not_found(error):
    return Response('Not Found', status=404)
 
 
-def getPortNum(defaultPort=5005):
+def argParser():
    parser = argparse.ArgumentParser()
    parser.add_argument('-p','--port', type=int, help='specify the port number')
+   parser.add_argument('-e', '--environment', type=str, help='specify the environment')
    args = parser.parse_args()
-   return args.port or defaultPort
+   return args
+
+args = argParser()
+
+def getPortNum():
+   return args.port or DEFAULT_PORT_NUM
+
+
+def getEnv():
+   return args.environment or DEFAULT_ENV
 
 
 @app.after_request

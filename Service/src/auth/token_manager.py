@@ -17,11 +17,3 @@ def getUniqueToken():
       token = generateToken()
 
    return token
-
-
-def addTokenToUser(userId):
-   token = getUniqueToken()
-   
-   g.cursor.execute("UPDATE User SET token = %s WHERE id = %s", [token, userId])
-
-   return token

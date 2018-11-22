@@ -4,10 +4,10 @@ import requests
 import simplejson as json
 import time
 
-
-from request_validator import validator, charts_schema
-from request_validator.validation_error import ValidationError
-from util.errMap import errors
+from auth import auth
+from request_validator import validator
+from request_validator.schemas import charts_schema
+from util.error_map import errors
 
 DAY = '1d'
 MONTH = '1m'
@@ -23,11 +23,9 @@ URL_PREFIX = 'https://api.iextrading.com/1.0/stock/'
 
 
 @charts_api.route('/api/charts', methods=['GET'])
+@auth.login_required
+@validator.validate_params(charts_schema.fields)
 def get_history():
-   try:
-      validator.validate(request.args, charts_schema.fields)
-   except ValidationError as e:
-      return make_response(json.dumps(e.errors), 400)
 
    ticker = request.args.get('ticker')
    length = request.args.get('length')

@@ -1,11 +1,10 @@
 from datetime import datetime
 from flask import Blueprint, request, Response, g, jsonify, make_response
-from marshmallow import ValidationError
 import simplejson as json
 
 from routes import stock
 from util.utility import Utility
-from util.errMap import errors
+from util.error_map import errors
 
 portfolio_api = Blueprint('portfolio_api', __name__)
 

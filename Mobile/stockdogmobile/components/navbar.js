@@ -9,28 +9,27 @@ export default class NavBar extends Component {
       super(props);
    }
 
-   openDrawer() {
-      Actions.drawerOpen();
-   }
+   // openDrawer() {
+   //    Actions.drawerOpen();
+   // }
 
-   openSettings() {
-      Actions.settings();
-   }
+   // openSettings() {
+   //    Actions.settings();
+   // }
 
-   isStockPage() {
-      if (this.props.stock) {
-         return <Icon name='chevron-down' size={48} color='grey' />;
-      }
-   }
+   // isStockPage() {
+   //    if (this.props.stock) {
+   //       return <Icon name='chevron-down' size={48} color='grey' />;
+   //    }
+   // }
 
    render() {
       return (
-         <View>
-            <TouchableOpacity onPress={this.openDrawer}>
+         <View style={containers.iconHeaders}>
+            <TouchableOpacity>
                <Icon name='user' size={30} color='white' />
             </TouchableOpacity>
-            {this.isStockPage()}
-            <TouchableOpacity onPress={this.openSettings}>
+            <TouchableOpacity>
                <Icon name='settings' size={30} color='white' />
             </TouchableOpacity>
          </View>

@@ -1,8 +1,7 @@
 from flask import Blueprint, jsonify, make_response, request, Response, g
-from marshmallow import ValidationError
 import simplejson as json
 
-from util.errMap import errors
+from util.error_map import errors
 
 watchlist_api = Blueprint('watchlist_api', __name__)
 

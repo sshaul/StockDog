@@ -1,15 +1,19 @@
 import React from 'react';
+import {
+   BrowserRouter as Router
+} from 'react-router-dom';
 
 import Listing from '../components/Listing/Listing';
 import Graph from '../components/Graph/Graph';
+import Navbar from '../components/Navigation/Navbar';
+import News from '../components/News/News';
 
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
+
 
 import { Button, Welcome } from '@storybook/react/demo';
 
-var listingProps = {
+const listingProps = {
    listings: [
       {
          title: "RAD",
@@ -37,20 +41,61 @@ var listingProps = {
 
 storiesOf('Listing', module)
    .add('one listing', () =>
-      <Listing {...listingProps}/>);
+      <Listing {...listingProps} />);
 
 storiesOf('Graph', module)
-   .add('loading', () => 
+   .add('loading', () =>
       <Graph isLoading={true} />)
-   .add('loaded', () => 
-      <Graph isLoading={false} 
+   .add('loaded', () =>
+      <Graph isLoading={false}
          labels={["1/13/2018", "1/14/2018", "1/15/2018",
-                  "1/16/2018", "1/17/2018", "1/18/2018"]} 
-         data={[14.21, 23.21, 20.53, 19.23, 15.67, 16.23]} 
+            "1/16/2018", "1/17/2018", "1/18/2018"]}
+         data={[14.21, 23.21, 20.53, 19.23, 15.67, 16.23]}
       />
    );
 
 
+const navbarLinks = [
+   {
+      title: "Month League",
+      location: "/league/monthLeague"
+   },
+   {
+      title: "Penny Stocks",
+      location: "/league/pennyStocks"
+   },
+   {
+      title: "Swing Stocks",
+      location: "/league/swingStocks"
+   }
+]
+
+storiesOf('Navbar', module)
+   .add('no links', () =>
+      <Router><Navbar links={navbarLinks} /></Router>);
+
+
+const headlines = [
+   {
+      title: "China may reject new trade talks if more tariffs imposed",
+      link: "/article1"
+   },
+   {
+      title: "Shiller: The market is experiencing 'irrational exuberance aaaaaaaaaaaaaaaaaaaaaa",
+      link: "/article2"
+   },
+   {
+      title: "3 Incredibly Cheap Technology Stocks",
+      link: "/article3"
+   },
+   {
+      title: "3 Things to Watch in the Stock Market This Week",
+      link: "/article4"
+   }
+]
+storiesOf('News', module)
+   .add('default', () =>
+   <Router><News headlines={headlines} /></Router>);
 
 
 
