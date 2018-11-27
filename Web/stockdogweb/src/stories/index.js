@@ -7,6 +7,7 @@ import Listing from '../components/Listing/Listing';
 import Graph from '../components/Graph/Graph';
 import Navbar from '../components/Navigation/Navbar';
 import News from '../components/News/News';
+import Portfolio from '../containers/Portfolio/Portfolio.js';
 
 import { storiesOf } from '@storybook/react';
 
@@ -97,16 +98,7 @@ storiesOf('News', module)
    .add('default', () =>
    <Router><News headlines={headlines} /></Router>);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+storiesOf('Portfolio', module)
+  .add('default', () =>
+  <Router><Portfolio /></Router>
+);
