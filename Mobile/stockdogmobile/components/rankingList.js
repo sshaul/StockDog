@@ -2,24 +2,14 @@ import React, { Component } from 'react';
 import { Text, View, FlatList } from 'react-native';
 import styles from '../style/screens/league';
 
-export default class RatingsList extends Component {
+export default class RankingList extends Component {
    constructor(props) {
       super(props);
-      this.state = {
-         members: [
-            {'name': 'Billy Joe', 'worth': 30312.32},
-            {'name': 'Bob Belcher', 'worth': 26324.97},
-            {'name': 'Seagull Shaul', 'worth': 20683.69},
-            {'name': 'Chillyboi', 'worth': 18232.65},
-            {'name': 'Weeboo', 'worth': 10231.53},
-            {'name': 'Poor person', 'worth': 459.23}
-         ]
-      };
    }
 
    keyExtractor = (item, index) => index
 
-   renderItem = (item) => {
+   renderRankingRow = (item) => {
       return (
          <View style={styles.horizontalItem}>
             <Text style={styles.listText}>{item.index + 1}  {item.item.name}</Text>
@@ -38,8 +28,8 @@ export default class RatingsList extends Component {
             </View>
             <FlatList
                keyExtractor={this.keyExtractor}
-               data={this.state.members}
-               renderItem={this.renderItem}/>
+               data={this.props.members}
+               renderItem={this.renderRankingRow}/>
          </View>
       );
    }
