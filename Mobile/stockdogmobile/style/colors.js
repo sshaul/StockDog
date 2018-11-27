@@ -8,6 +8,7 @@ export const colors = {
     red: "#ff413b",
     darkGrey: '#808080',
     // activeTab: '#434b59',
-    lightBackground: '#404040'
+    lightBackground: '#404040',
+    black: '#484040'
 }
 

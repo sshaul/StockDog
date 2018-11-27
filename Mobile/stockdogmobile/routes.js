@@ -19,8 +19,6 @@ import SetNickname from './screens/setNickname';
 import SettingsModal from './screens/settingsmodal';
 import LeagueDrawer from './components/leaguedrawer';
 import TabIcon from './components/tabIcon';
-import containers from './style/containers';
-import text from './style/text';
 import { colors } from './style/colors';
 
 const Routes = (store) => (
@@ -64,8 +62,9 @@ const Routes = (store) => (
               
           
           <Lightbox>
+            */}
             <Scene key="stock" component={Stock} hideNavBar swipeDownToClose={false}/>
-            <Scene key="buysellmodal" component={BuySellModal} hideNavBar />
+            {/*<Scene key="buysellmodal" component={BuySellModal} hideNavBar />
           </Lightbox>
           <Scene key="settings" component={SettingsModal} hideNavBar />
         </Modal>

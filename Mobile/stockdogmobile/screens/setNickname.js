@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, Button, AsyncStorage } from 'react-native';
 import Lightbox from '../components/baseLightbox';
 import { Actions } from 'react-native-router-flux';
-import containers from '../style/containers';
-import text from '../style/text';
 import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Icon from 'react-native-vector-icons/Feather';

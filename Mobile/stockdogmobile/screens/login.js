@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LinearGradient } from 'expo';
-import containers from '../style/containers';
-import elements from '../style/elements';
-import {colors} from '../style/colors';
-import text from '../style/text';
+import { colors } from '../style/colors';
+import styles from '../style/screens/loginRegister';
 import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Api from '../api';
@@ -61,17 +59,17 @@ class Login extends Component {
     return (
       <KeyboardAwareScrollView 
         resetScrollToCoords={{ x: 0, y: 0 }}
-        contentContainerStyle={containers.centeredDark}
+        contentContainerStyle={styles.background}
         scrollEnabled={false}
         keyboardShouldPersistTaps="handled"
         enableOnAndroid={true}>
           <LinearGradient
             colors={['transparent', colors.lightBackground]}
-            style={containers.gradient}>
+            style={styles.gradientBackground}>
             <Image 
               source={logoImage} 
-              style={containers.logo}/>
-            <Text style={text.title}>StockDog</Text>
+              style={styles.logo}/>
+            <Text style={styles.title}>StockDog</Text>
             <FormInput
               type="email"
               value={this.state.email}
@@ -90,12 +88,12 @@ class Login extends Component {
               disabled={disabled} 
               onpress={this.login}/>
             {/* <TouchableOpacity
-              style={elements.smallTextButton}>
-              <Text style={text.smallText}> Forgot Password? </Text>
+              style={styles.smallTextButton}>
+              <Text style={styles.smallText}> Forgot Password? </Text>
             </TouchableOpacity> */}
-            <TouchableOpacity style={elements.smallTextButton}>
+            <TouchableOpacity style={styles.smallTextButton}>
               <Text 
-                style={text.smallText} 
+                style={styles.smallText} 
                 onPress={this.navToRegister}> 
                 Create an account 
               </Text>

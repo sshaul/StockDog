@@ -3,9 +3,6 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import Lightbox from '../components/baseLightbox';
 import DatePicker from 'react-native-datepicker';
 import { Actions } from 'react-native-router-flux';
-import containers from '../style/containers';
-import elements from '../style/elements';
-import text from '../style/text';
 import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Icon from 'react-native-vector-icons/Feather';
@@ -72,14 +69,14 @@ export default class AddPortfolioModal extends Component {
 
     return (
         <Lightbox verticalPercent={0.7} horizontalPercent={0.8}>
-          <View style={containers.addGroupOuterModal}>
-            <View style={containers.addGroupModalHeader}>
+          <View>
+            <View>
               <Text style={text.modalHeader}> Create a League </Text>
               <TouchableOpacity onPress={this.close}>
                 <Icon name='x' size={30} color='white' />
               </TouchableOpacity>
             </View>
-            <View style={containers.addGroupInnerModal}>
+            <View>
              <FormInput 
                 type="Name" 
                 onchange={(name) => this.setState({name})} 
