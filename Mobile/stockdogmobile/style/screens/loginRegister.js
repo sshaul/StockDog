@@ -23,7 +23,8 @@ export default styles = StyleSheet.create({
    },
    logo: {
       width: 305,
-      height: 193
+      // height: 193
+      height: 250
    },
    smallTextButton: {
       height: 25,
