@@ -18,6 +18,7 @@ export default class App extends Component {
   async componentDidMount() {
     await Font.loadAsync({
       'assistant-bold': require('./assets/fonts/Assistant-Bold.otf'),
+      'assistant-semibold': require('./assets/fonts/Assistant-SemiBold.otf'),
       'assistant': require('./assets/fonts/Assistant-Regular.otf')
     });
     this.setState({fontLoaded: true});
