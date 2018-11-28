@@ -72,8 +72,10 @@ const navbarLinks = [
 ]
 
 storiesOf('Navbar', module)
+   .add('with links', () =>
+      <Router><Navbar links={navbarLinks} /></Router>)
    .add('no links', () =>
-      <Router><Navbar links={navbarLinks} /></Router>);
+      <Router><Navbar links={[]} /></Router>);
 
 
 const headlines = [
