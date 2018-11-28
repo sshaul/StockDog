@@ -69,7 +69,6 @@ class Login extends Component {
             <Image 
               source={logoImage} 
               style={styles.logo}/>
-            {/* <Text style={styles.title}>StockDog</Text> */}
             <FormInput
               type="email"
               value={this.state.email}
