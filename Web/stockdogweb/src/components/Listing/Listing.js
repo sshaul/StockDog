@@ -61,7 +61,7 @@ class Listing extends Component {
    render() {
       return (
          <div class="Listing">
-            <div class="listing-title">Portfolio</div>
+            <div class="listing-title">{this.props.title}</div>
             <div class="listing-items">
                {this.state.listingElements}
             </div>
