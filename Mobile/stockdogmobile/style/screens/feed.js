@@ -12,29 +12,70 @@ export default styles = StyleSheet.create({
    headerRow: {
       flex: 0.1,
       flexDirection: 'row',
-      width: '70%',
+      width: '80%',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
    },
    chosenHeader: {
+      flex: 0.5,
       borderBottomWidth: 3,
       borderColor: colors.bright,
-      paddingLeft: 20,
-      paddingRight: 20,
+      alignItems: 'center',
       paddingBottom: 10
    },
    notChosenHeader: {
-      borderBottomWidth: 1,
+      flex: 0.5,
+      borderBottomWidth: 3,
       borderColor: colors.grey,
-      paddingLeft: 20,
-      paddingRight: 20,
-      paddingBottom: 10
+      alignItems: 'center',
+      paddingBottom: 10,
+   },
+   feedPostsContainer: {
+      flex: 0.9,
+      width: '80%',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start'
+   },
+   postTitleContainer: {
+      flexDirection: 'row',
+      width: '100%',
+      justifyContent: 'space-between'
+   },
+   commentContentContainer: {
+      marginLeft: 20,
+      paddingTop: 10,
+      flexWrap: 'wrap'
    },
    // ----------------- Text ------------- //
    headerText: {
       fontSize: 36,
-      fontFamily: 'assistant',
-      // fontFamily: 'assistant-semibold',
+      fontFamily: 'assistant-semibold',
       color: colors.white
-   }
+   },
+   postTitle: {
+      fontSize: 24,
+      fontFamily: 'assistant-semibold',
+      color: colors.bright
+   },
+   miniText: {
+      fontSize: 10,
+      fontFamily: 'assistant-semibold',
+      color: colors.lightGrey
+   },
+   commentTitle: {
+      fontSize: 16,
+      fontFamily: 'assistant-semibold',
+      color: colors.white
+   },
+   commentContent: {
+      fontSize: 16,
+      fontFamily: 'assistant-extralight',
+      color: colors.white
+   },
+   replyButtonText: {
+      fontSize: 16,
+      fontFamily: 'assistant-semibold',
+      color: colors.bright,
+      textDecorationLine: 'underline'
+   },
 });
