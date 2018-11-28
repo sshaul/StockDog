@@ -25,8 +25,12 @@ class Portfolio extends Component {
             ]
             }/>
          <Graph />
-         {/*<Listing />
-         <Listing />*/}
+         <div className="portfolio-listing-news-area">
+            <div className="portfolio-listing-area">
+               <Listing title="Portfolio"/>
+               <Listing title="Watchlist"/>
+            </div>
+         </div>
       </div>
       );
    }
