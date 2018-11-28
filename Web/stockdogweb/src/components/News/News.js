@@ -8,6 +8,11 @@ class News extends Component {
       const headlineObjs = this.props.headlines;
       var headlines = [];
 
+      // Don't do anything if there are no headlines
+      if (!headlineObjs) {
+         return;
+      }
+
       headlineObjs.forEach(headline => {
          headlines.push(
             <h2 onClick={() => this.props.history.push(headline.link)}>{headline.title}</h2>
