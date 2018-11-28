@@ -13,6 +13,12 @@ class Listing extends Component {
 
    generateListings = () => {
       var listingElements = [];
+
+      // Dont' do anything if there are no listings
+      if (!this.props.listing) {
+         return;
+      }
+
       this.props.listings.forEach(listing => {
 
          // Need to do the priceChange element seperately because
