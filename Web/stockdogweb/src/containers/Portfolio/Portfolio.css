@@ -36,11 +36,11 @@ body, html {
   padding-left: 20px; }
 
 .portfolio-circle {
-  height: 900px;
+  height: 1200px;
   width: 3000px;
   border-radius: 50%;
   background-color: #3ee7ad;
   position: absolute;
   z-index: -1;
-  top: -420px;
+  top: -720px;
   left: -1300px; }
