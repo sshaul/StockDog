@@ -51,6 +51,25 @@ const watchListProps = {
    ]
 }
 
+const headlines = [
+   {
+      title: "China may reject new trade talks if more tariffs imposed",
+      link: "/article1"
+   },
+   {
+      title: "Shiller: The market is experiencing 'irrational exuberance aaaaaaaaaaaaaaaaaaaaaa",
+      link: "/article2"
+   },
+   {
+      title: "3 Incredibly Cheap Technology Stocks",
+      link: "/article3"
+   },
+   {
+      title: "3 Things to Watch in the Stock Market This Week",
+      link: "/article4"
+   }
+]
+
 class Portfolio extends Component {
    render() {
       return (
@@ -81,7 +100,7 @@ class Portfolio extends Component {
                <Listing {...watchListProps}/>
             </div>
             <div className="portfolio-news-area">
-               <News />
+               <News headlines={headlines} />
             </div>
          </div>
       </div>
