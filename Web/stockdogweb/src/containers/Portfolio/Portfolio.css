@@ -4,4 +4,13 @@
 
 .portfolio-listing-news-area {
   width: 800px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  background-color: orange; }
+
+.portfolio-listing-area {
+  width: 50%;
+  float: left; }
+
+.portfolio-news-area {
+  width: 50%;
+  float: left; }
