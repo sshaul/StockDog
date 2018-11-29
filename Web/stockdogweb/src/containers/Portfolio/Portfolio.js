@@ -70,7 +70,11 @@ class Portfolio extends Component {
                }
             ]
             }/>
-         <Graph />
+         <Graph isLoading={false}
+            labels={["1/13/2018", "1/14/2018", "1/15/2018",
+               "1/16/2018", "1/17/2018", "1/18/2018"]}
+               data={[14.21, 23.21, 20.53, 19.23, 15.67, 16.23]}
+            />
          <div className="portfolio-listing-news-area">
             <div className="portfolio-listing-area">
                <Listing {...listingProps}/>
