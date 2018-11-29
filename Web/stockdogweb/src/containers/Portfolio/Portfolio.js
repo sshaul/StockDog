@@ -34,7 +34,7 @@ const listingProps = {
 }
 
 const watchListProps = {
-   title: 'Portfolio',
+   title: 'Watchlist',
    listings: [
       {
          title: "ROKU",
@@ -89,6 +89,8 @@ class Portfolio extends Component {
                }
             ]
             }/>
+         <div className="portfolio-circle">
+         </div>
          <Graph isLoading={false}
             labels={["1/13/2018", "1/14/2018", "1/15/2018",
                "1/16/2018", "1/17/2018", "1/18/2018"]}

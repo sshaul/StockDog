@@ -1,4 +1,8 @@
-.Portfolio {
+@import '../../css/Global.scss';
+
+body, html {
+   max-width: 100%;
+   overflow-x: hidden;
 }
 
 .Graph { 
@@ -25,5 +29,16 @@
 
 .News {
    padding-left: 20px;
+}
+
+.portfolio-circle {
+   height: 900px;
+   width: 3000px;
+   border-radius: 50%;
+   background-color: $primary-color;
+   position: absolute;
+   z-index: -1;
+   top: -420px;
+   left: -1300px;
 }
 

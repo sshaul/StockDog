@@ -1,3 +1,19 @@
+/* Colors
+-----------------------------------------------------------------------------*/
+/*===========================================================================*/
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Assistant', sans-serif; }
+
+body {
+  background-color: #212121;
+  height: 100%; }
+
+body, html {
+  max-width: 100%;
+  overflow-x: hidden; }
+
 .Graph {
   margin: 0 auto;
   margin-top: 20px; }
@@ -18,3 +34,13 @@
 
 .News {
   padding-left: 20px; }
+
+.portfolio-circle {
+  height: 900px;
+  width: 3000px;
+  border-radius: 50%;
+  background-color: #3ee7ad;
+  position: absolute;
+  z-index: -1;
+  top: -420px;
+  left: -1300px; }
