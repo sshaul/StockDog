@@ -36,15 +36,25 @@ export default styles = StyleSheet.create({
       justifyContent: 'flex-start',
       alignItems: 'flex-start'
    },
+   activityPost: {
+      flex: 1,
+      paddingBottom: 10
+   },
    postTitleContainer: {
       flexDirection: 'row',
-      width: '100%',
+      width: '80%',
       justifyContent: 'space-between'
    },
-   commentContentContainer: {
+   commentContainer: {
       marginLeft: 20,
       paddingTop: 10,
-      flexWrap: 'wrap'
+      width: '90%',
+      flex: 1,
+      flexDirection: 'row'
+   },
+   replyButtonContainer: {
+      padding: 10,
+      paddingLeft: 20
    },
    // ----------------- Text ------------- //
    headerText: {
@@ -69,8 +79,10 @@ export default styles = StyleSheet.create({
    },
    commentContent: {
       fontSize: 16,
-      fontFamily: 'assistant-extralight',
-      color: colors.white
+      fontFamily: 'assistant-light',
+      color: colors.white,
+      flex: 1,
+      flexWrap: 'wrap'
    },
    replyButtonText: {
       fontSize: 16,

@@ -11,16 +11,32 @@ export default class ActivityPost extends Component {
    render() {
       var post = this.props.post;
       return (
-         <View>
+         <View style={styles.activityPost}>
             <Text style={styles.miniText}>{post.date}</Text>
             <View style={styles.postTitleContainer}>
                <Text style={styles.postTitle}>{post.username}</Text>
                <Text style={styles.postTitle}>{post.amount} {post.ticker} {post.action}</Text>
             </View>
-            <View style={styles.commentContentContainer}>
-               <Text style={styles.commentTitle}>{post.comments[0].username}</Text>
-               <Text style={styles.commentContent}>{post.comments[0].comment}</Text>
-            </View>
+            {
+               post.comments.map((comment, index) => {
+                  return (
+                     <View key={index} style={styles.commentContainer}>
+                        <Text style={styles.commentContent}>
+                           <Text style={styles.commentTitle}>
+                              {comment.username}
+                           </Text> {comment.comment}
+                        </Text>
+                     </View>
+                  );
+               })
+            }
+            <TouchableOpacity style={styles.replyButtonContainer}>
+               <Text style={styles.replyButtonText}
+               //  onPress={this.reply}
+               >
+                  Reply
+               </Text>
+            </TouchableOpacity>
          </View>
       );
    };

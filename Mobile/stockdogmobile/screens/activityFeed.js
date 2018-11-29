@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, FlatList } from 'react-native';
 import styles from '../style/screens/feed';
 import ActivityPost from '../components/activityPost';
 
@@ -51,10 +51,24 @@ export default class ActivityFeed extends Component {
       }
    }
 
+   keyExtractor = (item, index) => index
+
+   renderActivityPost = (activity) => {
+      return (
+         <ActivityPost post={activity.item}/>
+      );
+   }
+
    render() {
       return (
-         <View style={styles.feedPostsContainer}>
-            <ActivityPost post={this.state.activities[0]}/>
+         <View style={{flex: 1}}>
+            <View style={styles.feedPostsContainer}>
+               <FlatList
+                  keyExtractor={this.keyExtractor}
+                  data={this.state.activities}
+                  renderItem={this.renderActivityPost}
+                  showsHorizontalScrollIndicator={false}/>
+            </View>
          </View>
       );
    };
