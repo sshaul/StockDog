@@ -24,19 +24,15 @@ class Listing extends Component {
          // Need to do the priceChange element seperately because
          // it changes depending on if its negative or positive
          var priceChangeElement;
+         const prefixSymbol = listing.priceChange >= 0 ?
+            '+' : '';
+         const colorClass = listing.priceChange >= 0 ?
+            'listing-up-color' : 'listing-down-color';
 
-         if (listing.priceChange >= 0) {
-            priceChangeElement = 
-               <div className="listing-item-price-change listing-up-color">
-                  (+{listing.priceChange})
-               </div>
-         }
-         else {
-            priceChangeElement = 
-               <div className="listing-item-price-change listing-down-color">
-                  ({listing.priceChange})
-               </div>
-         }
+         priceChangeElement = 
+            <div className={"listing-item-price-change " + colorClass}>
+               ({prefixSymbol}{listing.priceChange})
+            </div>
 
          // Need to do amount separately since 0 shows nothing
          var amountElement = <div></div>;
