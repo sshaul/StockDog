@@ -9,7 +9,7 @@ export default tabStyle = StyleSheet.create({
    tabBar: {
       borderTopColor: colors.grey,
       borderTopWidth: 1 / PixelRatio.get(),
-      height:isX ? 70 : 0
+      height:isX ? 70 : 50
    },
    tabStyle: {
       paddingBottom:isX ? 20: 0,
