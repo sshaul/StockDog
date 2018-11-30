@@ -23,7 +23,7 @@ export default styles = StyleSheet.create({
    },
    logo: {
       width: 305,
-      height: 193
+      height: 260
    },
    smallTextButton: {
       height: 25,
@@ -43,16 +43,18 @@ export default styles = StyleSheet.create({
       height: 45,
       width: 250,
       backgroundColor: 'transparent',
-      borderBottomWidth: 1,
+      borderBottomWidth: 2,
       borderColor: colors.placeholders,
-      paddingLeft: 20,
-      margin: 10
+      margin: 10,
+      opacity: 0.50,
+      fontFamily: 'assistant',
+      fontSize: 18
    },
    // ----------------- Text ------------- //
    title: {
       color: colors.bright,
       fontFamily: 'assistant',
-      fontSize: 40,
+      fontSize: 56,
       backgroundColor: 'transparent'
    },
    smallText: {
