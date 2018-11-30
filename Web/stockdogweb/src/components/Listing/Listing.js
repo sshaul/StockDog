@@ -35,7 +35,7 @@ class Listing extends Component {
             </div>
 
          // Need to do amount separately since 0 shows nothing
-         var amountElement = <div></div>;
+         var amountElement = null;
          if (listing.amount !== 0) {
             amountElement = 
                <div className="listing-item-amount">
