@@ -4,8 +4,6 @@ import { colors } from '../colors';
 const { height, width } = Dimensions.get("window");
 const isX = Platform.OS === "ios" && (height > 800 || width > 800) ? true : false
 
-
-
 export default tabStyle = StyleSheet.create({
    // ----------------- Containers ------------- //
    tabBar: {
