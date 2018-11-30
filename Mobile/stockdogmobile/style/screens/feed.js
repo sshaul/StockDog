@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { colors } from '../colors';
+
+const width = Dimensions.get("window").width;
 
 export default styles = StyleSheet.create({
    // ----------------- Containers ------------- //
@@ -32,7 +34,6 @@ export default styles = StyleSheet.create({
    },
    feedPostsContainer: {
       flex: 0.9,
-      width: '80%',
       justifyContent: 'flex-start',
       alignItems: 'flex-start'
    },
@@ -42,7 +43,7 @@ export default styles = StyleSheet.create({
    },
    postTitleContainer: {
       flexDirection: 'row',
-      width: '80%',
+      width: width * 0.8,
       justifyContent: 'space-between'
    },
    commentContainer: {
