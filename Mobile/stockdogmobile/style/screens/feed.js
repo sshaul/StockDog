@@ -41,10 +41,14 @@ export default styles = StyleSheet.create({
       flex: 1,
       paddingBottom: 10
    },
-   postTitleContainer: {
+   activityPostTitleContainer: {
       flexDirection: 'row',
       width: width * 0.8,
       justifyContent: 'space-between'
+   },
+   ideaPostTitleContainer: {
+      flexDirection: 'row',
+      width: width * 0.8,
    },
    commentContainer: {
       marginLeft: 20,
@@ -67,6 +71,11 @@ export default styles = StyleSheet.create({
       fontSize: 24,
       fontFamily: 'assistant-semibold',
       color: colors.bright
+   },
+   ideaText: {
+      fontSize: 24,
+      fontFamily: 'assistant-light',
+      color: colors.white
    },
    miniText: {
       fontSize: 10,
