@@ -4,10 +4,6 @@ import styles from '../style/screens/feed';
 
 export default class IdeaFeed extends Component {
 
-   constructor(props) {
-      super(props);
-   }
-
    render() {
       return (
          <View style={styles.headerRow}>

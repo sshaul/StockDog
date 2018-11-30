@@ -6,11 +6,7 @@ import styles from '../style/screens/feed';
 
 export default class FeedHeader extends Component {
 
-   constructor(props) {
-      super(props);
-   }
-
-   isChosenHeader = (feedType) => {
+   getHeaderStatusStyle = (feedType) => {
       return this.props.feedType === feedType ? 
          styles.chosenHeader : 
          styles.notChosenHeader;
@@ -20,12 +16,12 @@ export default class FeedHeader extends Component {
       return (
          <View style={styles.headerRow}>
             <TouchableOpacity 
-               style={this.isChosenHeader('activity')}
+               style={this.getHeaderStatusStyle('activity')}
                onPress={() => this.props.switchFeedType('activity')}>
                <Text style={styles.headerText}>Activity</Text>
             </TouchableOpacity>
             <TouchableOpacity 
-               style={this.isChosenHeader('ideas')}
+               style={this.getHeaderStatusStyle('ideas')}
                onPress={() => this.props.switchFeedType('ideas')}>
                <Text style={styles.headerText}>Ideas</Text>
             </TouchableOpacity>
