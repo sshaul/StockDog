@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
 import styles from '../style/screens/feed';
 
-export default class ActivityPost extends Component {
+export default class IdeaPost extends Component {
 
    createComments = (post) => {
       return post.comments.map((comment, index) => {
@@ -25,9 +25,11 @@ export default class ActivityPost extends Component {
       return (
          <View style={styles.activityPost}>
             <Text style={styles.miniText}>{post.date}</Text>
-            <View style={styles.activityPostTitleContainer}>
-               <Text style={styles.postTitle}>{post.username}</Text>
-               <Text style={styles.postTitle}>{post.amount} {post.ticker} {post.action}</Text>
+            <View style={styles.ideaPostTitleContainer}>
+               <Text>
+                  <Text style={styles.postTitle}>{post.username}</Text>
+                  <Text style={styles.ideaText}>  {post.idea}</Text>
+               </Text>
             </View>
             {comments}
             <TouchableOpacity style={styles.replyButtonContainer}>
