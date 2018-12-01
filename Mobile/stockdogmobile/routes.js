@@ -20,40 +20,41 @@ import SettingsModal from './screens/settingsmodal';
 import LeagueDrawer from './components/leaguedrawer';
 import TabIcon from './components/tabIcon';
 import { colors } from './style/colors';
+import tabStyle from './style/components/tabBar';
 
 const Routes = (store) => (
   <Provider store={store}>
     <CustomRouter>
       <Scene key="root" hideNavBar>
         {/* <Scene key="login" component={Login}/>
-        <Scene key="register" component={Register}/> */}
-            {/* <Drawer 
+        <Scene key="register" component={Register}/>
+            <Drawer
               key="drawer"  
               contentComponent={LeagueDrawer} 
               type="replace"
             >
-              <Modal key="modal">
+              <Modal key="modal">  */}
                 <Tabs 
                   key="main" 
-                  tabBarStyle={ containers.tabBar } 
+                  tabBarStyle={ tabStyle.tabBar } 
+                  tabStyle={ tabStyle.tabStyle }
                   tabBarPosition="bottom"
                   activeTintColor={ colors.white }
                   inactiveTintColor={ colors.white }
                   inactiveBackgroundColor= { colors.grey }
                   activeBackgroundColor= { colors.activeTab }
-                  indicatorStyle= { containers.indicator }
-                  labelStyle= { text.tabLabel }
-                  > */}
-                  {/* <Scene key="portfoliomain" hideNavBar title="Portfolio" iconName="user" icon={TabIcon}>
+                  labelStyle= { tabStyle.tabLabel }
+                  > 
+                  <Scene key="portfoliomain" hideNavBar title="Portfolio" iconName="user" icon={TabIcon}>
                     <Scene key="portfolio" component={Portfolio} onEnter={Portfolio.onEnterPortfolio}/>
-                  </Scene> */}
-                  {/* <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon} onEnter={League.onEnterLeague}/>  */}
-                  <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon} onEnter={Feed.onEnterFeed}/> 
+            </Scene>
+                  <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon} onEnter={League.onEnterLeague}/>
+                  <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon} onEnter={Feed.onEnterFeed}/>
                   {/*<Scene key="searchmain" hideNavBar title="Search" iconName="search" icon={TabIcon}>
                     <Scene key="search" component={Search}/>
-                  </Scene>
+                  </Scene> */}
                 </Tabs>
-                <Lightbox key="lightbox">
+                {/*<Lightbox key="lightbox">
                   <Scene key="noportfolios" hideNavBar component={noPortfoliosProfile}/>
                   <Scene key="addportfolio" hideNavBar component={AddPortfolioModal}/>
                   <Scene key="joinportfolio" hideNavBar component={JoinLeagueModal}/>
@@ -61,8 +62,8 @@ const Routes = (store) => (
                 </Lightbox>
               
           
-          <Lightbox> */}
-            
+          <Lightbox>
+            */}
             {/* <Scene key="stock" component={Stock} hideNavBar swipeDownToClose={false}/> */}
             {/*<Scene key="buysellmodal" component={BuySellModal} hideNavBar />
           </Lightbox>
