@@ -8,6 +8,7 @@ import Graph from '../components/Graph/Graph';
 import Navbar from '../components/Navigation/Navbar';
 import News from '../components/News/News';
 import Portfolio from '../containers/Portfolio/Portfolio.js';
+import Article from '../components/Article/Article.js';
 
 import { storiesOf } from '@storybook/react';
 
@@ -104,4 +105,10 @@ storiesOf('News', module)
 storiesOf('Portfolio', module)
   .add('default', () =>
   <Router><Portfolio /></Router>
-);
+  );
+
+storiesOf('Article', module)
+   .add('AMD', () =>
+      <Article title={'About'}
+         content={'Advanced Micro Devices, Inc. engages in the provision of semiconductor businesses. It operates through the Computing and Graphics and Enterprise, Embedded and Semi-Custom segments.'}
+      />);
