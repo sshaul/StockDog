@@ -10,6 +10,8 @@ export const colors = {
     darkGrey: '#808080',
     // activeTab: '#434b59',
     lightBackground: '#404040',
-    black: '#484040'
+    black: '#484040',
+    modalBackground: '#f7f8f9',
+    swipeline: '#d6d6d6'
 }
 

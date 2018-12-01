@@ -14,7 +14,8 @@ import Feed from './screens/feed';
 import noPortfoliosProfile from './screens/noPortfoliosProfile';
 import AddPortfolioModal from './screens/addportfoliomodal';
 import JoinLeagueModal from './screens/joinLeagueModal';
-import BuySellModal from './screens/buysellmodal';
+// import BuySellModal from './screens/buysellmodal';
+import TradingModal from './screens/tradingModal';
 import SetNickname from './screens/setNickname';
 import SettingsModal from './screens/settingsmodal';
 import LeagueDrawer from './components/leaguedrawer';
@@ -48,7 +49,7 @@ const Routes = (store) => (
                     <Scene key="portfolio" component={Portfolio} onEnter={Portfolio.onEnterPortfolio}/>
                   </Scene> */}
                   {/* <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon} onEnter={League.onEnterLeague}/>  */}
-                  <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon} onEnter={Feed.onEnterFeed}/> 
+                  {/* <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon} onEnter={Feed.onEnterFeed}/>  */}
                   {/*<Scene key="searchmain" hideNavBar title="Search" iconName="search" icon={TabIcon}>
                     <Scene key="search" component={Search}/>
                   </Scene>
@@ -58,15 +59,15 @@ const Routes = (store) => (
                   <Scene key="addportfolio" hideNavBar component={AddPortfolioModal}/>
                   <Scene key="joinportfolio" hideNavBar component={JoinLeagueModal}/>
                   <Scene key="setnickname" hideNavBar component={SetNickname} />
-                </Lightbox>
+                </Lightbox>*/}
               
           
-          <Lightbox> */}
+          <Lightbox> 
             
-            {/* <Scene key="stock" component={Stock} hideNavBar swipeDownToClose={false}/> */}
-            {/*<Scene key="buysellmodal" component={BuySellModal} hideNavBar />
+            <Scene key="stock" component={Stock} hideNavBar swipeDownToClose={false}/>
+            <Scene key="tradingmodal" component={TradingModal} hideNavBar />
           </Lightbox>
-          <Scene key="settings" component={SettingsModal} hideNavBar />
+          {/* <Scene key="settings" component={SettingsModal} hideNavBar />
         </Modal>
       </Drawer> */}
       </Scene>
