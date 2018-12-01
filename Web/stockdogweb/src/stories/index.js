@@ -7,6 +7,7 @@ import Listing from '../components/Listing/Listing';
 import Graph from '../components/Graph/Graph';
 import Navbar from '../components/Navigation/Navbar';
 import News from '../components/News/News';
+import Portfolio from '../containers/Portfolio/Portfolio.js';
 
 import { storiesOf } from '@storybook/react';
 
@@ -14,6 +15,7 @@ import { storiesOf } from '@storybook/react';
 import { Button, Welcome } from '@storybook/react/demo';
 
 const listingProps = {
+   title: 'Portfolio',
    listings: [
       {
          title: "RAD",
@@ -71,8 +73,10 @@ const navbarLinks = [
 ]
 
 storiesOf('Navbar', module)
+   .add('with links', () =>
+      <Router><Navbar links={navbarLinks} /></Router>)
    .add('no links', () =>
-      <Router><Navbar links={navbarLinks} /></Router>);
+      <Router><Navbar links={[]} /></Router>);
 
 
 const headlines = [
@@ -97,16 +101,7 @@ storiesOf('News', module)
    .add('default', () =>
    <Router><News headlines={headlines} /></Router>);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+storiesOf('Portfolio', module)
+  .add('default', () =>
+  <Router><Portfolio /></Router>
+);
