@@ -8,6 +8,7 @@ import Graph from '../components/Graph/Graph';
 import Navbar from '../components/Navigation/Navbar';
 import News from '../components/News/News';
 import Portfolio from '../containers/Portfolio/Portfolio.js';
+import Trade from '../components/Stock/Trade/Trade.js';
 
 import { storiesOf } from '@storybook/react';
 
@@ -104,4 +105,9 @@ storiesOf('News', module)
 storiesOf('Portfolio', module)
   .add('default', () =>
   <Router><Portfolio /></Router>
+);
+
+storiesOf('Trade', module)
+  .add('default', () =>
+   <Trade /> 
 );
