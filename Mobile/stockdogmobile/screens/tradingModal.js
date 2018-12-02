@@ -40,8 +40,11 @@ export default class TradingModal extends Component {
    }
 
    render() {
+
+      // These will be props passed to the modal
       var buyingPower = 10;
       var total = 0;
+      var price = 0;
 
       return (
          <Lightbox verticalPercent={0.5} horizontalPercent={0.8}>
@@ -55,17 +58,14 @@ export default class TradingModal extends Component {
                   </Text>
                </View>
                <View style={styles.inputs}>
+                  <Text style={styles.buyingPowerText}>
+                     Current Price: {price}
+                  </Text>
                   <TextInput
                      style={styles.pickerSelect}
                      placeholder="Select an action."
                      placeholderColor={colors.black}
                      value={""}
-                  />
-                  <TextInput
-                     style={styles.pickerSelect}
-                     placeholder="Price"
-                     placeholderColor={colors.black}
-                     value={this.state.price}
                   />
                   <TextInput
                      style={styles.pickerSelect}

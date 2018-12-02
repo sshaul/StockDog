@@ -64,8 +64,8 @@ const Routes = (store) => (
           
           <Lightbox> 
             
-            <Scene key="stock" component={Stock} hideNavBar swipeDownToClose={false}/>
-            <Scene key="tradingmodal" component={TradingModal} hideNavBar />
+            <Scene key="stock" component={Stock} swipeDownToClose={false}/>
+            <Scene key="tradingmodal" component={TradingModal} swipeDownToClose={true}/>
           </Lightbox>
           {/* <Scene key="settings" component={SettingsModal} hideNavBar />
         </Modal>

@@ -43,8 +43,7 @@ export default styles = StyleSheet.create({
       height: 48,
       backgroundColor: colors.white,
       borderColor: colors.grey,
-      borderRadius: 8,
-      marginTop: 20
+      borderRadius: 8
    },
    total: {
       flex: 0.2,
@@ -61,6 +60,7 @@ export default styles = StyleSheet.create({
    },
    // ----------------- Text ------------- //
    buyingPowerText: {
+      textAlign: 'center',
       fontFamily: 'assistant',
       fontSize: 20,
       color: colors.black
