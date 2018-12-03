@@ -6,7 +6,6 @@ const { width, height } = Dimensions.get('window');
 export default styles = StyleSheet.create({
    // ----------------- Containers ------------- //
    outermostBaseContainer: {
-      backgroundColor: 'rgba(0,0,0,0.5)',
       position: 'absolute',
       top: 0,
       bottom: 0,
@@ -49,12 +48,24 @@ export default styles = StyleSheet.create({
       backgroundColor: colors.swipeline,
       borderRadius: 25
    },
+   tradingButtonGroup: {
+      height: height * 0.05,
+      width: '60%',
+      borderWidth: 1,
+      borderColor: colors.bright,
+      borderRadius: 8,
+      backgroundColor: 'transparent'
+   },
+   buttonGroupSelected: {
+      backgroundColor: colors.bright
+   },
    inputs: {
       flex: 0.5,
-      justifyContent: 'space-around'
+      justifyContent: 'space-around',
+      alignItems: 'center'
    },
-   pickerSelect: {
-      width: 223,
+   amountInput: {
+      width: width * 0.5,
       height: 48,
       backgroundColor: colors.white,
       borderColor: colors.grey,

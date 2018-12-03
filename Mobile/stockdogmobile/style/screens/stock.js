@@ -33,9 +33,6 @@ export default styles = StyleSheet.create({
    transparentBackground: {
       backgroundColor: 'transparent'
    },
-   buttonGroupSelected: {
-      backgroundColor: colors.bright
-   },
    tradingBox: {
       backgroundColor: colors.white,
       flex: 0.3,
