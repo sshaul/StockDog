@@ -10,6 +10,7 @@ export default class TradingModal extends Component {
    constructor(props) {
       super(props);
       this.state = {
+         action: 'Buy',
          price: '',
          amount: ''
       };
@@ -32,6 +33,14 @@ export default class TradingModal extends Component {
       //       });
       // }
 
+   }
+
+   onChangeAction = (actionIndex) => {
+      const actions = ['Buy', 'Sell'];
+      this.setState({
+         actionIndex: actionIndex,
+         action: actions[actionIndex]
+      });
    }
 
    onchangeamount(amount) {
@@ -59,8 +68,8 @@ export default class TradingModal extends Component {
                   Current Price: {price}
                </Text>
                <ButtonGroup
-                  // onPress={this.updateIndex.bind(this)}
-                  selectedIndex={0}
+                  onPress={this.onChangeAction}
+                  selectedIndex={this.state.actionIndex}
                   buttons={['Buy', 'Sell']}
                   containerStyle={styles.tradingButtonGroup}
                   textStyle={styles.buttonText}
@@ -70,20 +79,19 @@ export default class TradingModal extends Component {
                />
                <TextInput
                   style={styles.amountInput}
+                  keyboardType="numeric"
                   placeholder="Amount"
-                  placeholderColor={colors.black}
+                  placeholderColor={colors.grey}
                   value={this.state.amount}
+                  onChangeText={(amount) => this.setState({amount})}
+                  returnKeyType="done"
                />
             </View>
             <View style={styles.total}>
-               <Text style={styles.totalText}>
-                  Total: ${total}
-               </Text>
+               <Text style={styles.totalText}>Total: ${total}</Text>
             </View>
             <TouchableOpacity style={styles.executeButton}>
-               <Text style={styles.executeButtonText}>
-                  Execute
-               </Text>
+               <Text style={styles.executeButtonText}>Execute</Text>
             </TouchableOpacity>
          </Lightbox>
       );

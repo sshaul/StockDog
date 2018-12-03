@@ -65,11 +65,12 @@ export default styles = StyleSheet.create({
       alignItems: 'center'
    },
    amountInput: {
-      width: width * 0.5,
+      width: width * 0.3,
       height: 48,
       backgroundColor: colors.white,
       borderColor: colors.grey,
-      borderRadius: 8
+      borderRadius: 8,
+      paddingLeft: 20
    },
    total: {
       flex: 0.2,
