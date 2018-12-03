@@ -5,7 +5,9 @@ class Button extends Component {
    render() {
       return (
          <div className="Button">
-            <button type="button" style={{width: this.props.width}}>{this.props.text}</button>
+            <button type="button" style={{width: this.props.width}}>
+               {this.props.text}
+            </button>
          </div>
       );
    }
