@@ -7,13 +7,13 @@ import Listing from '../components/Listing/Listing';
 import Graph from '../components/Graph/Graph';
 import Navbar from '../components/Navigation/Navbar';
 import News from '../components/News/News';
-import Portfolio from '../containers/Portfolio/Portfolio.js';
-import Trade from '../components/Stock/Trade/Trade.js';
+import Portfolio from '../containers/Portfolio/Portfolio';
+import Trade from '../components/Stock/Trade/Trade';
+import Button from '../components/Button/Button';
 
 import { storiesOf } from '@storybook/react';
 
 
-import { Button, Welcome } from '@storybook/react/demo';
 
 const listingProps = {
    title: 'Portfolio',
@@ -110,4 +110,11 @@ storiesOf('Portfolio', module)
 storiesOf('Trade', module)
   .add('default', () =>
    <Trade /> 
+);
+
+storiesOf('Button', module)
+   .add('300px width', () =>
+      <Button text={"Trade"} width={300} />) 
+   .add('200px width', () =>
+      <Button text={"Trade"} width={200} /> 
 );
