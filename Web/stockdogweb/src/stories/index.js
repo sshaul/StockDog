@@ -11,6 +11,7 @@ import Portfolio from '../containers/Portfolio/Portfolio';
 import Stock from '../containers/Stock/Stock';
 import Trade from '../components/Stock/Trade/Trade';
 import Button from '../components/Button/Button';
+import Article from '../components/Article/Article.js';
 
 import { storiesOf } from '@storybook/react';
 
@@ -124,3 +125,9 @@ storiesOf('Button', module)
    .add('200px width', () =>
       <Button text={"Trade"} width={200} /> 
 );
+
+storiesOf('Article', module)
+   .add('AMD', () =>
+      <Article title={'About'}
+         content={'Advanced Micro Devices, Inc. engages in the provision of semiconductor businesses. It operates through the Computing and Graphics and Enterprise, Embedded and Semi-Custom segments.'}
+      />);
