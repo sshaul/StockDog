@@ -14,7 +14,6 @@ import Feed from './screens/feed';
 import noPortfoliosProfile from './screens/noPortfoliosProfile';
 import AddPortfolioModal from './screens/addportfoliomodal';
 import JoinLeagueModal from './screens/joinLeagueModal';
-// import BuySellModal from './screens/buysellmodal';
 import TradingModal from './screens/tradingModal';
 import SetNickname from './screens/setNickname';
 import SettingsModal from './screens/settingsmodal';
