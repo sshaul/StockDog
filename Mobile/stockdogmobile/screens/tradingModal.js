@@ -75,8 +75,7 @@ export default class TradingModal extends Component {
                   textStyle={styles.buttonText}
                   buttonStyle={styles.transparentBackground}
                   selectedButtonStyle={styles.buttonGroupSelected}
-                  selectedTextStyle={{color: 'white'}}
-               />
+                  selectedTextStyle={{color: 'white'}}/>
                <TextInput
                   style={styles.amountInput}
                   keyboardType="numeric"
@@ -84,8 +83,7 @@ export default class TradingModal extends Component {
                   placeholderColor={colors.grey}
                   value={this.state.amount}
                   onChangeText={(amount) => this.setState({amount})}
-                  returnKeyType="done"
-               />
+                  returnKeyType="done"/>
             </View>
             <View style={styles.total}>
                <Text style={styles.totalText}>Total: ${total}</Text>
