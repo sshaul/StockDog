@@ -48,10 +48,10 @@ export default class TradingModal extends Component {
 
       return (
          <Lightbox verticalPercent={0.5} horizontalPercent={0.8}>
-            <View style={styles.outerModal}>
+            {/* <View style={styles.outerModal}>
                <View style={styles.modalHeaders}>
                   <View style={styles.swipeline} />
-               </View>
+               </View> */}
                <View style={styles.buyingPower}>
                   <Text style={styles.buyingPowerText}>
                      Buying Power: ${buyingPower}
@@ -84,7 +84,7 @@ export default class TradingModal extends Component {
                      Execute
                   </Text>
                </TouchableOpacity>
-            </View>
+            {/* </View> */}
          </Lightbox>
       );
    }

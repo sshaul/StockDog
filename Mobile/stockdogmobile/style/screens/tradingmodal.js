@@ -5,6 +5,21 @@ const { width, height } = Dimensions.get('window');
 
 export default styles = StyleSheet.create({
    // ----------------- Containers ------------- //
+   outermostBaseContainer: {
+      backgroundColor: 'rgba(0,0,0,0.5)',
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+   },
+   baseModal: {
+      flex: 0.6,
+      right: 0,
+      left: 0
+   },
    modalHeaders: {
       flex: 0.1,
       alignItems: 'flex-end',
