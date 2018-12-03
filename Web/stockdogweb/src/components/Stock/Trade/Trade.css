@@ -19,7 +19,8 @@ body {
   width: 90%;
   background-color: #f7f8f9;
   margin: 0 auto;
-  border-radius: 10px 10px 0px 0px; }
+  border-radius: 10px 10px 0px 0px;
+  text-align: center; }
 
 .trade-elements {
   display: flex;
@@ -39,3 +40,8 @@ body {
 .trade-element h2 {
   font-weight: normal;
   font-size: 18px; }
+
+.trade-button {
+  display: inline-block;
+  text-align: center;
+  margin: 0 auto; }

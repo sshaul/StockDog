@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Trade.css';
+import Button from '../../Button/Button';
 
 class Trade extends Component {
    render() {
@@ -18,6 +19,9 @@ class Trade extends Component {
                   <h1>12M</h1>
                   <h2>Volume</h2>
                </div>
+            </div>
+            <div className="trade-button">
+               <Button text={'Trade'} width={260} />
             </div>
          </div>
       );
