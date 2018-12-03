@@ -8,6 +8,7 @@ import Graph from '../components/Graph/Graph';
 import Navbar from '../components/Navigation/Navbar';
 import News from '../components/News/News';
 import Portfolio from '../containers/Portfolio/Portfolio';
+import Stock from '../containers/Stock/Stock';
 import Trade from '../components/Stock/Trade/Trade';
 import Button from '../components/Button/Button';
 
@@ -105,6 +106,11 @@ storiesOf('News', module)
 storiesOf('Portfolio', module)
   .add('default', () =>
   <Router><Portfolio /></Router>
+);
+
+storiesOf('Stock', module)
+  .add('default', () =>
+     <Router><Stock /></Router>
 );
 
 storiesOf('Trade', module)
