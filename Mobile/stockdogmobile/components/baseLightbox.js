@@ -35,7 +35,7 @@ export default class BaseLightbox extends Component {
    }
 
    isInCloseZone = (gesture) => {
-      return gesture.moveY > 400;
+      return gesture.dy > 400;
    }
 
    componentDidMount() {
