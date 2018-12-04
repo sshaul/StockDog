@@ -9,7 +9,7 @@ import Navbar from '../components/Navigation/Navbar';
 import News from '../components/News/News';
 import Portfolio from '../containers/Portfolio/Portfolio';
 import Stock from '../containers/Stock/Stock';
-import Trade from '../components/Stock/Trade/Trade';
+import Trade from '../components/Trade/Trade';
 import Button from '../components/Button/Button';
 import Article from '../components/Article/Article.js';
 

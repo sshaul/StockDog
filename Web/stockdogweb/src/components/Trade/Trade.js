@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Trade.css';
-import Button from '../../Button/Button';
+import Button from '../Button/Button';
 
 class Trade extends Component {
    render() {

@@ -12,7 +12,8 @@ body {
 
 .Article h1 {
   color: #3ee7ad;
-  font-weight: normal; }
+  font-weight: normal;
+  font-size: 28px; }
 
 .Article p {
   color: #f7f8f9; }
