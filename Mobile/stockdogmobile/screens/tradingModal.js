@@ -10,7 +10,7 @@ export default class TradingModal extends Component {
    constructor(props) {
       super(props);
       this.state = {
-         action: 'Buy',
+         action: '',
          price: '',
          amount: ''
       };
@@ -33,6 +33,15 @@ export default class TradingModal extends Component {
       var buyingPower = props.buyingPower;
       var price = props.price;
       var total = this.state.amount ? price * parseInt(this.state.amount) : 0;
+
+      var isDisabled = !(this.state.amount && this.state.action) 
+         || this.state.amount <= 0;
+      var buttonStyle = isDisabled ? 
+                        styles.disabledExecuteButton : 
+                        styles.executeButton;
+      var buttonTextStyle = isDisabled ? 
+                            styles.disabledExecuteButtonText : 
+                            styles.executeButtonText;
 
       return (
          <Lightbox verticalPercent={0.5} horizontalPercent={0.8}>
@@ -66,8 +75,8 @@ export default class TradingModal extends Component {
             <View style={styles.total}>
                <Text style={styles.totalText}>Total: ${total}</Text>
             </View>
-            <TouchableOpacity style={styles.executeButton}>
-               <Text style={styles.executeButtonText}>Execute</Text>
+            <TouchableOpacity style={buttonStyle}>
+               <Text style={buttonTextStyle}>Execute</Text>
             </TouchableOpacity>
          </Lightbox>
       );

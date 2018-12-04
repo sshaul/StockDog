@@ -85,6 +85,17 @@ export default styles = StyleSheet.create({
       borderRadius: 8,
       marginTop: 10
    },
+   disabledExecuteButton: {
+      width: '60%',
+      flex: 0.1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'transparent',
+      borderColor: colors.bright,
+      borderWidth: 1,
+      borderRadius: 8,
+      marginTop: 10
+   },
    // ----------------- Text ------------- //
    buyingPowerText: {
       textAlign: 'center',
@@ -101,5 +112,10 @@ export default styles = StyleSheet.create({
       fontFamily: 'assistant',
       fontSize: 20,
       color: colors.white
+   },
+   disabledExecuteButtonText: {
+      fontFamily: 'assistant',
+      fontSize: 20,
+      color: colors.black
    },
 });
