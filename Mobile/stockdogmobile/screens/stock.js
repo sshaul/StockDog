@@ -19,7 +19,11 @@ export default class Stock extends Component {
    }
 
    openModal() {
-      Actions.tradingmodal();
+      Actions.tradingmodal({ 
+         buyingPower: 10,
+         total: 0,
+         price: 2
+      });
    }
 
    updateIndex(selectedIndex) {

@@ -17,21 +17,6 @@ export default class TradingModal extends Component {
    }
 
    buysellstock() {
-      // var props = this.props.navigation.state.params;
-      // if (/[a-zA-Z]/.test(this.state.amount)) {
-      //    alert("Invalid amount value. Please enter numbers only.");
-      // }
-      // else {
-      //    this.api.manageStock(props.modalType, props.ticker, parseInt(this.state.amount),
-      //       (res) => {
-      //          if (res.status_code === 400) {
-      //             alert(res.message);
-      //          }
-      //          else {
-      //             this.setState({ transactionComplete: true });
-      //          }
-      //       });
-      // }
 
    }
 
@@ -43,18 +28,11 @@ export default class TradingModal extends Component {
       });
    }
 
-   onchangeamount(amount) {
-      // this.setState({
-      //    amount: amount.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").replace(/\s{1,}/g, "")
-      // });
-   }
-
    render() {
-
-      // These will be props passed to the modal
-      var buyingPower = 10;
-      var total = 0;
-      var price = 0;
+      var props = this.props.navigation.state.params;
+      var buyingPower = props.buyingPower;
+      var price = props.price;
+      var total = this.state.amount ? price * parseInt(this.state.amount) : 0;
 
       return (
          <Lightbox verticalPercent={0.5} horizontalPercent={0.8}>
