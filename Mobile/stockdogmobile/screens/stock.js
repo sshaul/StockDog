@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { ButtonGroup } from 'react-native-elements';
 import styles from '../style/screens/stock';
 import StockChart from '../components/stockchart';
@@ -15,6 +16,14 @@ export default class Stock extends Component {
 
    componentDidMount() {
 
+   }
+
+   openModal() {
+      Actions.tradingmodal({ 
+         buyingPower: 10,
+         total: 0,
+         price: 2
+      });
    }
 
    updateIndex(selectedIndex) {
@@ -57,7 +66,7 @@ export default class Stock extends Component {
                   </View>
                </View>
                <View style={styles.tradingButtonContainer}>
-                  <TouchableOpacity style={styles.tradingButton}>
+                  <TouchableOpacity style={styles.tradingButton} onPress={this.openModal}>
                      <Text style={styles.tradingButtonText}>Trade</Text>
                   </TouchableOpacity>
                </View>

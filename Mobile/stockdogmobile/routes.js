@@ -14,7 +14,7 @@ import Feed from './screens/feed';
 import noPortfoliosProfile from './screens/noPortfoliosProfile';
 import AddPortfolioModal from './screens/addportfoliomodal';
 import JoinLeagueModal from './screens/joinLeagueModal';
-import BuySellModal from './screens/buysellmodal';
+import TradingModal from './screens/tradingModal';
 import SetNickname from './screens/setNickname';
 import SettingsModal from './screens/settingsmodal';
 import LeagueDrawer from './components/leaguedrawer';
@@ -23,10 +23,10 @@ import { colors } from './style/colors';
 import tabStyle from './style/components/tabBar';
 
 const Routes = (store) => (
-  <Provider store={store}>
-    <CustomRouter>
-      <Scene key="root" hideNavBar>
-        {/* <Scene key="login" component={Login}/>
+   <Provider store={store}>
+      <CustomRouter>
+         <Scene key="root" hideNavBar>
+            {/* <Scene key="login" component={Login}/>
         <Scene key="register" component={Register}/>
             <Drawer
               key="drawer"  
@@ -34,45 +34,44 @@ const Routes = (store) => (
               type="replace"
             >
               <Modal key="modal">  */}
-                <Tabs 
-                  key="main" 
-                  tabBarStyle={ tabStyle.tabBar } 
-                  tabStyle={ tabStyle.tabStyle }
-                  tabBarPosition="bottom"
-                  activeTintColor={ colors.white }
-                  inactiveTintColor={ colors.white }
-                  inactiveBackgroundColor= { colors.grey }
-                  activeBackgroundColor= { colors.activeTab }
-                  labelStyle= { tabStyle.tabLabel }
-                  > 
-                  <Scene key="portfoliomain" hideNavBar title="Portfolio" iconName="user" icon={TabIcon}>
-                    <Scene key="portfolio" component={Portfolio} onEnter={Portfolio.onEnterPortfolio}/>
-            </Scene>
-                  <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon} onEnter={League.onEnterLeague}/>
-                  <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon} onEnter={Feed.onEnterFeed}/>
-                  {/*<Scene key="searchmain" hideNavBar title="Search" iconName="search" icon={TabIcon}>
+            <Tabs
+               key="main"
+               tabBarStyle={tabStyle.tabBar}
+               tabStyle={tabStyle.tabStyle}
+               tabBarPosition="bottom"
+               activeTintColor={colors.white}
+               inactiveTintColor={colors.white}
+               inactiveBackgroundColor={colors.grey}
+               activeBackgroundColor={colors.activeTab}
+               labelStyle={tabStyle.tabLabel}
+            >
+               <Scene key="portfoliomain" hideNavBar title="Portfolio" iconName="user" icon={TabIcon}>
+                  <Scene key="portfolio" component={Portfolio} onEnter={Portfolio.onEnterPortfolio} />
+               </Scene>
+               <Scene key="league" title="League" component={League} hideNavBar iconName="users" icon={TabIcon} onEnter={League.onEnterLeague} />
+               <Scene key="feed" title="Feed" component={Feed} hideNavBar iconName="activity" icon={TabIcon} onEnter={Feed.onEnterFeed} />
+               {/*<Scene key="searchmain" hideNavBar title="Search" iconName="search" icon={TabIcon}>
                     <Scene key="search" component={Search}/>
                   </Scene> */}
-                </Tabs>
-                {/*<Lightbox key="lightbox">
+            </Tabs>
+            {/*<Lightbox key="lightbox">
                   <Scene key="noportfolios" hideNavBar component={noPortfoliosProfile}/>
                   <Scene key="addportfolio" hideNavBar component={AddPortfolioModal}/>
                   <Scene key="joinportfolio" hideNavBar component={JoinLeagueModal}/>
                   <Scene key="setnickname" hideNavBar component={SetNickname} />
-                </Lightbox>
-              
-          
-          <Lightbox>
-            */}
-            {/* <Scene key="stock" component={Stock} hideNavBar swipeDownToClose={false}/> */}
-            {/*<Scene key="buysellmodal" component={BuySellModal} hideNavBar />
-          </Lightbox>
-          <Scene key="settings" component={SettingsModal} hideNavBar />
+                </Lightbox>*/}
+
+
+            <Lightbox>
+               <Scene key="stock" component={Stock} hideNavBar swipeDownToClose={false} />
+               <Scene key="tradingmodal" component={TradingModal} swipeDownToClose={true} />
+            </Lightbox>
+            {/* <Scene key="settings" component={SettingsModal} hideNavBar />
         </Modal>
       </Drawer> */}
-      </Scene>
-    </CustomRouter>
-  </Provider>
+         </Scene>
+      </CustomRouter>
+   </Provider>
 );
 
 export default Routes;
