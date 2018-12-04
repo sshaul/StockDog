@@ -116,7 +116,7 @@ storiesOf('Stock', module)
 
 storiesOf('Trade', module)
   .add('default', () =>
-   <Trade /> 
+   <Trade quantity={40} price={400.12} volume={2} /> 
 );
 
 storiesOf('Button', module)

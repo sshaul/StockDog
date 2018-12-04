@@ -15,7 +15,7 @@ class Stock extends Component {
             <div className="stock-content">
                <Article title={"About"} content={'Advanced Micro Devices, Inc. engages in the provision of semiconductor businesses. It operates through the Computing and Graphics and Enterprise, Embedded and Semi-Custom segments.'}/>
             </div>
-            <Trade />
+            <Trade quantity={13} price={20.15} volume={'12M'}  />
          </div>
       );
    }
