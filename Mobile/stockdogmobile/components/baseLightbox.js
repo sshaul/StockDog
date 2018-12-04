@@ -14,15 +14,19 @@ export default class BaseLightbox extends Component {
 
       this.panResponder = PanResponder.create({
          onStartShouldSetPanResponder: () => true,
+         // Change dx and dy based on screen press for dragging
          onPanResponderMove: Animated.event([null, {
             dx: this.state.pan.x,
             dy: this.state.pan.y
          }]),
+         // Behavior for when touch is released
          onPanResponderRelease: (e, gesture) => {
+            // Close modal only if dragged far enough down
             if (this.isInCloseZone(gesture)) {
                this.closeModal();
             }
             else {
+               // Not dragged far enough, will bounce back to center
                Animated.spring(this.state.pan, {
                   toValue: { x: 0, y: 0 }
                }).start();
@@ -31,11 +35,13 @@ export default class BaseLightbox extends Component {
       });
    }
 
+   // Determines the distance lightbox needs to be dragged
    isInCloseZone = (gesture) => {
-      return gesture.dy > 400;
+      return gesture.dy > 200;
    }
 
    componentDidMount() {
+      // Sliding modal in from the bottom of screen
       Animated.timing(this.state.top, {
          duration: 100,
          toValue: 0,
@@ -43,6 +49,7 @@ export default class BaseLightbox extends Component {
    }
 
    closeModal = () => {
+      // Sliding modal out to the bottom of the screen
       Animated.timing(this.state.top, {
          duration: 100,
          toValue: 500,
