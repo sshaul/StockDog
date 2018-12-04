@@ -7,13 +7,15 @@ import Listing from '../components/Listing/Listing';
 import Graph from '../components/Graph/Graph';
 import Navbar from '../components/Navigation/Navbar';
 import News from '../components/News/News';
-import Portfolio from '../containers/Portfolio/Portfolio.js';
+import Portfolio from '../containers/Portfolio/Portfolio';
+import Stock from '../containers/Stock/Stock';
+import Trade from '../components/Trade/Trade';
+import Button from '../components/Button/Button';
 import Article from '../components/Article/Article.js';
 
 import { storiesOf } from '@storybook/react';
 
 
-import { Button, Welcome } from '@storybook/react/demo';
 
 const listingProps = {
    title: 'Portfolio',
@@ -105,7 +107,24 @@ storiesOf('News', module)
 storiesOf('Portfolio', module)
   .add('default', () =>
   <Router><Portfolio /></Router>
-  );
+);
+
+storiesOf('Stock', module)
+  .add('default', () =>
+     <Router><Stock /></Router>
+);
+
+storiesOf('Trade', module)
+  .add('default', () =>
+   <Trade quantity={40} price={400.12} volume={2} /> 
+);
+
+storiesOf('Button', module)
+   .add('300px width', () =>
+      <Button text={"Trade"} width={300} />) 
+   .add('200px width', () =>
+      <Button text={"Trade"} width={200} /> 
+);
 
 storiesOf('Article', module)
    .add('AMD', () =>

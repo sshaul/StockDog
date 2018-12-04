@@ -10,10 +10,15 @@ body {
   background-color: #212121;
   height: 100%; }
 
-.Article h1 {
-  color: #3ee7ad;
-  font-weight: normal;
-  font-size: 28px; }
+.Button button {
+  background-color: #3ee7ad;
+  border: none;
+  font-family: 'Assistant';
+  font-size: 20px;
+  padding: 10px 0px;
+  color: #f7f8f9;
+  border-radius: 3px;
+  cursor: pointer; }
 
-.Article p {
-  color: #f7f8f9; }
+.Button button:hover {
+  background-color: #18c187; }
