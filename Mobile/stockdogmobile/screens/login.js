@@ -9,13 +9,6 @@ import styles from '../style/screens/loginRegister';
 import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
 import Api from '../api';
-import { loginUser } from '../actions';
-
-mapDispatchToProps = (dispatch) => ({
-  loginUser: (username, password) => {
-    dispatch(loginUser(username, password));
-  }
-});
 
 var logoImage = require('../assets/logo.png');
 
@@ -51,7 +44,7 @@ class Login extends Component {
   };
 
   login = () => {
-    this.props.loginUser(this.state.email, this.state.password);
+    this.props.dispatch(this.state.email, this.state.password);
   };
 
   render() {
@@ -103,4 +96,10 @@ class Login extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+// mapDispatchToProps = (dispatch) => ({
+//   loginUser: (username, password) => {
+//     dispatch(loginUser(username, password));
+//   }
+// });
+
+export default connect(null)(Login);

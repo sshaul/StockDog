@@ -26,9 +26,9 @@ const Routes = (store) => (
    <Provider store={store}>
       <CustomRouter>
          <Scene key="root" hideNavBar>
-            {/* <Scene key="login" component={Login}/>
-        <Scene key="register" component={Register}/>
-            <Drawer
+            <Scene key="login" component={Login}/>
+            <Scene key="register" component={Register}/>
+            {/* <Drawer
               key="drawer"  
               contentComponent={LeagueDrawer} 
               type="replace"
