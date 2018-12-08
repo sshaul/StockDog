@@ -74,7 +74,6 @@ class Transaction extends Component {
 									value={this.state.selectedOption}
 									onChange={this.handleSelectChange}
 									options={tradeOptions}
-									placeholder='Type'
 									isSearchable={false}
 								/>
 								<input id="amount"
