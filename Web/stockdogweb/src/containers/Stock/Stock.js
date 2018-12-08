@@ -17,11 +17,11 @@ class Stock extends Component {
       };
    }
 
-   activeTransactionModal = () => {
+   activateTransactionModal = () => {
       this.setState({transactionIsOpen: true});
    };
 
-   deactiveTransactionModal = () => {
+   deactivateTransactionModal = () => {
       this.setState({transactionIsOpen: false});
    };
 
@@ -34,10 +34,10 @@ class Stock extends Component {
                <Article title={this.state.title} content={this.state.content}/>
             </div>
             <Trade quantity={13} price={20.15} volume={'12M'} 
-               onClickBtn={this.activeTransactionModal} 
+               onClickBtn={this.activateTransactionModal} 
             />
             <Transaction isOpen={this.state.transactionIsOpen} 
-               onClose={this.deactiveTransactionModal}
+               onClose={this.deactivateTransactionModal}
             />
          </div>
       );
