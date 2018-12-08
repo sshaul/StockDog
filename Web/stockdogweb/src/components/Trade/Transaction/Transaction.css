@@ -10,7 +10,9 @@
 .transaction-modal-content h2 {
   font-weight: normal;
   text-align: center;
-  font-size: 16px;
+  font-size: 16px; }
+
+.transaction-info {
   margin-bottom: 20px; }
 
 .transaction-modal-content input {

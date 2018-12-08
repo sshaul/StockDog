@@ -121,7 +121,7 @@ storiesOf('Trade', module)
 
 storiesOf('Transaction', module)
   .add('default', () =>
-   <Transaction isOpen={true} buyingPower={2313} price={2.19}/> 
+   <Transaction isOpen={true} buyingPower={2313} price={2.19} amountOwned={10}/> 
 );
 
 storiesOf('Button', module)
