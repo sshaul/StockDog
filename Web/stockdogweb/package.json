@@ -17,7 +17,7 @@
     "react-redux": "^5.1.1",
     "react-responsive-modal": "^2.0.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.17",
+    "react-scripts": "^2.1.1",
     "react-sidenav": "^2.1.2",
     "react-tooltip": "^3.4.0",
     "redux-thunk": "^2.3.0"
@@ -46,5 +46,11 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.0.3"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
