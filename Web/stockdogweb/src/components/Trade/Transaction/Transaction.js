@@ -4,7 +4,7 @@ import Select from 'react-select';
 import Button from '../../Button/Button';
 import './Transaction.css';
 
-const selectOptions = [
+const tradeOptions = [
 	{value: 'buy', label: 'Buy'},
 	{value: 'sell', label: 'Sell'}
 ]
@@ -66,7 +66,7 @@ class Transaction extends Component {
 								className="transaction-type-select"
 								value={this.selectedOption}
 								onChange={this.handleSelectChange}
-								options={selectOptions}
+								options={tradeOptions}
 								placeholder='Type'
 								isSearchable={false}
 							/>
