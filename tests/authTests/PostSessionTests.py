@@ -18,8 +18,11 @@ class PostSessionTests(TestConfiguration):
          'password' : 'Stockd2g'
       }
       response = requests.post(url=url, data=json.dumps(body), headers=self.headers)
-      self.assertEqual(self.getJson(response), None)
+      responseData = self.getJson(response)
+      
       self.assertEqual(response.status_code, 200)
+      self.assertTrue('id' in responseData)
+      self.assertTrue(responseData['id'] > 0)
 
 
    def test_login_user(self):
