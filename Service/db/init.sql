@@ -8,7 +8,9 @@ CREATE TABLE User (
    lastName VARCHAR(32),
    email VARCHAR(32) UNIQUE,
    password VARCHAR(1024),
-   token VARCHAR(1024)
+   token VARCHAR(1024),
+   dateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
+   dateUpdated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 
@@ -17,7 +19,9 @@ CREATE TABLE Portfolio (
    buyPower DECIMAL(13, 2),
    name VARCHAR(32),
    userId INT(11) REFERENCES User(id),
-   leagueId INT(11) REFERENCES League(id)
+   leagueId INT(11) REFERENCES League(id),
+   dateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
+   dateUpdated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 
@@ -36,14 +40,18 @@ CREATE TABLE Transaction (
    datetime DATETIME,
    portfolioId INT(11) REFERENCES Portfolio(id),
    ticker VARCHAR(8) REFERENCES Ticker(symbol),
-   leagueId INT(11) REFERENCES League(id)
+   leagueId INT(11) REFERENCES League(id),
+   dateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
+   dateUpdated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 
 CREATE TABLE Watchlist (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    portfolioId INT(11) REFERENCES Portfolio(id),
-   ticker VARCHAR(8) REFERENCES Ticker(symbol)
+   ticker VARCHAR(8) REFERENCES Ticker(symbol),
+   dateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
+   dateUpdated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 
@@ -51,7 +59,9 @@ CREATE TABLE PortfolioHistory (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    portfolioId INT(11) REFERENCES Portfolio(id),
    datetime DATETIME,
-   value DECIMAL(13, 2)
+   value DECIMAL(13, 2),
+   dateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
+   dateUpdated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 
@@ -60,7 +70,9 @@ CREATE TABLE PortfolioItem (
    shareCount INT(11),
    avgCost DECIMAL(13, 2),
    portfolioId INT(11) REFERENCES Portfolio(id),
-   ticker VARCHAR(8) REFERENCES Ticker(symbol)
+   ticker VARCHAR(8) REFERENCES Ticker(symbol),
+   dateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
+   dateUpdated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 
@@ -71,5 +83,7 @@ CREATE TABLE League (
    end DATETIME,
    startPos DECIMAL(13, 2),
    inviteCode VARCHAR(6) UNIQUE,
-   ownerId INT(11) REFERENCES User(id)
+   ownerId INT(11) REFERENCES User(id),
+   dateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
+   dateUpdated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
