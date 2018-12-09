@@ -19,14 +19,14 @@ class TestConfiguration(TestCase):
    def setUpClass(cls):
       cls.log = Logger(True, True, True)
       try:
-         cls.db = getDBConn(TRAVIS_ENV)
+         cls.db = getDBConn(LOCAL_ENV)
          cls.cursor = cls.db.cursor()
       except Exception as e:
          cls.log.error(e)
          raise e
 
       cls.headers = {'content-type' : 'application/json'}
-      cls.baseUrl = TRAVIS_URL
+      cls.baseUrl = LOCAL_URL
 
    
    def getJson(cls, res):
@@ -34,6 +34,13 @@ class TestConfiguration(TestCase):
          return res.json()
       except simplejson.errors.JSONDecodeError as e:
          return None
+
+
+   def deleteTables(cls, tables, resetAutoIncrement=True):
+      for table in tables:
+         cls.cursor.execute("DELETE FROM " + table)
+         if resetAutoIncrement:
+            cls.cursor.execute("ALTER TABLE " + table + " AUTO_INCREMENT=1")
 
    
    @classmethod

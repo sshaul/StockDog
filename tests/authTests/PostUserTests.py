@@ -241,7 +241,7 @@ class PostUserTests(TestConfiguration):
    
       self.assertEquals(response.status_code, 400)
       self.assertTrue('InvalidField' in responseData[0])
-      self.assertEquals(responseData[0]['InvalidField'], 'firstName is too long')
+      self.assertEquals(responseData[0]['InvalidField'], 'firstName is too long - must be under 32 characters')
    
 
    def test_register_user_longLastName(self):
@@ -257,7 +257,7 @@ class PostUserTests(TestConfiguration):
       
       self.assertEquals(response.status_code, 400)
       self.assertTrue('InvalidField' in responseData[0])
-      self.assertEquals(responseData[0]['InvalidField'], 'lastName is too long')
+      self.assertEquals(responseData[0]['InvalidField'], 'lastName is too long - must be under 32 characters')
    
 
    def test_register_user_duplicateEmail(self):
@@ -281,8 +281,8 @@ class PostUserTests(TestConfiguration):
    
    
    def tearDown(self):
-      self.cursor.execute("DELETE FROM User")
-      self.cursor.execute("ALTER TABLE User AUTO_INCREMENT=1")
+      self.deleteTables(['User'])
+
 
 if __name__ == "__main__":
    main()

@@ -4,17 +4,19 @@ from unittest import TestLoader, TestSuite, TextTestRunner
 from authTests.PostUserTests import PostUserTests
 from authTests.PostSessionTests import PostSessionTests
 from authTests.DeleteSessionTests import DeleteSessionTests
-from routesTests.ChartsTests import ChartsTests
+from routesTests.GetChartsTests import GetChartsTests
+from routesTests.PostPortfolioTests import PostPortfolioTests
 
 
 if __name__ == '__main__':
    loader = TestLoader()
    suite = TestSuite(
       (
-         loader.loadTestsFromTestCase(PostUserTests),
-         loader.loadTestsFromTestCase(PostSessionTests),
-         loader.loadTestsFromTestCase(DeleteSessionTests),
-         loader.loadTestsFromTestCase(ChartsTests)
+         # loader.loadTestsFromTestCase(PostUserTests),
+         # loader.loadTestsFromTestCase(PostSessionTests),
+         # loader.loadTestsFromTestCase(DeleteSessionTests),
+         # loader.loadTestsFromTestCase(GetChartsTests),
+         loader.loadTestsFromTestCase(PostPortfolioTests)
       )
    )
    runner = TextTestRunner()

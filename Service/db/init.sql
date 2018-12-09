@@ -25,6 +25,13 @@ CREATE TABLE Portfolio (
 );
 
 
+CREATE TABLE Ticker (
+   id INT(11) AUTO_INCREMENT PRIMARY KEY,
+   symbol VARCHAR(8),
+   company VARCHAR(32)
+);
+
+
 CREATE TABLE Transaction (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    sharePrice DECIMAL(13, 2),
