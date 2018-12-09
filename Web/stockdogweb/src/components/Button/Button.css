@@ -22,3 +22,6 @@ body {
 
 .Button button:hover {
   background-color: #18c187; }
+
+.Button button:disabled {
+  background: #cccccc; }

@@ -12,6 +12,9 @@
 }
 
 .Button button:hover {
-
    background-color: darken($primary-color, 15%);
+}
+
+.Button button:disabled {
+	background: #cccccc;
 }
