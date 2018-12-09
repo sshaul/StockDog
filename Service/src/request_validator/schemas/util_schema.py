@@ -27,8 +27,11 @@ def validatePassword(passwordStr, field, errors):
 def validateName(nameStr, field, errors):
    if type(nameStr) != str:
       errors.append({'InvalidField' : field.name + ' is not a string or formatted incorrectly'})
-   elif type(nameStr) == str and len(nameStr) > NAME_CHAR_LIMIT:
-      errors.append({'InvalidField' : field.name + ' is too long - must be under 32 characters'})
+   elif type(nameStr) == str: 
+      if len(nameStr) > NAME_CHAR_LIMIT:
+         errors.append({'InvalidField' : field.name + ' is too long - must be under 32 characters'})
+      elif len(nameStr) == 0:
+         errors.append({'InvalidField' : field.name + ' must not be empty'})
 
    return errors
 
@@ -47,6 +50,5 @@ def validateBuyPower(buyPower, field, errors):
       errors.append({
          'InvalidField' : field.name + ' must be an integer greater than 1 and less than 1000000'
       })
-
 
    return errors

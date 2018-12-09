@@ -107,6 +107,20 @@ class PostPortfolioTests(TestConfiguration):
       self.assertEquals(responseData[0]['InvalidField'], 'name is too long - must be under 32 characters')
 
 
+   def test_post_portfolio_soloEmptyName(self):
+      body = {
+         'name' : ''
+      }
+
+      response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
+      responseData = self.getJson(response)
+   
+      self.assertEquals(response.status_code, 400)
+      self.assertTrue('InvalidField' in responseData[0])
+      self.assertEquals(responseData[0]['InvalidField'], 'name must not be empty')
+
+
+
    def test_post_portfolio_soloInvalidName(self):
       body = {
          'name' : 2121342
