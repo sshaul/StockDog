@@ -8,7 +8,6 @@ import { colors } from '../style/colors';
 import styles from '../style/screens/loginRegister';
 import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
-import Api from '../api';
 import { loginUser } from '../actions';
 
 mapDispatchToProps = (dispatch) => ({
@@ -32,14 +31,6 @@ class Login extends Component {
     };
 
     this.inputs = {};
-    this.api = new Api();
-  }
-
-  componentDidMount() {
-    // Check if user is already logged in
-    AsyncStorage.getItem('token', (token) => {
-      // console.log(token);
-    })
   }
 
   focusNextField = (id) => {

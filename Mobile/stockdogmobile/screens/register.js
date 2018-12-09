@@ -9,7 +9,6 @@ import Icon from 'react-native-vector-icons/Feather';
 import PopoverTooltip from 'react-native-popover-tooltip';
 import WideButton from '../components/widebutton';
 import FormInput from '../components/formInput';
-import Api from '../api';
 
 export default class Register extends Component {
   constructor(props) {
@@ -21,7 +20,6 @@ export default class Register extends Component {
       password: ""
     };
 
-    this.api = new Api();
     this.inputs = {};
   }
 

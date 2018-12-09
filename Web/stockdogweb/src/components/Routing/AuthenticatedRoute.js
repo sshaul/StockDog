@@ -1,5 +1,5 @@
 import React from "react";
-import { authenticated } from "../utils/utils";
+import { authenticated } from "../../utils/utils";
 import { Redirect, Route } from "react-router-dom";
 import { withCookies } from "react-cookie";
 
