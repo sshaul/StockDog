@@ -35,6 +35,13 @@ class TestConfiguration(TestCase):
       except simplejson.errors.JSONDecodeError as e:
          return None
 
+
+   def deleteTables(cls, tables, resetAutoIncrement=True):
+      for table in tables:
+         cls.cursor.execute("DELETE FROM " + table)
+         if resetAutoIncrement:
+            cls.cursor.execute("ALTER TABLE " + table + " AUTO_INCREMENT=1")
+
    
    @classmethod
    def tearDownClass(cls):

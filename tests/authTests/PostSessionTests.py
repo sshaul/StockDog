@@ -131,5 +131,4 @@ class PostSessionTests(TestConfiguration):
    
 
    def tearDown(self):
-      self.cursor.execute("DELETE FROM User")
-      self.cursor.execute("ALTER TABLE User AUTO_INCREMENT=1")
+      self.deleteTables(['User'])
