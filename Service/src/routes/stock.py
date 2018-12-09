@@ -5,7 +5,6 @@ import simplejson as json
 import time
 from urllib.parse import urlencode
 
-from routes import iex
 from util.error_map import errors
 
 TODAY = 0
@@ -126,7 +125,7 @@ def post_buy_transaction(ticker):
 @stock_api.route('/api/stock/<ticker>/history/<length>')
 def get_history(ticker, length):
    if True:
-      return iex.get_history(ticker, length)
+      return charts.get_history(ticker, length)
    else:
       try:
          function = getFunction(length)

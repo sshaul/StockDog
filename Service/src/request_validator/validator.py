@@ -42,14 +42,16 @@ def check_required_fields(data, fields, errors):
 
 def check_field_validity(data, fields, errors):
    for field in fields:
-      if field.customValidate is not None:
+      if not field.isRequired and data.get(field.name) is None:
+         pass
+      elif field.customValidate is not None:
          field.customValidate(data.get(field.name), field, errors)
       elif field.datatype == str and data.get(field.name) is not None:
          validate_str(data.get(field.name), field, errors)
       elif field.datatype == int and data.get(field.name) is not None:
          validate_int(data.get(field.name), field, errors)
       else:
-         g.logger.error("Unexpected datatype encountered in request validation")
+         g.log.error("Unexpected datatype encountered in request validation for " + field.name)
    
    return errors
 

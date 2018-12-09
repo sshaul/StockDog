@@ -2,6 +2,8 @@ import re
 from validate_email import validate_email
 
 NAME_CHAR_LIMIT = 32
+MIN_BUY_POWER = 1
+MAX_BUY_POWER = 1000000
 
 def validateEmail(emailStr, field, errors):
    if not validate_email(emailStr):
@@ -26,7 +28,7 @@ def validateName(nameStr, field, errors):
    if type(nameStr) != str:
       errors.append({'InvalidField' : field.name + ' is not a string or formatted incorrectly'})
    elif type(nameStr) == str and len(nameStr) > NAME_CHAR_LIMIT:
-      errors.append({'InvalidField' : field.name + ' is too long'})
+      errors.append({'InvalidField' : field.name + ' is too long - must be under 32 characters'})
 
    return errors
 
@@ -37,4 +39,14 @@ def validateLength(lengthStr, field, errors):
          'InvalidField': field.name + " is not one of 'day', 'week', 'month', 'year', or 'recent'"
       })
    
+   return errors
+
+
+def validateBuyPower(buyPower, field, errors):
+   if type(buyPower) != int or buyPower < MIN_BUY_POWER or buyPower > MAX_BUY_POWER:
+      errors.append({
+         'InvalidField' : field.name + ' must be an integer greater than 1 and less than 1000000'
+      })
+
+
    return errors
