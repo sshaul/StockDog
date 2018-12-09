@@ -14,8 +14,11 @@ class PostPortfolioTests(TestConfiguration):
          'password' : 'Stockd2g'
       }
       registerResponse = requests.post(url=registerUrl, data=json.dumps(registerBody), headers=self.headers)
+      registerResponseData = self.getJson(registerResponse)
       self.assertEqual(registerResponse.status_code, 200)
-      self.assertEqual(self.getJson(registerResponse), None)
+      self.assertTrue('id' in registerResponseData)
+      self.assertTrue(registerResponseData['id'] > 0)
+      
 
       loginUrl = self.baseUrl + '/users/session'
       loginBody = {
