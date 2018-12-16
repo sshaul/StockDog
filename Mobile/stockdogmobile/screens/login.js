@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, Image, AsyncStorage } from 'react-native';
+import { Text, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -8,6 +8,8 @@ import { colors } from '../style/colors';
 import styles from '../style/screens/loginRegister';
 import FormInput from '../components/formInput';
 import WideButton from '../components/widebutton';
+import { loginUser } from '../actions/authActions';
+import { login } from '../api';
 
 var logoImage = require('../assets/logo.png');
 
@@ -34,8 +36,13 @@ class Login extends Component {
       Actions.register({});
    };
 
-   login = () => {
-      this.props.dispatch(this.state.email, this.state.password);
+   submitLogin = () => {
+      login(this.state.email, this.state.password).then((res) => {
+         this.props.loginUser(res.data.userId, res.data.token);
+         Actions.portfolio();
+      }).catch((e) => {
+         console.log(e.response);
+      });
    };
 
    render() {
@@ -64,12 +71,12 @@ class Login extends Component {
                   value={this.state.password}
                   onchange={(password) => this.setState({ password })}
                   returnKeyType={"done"}
-                  onSubmitEditing={this.login}
+                  onSubmitEditing={this.submitLogin}
                   refer={input => { this.inputs['password'] = input; }} />
                <WideButton
                   type='login'
                   disabled={disabled}
-                  onpress={this.login} />
+                  onpress={this.submitLogin} />
                {/* <TouchableOpacity
               style={styles.smallTextButton}>
               <Text style={styles.smallText}> Forgot Password? </Text>
@@ -87,4 +94,4 @@ class Login extends Component {
    }
 }
 
-export default connect(null)(Login);
+export default connect(null, { loginUser })(Login);

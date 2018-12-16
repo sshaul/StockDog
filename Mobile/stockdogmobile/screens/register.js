@@ -10,7 +10,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import PopoverTooltip from 'react-native-popover-tooltip';
 import WideButton from '../components/widebutton';
 import FormInput from '../components/formInput';
-import api from '../api';
+import { registerUser } from '../actions/authActions';
+import { register } from '../api';
 
 class Register extends Component {
    constructor(props) {
@@ -34,19 +35,20 @@ class Register extends Component {
       navigation.goBack(null);
    }
 
-   register = () => {
+   submitRegister = () => {
       if (!this.state.email.includes('@')) {
          alert('Please enter a valid email address.');
       }
       else {
-         api.register(this.state.firstname,
+         register(this.state.firstname,
             this.state.lastname,
             this.state.email,
             this.state.password
          ).then(() =>{
+            this.props.registerUser(this.state.email);
             Actions.login({email: this.state.email});
          }).catch((e) => {
-            console.log('Error: ', e);
+            console.log(e.response.data[0]);
             alert('Invalid registration. ' +
                'Please enter all fields and ' + 
                'follow password instructions.');
@@ -106,7 +108,7 @@ class Register extends Component {
                               'follow password instructions.');
                         }
                         else {
-                           this.register();
+                           this.submitRegister();
                         }
                      }} />
                   <PopoverTooltip
@@ -125,7 +127,7 @@ class Register extends Component {
                <WideButton 
                   type='register' 
                   disabled={disabled} 
-                  onpress={this.register} />
+                  onpress={this.submitRegister} />
                <TouchableOpacity
                   style={styles.smallTextButton}>
                   <Text
@@ -140,4 +142,4 @@ class Register extends Component {
    }
 }
 
-export default connect(null)(Register);
+export default connect(null, { registerUser })(Register);

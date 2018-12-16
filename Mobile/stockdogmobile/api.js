@@ -8,32 +8,25 @@ const config = {
    }
 }
 
-const register = async(firstName, lastName, email, password) => {
+const register = async (firstName, lastName, email, password) => {
    var data = {
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
       "password": password
    };
-   var response = await axios.post(baseurl + '/users', data, config);
-
-   return response;
+   return await axios.post(baseurl + '/users', data, config);
 }
 
-const login = async (username, password) => {
-   console.log('in login function');
+const login = async (email, password) => {
    var data = {
-      'username': username,
+      'email': email,
       'password': password
    };
-   console.log('requesting soon');
-   var response = await axios.post(baseurl + '/users/session', data, config);
-   console.log(response);
+   return await axios.post(baseurl + '/users/session', data, config);
 };
 
-const api = {
+export {
    register,
    login,
 };
-
-export default api;

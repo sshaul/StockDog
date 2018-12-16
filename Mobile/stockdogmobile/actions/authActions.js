@@ -1,4 +1,4 @@
-export default registerUser = (firstname, lastname, email, password) => {
+const registerUser = (firstname, lastname, email, password) => {
    return {
       'type': 'REGISTER_USER',
       'payload': {
@@ -10,7 +10,17 @@ export default registerUser = (firstname, lastname, email, password) => {
    }
 }
 
-// export function loginUser(username, password) {
-//    var creds = {user: username, password: password};
-//    return { creds, type: 'LOGIN_USER' };
-// };
+const loginUser = (userId, token) => {
+   return {
+      type: 'LOGIN_USER',
+      payload: {
+         userId,
+         token
+      }
+   };
+};
+
+export {
+   registerUser,
+   loginUser
+}
