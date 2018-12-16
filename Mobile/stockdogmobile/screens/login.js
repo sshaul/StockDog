@@ -16,10 +16,7 @@ var logoImage = require('../assets/logo.png');
 class Login extends Component {
    constructor(props) {
       super(props);
-      var user = "";
-      if (this.props.navigation.state.params) {
-         user = this.props.navigation.state.params.email;
-      }
+      var user = this.props.email ? this.props.email : "";
       this.state = {
          email: user,
          password: ""
@@ -94,4 +91,8 @@ class Login extends Component {
    }
 }
 
-export default connect(null, { loginUser })(Login);
+const mapStateToProps = state => ({
+   items: state.email,
+ });
+
+export default connect(mapStateToProps, { loginUser })(Login);
