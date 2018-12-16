@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { colors } from '../style/colors';
@@ -9,9 +10,9 @@ import Icon from 'react-native-vector-icons/Feather';
 import PopoverTooltip from 'react-native-popover-tooltip';
 import WideButton from '../components/widebutton';
 import FormInput from '../components/formInput';
-import Api from '../api';
+import api from '../api';
 
-export default class Register extends Component {
+class Register extends Component {
    constructor(props) {
       super(props);
       this.state = {
@@ -38,8 +39,18 @@ export default class Register extends Component {
          alert('Please enter a valid email address.');
       }
       else {
-         this.props.dispatch(this.state.firstname, this.state.lastname,
-            this.state.email, this.state.password);
+         api.register(this.state.firstname,
+            this.state.lastname,
+            this.state.email,
+            this.state.password
+         ).then(() =>{
+            Actions.login({email: this.state.email});
+         }).catch((e) => {
+            console.log('Error: ', e);
+            alert('Invalid registration. ' +
+               'Please enter all fields and ' + 
+               'follow password instructions.');
+         });
       }
    }
 
@@ -90,7 +101,9 @@ export default class Register extends Component {
                      refer={input => { this.inputs['password'] = input; }}
                      onSubmitEditing={() => {
                         if (disabled) {
-                           alert('Invalid registration. Please enter all fields and follow password instructions.');
+                           alert('Invalid registration. ' +
+                              'Please enter all fields and ' + 
+                              'follow password instructions.');
                         }
                         else {
                            this.register();
@@ -104,21 +117,27 @@ export default class Register extends Component {
                         </View>
                      }
                      items={[{
-                        label: 'Password must be at least 8 characters long and contain at least 1 number.',
+                        label: 'Password must be at least 8 characters long ' +
+                           'and contain at least 1 number.',
                         onPress: () => { }
                      }]} />
                </View>
-               <WideButton type='register' disabled={disabled} onpress={this.register} />
+               <WideButton 
+                  type='register' 
+                  disabled={disabled} 
+                  onpress={this.register} />
                <TouchableOpacity
                   style={styles.smallTextButton}>
                   <Text
                      style={styles.smallText}
                      onPress={this.navToLogin}>
                      Return to log in
-            </Text>
+                  </Text>
                </TouchableOpacity>
             </LinearGradient>
          </KeyboardAwareScrollView>
       );
    }
 }
+
+export default connect(null)(Register);

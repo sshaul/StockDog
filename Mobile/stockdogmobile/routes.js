@@ -21,8 +21,9 @@ import LeagueDrawer from './components/leaguedrawer';
 import TabIcon from './components/tabIcon';
 import { colors } from './style/colors';
 import tabStyle from './style/components/tabBar';
+import store from './store/store';
 
-const Routes = (store) => (
+const Routes = () => (
    <Provider store={store}>
       <CustomRouter>
          <Scene key="root" hideNavBar>

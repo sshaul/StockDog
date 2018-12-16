@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseurl = 'localhost:5005/api';
+const baseurl = 'http://localhost:5005/api';
 
 const config = {
    'headers': {
@@ -16,6 +16,7 @@ const register = async(firstName, lastName, email, password) => {
       "password": password
    };
    var response = await axios.post(baseurl + '/users', data, config);
+
    return response;
 }
 
