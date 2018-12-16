@@ -18,9 +18,11 @@ class PostUserTests(TestConfiguration):
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-   
-      self.assertEquals(self.getJson(response), None)
+      responseData = self.getJson(response)
+
       self.assertEquals(response.status_code, 200)
+      self.assertTrue('id' in responseData)
+      self.assertTrue(responseData['id'] > 0)
 
    
    def test_register_user_noFirstName(self):
@@ -241,7 +243,7 @@ class PostUserTests(TestConfiguration):
    
       self.assertEquals(response.status_code, 400)
       self.assertTrue('InvalidField' in responseData[0])
-      self.assertEquals(responseData[0]['InvalidField'], 'firstName is too long')
+      self.assertEquals(responseData[0]['InvalidField'], 'firstName is too long - must be under 32 characters')
    
 
    def test_register_user_longLastName(self):
@@ -257,7 +259,7 @@ class PostUserTests(TestConfiguration):
       
       self.assertEquals(response.status_code, 400)
       self.assertTrue('InvalidField' in responseData[0])
-      self.assertEquals(responseData[0]['InvalidField'], 'lastName is too long')
+      self.assertEquals(responseData[0]['InvalidField'], 'lastName is too long - must be under 32 characters')
    
 
    def test_register_user_duplicateEmail(self):
@@ -268,21 +270,23 @@ class PostUserTests(TestConfiguration):
          'password' : 'normaLpas1'
       }
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
+      responseData = self.getJson(response)
 
       self.assertEquals(response.status_code, 200)
-      self.assertEquals(self.getJson(response), None)
+      self.assertTrue('id' in responseData)
+      self.assertTrue(responseData['id'] > 0)
    
       responseDuplicate = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = self.getJson(responseDuplicate)
+      responseDuplicateData = self.getJson(responseDuplicate)
       
       self.assertEquals(responseDuplicate.status_code, 400)
-      self.assertTrue('DuplicateEmail' in responseData)
-      self.assertEquals(responseData['DuplicateEmail'], 'User with email already exists.')
+      self.assertTrue('DuplicateEmail' in responseDuplicateData)
+      self.assertEquals(responseDuplicateData['DuplicateEmail'], 'User with email already exists.')
    
    
    def tearDown(self):
-      self.cursor.execute("DELETE FROM User")
-      self.cursor.execute("ALTER TABLE User AUTO_INCREMENT=1")
+      self.deleteTables(['User'])
+
 
 if __name__ == "__main__":
    main()

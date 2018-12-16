@@ -4,7 +4,7 @@ from unittest import main
 
 from TestConfiguration import TestConfiguration
 
-class ChartsTests(TestConfiguration):
+class GetChartsTests(TestConfiguration):
 
    def setUp(self):
       self.headers = {'content-type' : 'application/json'}
@@ -17,8 +17,11 @@ class ChartsTests(TestConfiguration):
          'password' : 'Stockd2g'
       }
       registerResponse = requests.post(url=registerUrl, data=json.dumps(registerBody), headers=self.headers)
+      registerResponseData = self.getJson(registerResponse)
+
       self.assertEqual(registerResponse.status_code, 200)
-      self.assertEqual(self.getJson(registerResponse), None)
+      self.assertTrue('id' in registerResponseData)
+      self.assertTrue(registerResponseData['id'] > 0)
 
       loginUrl = self.baseUrl + '/users/session'
       loginBody = {
@@ -71,6 +74,7 @@ class ChartsTests(TestConfiguration):
    def test_getCharts_notLoggedIn(self):
       logoutUrl = self.baseUrl + '/users/' + str(self.userId) + '/session'
       logoutResponse = requests.delete(url=logoutUrl, headers=self.headers)     
+      self.assertEqual(logoutResponse.status_code, 200)
 
       url = self.url + '?ticker=AMD&length=recent'
       response = requests.get(url=url, headers=self.headers)
@@ -207,8 +211,7 @@ class ChartsTests(TestConfiguration):
 
 
    def tearDown(self):
-      self.cursor.execute("DELETE FROM User")
-      self.cursor.execute("ALTER TABLE User AUTO_INCREMENT=1")
+      self.deleteTables(['User'])
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 from ..field import Field
-from .user_schema import validateEmail
+from .util_schema import validateEmail
 
 fields = [
    Field('email', str, True, validateEmail),

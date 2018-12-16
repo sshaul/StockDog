@@ -19,44 +19,6 @@ export default class StockChart extends Component {
 
   };
 
-  // componentDidMount() {
-  //   this.getData('day');
-  // }
-
-  // componentWillReceiveProps(nextProps) {
-  //   this.getData(nextProps.range);
-  // }
-
-  // updateIndex(selectedIndex) {
-  //   var index = '';
-  //   if (selectedIndex == 0) {
-  //     index = 'day';
-  //   }
-  //   else if (selectedIndex == 1) {
-  //     index = 'week';
-  //   }
-  //   else if (selectedIndex == 2) {
-  //     index = 'month';
-  //   }
-  //   else {
-  //     index = 'year';
-  //   }
-  //   this.setState({selectedIndex, range: index});
-  // }
-  
-  // getData(range) {
-  //   if (this.props.portfolio) {
-  //     this.api.getPortfolioData((newXData, newYData) => {
-  //       this.setState({xData: newXData, yData: newYData, isLoading: false});
-  //     });
-  //   }
-  //   else {
-  //     this.api.getChartData(this.props.ticker, range, (newXData, newYData, error) => {
-  //       this.setState({xData: newXData, yData: newYData, isLoading: false});
-  //     });
-  //   };
-  // }
-
   createChart() {
     var conf={
             chart: {
