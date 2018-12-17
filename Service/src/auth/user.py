@@ -25,7 +25,7 @@ def post_user():
    g.cursor.execute("INSERT INTO User(firstName, lastName, email, password) VALUES (%s, %s, %s, %s)",
       (body['firstName'], body['lastName'], body['email'], passwordHash))
    
-   return Response(status=200)
+   return jsonify(id=g.cursor.lastrowid)
 
 
 @user_api.route('/api/users/session', methods=['POST'])

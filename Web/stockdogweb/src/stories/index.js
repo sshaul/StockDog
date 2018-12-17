@@ -10,11 +10,11 @@ import News from '../components/News/News';
 import Portfolio from '../containers/Portfolio/Portfolio';
 import Stock from '../containers/Stock/Stock';
 import Trade from '../components/Trade/Trade';
+import Transaction from '../components/Trade/Transaction/Transaction';
 import Button from '../components/Button/Button';
 import Article from '../components/Article/Article.js';
 
 import { storiesOf } from '@storybook/react';
-
 
 
 const listingProps = {
@@ -119,11 +119,18 @@ storiesOf('Trade', module)
    <Trade quantity={40} price={400.12} volume={2} /> 
 );
 
+storiesOf('Transaction', module)
+  .add('default', () =>
+   <Transaction isOpen={true} buyingPower={2313} price={2.19} amountOwned={10}/> 
+);
+
 storiesOf('Button', module)
    .add('300px width', () =>
       <Button text={"Trade"} width={300} />) 
    .add('200px width', () =>
-      <Button text={"Trade"} width={200} /> 
+      <Button text={"Trade"} width={200} />)
+   .add('disabled', () =>
+      <Button text={"Trade"} width={200} isDisabled={true} /> 
 );
 
 storiesOf('Article', module)

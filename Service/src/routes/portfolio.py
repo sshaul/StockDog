@@ -3,53 +3,74 @@ from flask import Blueprint, request, Response, g, jsonify, make_response
 import simplejson as json
 
 from routes import stock
+from auth import auth
+from request_validator import validator
+from request_validator.schemas import portfolio_schema
 from util.utility import Utility
 from util.error_map import errors
 
 portfolio_api = Blueprint('portfolio_api', __name__)
 
+DEFAULT_BUYPOWER = 10000
 
-@portfolio_api.route('/api/portfolio', methods=['POST'])
+@portfolio_api.route('/api/portfolios', methods=['POST'])
+@auth.login_required
+@validator.validate_body(portfolio_schema.fields)
 def post_portfolio():
    body = request.get_json()
-   try:
-      result = PortfolioSchema().load(body)
-   except ValidationError as err:
-      return make_response(json.dumps(err.messages), 400)
+   buyPower = body.get('buyPower') or DEFAULT_BUYPOWER
 
-   now = datetime.now()
-
-   if 'leagueId' in body:
-      
-      if 'inviteCode' in body:
-         g.cursor.execute("SELECT inviteCode, startPos FROM League WHERE id = %s", body['leagueId'])
-         row = g.cursor.fetchone()
-
-         if row is None:
-            return make_response(jsonify(error=errors['nonexistentLeague']), 404)
-         
-         if body['inviteCode'] == row['inviteCode']:
-            g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId, leagueId) VALUES (%s, %s, %s, %s)",
-               [body['name'], row['startPos'], body['userId'], body['leagueId']])
-            lastrowid = g.cursor.lastrowid
-
-            g.cursor.execute("INSERT INTO PortfolioHistory(portfolioId, datetime, value) VALUES (%s, %s, %s)",
-               [g.cursor.lastrowid, str(now), row['startPos']])
-         else:
-            return make_response(jsonify(error=errors['inviteCodeMismatch']), 400)
-      
-      else:
-         return Response(errors['missingInviteCode'], status=400)
-   
-   else:      
-      g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)", 
-         [body['name'], body['buyPower'], body['userId']])
+   if 'inviteCode' in body:
+      return Response(status=405)
+   else:
+      g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)",
+         [body['name'], buyPower, g.user['id']])
       lastrowid = g.cursor.lastrowid
 
-      g.cursor.execute("INSERT INTO PortfolioHistory(portfolioId, datetime, value) VALUES (%s, %s, %s)",
-         [g.cursor.lastrowid, str(now), body['buyPower']])
+   return jsonify(id=lastrowid, buyPower=buyPower)
 
-   return jsonify(id=lastrowid)
+
+# @portfolio_api.route('/api/portfolio', methods=['POST'])
+# def post_portfolio():
+#    body = request.get_json()
+#    try:
+#       result = PortfolioSchema().load(body)
+#    except ValidationError as err:
+#       return make_response(json.dumps(err.messages), 400)
+
+#    now = datetime.now()
+
+#    if 'leagueId' in body:
+      
+#       if 'inviteCode' in body:
+#          g.cursor.execute("SELECT inviteCode, startPos FROM League WHERE id = %s", body['leagueId'])
+#          row = g.cursor.fetchone()
+
+#          if row is None:
+#             return make_response(jsonify(error=errors['nonexistentLeague']), 404)
+         
+#          if body['inviteCode'] == row['inviteCode']:
+#             g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId, leagueId) VALUES (%s, %s, %s, %s)",
+#                [body['name'], row['startPos'], body['userId'], body['leagueId']])
+#             lastrowid = g.cursor.lastrowid
+
+#             g.cursor.execute("INSERT INTO PortfolioHistory(portfolioId, datetime, value) VALUES (%s, %s, %s)",
+#                [g.cursor.lastrowid, str(now), row['startPos']])
+#          else:
+#             return make_response(jsonify(error=errors['inviteCodeMismatch']), 400)
+      
+#       else:
+#          return Response(errors['missingInviteCode'], status=400)
+   
+#    else:      
+#       g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)", 
+#          [body['name'], body['buyPower'], body['userId']])
+#       lastrowid = g.cursor.lastrowid
+
+#       g.cursor.execute("INSERT INTO PortfolioHistory(portfolioId, datetime, value) VALUES (%s, %s, %s)",
+#          [g.cursor.lastrowid, str(now), body['buyPower']])
+
+#    return jsonify(id=lastrowid)
 
 
 @portfolio_api.route('/api/portfolio', methods=['GET'])

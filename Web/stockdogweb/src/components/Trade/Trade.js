@@ -21,7 +21,9 @@ class Trade extends Component {
                </div>
             </div>
             <div className="trade-button">
-               <Button text={'Trade'} width={260} />
+               <Button text={'Trade'} width={260} 
+                  onClick={this.props.onClickBtn}
+               />
             </div>
          </div>
       );
