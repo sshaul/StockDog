@@ -4,6 +4,7 @@ from validate_email import validate_email
 NAME_CHAR_LIMIT = 32
 MIN_BUY_POWER = 1
 MAX_BUY_POWER = 1000000
+VALID_TRANS_TYPES = ['BUY', 'SELL']
 
 def validateEmail(emailStr, field, errors):
    if not validate_email(emailStr):
@@ -52,3 +53,20 @@ def validateBuyPower(buyPower, field, errors):
       })
 
    return errors
+
+
+def validatePosInt(integer, field, errors):
+   if type(integer) != int or integer <= 0:
+      errors.append({
+         'InvalidField' : field.name + ' must be a positive integer'
+      })
+
+   return errors
+
+
+def validateTransType(transType, field, errors):
+   print("TRANSTYPE IS " + transType)
+   if type(transType) != str or transType not in VALID_TRANS_TYPES:
+      errors.append({
+         'InvalidField' : field.name + ' must be a valid transType: ' + ", ".join(VALID_TRANS_TYPES)
+      })

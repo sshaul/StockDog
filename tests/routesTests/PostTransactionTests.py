@@ -121,16 +121,12 @@ class PostTransactionTests(TestConfiguration):
          "transType" : "BUY",
          "portfolioId" : 16
       }
-
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
-      responseData = self.getJson(response)
 
-      self.assertEquals(response.status_code, 200)
-      self.assertTrue('id' in responseData)
-      self.assertTrue(responseData['id'] > 0)
+      self.assertEquals(response.status_code, 403)
 
    
-   def test_post_transaction_noShareCount(self):
+   def test_post_transaction_missingShareCount(self):
       body = {
          "ticker" : "AMD",
          "transType" : "BUY",
@@ -203,7 +199,7 @@ class PostTransactionTests(TestConfiguration):
 
       self.assertEquals(response.status_code, 400)
       self.assertTrue('InvalidField' in responseData[0])
-      self.assertEquals(responseData[0]['InvalidField'], 'shareCount must be an integer greater than 0')
+      self.assertEquals(responseData[0]['InvalidField'], 'shareCount must be a positive integer')
    
 
    def test_post_transaction_invalidTicker(self):
@@ -218,8 +214,8 @@ class PostTransactionTests(TestConfiguration):
       responseData = self.getJson(response)
 
       self.assertEquals(response.status_code, 400)
-      self.assertTrue('InvalidTicker' in responseData)
-      self.assertEquals(responseData['InvalidTicker'], "The stock ticker is either invalid or unsupported.")
+      self.assertTrue('UnsupportedTicker' in responseData)
+      self.assertEquals(responseData['UnsupportedTicker'], "The stock ticker is either invalid or unsupported.")
 
    
    def test_post_transaction_invalidTransType(self):
@@ -235,7 +231,7 @@ class PostTransactionTests(TestConfiguration):
 
       self.assertEquals(response.status_code, 400)
       self.assertTrue('InvalidField' in responseData[0])
-      self.assertEquals(responseData[0]['InvalidField'], 'transType must be BUY or SELL')
+      self.assertEquals(responseData[0]['InvalidField'], 'transType must be a valid transType: BUY, SELL')
 
 
    def test_post_transaction_invalidPortfolioId(self):
@@ -251,14 +247,14 @@ class PostTransactionTests(TestConfiguration):
 
       self.assertEquals(response.status_code, 400)
       self.assertTrue('InvalidField' in responseData[0])
-      self.assertEquals(responseData[0]['InvalidField'], 'portfolioId must be an integer greater than 0')
+      self.assertEquals(responseData[0]['InvalidField'], 'portfolioId must be a positive integer')
 
    
    def test_post_transaction_notEnoughBuyPower(self):
       body = {
          "shareCount" : 1000000,
          "ticker" : "AMD",
-         "transType" : "CALLOPTION",
+         "transType" : "BUY",
          "portfolioId" : self.portfolioId
       }
 
@@ -296,6 +292,22 @@ class PostTransactionTests(TestConfiguration):
       self.assertEquals(sellResponse.status_code, 400)
       self.assertTrue('InsufficientShares' in sellResponseData)
       self.assertEquals(sellResponseData['InsufficientShares'], "Insufficient shares owned to make sale.")
+
+   
+   def test_post_transaction_noShareCount(self):
+      sellBody = {
+         "shareCount" : 50,
+         "ticker" : "AMD",
+         "transType" : "SELL",
+         "portfolioId" : self.portfolioId
+      }
+      sellResponse = requests.post(url=self.url, data=json.dumps(sellBody), headers=self.headers)
+      sellResponseData = self.getJson(sellResponse)
+
+      self.assertEquals(sellResponse.status_code, 400)
+      self.assertTrue('InsufficientShares' in sellResponseData)
+      self.assertEquals(sellResponseData['InsufficientShares'], "Insufficient shares owned to make sale.")
+
 
 
    def tearDown(self):

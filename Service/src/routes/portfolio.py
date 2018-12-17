@@ -25,9 +25,9 @@ def post_portfolio():
    else:
       g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)",
          [body['name'], buyPower, g.user['id']])
-      lastrowid = g.cursor.lastrowid
+      portfolioId = g.cursor.lastrowid
 
-   return jsonify(id=lastrowid, buyPower=buyPower)
+   return jsonify(id=portfolioId, buyPower=buyPower)
 
 
 # @portfolio_api.route('/api/portfolio', methods=['POST'])
