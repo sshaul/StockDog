@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, make_response, request, Response, g
 import simplejson as json
 
 from auth import auth
-from .charts import get_history
+from .charts import getSharePrice
 from request_validator import validator
 from request_validator.schemas import transaction_schema
 from util.utility import Utility
@@ -20,7 +20,7 @@ def post_transaction():
       return Response(status=403)
 
    try:
-      sharePrice = json.loads(get_history(body['ticker'], 'recent'))[0]['price']
+      sharePrice = getSharePrice(body['ticker'])
    except TypeError:
       return make_response(jsonify(UnsupportedTicker=errors['unsupportedTicker']), 400)
 

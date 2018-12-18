@@ -60,6 +60,10 @@ def get_history(ticker, length):
    return json.dumps(data)
 
 
+def getSharePrice(ticker):
+   return json.loads(get_history(ticker, 'recent'))[0]['price']
+
+
 def getInterval(length):
    if length == 'recent' or length == 'day':
       return DAY
