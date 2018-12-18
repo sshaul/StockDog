@@ -36,7 +36,7 @@ CREATE TABLE Transaction (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    sharePrice DECIMAL(13, 2),
    shareCount INT(11),
-   transType VARCHAR(12),
+   action VARCHAR(12),
    portfolioId INT(11) REFERENCES Portfolio(id),
    ticker VARCHAR(8) REFERENCES Ticker(symbol),
    leagueId INT(11) REFERENCES League(id),

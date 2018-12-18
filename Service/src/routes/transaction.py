@@ -24,7 +24,7 @@ def post_transaction():
    except TypeError:
       return make_response(jsonify(UnsupportedTicker=errors['unsupportedTicker']), 400)
 
-   if body['transType'] == 'BUY':
+   if body['action'] == 'BUY':
       return buy(sharePrice, body)
    else:
       return sell(sharePrice, body)
@@ -42,7 +42,7 @@ def buy(sharePrice, requestBody):
       return make_response(jsonify(InsufficientBuyPower=errors['insufficientBuyPower']), 400)
    
    remainingBuyPower = float(portfolio['buyPower']) - purchaseCost
-   g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, transType, portfolioId, ticker, leagueId) " +
+   g.cursor.execute("INSERT INTO Transaction(sharePrice, shareCount, action, portfolioId, ticker, leagueId) " +
       "VALUES (%s, %s, %s, %s, %s, %s)",
       [sharePrice, requestBody['shareCount'], "BUY", requestBody['portfolioId'], requestBody['ticker'], portfolio['leagueId']])
    transactionId = g.cursor.lastrowid
@@ -88,7 +88,7 @@ def sell(sharePrice, requestBody):
       return make_response(jsonify(NonexistentPortfolio=errors['nonexistentPortfolio']))
    
    g.cursor.execute("INSERT INTO Transaction" +
-      "(sharePrice, shareCount, transType, portfolioId, ticker, leagueId) " +
+      "(sharePrice, shareCount, action, portfolioId, ticker, leagueId) " +
       "VALUES (%s, %s, %s, %s, %s, %s)",
       [sharePrice, requestBody['shareCount'], 0, requestBody['portfolioId'], requestBody['ticker'], portfolio['leagueId']])
    transactionId = g.cursor.lastrowid

@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import Blueprint, request, Response, g, jsonify, make_response
 import simplejson as json
 
-from routes import stock
+from routes import charts
 from auth import auth
 from request_validator import validator
 from request_validator.schemas import portfolio_schema

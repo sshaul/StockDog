@@ -55,7 +55,7 @@ class PostTransactionTests(TestConfiguration):
       body = {
          "shareCount" : 5,
          "ticker" : "AMD",
-         "transType" : "BUY",
+         "action" : "BUY",
          "portfolioId" : self.portfolioId
       }
 
@@ -71,7 +71,7 @@ class PostTransactionTests(TestConfiguration):
       buyBody = {
          "shareCount" : 5,
          "ticker" : "AMD",
-         "transType" : "BUY",
+         "action" : "BUY",
          "portfolioId" : self.portfolioId
       }
       buyResponse = requests.post(url=self.url, data=json.dumps(buyBody), headers=self.headers)
@@ -84,7 +84,7 @@ class PostTransactionTests(TestConfiguration):
       sellBody = {
          "shareCount" : 2,
          "ticker" : "AMD",
-         "transType" : "SELL",
+         "action" : "SELL",
          "portfolioId" : self.portfolioId
       }
       sellResponse = requests.post(url=self.url, data=json.dumps(sellBody), headers=self.headers)
@@ -103,7 +103,7 @@ class PostTransactionTests(TestConfiguration):
       buyBody = {
          "shareCount" : 5,
          "ticker" : "AMD",
-         "transType" : "BUY",
+         "action" : "BUY",
          "portfolioId" : self.portfolioId
       }
       buyResponse = requests.post(url=self.url, data=json.dumps(buyBody), headers=self.headers)
@@ -118,7 +118,7 @@ class PostTransactionTests(TestConfiguration):
       body = {
          "shareCount" : 5,
          "ticker" : "AMD",
-         "transType" : "BUY",
+         "action" : "BUY",
          "portfolioId" : 16
       }
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
@@ -129,7 +129,7 @@ class PostTransactionTests(TestConfiguration):
    def test_post_transaction_missingShareCount(self):
       body = {
          "ticker" : "AMD",
-         "transType" : "BUY",
+         "action" : "BUY",
          "portfolioId" : self.portfolioId
       }
 
@@ -144,7 +144,7 @@ class PostTransactionTests(TestConfiguration):
    def test_post_transaction_noTicker(self):
       body = {
          "shareCount": 5,
-         "transType" : "BUY",
+         "action" : "BUY",
          "portfolioId" : self.portfolioId
       }
 
@@ -156,7 +156,7 @@ class PostTransactionTests(TestConfiguration):
       self.assertEquals(responseData[0]['MissingField'], 'ticker is a required field')
 
    
-   def test_post_transaction_noTransType(self):
+   def test_post_transaction_noAction(self):
       body = {
          "shareCount" : 5,
          "ticker" : "AMD",
@@ -168,14 +168,14 @@ class PostTransactionTests(TestConfiguration):
 
       self.assertEquals(response.status_code, 400)
       self.assertTrue('MissingField' in responseData[0])
-      self.assertEquals(responseData[0]['MissingField'], 'transType is a required field')
+      self.assertEquals(responseData[0]['MissingField'], 'action is a required field')
 
       
    def test_post_transaction_noPortfolioId(self):
       body = {
          "shareCount" : 5,
          "ticker" : "AMD",
-         "transType" : "BUY"
+         "action" : "BUY"
       }
 
       response = requests.post(url=self.url, data=json.dumps(body), headers=self.headers)
@@ -190,7 +190,7 @@ class PostTransactionTests(TestConfiguration):
       body = {
          "shareCount" : -3,
          "ticker" : "AMD",
-         "transType" : "BUY",
+         "action" : "BUY",
          "portfolioId" : self.portfolioId
       }
 
@@ -206,7 +206,7 @@ class PostTransactionTests(TestConfiguration):
       body = {
          "shareCount" : 5,
          "ticker" : "YOLO",
-         "transType" : "BUY",
+         "action" : "BUY",
          "portfolioId" : self.portfolioId
       }
 
@@ -218,11 +218,11 @@ class PostTransactionTests(TestConfiguration):
       self.assertEquals(responseData['UnsupportedTicker'], "The stock ticker is either invalid or unsupported.")
 
    
-   def test_post_transaction_invalidTransType(self):
+   def test_post_transaction_invalidAction(self):
       body = {
          "shareCount" : 5,
          "ticker" : "AMD",
-         "transType" : "CALLOPTION",
+         "action" : "CALLOPTION",
          "portfolioId" : self.portfolioId
       }
 
@@ -231,14 +231,14 @@ class PostTransactionTests(TestConfiguration):
 
       self.assertEquals(response.status_code, 400)
       self.assertTrue('InvalidField' in responseData[0])
-      self.assertEquals(responseData[0]['InvalidField'], 'transType must be a valid transType: BUY, SELL')
+      self.assertEquals(responseData[0]['InvalidField'], 'action must be a valid action: BUY, SELL')
 
 
    def test_post_transaction_invalidPortfolioId(self):
       body = {
          "shareCount" : 5,
          "ticker" : "AMD",
-         "transType" : "BUY",
+         "action" : "BUY",
          "portfolioId" : self.portfolioId * -1
       }
 
@@ -254,7 +254,7 @@ class PostTransactionTests(TestConfiguration):
       body = {
          "shareCount" : 1000000,
          "ticker" : "AMD",
-         "transType" : "BUY",
+         "action" : "BUY",
          "portfolioId" : self.portfolioId
       }
 
@@ -270,7 +270,7 @@ class PostTransactionTests(TestConfiguration):
       buyBody = {
          "shareCount" : 5,
          "ticker" : "AMD",
-         "transType" : "BUY",
+         "action" : "BUY",
          "portfolioId" : self.portfolioId
       }
       buyResponse = requests.post(url=self.url, data=json.dumps(buyBody), headers=self.headers)
@@ -283,7 +283,7 @@ class PostTransactionTests(TestConfiguration):
       sellBody = {
          "shareCount" : 50,
          "ticker" : "AMD",
-         "transType" : "SELL",
+         "action" : "SELL",
          "portfolioId" : self.portfolioId
       }
       sellResponse = requests.post(url=self.url, data=json.dumps(sellBody), headers=self.headers)
@@ -298,7 +298,7 @@ class PostTransactionTests(TestConfiguration):
       sellBody = {
          "shareCount" : 50,
          "ticker" : "AMD",
-         "transType" : "SELL",
+         "action" : "SELL",
          "portfolioId" : self.portfolioId
       }
       sellResponse = requests.post(url=self.url, data=json.dumps(sellBody), headers=self.headers)
