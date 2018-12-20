@@ -8,27 +8,23 @@ import Login from './screens/login';
 import Register from './screens/register';
 import Portfolio from './screens/portfolio';
 import Stock from './screens/stock';
-import Search from './screens/search';
 import League from './screens/league';
 import Feed from './screens/feed';
-import noPortfoliosProfile from './screens/noPortfoliosProfile';
 import AddPortfolioModal from './screens/addportfoliomodal';
 import JoinLeagueModal from './screens/joinLeagueModal';
 import TradingModal from './screens/tradingModal';
-import SetNickname from './screens/setNickname';
-import SettingsModal from './screens/settingsmodal';
-import LeagueDrawer from './components/leaguedrawer';
 import TabIcon from './components/tabIcon';
 import { colors } from './style/colors';
 import tabStyle from './style/components/tabBar';
+import store from './store/store';
 
-const Routes = (store) => (
+const Routes = () => (
    <Provider store={store}>
       <CustomRouter>
          <Scene key="root" hideNavBar>
-            {/* <Scene key="login" component={Login}/>
-        <Scene key="register" component={Register}/>
-            <Drawer
+            <Scene key="login" component={Login}/>
+            <Scene key="register" component={Register}/>
+            {/* <Drawer
               key="drawer"  
               contentComponent={LeagueDrawer} 
               type="replace"

@@ -2,7 +2,7 @@ import { ActionConst } from 'react-native-router-flux';
 import { combineReducers } from 'redux';
 
 // import the other reducers
-import loginReducer from './loginReducer';
+import authReducer from './authReducers';
 
 const sceneReducer = (state = {}, action) => {
     switch(action.type){
@@ -16,5 +16,5 @@ const sceneReducer = (state = {}, action) => {
 
 export default reducers = combineReducers({
     sceneReducer,
-    loginReducer,
+    authReducer,
 });
