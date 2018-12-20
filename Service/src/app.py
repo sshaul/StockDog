@@ -8,7 +8,6 @@ from routes.charts import charts_api
 from routes.league import league_api
 from routes.nuke import nuke_api
 from routes.portfolio import portfolio_api
-from routes.stock import stock_api
 from routes.transaction import transaction_api
 from routes.watchlist import watchlist_api
 
@@ -22,7 +21,6 @@ app.register_blueprint(charts_api)
 app.register_blueprint(league_api)
 app.register_blueprint(nuke_api)
 app.register_blueprint(portfolio_api)
-app.register_blueprint(stock_api)
 app.register_blueprint(transaction_api)
 app.register_blueprint(watchlist_api)
 app.register_blueprint(user_api)

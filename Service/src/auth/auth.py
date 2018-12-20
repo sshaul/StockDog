@@ -8,20 +8,30 @@ def login_required(f):
    @wraps(f)
    def decorator(*args, **kwargs):
       try: 
-         authHeader = request.headers.get('Authorization').split(' ')
-         if len(authHeader) != 2 or authHeader[0] != "token":
-            raise Exception('Invalid token')
-         authToken = authHeader[1]
-         g.cursor.execute("SELECT * FROM User WHERE token = %s", authToken)
-         g.user = g.cursor.fetchone()
-         if g.user is None:
-            raise Exception('Invalid token')
+         validate_session()
       except Exception as e:
          return make_response(jsonify(NotLoggedIn=errors['notLoggedIn']),401)
       
       return f(*args, **kwargs)
-      
    return decorator
 
+
+def validate_session():
+   authHeader = request.headers.get('Authorization').split(' ')
+   if len(authHeader) != 2 or authHeader[0] != "token":
+      raise Exception('Invalid token')
+   authToken = authHeader[1]
+   g.cursor.execute("SELECT * FROM User WHERE token = %s", authToken)
+   g.user = g.cursor.fetchone()
+   if g.user is None:
+      raise Exception('Invalid token')
+
+
 def session_belongsTo_user(userId):
-   return str(g.user['id']) == userId
+   return g.user['id'] == int(userId)
+
+
+def portfolio_belongsTo_user(portfolioId):
+   g.cursor.execute("SELECT userId FROM Portfolio WHERE id = %s", portfolioId)
+   portfolio = g.cursor.fetchone()
+   return False if not portfolio else portfolio.get('userId', -1) == g.user['id'] 

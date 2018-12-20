@@ -4,6 +4,7 @@ from validate_email import validate_email
 NAME_CHAR_LIMIT = 32
 MIN_BUY_POWER = 1
 MAX_BUY_POWER = 1000000
+VALID_ACTION_TYPES = ['BUY', 'SELL']
 
 def validateEmail(emailStr, field, errors):
    if not validate_email(emailStr):
@@ -52,3 +53,19 @@ def validateBuyPower(buyPower, field, errors):
       })
 
    return errors
+
+
+def validatePosInt(integer, field, errors):
+   if type(integer) != int or integer <= 0:
+      errors.append({
+         'InvalidField' : field.name + ' must be a positive integer'
+      })
+
+   return errors
+
+
+def validateAction(action, field, errors):
+   if type(action) != str or action not in VALID_ACTION_TYPES:
+      errors.append({
+         'InvalidField' : field.name + ' must be a valid action: ' + ", ".join(VALID_ACTION_TYPES)
+      })

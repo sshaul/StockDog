@@ -25,11 +25,14 @@ URL_PREFIX = 'https://api.iextrading.com/1.0/stock/'
 @charts_api.route('/api/charts', methods=['GET'])
 @auth.login_required
 @validator.validate_params(charts_schema.fields)
-def get_history():
-
+def extract_args():
    ticker = request.args.get('ticker')
    length = request.args.get('length')
 
+   return get_history(ticker, length)
+
+
+def get_history(ticker, length):
    interval = getInterval(length)
    requestUrl = URL_PREFIX + ticker + '/chart/' + interval
    
@@ -55,6 +58,10 @@ def get_history():
    g.log.info('Parsing data time is: ' + str(parseTime))
 
    return json.dumps(data)
+
+
+def getSharePrice(ticker):
+   return json.loads(get_history(ticker, 'recent'))[0]['price']
 
 
 def getInterval(length):
