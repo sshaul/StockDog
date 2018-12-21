@@ -6,6 +6,7 @@ from authTests.PostSessionTests import PostSessionTests
 from authTests.DeleteSessionTests import DeleteSessionTests
 from routesTests.GetChartsTests import GetChartsTests
 from routesTests.PostPortfolioTests import PostPortfolioTests
+from routesTests.PostTransactionTests import PostTransactionTests
 
 
 if __name__ == '__main__':
@@ -16,7 +17,8 @@ if __name__ == '__main__':
          loader.loadTestsFromTestCase(PostSessionTests),
          loader.loadTestsFromTestCase(DeleteSessionTests),
          loader.loadTestsFromTestCase(GetChartsTests),
-         loader.loadTestsFromTestCase(PostPortfolioTests)
+         loader.loadTestsFromTestCase(PostPortfolioTests),
+         loader.loadTestsFromTestCase(PostTransactionTests)
       )
    )
    runner = TextTestRunner()

@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import Blueprint, request, Response, g, jsonify, make_response
 import simplejson as json
 
-from routes import stock
+from routes import charts
 from auth import auth
 from request_validator import validator
 from request_validator.schemas import portfolio_schema
@@ -25,9 +25,9 @@ def post_portfolio():
    else:
       g.cursor.execute("INSERT INTO Portfolio(name, buyPower, userId) VALUES (%s, %s, %s)",
          [body['name'], buyPower, g.user['id']])
-      lastrowid = g.cursor.lastrowid
+      portfolioId = g.cursor.lastrowid
 
-   return jsonify(id=lastrowid, buyPower=buyPower)
+   return jsonify(id=portfolioId, buyPower=buyPower)
 
 
 # @portfolio_api.route('/api/portfolio', methods=['POST'])
