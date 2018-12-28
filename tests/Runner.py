@@ -14,12 +14,12 @@ if __name__ == '__main__':
    loader = TestLoader()
    suite = TestSuite(
       (
-         # loader.loadTestsFromTestCase(PostUserTests),
-         # loader.loadTestsFromTestCase(PostSessionTests),
-         # loader.loadTestsFromTestCase(DeleteSessionTests),
-         # loader.loadTestsFromTestCase(GetChartsTests),
-         # loader.loadTestsFromTestCase(PostPortfolioTests),
-         # loader.loadTestsFromTestCase(PostTransactionTests),
+         loader.loadTestsFromTestCase(PostUserTests),
+         loader.loadTestsFromTestCase(PostSessionTests),
+         loader.loadTestsFromTestCase(DeleteSessionTests),
+         loader.loadTestsFromTestCase(GetChartsTests),
+         loader.loadTestsFromTestCase(PostPortfolioTests),
+         loader.loadTestsFromTestCase(PostTransactionTests),
          loader.loadTestsFromTestCase(GetPortfoliosTests)
       )
    )
