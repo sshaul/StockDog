@@ -7,18 +7,20 @@ from authTests.DeleteSessionTests import DeleteSessionTests
 from routesTests.GetChartsTests import GetChartsTests
 from routesTests.PostPortfolioTests import PostPortfolioTests
 from routesTests.PostTransactionTests import PostTransactionTests
+from routesTests.GetPortfoliosTests import GetPortfoliosTests
 
 
 if __name__ == '__main__':
    loader = TestLoader()
    suite = TestSuite(
       (
-         loader.loadTestsFromTestCase(PostUserTests),
-         loader.loadTestsFromTestCase(PostSessionTests),
-         loader.loadTestsFromTestCase(DeleteSessionTests),
-         loader.loadTestsFromTestCase(GetChartsTests),
-         loader.loadTestsFromTestCase(PostPortfolioTests),
-         loader.loadTestsFromTestCase(PostTransactionTests)
+         # loader.loadTestsFromTestCase(PostUserTests),
+         # loader.loadTestsFromTestCase(PostSessionTests),
+         # loader.loadTestsFromTestCase(DeleteSessionTests),
+         # loader.loadTestsFromTestCase(GetChartsTests),
+         # loader.loadTestsFromTestCase(PostPortfolioTests),
+         # loader.loadTestsFromTestCase(PostTransactionTests),
+         loader.loadTestsFromTestCase(GetPortfoliosTests)
       )
    )
    runner = TextTestRunner()
