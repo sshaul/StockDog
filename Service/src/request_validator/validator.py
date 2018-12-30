@@ -70,6 +70,34 @@ def validate_int(datum, field, errors):
    return errors
 
 
+def login_required(f):
+   @wraps(f)
+   def decorator(*args, **kwargs):
+      try: 
+         validate_session()
+      except Exception as e:
+         return make_response(jsonify(NotLoggedIn=errors['notLoggedIn']),401)
+      
+      return f(*args, **kwargs)
+   return decorator
+
+
+def validate_headers(f):
+   @wraps(f)
+   def decorator(*args, **kwargs):
+      try:
+         errors = []
+         check_headers(errors)
+         if (len(errors) > 0):
+            raise ValidationError(errors)
+      
+      except ValidationError as e:
+         return make_response(json.dumps(e.errors), 400)
+      
+      return f(*args, **kwargs)
+   return decorator
+
+
 def validate_params(fields):
    def decorator(fn):
       def wrap(*args, **kwargs):
