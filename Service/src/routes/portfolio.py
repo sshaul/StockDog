@@ -63,8 +63,7 @@ def attach_portfolioItems(portfolio):
 
 def attach_portfolio_netWorth(portfolio):
    netWorth = float(portfolio['buyPower'])
-   if len(portfolio['items']) > 0:
-      for item in portfolio['items']:
+   for item in portfolio['items']:
          netWorth += float(charts.getSharePrice(item['ticker'])) * item['shareCount']
    
    portfolio['netWorth'] = netWorth
