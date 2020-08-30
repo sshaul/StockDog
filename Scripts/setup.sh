@@ -93,9 +93,9 @@ echo -e "${GREEN}Successfully setup service module${RESTORE}\n"
 
 ###############################################################################
 # Setup the StockDog database
-echo "Creating the StockDog database"
 cd "$SERVICE_MODULE_DIR"
 init_sql="${SERVICE_MODULE_DIR}/db/init.sql"
+echo "${YELLOW}${LOG_FILE}${RESTORE}"
 if ! mysql < $init_sql 1>>"$LOG_FILE" 2>&1; then
    echo -e "${RED}Failed to bootstrap the StockDog database"
    echo -e "Make sure MySQL server is running and ~/.my.cnf is set up correctly.${RESTORE}"

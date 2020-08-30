@@ -8,18 +8,21 @@ from auth import auth
 from request_validator import validator
 from request_validator.schemas import charts_schema
 from util.error_map import errors
+from util.db_connection import getConfigFilePath
 
 DAY = '1d'
 MONTH = '1m'
 YEAR = '1y'
 
-IEX_DATETIME_FORMAT = '%Y%m%d %H:%M'
+IEX_DATETIME_FORMAT = '%Y-%m-%d %H:%M'
 IEX_DATE_FORMAT = '%Y-%m-%d'
 DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 charts_api = Blueprint('charts_api', __name__)
 
-URL_PREFIX = 'https://api.iextrading.com/1.0/stock/'
+URL_PREFIX = 'https://cloud.iexapis.com/v1/stock/'
+
+CONFIG_FILE_PATH = "/Users/rohithdara/dev/StockDog/Service/src/routes/config.json"
 
 
 @charts_api.route('/api/charts', methods=['GET'])
@@ -34,7 +37,13 @@ def extract_args():
 
 def get_history(ticker, length):
    interval = getInterval(length)
-   requestUrl = URL_PREFIX + ticker + '/chart/' + interval
+   try:
+      configFile = open(CONFIG_FILE_PATH, 'r')
+      config = json.load(configFile)
+      configFile.close()
+   except Exception as e:
+      raise Exception('The filename was not provided or poorly formatted') 
+   requestUrl = URL_PREFIX + ticker + '/chart/' + interval + '?token=' + config["TokenIEX"]
    
    g.log.info('IEX API hitting: ' + requestUrl)
    startTime = time.time()
@@ -43,6 +52,7 @@ def get_history(ticker, length):
 
    try:
       response = rawResponse.json()
+      g.log.info(response, isPprint=True)
    except:
       return make_response(jsonify(InvalidTicker=errors['unsupportedTicker']), 400)
 
@@ -96,8 +106,13 @@ def formatDataInterDay(jsonData):
 
 
 def formatDataIntraday(jsonData):
-   data = [] 
+   data = []
+   NoneItemsIEX = 0 
    for item in jsonData:
+      if item['average'] is None:
+         print(item)
+         NoneItemsIEX += 1
+         continue
       if item['average'] < 0:
          continue
 
@@ -107,6 +122,8 @@ def formatDataIntraday(jsonData):
          'epochTime' : itemTime.timestamp(),
          'price' : item['average']
       })
+   # if NoneItemsIEX > 2:
+   #    return make_response(jsonify(BrokenIEXResponse=errors['IEX Response Missing Entries']), 500)
 
    data.sort(key=lambda item:item['epochTime'], reverse=False)
    return data
